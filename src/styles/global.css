@@ -1,0 +1,149 @@
+/* Kadali global styles — Tailwind v4 CSS-first entry. */
+@import "tailwindcss";
+@import "./tokens.css";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-ui);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-wrap: balance;
+  }
+
+  :lang(kn) {
+    font-family: var(--font-kn);
+  }
+
+  /* Keyboard focus: 2px solid rani ring, offset from the edge */
+  :focus-visible {
+    outline: 2px solid var(--color-rani);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-turmeric);
+    color: var(--color-ink);
+  }
+
+  /* Respect users who prefer reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Long-form article markdown (apply to the rendered body container) */
+  .prose-kadali {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    line-height: 1.75;
+    color: var(--color-ink);
+  }
+
+  .prose-kadali > * + * {
+    margin-top: 1.25em;
+  }
+
+  .prose-kadali h2,
+  .prose-kadali h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+
+  .prose-kadali h2 {
+    font-size: var(--text-3xl);
+    margin-top: 2em;
+  }
+
+  .prose-kadali h3 {
+    font-size: var(--text-2xl);
+    margin-top: 1.75em;
+  }
+
+  .prose-kadali a {
+    color: var(--color-rani);
+    text-decoration: underline;
+    text-decoration-color: var(--color-turmeric);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+
+  .prose-kadali a:hover {
+    text-decoration-color: var(--color-rani);
+  }
+
+  .prose-kadali blockquote {
+    border-left: 3px solid var(--color-rani);
+    background-color: var(--color-jasmine);
+    padding: 1rem 1.25rem;
+    font-style: italic;
+  }
+
+  .prose-kadali blockquote p:first-of-type::before {
+    content: "“";
+  }
+
+  .prose-kadali blockquote p:last-of-type::after {
+    content: "”";
+  }
+
+  .prose-kadali img {
+    border-radius: 0; /* sharp edges are the Kadali look */
+    box-shadow: 0 10px 30px rgb(34 20 16 / 0.12);
+  }
+
+  .prose-kadali ul,
+  .prose-kadali ol {
+    padding-left: 1.5em;
+  }
+
+  .prose-kadali ul {
+    list-style: disc;
+  }
+
+  .prose-kadali ol {
+    list-style: decimal;
+  }
+
+  .prose-kadali li + li {
+    margin-top: 0.4em;
+  }
+
+  .prose-kadali figcaption,
+  .prose-kadali caption {
+    font-family: var(--font-ui);
+    font-size: var(--text-sm);
+    color: var(--color-stone);
+  }
+
+  .prose-kadali hr {
+    border: 0;
+    border-top: 1px solid color-mix(in srgb, var(--color-stone) 35%, transparent);
+  }
+}

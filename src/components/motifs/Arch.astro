@@ -1,0 +1,40 @@
+---
+/**
+ * Salu (temple) arch outline — a chandrashala silhouette drawn in currentColor.
+ * Purely decorative; pair with visible text next to it.
+ */
+interface Props {
+  /** Rendered width in px; height follows the arch aspect ratio. */
+  width?: number;
+  class?: string;
+}
+
+const { width = 160, class: className } = Astro.props;
+const height = Math.round((width * 150) / 120);
+---
+
+<svg
+  width={width}
+  height={height}
+  viewBox="0 0 120 150"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class={className}
+  aria-hidden="true"
+>
+  <!-- finial dot -->
+  <circle cx="60" cy="6" r="2.5" fill="currentColor" stroke="none"></circle>
+  <!-- outer arch -->
+  <path
+    d="M8 146 V72 C8 40 30 23 52 15 C55 13 58 11 60 8 C62 11 65 13 68 15 C90 23 112 40 112 72 V146"
+  ></path>
+  <!-- inner arch -->
+  <path
+    d="M22 146 V74 C22 50 38 36 55 29 L60 26.5 L65 29 C82 36 98 50 98 74 V146"
+  ></path>
+  <!-- base line -->
+  <path d="M4 146 H116"></path>
+</svg>

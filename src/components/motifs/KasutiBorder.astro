@@ -1,0 +1,43 @@
+---
+/**
+ * Kasuti-style border strip — a repeating geometric cross-stitch diamond band
+ * built from an SVG <pattern>. Ink it with currentColor via `class`.
+ */
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+
+// Unique per instance so several strips can share a page.
+const pid = `kasuti-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<svg
+  viewBox="0 0 96 16"
+  preserveAspectRatio="none"
+  class={`h-4 w-full ${className ?? ''}`}
+  aria-hidden="true"
+  role="presentation"
+>
+  <defs>
+    <pattern id={pid} width="24" height="16" patternUnits="userSpaceOnUse">
+      <!-- diamond outline -->
+      <path
+        d="M12 2 L22 8 L12 14 L2 8 Z"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+      ></path>
+      <!-- cross-stitch x marks at the joints -->
+      <path
+        d="M0 0 l3.5 3.5 M3.5 0 l-3.5 3.5 M20.5 0 l3.5 3.5 M24 0 l-3.5 3.5 M0 12.5 l3.5 3.5 M3.5 12.5 l-3.5 3.5 M20.5 12.5 l3.5 3.5 M24 12.5 l-3.5 3.5"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.2"
+        stroke-linecap="round"
+      ></path>
+    </pattern>
+  </defs>
+  <rect width="96" height="16" fill={`url(#${pid})`}></rect>
+</svg>

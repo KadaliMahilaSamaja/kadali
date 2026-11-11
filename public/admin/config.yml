@@ -1,0 +1,296 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+# ============================================================================
+# Kadali women's club — Sveltia CMS configuration
+#
+# SETUP TODOs for the club admin (details in docs/admin-guide.md):
+#
+#   1. backend.repo — replace the placeholder `kadali-org/kadali` with the
+#      real GitHub repository once the organisation exists (format: owner/repo).
+#
+#   2. backend.base_url — replace with the URL of YOUR deployed
+#      sveltia-cms-auth Cloudflare Worker (the OAuth client that handles
+#      sign-in), e.g. https://sveltia-cms-auth.<your-name>.workers.dev.
+#      Because `auth_methods` below allows OAuth only, sign-in will not
+#      work until this points at the deployed worker.
+#
+#   3. site_url — replace the placeholder with the real production URL
+#      once the domain is known.
+#
+# Docs: https://sveltiacms.app/en/docs/
+# ============================================================================
+
+backend:
+  name: github
+  repo: kadali-org/kadali # TODO: replace with the real owner/repo
+  branch: main
+  base_url: https://sveltia-cms-auth.example.workers.dev # TODO: replace with your sveltia-cms-auth Worker URL
+  auth_methods: [oauth] # OAuth sign-in only (see base_url TODO)
+
+# Editorial Workflow for article/event/announcement/gallery content.
+# Stages: Draft → Ready to publish (no separate "In review" column).
+# Saving never publishes; an editor must explicitly publish.
+publish_mode:
+  type: editorial_workflow
+  stages: [draft, pending_publish]
+  direct_publish: false
+
+site_url: https://kadali.example.org # TODO: replace with the real site URL
+
+# Images uploaded in the CMS are committed to public/images/uploads and
+# referenced from the site as /images/uploads/...
+media_folder: /public/images/uploads
+public_folder: /images/uploads
+
+# Media library behaviour (internal Git storage):
+# - photos are converted to WebP (max 2048x2048, quality 80) to keep the repo light
+# - SVGs are optimised, uploads over 15 MB are rejected before conversion
+# - uploaded files get clean, lowercase file names
+media_libraries:
+  default:
+    config:
+      transformations:
+        raster_image:
+          format: webp
+          quality: 80
+          width: 2048
+          height: 2048
+        svg:
+          optimize: true
+      max_file_size: 15728640 # 15 MB, checked before conversion
+      slugify_filename: true
+
+collections:
+  # ---------------------------------------------------------------- Articles
+  - name: articles
+    label: Articles
+    label_singular: Article
+    description: >-
+      Stories, essays and reports published on the website. Each article
+      appears on the Articles page once it is published.
+    folder: src/content/articles
+    identifier_field: title # the entry file name is generated from the title
+    summary: '{{title}} — {{pubDate}}'
+    editor:
+      preview: true
+    fields:
+      - name: title
+        label: Title
+        widget: string
+      - name: description
+        label: Description
+        widget: text
+        hint: One or two sentences shown under the title and in link previews.
+      - name: cover
+        label: Cover image
+        widget: image
+      - name: coverAlt
+        label: Cover image description
+        widget: string
+        hint: Short description of the image for screen readers.
+      - name: author
+        label: Author
+        widget: string
+      - name: category
+        label: Category
+        widget: select
+        options: [culture, literature, seva, spirituality, community]
+        hint: Picks the section the article is filed under.
+      - name: pubDate
+        label: Publish date
+        widget: datetime
+        type: date # date only (YYYY-MM-DD)
+      - name: featured
+        label: Featured on homepage
+        widget: boolean
+        default: false
+      - name: draft
+        label: Draft
+        widget: boolean
+        default: false
+        hint: Drafts are saved in the file but hidden on the website.
+      - name: body
+        label: Body
+        widget: markdown # rich text editor; saved as Markdown
+  # ------------------------------------------------------------------ Events
+  - name: events
+    label: Events
+    label_singular: Event
+    description: >-
+      Upcoming and past club events, each with a poster, dates and venue.
+    folder: src/content/events
+    identifier_field: title
+    summary: '{{title}} — {{startAt}}'
+    editor:
+      preview: true
+    fields:
+      - name: title
+        label: Title
+        widget: string
+      - name: poster
+        label: Poster
+        widget: image
+      - name: summary
+        label: Summary
+        widget: text
+        hint: One or two sentences describing the event.
+      - name: startAt
+        label: Starts at
+        widget: datetime
+      - name: endAt
+        label: Ends at
+        widget: datetime
+        required: false
+      - name: venue
+        label: Venue
+        widget: string
+      - name: mapUrl
+        label: Map link
+        widget: string
+        required: false
+        hint: Google Maps link to the venue.
+      - name: contact
+        label: Contact
+        widget: string
+        required: false
+        hint: Name or phone number members can ask about this event.
+      - name: status
+        label: Status
+        widget: select
+        default: auto
+        options: [auto, upcoming, completed, cancelled]
+        hint: '"Auto" decides upcoming/completed from the dates by itself.'
+      - name: featured
+        label: Featured on homepage
+        widget: boolean
+        default: false
+      - name: body
+        label: Details
+        widget: markdown
+  # ----------------------------------------------------------- Announcements
+  - name: announcements
+    label: Announcements
+    label_singular: Announcement
+    description: >-
+      Short notices shown on the website, with an optional image and an
+      optional expiry date.
+    folder: src/content/announcements
+    identifier_field: title
+    summary: '{{title}} — {{pubDate}}'
+    editor:
+      preview: true
+    fields:
+      - name: title
+        label: Title
+        widget: string
+      - name: body
+        label: Message
+        widget: markdown
+      - name: image
+        label: Image
+        widget: image
+        required: false
+      - name: pubDate
+        label: Publish date
+        widget: datetime
+        type: date # date only (YYYY-MM-DD)
+      - name: expiryDate
+        label: Expiry date
+        widget: datetime
+        type: date # date only (YYYY-MM-DD)
+        required: false
+        hint: The announcement is hidden on the website after this date.
+      - name: featured
+        label: Featured on homepage
+        widget: boolean
+        default: false
+  # ----------------------------------------------------------------- Gallery
+  - name: galleries
+    label: Gallery
+    label_singular: Gallery
+    description: >-
+      Photo albums from events and club activities. Add photos one by one,
+      each with an optional caption.
+    folder: src/content/galleries
+    identifier_field: title
+    summary: '{{title}} — {{date}}'
+    editor:
+      preview: true
+    fields:
+      - name: title
+        label: Title
+        widget: string
+      - name: date
+        label: Date
+        widget: datetime
+        type: date # date only (YYYY-MM-DD)
+      - name: event
+        label: Event
+        widget: string
+        required: false
+        hint: Name of the related event, if this album belongs to one.
+      - name: photos
+        label: Photos
+        widget: list
+        label_singular: Photo
+        summary: '{{caption}}'
+        thumbnail: image
+        fields:
+          - name: image
+            label: Image
+            widget: image
+          - name: caption
+            label: Caption
+            widget: string
+            required: false
+  # ---------------------------------------------------------------- Homepage
+  - name: settings
+    label: Homepage
+    label_singular: Homepage
+    description: >-
+      The big heading, description and highlights shown on the homepage.
+      Changes here go live immediately, without the review workflow.
+    publish_mode: simple # admin-only settings: save straight to the site
+    editor:
+      preview: true
+    files:
+      - name: site
+        label: Homepage settings
+        file: src/content/settings/site.json
+        fields:
+          - name: heroHeading
+            label: Heading
+            widget: string
+          - name: heroDescription
+            label: Description
+            widget: text
+          - name: featuredArticle
+            label: Featured article
+            widget: relation
+            collection: articles
+            value_field: '{{slug}}'
+            display_fields: ['{{title}}']
+            required: false
+          - name: featuredEvent
+            label: Featured event
+            widget: relation
+            collection: events
+            value_field: '{{slug}}'
+            display_fields: ['{{title}}']
+            required: false
+          - name: banner
+            label: Banner
+            widget: string
+            required: false
+            hint: Short announcement shown as a banner on the website.
+          - name: bannerExpiry
+            label: Banner expiry date
+            widget: datetime
+            type: date # date only (YYYY-MM-DD)
+            required: false
+          - name: featuredGallery
+            label: Featured gallery
+            widget: relation
+            collection: galleries
+            value_field: '{{slug}}'
+            display_fields: ['{{title}}']
+            required: false
