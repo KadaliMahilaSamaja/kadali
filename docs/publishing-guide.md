@@ -186,7 +186,7 @@ Tick each box only when it works. Note the phone model and Chrome version at the
 Environment: phone model ____________, Chrome version ____________, date ____________
 
 - [ ] 1. Member opens `kadali.example.org/admin` in Chrome and signs in with GitHub.
-- [ ] 2. The collection list shows **Articles**, **Events**, **Announcements**, **Gallery**, **Homepage**.
+- [ ] 2. The collection list shows **Articles**, **Events**, **Announcements**, **Gallery**, **Committee**, **Homepage**.
 - [ ] 3. Member creates a test article with Kannada text in **Title** and **Body**.
 - [ ] 4. Member taps **Save**. No error appears.
 - [ ] 5. Member taps **Mark as Ready**. The entry moves to the Ready column.
@@ -202,6 +202,17 @@ Environment: phone model ____________, Chrome version ____________, date _______
 - [ ] 15. Member adds the editor to the home screen and it opens like an app (optional).
 
 Pass rule: steps 1 to 14 must all pass. Record failures with a screenshot and fix them before members start.
+
+## 9. Update the committee
+
+The committee members (ಸಮಿತಿ) shown on the About page are managed in the CMS too.
+
+1. In the sidebar, tap **Committee**, then **New Member**.
+2. Fill in her **Name** (and her name in Kannada), choose her **Role**, add her **Photo**, and write a short **Short introduction**.
+3. Tap **Save**, then submit it for review.
+4. After the administrator publishes, she appears on the About page in her role group.
+
+You only choose the role in English in the form — the website shows the Kannada role name (ಅಧ್ಯಕ್ಷೆ, ಕಾರ್ಯದರ್ಶಿ, ಕೋಶಾಧಿಕಾರಿ, ಸದಸ್ಯೆ …) by itself.
 
 ---
 
