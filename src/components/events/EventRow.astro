@@ -1,0 +1,48 @@
+---
+/**
+ * Compact past-event row — small date block, title, venue · time, chevron.
+ * Used inside a divide-y list in the past group.
+ */
+import type { CollectionEntry } from 'astro:content';
+import { istInstant, istTimeRange } from './format';
+import CancelledBadge from './CancelledBadge.astro';
+
+interface Props {
+  event: CollectionEntry<'events'>;
+}
+
+const { event } = Astro.props;
+const { title, venue, endAt, startAt, status } = event.data;
+const { day, monthKn, year } = istInstant(startAt);
+const time = istTimeRange(startAt, endAt);
+const href = `/events/${event.id}`;
+---
+
+<li>
+  <a href={href} class="group flex items-center gap-4 py-4 sm:gap-6">
+    <div class="w-14 shrink-0 text-center sm:w-16">
+      <span class="font-display text-2xl font-semibold text-rani sm:text-3xl">
+        {day}
+      </span>
+      <span class="block font-ui text-xs leading-tight">
+        <span lang="kn" class="text-ink">{monthKn}</span>
+        <span class="text-stone">{year}</span>
+      </span>
+    </div>
+    <div class="min-w-0 flex-1">
+      <h3 class="font-display text-lg leading-snug">
+        <span
+          class="text-ink underline-offset-4 group-hover:text-rani group-hover:underline group-hover:decoration-rani group-hover:decoration-2"
+        >
+          {title}
+        </span>
+      </h3>
+      <p class="mt-1 font-ui text-sm text-stone">
+        {venue} · {time}
+        {status === 'cancelled' && <span class="sr-only">(cancelled)</span>}
+      </p>
+    </div>
+    {status === 'cancelled' && <div class="hidden sm:block"><CancelledBadge /></div>}
+    <span aria-hidden="true" class="text-rani">→</span>
+  </a>
+</li>

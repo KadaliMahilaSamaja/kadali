@@ -1,0 +1,61 @@
+---
+interface Props {
+  image?: string;
+  imageAlt: string;
+}
+
+const { image, imageAlt } = Astro.props;
+---
+
+<section class="bg-cream" aria-labelledby="intro-heading">
+  <div
+    class="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 sm:px-6 md:grid-cols-2 md:gap-16 md:py-24"
+  >
+    <div>
+      <p class="font-ui text-xs font-semibold tracking-[0.25em] text-rani uppercase">
+        Who we are
+      </p>
+      <h2
+        id="intro-heading"
+        class="mt-4 font-display text-3xl font-semibold md:text-4xl"
+      >
+        A seat kept open for every woman
+      </h2>
+      <p class="mt-5 font-body text-lg text-stone">
+        Kadali is a women's collective in Udupi, Karnataka, built around three
+        slow pleasures: reading Akkamahadevi's vachanas together, stitching
+        kasuti the way our grandmothers did, and putting what we make back into
+        the neighbourhood.
+      </p>
+      <p class="mt-4 font-body text-lg text-stone">
+        There are no memberships to apply for and no fees to worry about. Come
+        to a circle, a mela, or a stitch night, and you belong. Most of us
+        found our way here through a friend, a neighbour, or one December
+        reading.
+      </p>
+      <a
+        href="/about"
+        class="underline-reveal mt-6 inline-block font-ui text-sm font-semibold text-rani"
+      >
+        More about Kadali →
+      </a>
+    </div>
+
+    {
+      image && (
+        <div class="mx-auto w-full max-w-sm md:max-w-none">
+          {/* Seed photos are square SVGs; the arch mask crops to 4:5. */}
+          <img
+            src={image}
+            alt={imageAlt}
+            width="800"
+            height="800"
+            loading="lazy"
+            decoding="async"
+            class="aspect-[4/5] w-full rounded-t-[999px] border border-ink/10 object-cover"
+          />
+        </div>
+      )
+    }
+  </div>
+</section>

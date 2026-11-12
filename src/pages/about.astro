@@ -1,0 +1,308 @@
+---
+/**
+ * About page.
+ * NOTE: all copy is code-managed — it lives here on purpose, not in the CMS.
+ * Club-run edits to this prose happen in this file, via pull request.
+ */
+import BaseLayout from '../components/BaseLayout.astro';
+import PageHero from '../components/pages/PageHero.astro';
+import Beads from '../components/motifs/Beads.astro';
+---
+
+<BaseLayout
+  title="About Kadali — A Women's Collective Inspired by Akkamahadevi"
+  description="Kadali is a women's social, cultural and spiritual organisation in Karnataka, inspired by the twelfth-century vachana poet Akkamahadevi."
+>
+  <PageHero
+    eyebrow="About"
+    title="A circle of women, kept open"
+    kn="ಕದಲಿ ಮಹಿಳಾ ಸಂಘ"
+    lede="Kadali is a women's organisation in Karnataka — social, cultural and spiritual at once, because in our experience those three things refuse to be separated."
+    tone="rani"
+  />
+
+  <!-- Who we are -->
+  <section class="bg-cream">
+    <div
+      class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-12"
+    >
+      <div>
+        <h2 class="font-display text-3xl font-semibold text-ink">Who we are</h2>
+        <div class="mt-6 max-w-2xl space-y-5">
+          <p class="font-body text-lg text-stone">
+            Kadali is a women's organisation in Karnataka. We are homemakers
+            and teachers, shopkeepers and retirees, grandmothers and women who
+            moved here last month. What we share is a habit of gathering — to
+            sing, to sew, to mark the festivals, to sit with a text, to help
+            when help is needed.
+          </p>
+          <p class="font-body text-lg text-stone">
+            Our name is the coastal Kannada word for the plantain tree —
+            <span lang="kn">ಕದಲಿ</span> — the one that stands in every
+            courtyard, feeds whoever asks, and offers shade without being
+            asked. It is also the place where tradition says Akkamahadevi's
+            long journey came to rest. Both meanings suit us.
+          </p>
+          <p class="font-body text-lg text-stone">
+            There is no entrance test and no dress code beyond ordinary
+            decency. If you are a woman who wants a circle — to speak plainly
+            in, to work with your hands in, to be quiet in — a seat is already
+            kept open.
+          </p>
+        </div>
+      </div>
+
+      <aside class="mt-12 self-start border border-ink/10 bg-jasmine p-6 lg:mt-0 lg:p-8">
+        <h3 class="font-ui text-xs font-semibold tracking-[0.2em] uppercase text-rani">
+          In short
+        </h3>
+        <dl class="mt-5 space-y-4">
+          <div>
+            <dt class="font-ui text-xs font-semibold tracking-wide uppercase text-stone">
+              Focus
+            </dt>
+            <dd class="mt-1 font-body text-base text-ink">
+              Culture, seva, spirituality
+            </dd>
+          </div>
+          <div>
+            <dt class="font-ui text-xs font-semibold tracking-wide uppercase text-stone">
+              Inspiration
+            </dt>
+            <dd class="mt-1 font-body text-base text-ink">
+              <span lang="kn">ಅಕ್ಕಮಹಾದೇವಿ</span> · Akkamahadevi, the
+              twelfth-century vachana poet
+            </dd>
+          </div>
+          <div>
+            <dt class="font-ui text-xs font-semibold tracking-wide uppercase text-stone">
+              Name
+            </dt>
+            <dd class="mt-1 font-body text-base text-ink">
+              <span lang="kn">ಕದಲಿ</span> — coastal Kannada for the plantain
+              tree
+            </dd>
+          </div>
+          <div>
+            <dt class="font-ui text-xs font-semibold tracking-wide uppercase text-stone">
+              Doors
+            </dt>
+            <dd class="mt-1 font-body text-base text-ink">Open to all women</dd>
+          </div>
+          <div>
+            <dt class="font-ui text-xs font-semibold tracking-wide uppercase text-stone">
+              First step
+            </dt>
+            <dd class="mt-1 font-body text-base text-ink">
+              A message — <a
+                href="/contact"
+                class="font-medium text-rani underline-offset-4 hover:underline">contact
+                us</a
+              > and someone will point you to the next gathering.
+            </dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <div class="bg-cream">
+    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+      <Beads class="w-40 text-turmeric" />
+    </div>
+  </div>
+
+  <!-- Inspiration: Akkamahadevi -->
+  <section class="bg-jasmine">
+    <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+      <h2 class="font-display text-3xl font-semibold text-ink">
+        Our inspiration
+      </h2>
+      <p
+        lang="kn"
+        class="mt-2 font-display text-2xl font-semibold text-rani"
+      >
+        ಅಕ್ಕಮಹಾದೇವಿ · Akkamahadevi
+      </p>
+
+      <div
+        class="mt-8 lg:grid lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-12"
+      >
+        <div class="max-w-2xl space-y-5">
+          <p class="font-body text-lg text-stone">
+            In the twelfth century, a girl from Udutadi (<span lang="kn"
+              >ಉಡುತಡಿ</span
+            >) in the Shivamogga hills refused the life that had been arranged
+            for her, walked out of her hometown, and kept walking across
+            Karnataka — singing. Her songs are vachanas (<span lang="kn"
+              >ವಚನ</span
+            >): short, plain-spoken Kannada poems, addressed without ornament
+            to the <span lang="kn">ಚೆನ್ನಮಲ್ಲಿಕಾರ್ಜುನ</span> (Chennamallikarjuna)
+            she loved.
+          </p>
+          <p class="font-body text-lg text-stone">
+            She stood among the poet-saints of the Virashaiva world —
+            Basavanna's gatherings at Kalyana, Allama Prabhu's questions — and
+            argued as their equal, which the century did not expect of a woman
+            and she did not care. Tradition holds that her road ended at
+            Kadali, where she is said to have merged with the one she had been
+            singing to all along.
+          </p>
+          <p class="font-body text-lg text-stone">
+            We are not saints and we are not wandering. But we keep her habits
+            where we can: speak plainly, hold the door open for the next
+            woman, and let devotion be something you can carry — a song at
+            dawn, a stitch in the evening — rather than a performance. Our
+            vachana circles often begin with one of her poems.
+          </p>
+        </div>
+
+        <blockquote
+          class="mt-10 self-start border-l-4 border-rani pl-6 lg:mt-0"
+        >
+          <p class="font-display text-2xl leading-snug text-ink italic">
+            She kept nothing — not the house, not the name people gave her,
+            not even shame — and so had both hands free for the road.
+          </p>
+          <footer class="mt-4 font-ui text-sm text-stone">
+            — how we tell her story, in the spirit of her vachanas
+          </footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <div class="bg-jasmine">
+    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+      <Beads class="w-40 text-turmeric" />
+    </div>
+  </div>
+
+  <!-- What we do -->
+  <section class="bg-cream">
+    <div
+      class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12"
+    >
+      <div class="lg:sticky lg:top-24 lg:self-start">
+        <h2 class="font-display text-3xl font-semibold text-ink">
+          What we do
+        </h2>
+        <p class="mt-6 max-w-md font-body text-lg text-stone">
+          Three words cover most of our calendar, and none of them is for
+          show. Everything below happens in ordinary rooms with the fan
+          running — come once and you will see.
+        </p>
+        <figure class="mt-10 max-w-md border border-ink/10 bg-jasmine p-3">
+          <img
+            src="/images/uploads/cover-kasuti-nights.svg"
+            alt="Kasuti embroidery — counted-thread patterns worked in geometric motifs"
+            width="800"
+            height="600"
+            loading="lazy"
+            decoding="async"
+            class="h-auto w-full"
+          />
+          <figcaption class="mt-3 px-1 pb-1 font-ui text-xs text-stone">
+            Kasuti (<span lang="kn">ಕಸುತಿ</span>) — counted-thread work, a
+            regular hands-on evening at Kadali.
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="mt-12 lg:mt-0">
+        <article class="border-t border-ink/10 py-8 first:border-t-0 first:pt-0 lg:pt-2">
+          <div class="flex items-baseline gap-3">
+            <span class="font-ui text-sm font-semibold text-turmeric" aria-hidden="true"
+              >01</span
+            >
+            <h3 class="font-display text-2xl font-semibold text-ink">
+              <span lang="kn">ಸಂಸ್ಕೃತಿ</span>
+              <span aria-hidden="true" class="text-rani">·</span> Culture
+            </h3>
+          </div>
+          <p class="mt-3 max-w-xl font-body text-base text-stone">
+            Kasuti (<span lang="kn">ಕಸುತಿ</span>) embroidery learned from the
+            women who still know the counts, folk songs in the old tunes,
+            trips to Yakshagana when the season allows, and festival melas
+            where everyone cooks one dish too many. Culture here is hands-on
+            and slightly noisy.
+          </p>
+        </article>
+
+        <article class="border-t border-ink/10 py-8">
+          <div class="flex items-baseline gap-3">
+            <span class="font-ui text-sm font-semibold text-turmeric" aria-hidden="true"
+              >02</span
+            >
+            <h3 class="font-display text-2xl font-semibold text-ink">
+              <span lang="kn">ಸೇವೆ</span>
+              <span aria-hidden="true" class="text-rani">·</span> Seva
+            </h3>
+          </div>
+          <p class="mt-3 max-w-xl font-body text-base text-stone">
+            Quiet, organised service: meals collected for a family in crisis,
+            rides to the hospital, school bags gathered before June. No
+            committee where one person will do; the point is that help arrives
+            while it still helps.
+          </p>
+        </article>
+
+        <article class="border-t border-ink/10 py-8">
+          <div class="flex items-baseline gap-3">
+            <span class="font-ui text-sm font-semibold text-turmeric" aria-hidden="true"
+              >03</span
+            >
+            <h3 class="font-display text-2xl font-semibold text-ink">
+              <span lang="kn">ಆಧ್ಯಾತ್ಮ</span>
+              <span aria-hidden="true" class="text-rani">·</span> Spirituality
+            </h3>
+          </div>
+          <p class="mt-3 max-w-xl font-body text-base text-stone">
+            Vachana circles, bhajan mornings, festival observances, the
+            occasional temple pilgrimage. God is discussed freely and plainly,
+            in Akka's manner, and nobody's way of praying is examined.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="bg-cream">
+    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+      <Beads class="w-40 text-turmeric" />
+    </div>
+  </div>
+
+  <!-- Join us -->
+  <section class="bg-ink text-cream">
+    <div class="mx-auto max-w-6xl px-4 py-16 text-center sm:px-6 sm:py-20">
+      <Beads class="mx-auto w-40 text-turmeric" />
+      <h2 class="mt-8 font-display text-3xl font-semibold sm:text-4xl">
+        Join us
+      </h2>
+      <p lang="kn" class="mt-3 font-display text-xl text-cream/90">
+        ಕದಲಿಗೆ ಸೇರಿ
+      </p>
+      <p class="mx-auto mt-5 max-w-xl font-body text-lg text-cream/85">
+        Come once as a guest and see how it feels. The easiest first step is a
+        message — a WhatsApp note or a phone call — and someone will tell you
+        when and where we next gather. Bring nothing; the plantain tree has
+        always been enough for guests.
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+        <a
+          href="/contact"
+          class="rounded-sm bg-cream px-6 py-3 font-ui text-sm font-semibold text-ink transition-colors hover:bg-jasmine"
+        >
+          Get in touch
+        </a>
+        <a
+          href="/events"
+          class="rounded-sm border border-cream/40 px-6 py-3 font-ui text-sm font-semibold text-cream transition-colors hover:border-cream"
+        >
+          See upcoming events
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

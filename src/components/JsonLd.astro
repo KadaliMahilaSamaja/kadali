@@ -1,0 +1,14 @@
+---
+/**
+ * Renders one JSON-LD structured-data block.
+ * `data` accepts a single schema.org entity, an @graph object, or an array
+ * of entities; anything JSON-serializable works.
+ */
+interface Props {
+  data: object;
+}
+
+const { data } = Astro.props;
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(data)}></script>

@@ -1,0 +1,157 @@
+---
+/**
+ * Single reusable lightbox <dialog> for the whole gallery page.
+ *
+ * One instance per page; the script below wires it to every
+ * `[data-gallery]` group's `[data-photo-button]` tiles. Vanilla JS, no libs:
+ * - showModal() gives us native focus trapping and Escape handling
+ *   (Esc fires `cancel` -> `close`, where we clean up).
+ * - Prev/next cycle with wrap-around within the clicked group.
+ * - Full-size image src is assigned only when shown (lazy) and removed on
+ *   close. Thumb and full file are the same for now (SVG seeds);
+ *   TODO(optimize): swap in real full-size variants when photos land.
+ */
+---
+
+<dialog
+  id="lightbox"
+  class="w-[min(94vw,60rem)] rounded-lg border border-ink/10 bg-cream p-0 text-ink backdrop:bg-ink/80"
+  aria-label="Photo viewer"
+>
+  <figure class="flex flex-col">
+    <div class="flex items-center justify-between gap-4 px-4 pt-4 sm:px-6">
+      <p id="lightbox-counter" class="font-ui text-sm text-stone" aria-live="polite"></p>
+      <button
+        type="button"
+        id="lightbox-close"
+        class="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full border border-ink/20 text-ink transition-colors duration-200 hover:bg-jasmine"
+        aria-label="Close photo viewer"
+      >
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="flex items-center justify-center gap-2 px-3 py-4 sm:gap-4 sm:px-6">
+      <button
+        type="button"
+        id="lightbox-prev"
+        class="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-ink/20 text-ink transition-colors duration-200 hover:bg-jasmine"
+        aria-label="Previous photo"
+      >
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 5l-7 7 7 7"></path>
+        </svg>
+      </button>
+
+      <!--
+        The src is set per photo by the script; width/height attrs are
+        omitted because every photo can differ (dialog layout is fixed by
+        the max-h/max-w classes, so no reflow risk).
+      -->
+      <img
+        id="lightbox-image"
+        class="max-h-[68vh] w-auto max-w-full rounded-sm border border-ink/10 bg-jasmine object-contain"
+        alt=""
+      />
+
+      <button
+        type="button"
+        id="lightbox-next"
+        class="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-ink/20 text-ink transition-colors duration-200 hover:bg-jasmine"
+        aria-label="Next photo"
+      >
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M9 5l7 7-7 7"></path>
+        </svg>
+      </button>
+    </div>
+
+    <figcaption
+      id="lightbox-caption"
+      class="px-6 pb-5 text-center font-body text-base text-stone"
+    ></figcaption>
+  </figure>
+</dialog>
+
+<script>
+  const dialog = document.getElementById('lightbox') as HTMLDialogElement | null;
+  const imgEl = document.getElementById('lightbox-image') as HTMLImageElement | null;
+  const captionEl = document.getElementById('lightbox-caption');
+  const counterEl = document.getElementById('lightbox-counter');
+  const prevBtn = document.getElementById('lightbox-prev');
+  const nextBtn = document.getElementById('lightbox-next');
+  const closeBtn = document.getElementById('lightbox-close');
+
+  if (dialog && imgEl) {
+    let photos: { src: string; caption: string }[] = [];
+    let index = 0;
+
+    function show(): void {
+      const photo = photos[index];
+      if (!photo) return;
+      // Same file as the thumb for now; see TODO(optimize) above.
+      imgEl.src = photo.src;
+      imgEl.alt = photo.caption || 'Photograph';
+      if (captionEl) {
+        captionEl.textContent = photo.caption;
+        captionEl.classList.toggle('hidden', !photo.caption);
+      }
+      if (counterEl) counterEl.textContent = `${index + 1} / ${photos.length}`;
+    }
+
+    function step(delta: number): void {
+      if (photos.length === 0) return;
+      index = (index + delta + photos.length) % photos.length;
+      show();
+    }
+
+    function open(group: HTMLElement, startIndex: number): void {
+      photos = Array.from(
+        group.querySelectorAll<HTMLButtonElement>('[data-photo-button]'),
+      ).map((btn) => ({
+        src: btn.getAttribute('data-photo-src') ?? '',
+        caption: btn.getAttribute('data-caption') ?? '',
+      }));
+      index = Math.min(Math.max(startIndex, 0), photos.length - 1);
+      show();
+      if (!dialog!.open) {
+        dialog!.showModal();
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    // One listener per group keeps prev/next scoped to the clicked gallery.
+    for (const group of document.querySelectorAll<HTMLElement>('[data-gallery]')) {
+      group.querySelectorAll<HTMLButtonElement>('[data-photo-button]').forEach(
+        (btn, i) => {
+          btn.addEventListener('click', () => open(group, i));
+        },
+      );
+    }
+
+    prevBtn?.addEventListener('click', () => step(-1));
+    nextBtn?.addEventListener('click', () => step(1));
+    closeBtn?.addEventListener('click', () => dialog.close());
+
+    // Arrow keys navigate while the dialog is focused (focus is trapped
+    // inside it by showModal, so these never leak to the page).
+    dialog.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') step(-1);
+      if (event.key === 'ArrowRight') step(1);
+    });
+
+    // Click on the backdrop (the dialog box is fully covered by its content).
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+
+    // Native Esc triggers cancel -> close; clean up either way.
+    dialog.addEventListener('close', () => {
+      // Drop the full-size image from memory and restore page scroll.
+      imgEl.removeAttribute('src');
+      document.body.style.overflow = '';
+    });
+  }
+</script>

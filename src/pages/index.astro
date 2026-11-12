@@ -1,83 +1,148 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../components/BaseLayout.astro';
-import Arch from '../components/motifs/Arch.astro';
-import Beads from '../components/motifs/Beads.astro';
+import Hero from '../components/home/Hero.astro';
+import Intro from '../components/home/Intro.astro';
+import EventCard from '../components/home/EventCard.astro';
+import FeaturedArticle from '../components/home/FeaturedArticle.astro';
+import AnnouncementList from '../components/home/AnnouncementList.astro';
+import GalleryMosaic from '../components/home/GalleryMosaic.astro';
+import MissionBand from '../components/home/MissionBand.astro';
+import { deriveStatus, sortEvents } from '../lib/events';
 
-// Placeholder homepage — proves the content wiring. Page/hero agents build on this.
-const settingsEntry = (await getCollection('site-settings')).at(0);
+const now = new Date();
+
+// --- Site settings (single file() entry, id 'site') -------------------------
+const settings = (await getCollection('site-settings')).at(0);
+
+// --- Featured article -------------------------------------------------------
+// settings ref → most recent featured:true → most recent overall; a dangling
+// reference or a draft falls through to the next tier.
 const articles = (
   await getCollection('articles', ({ data }) => !data.draft)
+).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+let featuredArticle: CollectionEntry<'articles'> | undefined;
+const featuredArticleSlug = settings?.data.featuredArticle;
+if (featuredArticleSlug) {
+  const entry = await getEntry('articles', featuredArticleSlug).catch(
+    () => undefined,
+  );
+  if (entry && !entry.data.draft) featuredArticle = entry;
+}
+featuredArticle ??= articles.find((article) => article.data.featured);
+featuredArticle ??= articles.at(0);
+
+// --- Upcoming events (derived status, soonest first, max 3) ------------------
+const events = await getCollection('events');
+const upcomingEvents = sortEvents(
+  events.filter((event) => deriveStatus(event, now) === 'upcoming'),
+  'asc',
+).slice(0, 3);
+
+// --- Announcements (expired dropped at build time, newest first, max 3) -----
+const announcements = (
+  await getCollection(
+    'announcements',
+    ({ data }) => !data.expiryDate || data.expiryDate > now,
+  )
 )
-  .sort((a, b) => +b.data.pubDate - +a.data.pubDate)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 3);
 
-const heroHeading =
-  settingsEntry?.data.heroHeading ?? 'ಕದಲಿ · A circle of women, a circle of stories';
-const heroDescription =
-  settingsEntry?.data.heroDescription ??
-  "Kadali is a women's cultural collective in Karnataka.";
+// --- Featured gallery --------------------------------------------------------
+const galleries = (await getCollection('galleries')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+let featuredGallery: CollectionEntry<'galleries'> | undefined;
+const featuredGallerySlug = settings?.data.featuredGallery;
+if (featuredGallerySlug) {
+  const entry = await getEntry('galleries', featuredGallerySlug).catch(
+    () => undefined,
+  );
+  if (entry) featuredGallery = entry;
+}
+featuredGallery ??= galleries.at(0);
 
-const dateFormatter = new Intl.DateTimeFormat('en-IN', {
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric',
-});
+// --- Intro image: freshest announcement photo, else a gallery photo ---------
+const announcementWithImage = announcements.find((a) => a.data.image);
+const introImage =
+  announcementWithImage?.data.image ??
+  featuredGallery?.data.photos.at(0)?.image;
+const introImageAlt = announcementWithImage
+  ? `Photo from the announcement “${announcementWithImage.data.title}”`
+  : (featuredGallery?.data.photos.at(0)?.caption ??
+    'Kadali members gathered at a recent event');
+
+const heroHeading =
+  settings?.data.heroHeading ?? 'A circle of women, a circle of stories';
+const heroDescription =
+  settings?.data.heroDescription ??
+  "Kadali is a women's cultural collective in Karnataka — vachana circles, kasuti stitching, seva, and community.";
 ---
 
 <BaseLayout
   title="ಕದಲಿ · Kadali — A Women's Cultural Collective in Karnataka"
   description={heroDescription}
 >
-  <section class="bg-cream">
-    <div
-      class="mx-auto flex max-w-6xl flex-col items-center px-4 py-16 text-center sm:px-6 md:py-24"
-    >
-      <Arch width={120} class="text-rani" />
-      <h1
-        class="mt-8 max-w-2xl font-display text-4xl font-semibold text-ink sm:text-5xl"
-      >
-        {heroHeading}
-      </h1>
-      <p class="mt-5 max-w-xl font-body text-lg text-stone">
-        {heroDescription}
-      </p>
-      <Beads class="mt-10 w-44 text-turmeric" />
-    </div>
-  </section>
+  <Hero heading={heroHeading} description={heroDescription} />
 
-  <section class="bg-jasmine">
-    <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-      <h2 class="font-display text-3xl font-semibold text-ink">
-        Latest articles
-      </h2>
-      <ul class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {
-          articles.map((article) => (
-            <li class="border border-ink/10 bg-cream p-6">
-              <p class="font-ui text-xs font-semibold tracking-wider uppercase text-rani">
-                {article.data.category}
+  <Intro image={introImage} imageAlt={introImageAlt} />
+
+  {
+    upcomingEvents.length > 0 && (
+      <section class="bg-jasmine" aria-labelledby="upcoming-events-heading">
+        <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:py-20">
+          <div class="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p class="font-ui text-xs font-semibold tracking-[0.25em] text-rani uppercase">
+                Mark the date
               </p>
-              <h3 class="mt-2 font-display text-2xl leading-snug">
-                <a
-                  href={`/articles/${article.id}`}
-                  class="text-ink underline-offset-4 hover:text-rani hover:underline"
-                >
-                  {article.data.title}
-                </a>
-              </h3>
-              <p class="mt-3 font-body text-base text-stone">
-                {article.data.description}
-              </p>
-              <p class="mt-4 font-ui text-sm text-stone">
-                {article.data.author} · {dateFormatter.format(
-                  article.data.pubDate,
-                )}
-              </p>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </section>
+              <h2 id="upcoming-events-heading" class="mt-3 font-display text-3xl font-semibold">
+                Upcoming events
+              </h2>
+            </div>
+            <a
+              href="/events"
+              class="underline-reveal font-ui text-sm font-semibold text-rani"
+            >
+              All events →
+            </a>
+          </div>
+          <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {upcomingEvents.map((event) => (
+              <EventCard event={event} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  {featuredArticle && <FeaturedArticle article={featuredArticle} />}
+
+  {announcements.length > 0 && (
+    <AnnouncementList announcements={announcements} />
+  )}
+
+  {featuredGallery && <GalleryMosaic gallery={featuredGallery} />}
+
+  <MissionBand />
+
+  <style is:global>
+    /* Underline that sweeps in from the left on hover (pairs with the
+       1.02 image scale on card/featured hovers). Reduced motion is already
+       neutralised by the global.css prefers-reduced-motion block. */
+    .underline-reveal {
+      background-image: linear-gradient(currentColor, currentColor);
+      background-size: 0% 1.5px;
+      background-repeat: no-repeat;
+      background-position: 0 100%;
+      transition: background-size 200ms ease;
+    }
+    .underline-reveal:hover,
+    .group:hover .underline-reveal {
+      background-size: 100% 1.5px;
+    }
+  </style>
 </BaseLayout>

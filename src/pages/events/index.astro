@@ -1,0 +1,127 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../components/BaseLayout.astro';
+import Beads from '../../components/motifs/Beads.astro';
+import EventHeroCard from '../../components/events/EventHeroCard.astro';
+import EventCard from '../../components/events/EventCard.astro';
+import EventRow from '../../components/events/EventRow.astro';
+import { deriveStatus, sortEvents } from '../../lib/events';
+
+const events = await getCollection('events');
+
+// `cancelled` is orthogonal to the calendar: a cancelled event still belongs
+// in the group its date dictates, with the cancelled badge as the signal.
+// One build-time `now` keeps deriveStatus and the date comparison consistent.
+const buildNow = new Date();
+const upcomingEvents: CollectionEntry<'events'>[] = [];
+const pastEvents: CollectionEntry<'events'>[] = [];
+
+for (const event of events) {
+  const status = deriveStatus(event, buildNow);
+  const reference =
+    (event.data.endAt ?? event.data.startAt)?.getTime() ?? Number.NEGATIVE_INFINITY;
+  const belongsToPast =
+    status === 'completed' ||
+    (status === 'cancelled' && reference < buildNow.getTime());
+  (belongsToPast ? pastEvents : upcomingEvents).push(event);
+}
+
+const upcomingEntries = sortEvents(upcomingEvents); // soonest first
+const pastEntries = sortEvents(pastEvents, 'desc'); // most recent first
+
+// Featured event leads the upcoming group as a hero card.
+const featured =
+  upcomingEntries.find((event) => event.data.featured) ?? upcomingEntries[0];
+const restUpcoming = featured
+  ? upcomingEntries.filter((event) => event !== featured)
+  : [];
+---
+
+<BaseLayout
+  title="Events · ಕಾರ್ಯಕ್ರಮಗಳು — Kadali"
+  description="Upcoming and past events by the Kadali women's collective — melas, vachana readings, workshops, and seva drives around Udupi."
+>
+  <section class="bg-cream">
+    <div class="mx-auto max-w-6xl px-4 pt-12 pb-8 sm:px-6 md:pt-16">
+      <h1 class="font-display text-4xl font-semibold text-ink sm:text-5xl">
+        Events · <span lang="kn">ಕಾರ್ಯಕ್ರಮಗಳು</span>
+      </h1>
+      <p class="mt-4 max-w-2xl font-body text-lg text-stone">
+        Everything the collective is gathering for — come join us.
+      </p>
+      <Beads class="mt-8 w-44 text-turmeric" />
+
+      <!-- Tab-like anchors: works without JS, offsets the sticky header -->
+      <nav aria-label="Event groups" class="mt-8 flex flex-wrap gap-3">
+        <a
+          href="#upcoming"
+          class="border border-ink/10 bg-jasmine px-4 py-2 font-ui text-sm font-semibold text-ink underline-offset-4 hover:border-rani hover:text-rani hover:underline"
+        >
+          Upcoming <span lang="kn">ಮುಂಬರುವ</span> ({upcomingEntries.length})
+        </a>
+        <a
+          href="#past"
+          class="border border-ink/10 bg-jasmine px-4 py-2 font-ui text-sm font-semibold text-ink underline-offset-4 hover:border-rani hover:text-rani hover:underline"
+        >
+          Past <span lang="kn">ನಡೆದ</span> ({pastEntries.length})
+        </a>
+      </nav>
+    </div>
+  </section>
+
+  <section id="upcoming" class="scroll-mt-24 bg-cream">
+    <div class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+      <h2 class="font-display text-3xl font-semibold text-ink">
+        Upcoming <span lang="kn">ಮುಂಬರುವ ಕಾರ್ಯಕ್ರಮಗಳು</span>
+      </h2>
+
+      {
+        featured ? (
+          <>
+            <div class="mt-8">
+              <EventHeroCard event={featured} />
+            </div>
+            {restUpcoming.length > 0 && (
+              <ul class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {restUpcoming.map((event) => (
+                  <li>
+                    <EventCard event={event} />
+                  </li>
+                ))}
+              </ul>
+            )}
+          </>
+        ) : (
+          <p class="mt-6 font-body text-lg text-stone">
+            Nothing on the calendar right now — check back soon.{' '}
+            <span lang="kn">ಯಾವುದೇ ಮುಂಬರುವ ಕಾರ್ಯಕ್ರಮಗಳಿಲ್ಲ.</span>
+          </p>
+        )
+      }
+    </div>
+  </section>
+
+  <section id="past" class="scroll-mt-24 bg-jasmine">
+    <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+      <h2 class="font-display text-3xl font-semibold text-ink">
+        Past <span lang="kn">ನಡೆದ ಕಾರ್ಯಕ್ರಮಗಳು</span>
+      </h2>
+
+      {
+        pastEntries.length > 0 ? (
+          <ul class="mt-6 divide-y divide-ink/10">
+            {pastEntries.map((event) => (
+              <EventRow event={event} />
+            ))}
+          </ul>
+        ) : (
+          <p class="mt-6 font-body text-lg text-stone">
+            No past events recorded yet.{' '}
+            <span lang="kn">ಇದುವರೆಗೆ ಕಾರ್ಯಕ್ರಮಗಳಿಲ್ಲ.</span>
+          </p>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>

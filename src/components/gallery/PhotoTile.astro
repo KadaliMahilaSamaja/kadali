@@ -1,0 +1,49 @@
+---
+/**
+ * One photo inside a gallery group's masonry grid.
+ *
+ * A real <button> (not an <a href>) so the lightbox stays keyboard-native:
+ * Enter/Space activate it, and focus returns here when the dialog closes.
+ * Thumb and full-size image are the same file for now (SVG seeds);
+ * TODO(optimize): generate small thumbs when real photographs arrive.
+ */
+interface Props {
+  src: string;
+  caption?: string;
+}
+
+const { src, caption } = Astro.props;
+const alt = caption ?? 'Photograph from the Kadali gallery';
+
+// Seed SVGs are square 800x800; real photos will vary, but intrinsic
+// width/height only guards layout before the image decodes, so square
+// defaults are fine until real dimensions exist.
+const WIDTH = 800;
+const HEIGHT = 800;
+---
+
+<button
+  type="button"
+  class="group mb-3 block w-full cursor-pointer break-inside-avoid overflow-hidden rounded-[2px] border border-ink/10 bg-jasmine text-left"
+  data-photo-button
+  data-photo-src={src}
+  data-caption={caption ?? ''}
+  aria-label={caption ? `View photo: ${caption}` : 'View photo'}
+>
+  <img
+    src={src}
+    alt={alt}
+    width={WIDTH}
+    height={HEIGHT}
+    loading="lazy"
+    decoding="async"
+    class="h-auto w-full transition-transform duration-200 group-hover:scale-[1.02]"
+  />
+  {
+    caption && (
+      <span class="block px-2.5 py-2 font-ui text-sm leading-snug text-stone underline-offset-4 decoration-rani group-hover:underline">
+        {caption}
+      </span>
+    )
+  }
+</button>

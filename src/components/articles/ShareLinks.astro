@@ -1,0 +1,103 @@
+---
+/**
+ * Share row: WhatsApp / Facebook / X share anchors (no tracking scripts of
+ * our own) plus a copy-link button. The copy action is progressive —
+ * navigator.clipboard with an execCommand fallback for non-secure contexts.
+ */
+interface Props {
+  /** Absolute URL of the page being shared. */
+  url: string;
+  title: string;
+}
+
+const { url, title } = Astro.props;
+
+const text = encodeURIComponent(title);
+const link = encodeURIComponent(url);
+
+const shares = [
+  {
+    label: 'WhatsApp',
+    href: `https://wa.me/?text=${text}%20${link}`,
+  },
+  {
+    label: 'Facebook',
+    href: `https://www.facebook.com/sharer/sharer.php?u=${link}`,
+  },
+  {
+    label: 'X',
+    href: `https://twitter.com/intent/tweet?text=${text}&url=${link}`,
+  },
+];
+
+const buttonClass =
+  'inline-block border border-ink/15 bg-cream px-3 py-1.5 font-ui text-sm font-medium text-ink transition-colors duration-200 hover:border-rani hover:bg-rani hover:text-cream';
+---
+
+<div data-share class="flex flex-wrap items-center gap-3">
+  <h2 class="font-ui text-sm font-semibold tracking-wide uppercase text-ink">
+    Share
+    <span lang="kn" class="font-normal tracking-normal normal-case text-rani">ಹಂಚಿಕೆ</span>
+  </h2>
+  <ul class="flex flex-wrap items-center gap-2">
+    {
+      shares.map(({ label, href }) => (
+        <li>
+          <a href={href} target="_blank" rel="noopener noreferrer" class={buttonClass}>
+            {label}
+          </a>
+        </li>
+      ))
+    }
+    <li>
+      <button type="button" data-copy-link={url} class={buttonClass}>
+        Copy link
+      </button>
+    </li>
+  </ul>
+  <p role="status" data-copy-status class="font-ui text-sm font-medium text-rani"></p>
+</div>
+
+<script>
+  const COPY_LABEL = 'Copy link';
+
+  for (const button of document.querySelectorAll<HTMLButtonElement>(
+    '[data-copy-link]',
+  )) {
+    button.addEventListener('click', async () => {
+      const url = button.dataset.copyLink ?? '';
+      let copied = false;
+
+      try {
+        await navigator.clipboard.writeText(url);
+        copied = true;
+      } catch {
+        // execCommand fallback for non-secure contexts (http previews).
+        const scratch = document.createElement('textarea');
+        scratch.value = url;
+        scratch.setAttribute('readonly', '');
+        scratch.setAttribute('aria-hidden', 'true');
+        scratch.style.position = 'fixed';
+        scratch.style.opacity = '0';
+        document.body.appendChild(scratch);
+        scratch.select();
+        copied = document.execCommand('copy');
+        scratch.remove();
+      }
+
+      const status = button
+        .closest('[data-share]')
+        ?.querySelector<HTMLElement>('[data-copy-status]');
+      if (status) {
+        status.textContent = copied
+          ? 'Link copied'
+          : 'Could not copy — share the address bar link instead';
+      }
+      button.textContent = COPY_LABEL;
+
+      window.setTimeout(() => {
+        if (status) status.textContent = '';
+      }, 2500);
+    });
+  }
+</script>

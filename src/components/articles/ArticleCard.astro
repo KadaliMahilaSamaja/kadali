@@ -1,0 +1,62 @@
+---
+/**
+ * Article card for grids — rectangular, cover image top, category label,
+ * Fraunces title with hover underline reveal, excerpt and bilingual byline.
+ * Hover: image scale 1.02 + underline reveal (reduced-motion handled in
+ * global.css). `arch` gives the card the temple-arch top mask; use on the
+ * featured/first card of a grid only.
+ */
+import type { CollectionEntry } from 'astro:content';
+import { CATEGORY_LABELS } from './categories';
+import ArticleDate from './ArticleDate.astro';
+
+interface Props {
+  post: CollectionEntry<'articles'>;
+  arch?: boolean;
+}
+
+const { post, arch = false } = Astro.props;
+const { title, description, cover, coverAlt, author, category, pubDate } =
+  post.data;
+const { kn, en } = CATEGORY_LABELS[category];
+---
+
+<article
+  data-article-card
+  data-title={title}
+  data-description={description}
+  data-category={category}
+  class="group h-full border border-ink/10 bg-cream"
+>
+  <a href={`/articles/${post.id}`} class="flex h-full flex-col">
+    <div class={`overflow-hidden ${arch ? 'rounded-t-[999px]' : ''}`}>
+      <img
+        src={cover}
+        alt={coverAlt}
+        width={1200}
+        height={675}
+        loading="lazy"
+        decoding="async"
+        class="aspect-[4/3] w-full object-cover transition-transform duration-200 group-hover:scale-[1.02]"
+      />
+    </div>
+    <div class="flex flex-1 flex-col gap-3 p-5 pt-6">
+      <p class="font-ui text-xs font-semibold tracking-wider uppercase text-rani">
+        <span lang="kn" class="tracking-normal normal-case">{kn}</span>
+        <span aria-hidden="true">·</span>
+        <span>{en}</span>
+      </p>
+      <h3 class="font-display text-2xl leading-snug text-ink">
+        <span
+          class="bg-linear-to-r from-rani to-rani bg-[length:0%_2px] bg-left-bottom bg-no-repeat pb-0.5 transition-[background-size] duration-200 group-hover:bg-[length:100%_2px]"
+        >
+          {title}
+        </span>
+      </h3>
+      <p class="font-body text-base text-stone">{description}</p>
+      <p class="mt-auto pt-3 font-ui text-sm text-stone">
+        {author} · <ArticleDate date={pubDate} />
+      </p>
+    </div>
+  </a>
+</article>

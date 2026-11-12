@@ -1,0 +1,83 @@
+---
+/**
+ * One gallery entry: KasutiBorder header (title, en-IN date + Kannada date,
+ * optional linked event) followed by a masonry-ish CSS-columns photo grid.
+ * The section carries `data-gallery` so the lightbox script can scope
+ * prev/next cycling to this group's photos only.
+ */
+import type { CollectionEntry } from 'astro:content';
+import KasutiBorder from '../motifs/KasutiBorder.astro';
+import PhotoTile from './PhotoTile.astro';
+
+interface Props {
+  gallery: CollectionEntry<'galleries'>;
+  /** Resolved href of the linked event, when a title match exists. */
+  eventHref?: string;
+}
+
+const { gallery, eventHref } = Astro.props;
+const { title, date, event, photos } = gallery.data;
+
+// Build-time formatting; UTC keeps the rendered date stable across host TZs.
+const dateFormatter = new Intl.DateTimeFormat('en-IN', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+});
+const knDateFormatter = new Intl.DateTimeFormat('kn-IN', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+});
+const dateLabel = dateFormatter.format(date);
+const knDateLabel = knDateFormatter.format(date);
+const headingId = `gallery-heading-${gallery.id}`;
+---
+
+<section
+  id={`gallery-${gallery.id}`}
+  class="border-t border-ink/10 py-10 first:border-t-0 first:pt-0 md:py-14"
+  data-gallery
+  aria-labelledby={headingId}
+>
+  <header class="mb-6">
+    <KasutiBorder class="text-rani" />
+    <div class="mt-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+      <h2 id={headingId} class="font-display text-2xl font-semibold text-ink md:text-3xl">
+        {title}
+      </h2>
+      <p class="font-ui text-sm text-stone">
+        {dateLabel}
+        <span aria-hidden="true"> · </span>
+        <span lang="kn">{knDateLabel}</span>
+      </p>
+    </div>
+    {
+      event && (
+        <p class="mt-1 font-ui text-sm text-stone">
+          {'From '}
+          {eventHref ? (
+            <a
+              href={eventHref}
+              class="font-medium text-rani underline decoration-rani/40 underline-offset-4 transition-colors duration-200 hover:decoration-rani"
+            >
+              {event}
+            </a>
+          ) : (
+            <span>{event}</span>
+          )}
+        </p>
+      )
+    }
+  </header>
+
+  <div class="columns-2 gap-3 md:columns-3 xl:columns-4">
+    {
+      photos.map((photo) => (
+        <PhotoTile src={photo.image} caption={photo.caption} />
+      ))
+    }
+  </div>
+</section>

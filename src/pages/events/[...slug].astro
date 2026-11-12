@@ -1,0 +1,154 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../components/BaseLayout.astro';
+import Beads from '../../components/motifs/Beads.astro';
+import EventDate from '../../components/events/EventDate.astro';
+import EventCard from '../../components/events/EventCard.astro';
+import CancelledBadge from '../../components/events/CancelledBadge.astro';
+import { istIso } from '../../components/events/format';
+import { deriveStatus, sortEvents } from '../../lib/events';
+
+export async function getStaticPaths() {
+  const events = await getCollection('events');
+  return events.map((event) => {
+    const others = sortEvents(
+      events.filter(
+        (candidate) =>
+          candidate.id !== event.id && deriveStatus(candidate) === 'upcoming',
+      ),
+    ).slice(0, 2);
+    return { params: { slug: event.id }, props: { event, others } };
+  });
+}
+
+interface Props {
+  event: CollectionEntry<'events'>;
+  others: CollectionEntry<'events'>[];
+}
+
+const { event, others } = Astro.props;
+const { Content } = await render(event);
+const { title, poster, summary, venue, mapUrl, contact, startAt, endAt } =
+  event.data;
+
+const statusLabel = deriveStatus(event);
+const siteUrl = (Astro.site ?? new URL('https://kadali.example.org')).href;
+
+// Structured data: instants pinned to +05:30 so search engines read IST.
+const eventSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: title,
+  description: summary,
+  startDate: istIso(startAt),
+  endDate: istIso(endAt ?? startAt),
+  eventStatus:
+    statusLabel === 'cancelled'
+      ? 'https://schema.org/EventCancelled'
+      : 'https://schema.org/EventScheduled',
+  location: { '@type': 'Place', name: venue },
+  image: [new URL(poster, siteUrl).href],
+  organizer: { '@type': 'Organization', name: 'Kadali', url: siteUrl },
+};
+---
+
+<BaseLayout
+  title={`${title} · Events — Kadali`}
+  description={summary}
+  image={poster}
+  type="article"
+>
+  <article class="bg-cream">
+    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:py-16">
+      <nav aria-label="Breadcrumb" class="font-ui text-sm text-stone">
+        <a href="/" class="hover:text-rani hover:underline">Home</a>
+        <span aria-hidden="true"> / </span>
+        <a href="/events" class="hover:text-rani hover:underline">Events</a>
+        <span aria-hidden="true"> / </span>
+        <span aria-current="page" class="text-ink">{title}</span>
+      </nav>
+
+      <div class="mt-8 grid gap-10 lg:grid-cols-12 lg:gap-14">
+        <!-- Poster with temple-arch mask; above the fold, so eager -->
+        <figure class="lg:col-span-5">
+          <div class="overflow-hidden rounded-t-[999px] border border-ink/10">
+            <img
+              src={poster}
+              alt={`${title} poster`}
+              width="850"
+              height="1100"
+              loading="eager"
+              decoding="async"
+              class="h-auto w-full"
+            />
+          </div>
+        </figure>
+
+        <div class="flex flex-col items-start gap-5 lg:col-span-7">
+          {statusLabel === 'cancelled' && <CancelledBadge />}
+          <h1 class="font-display text-3xl font-semibold text-ink sm:text-4xl">
+            {title}
+          </h1>
+
+          <EventDate startAt={startAt} endAt={endAt} size="large" />
+
+          <p class="font-ui text-base text-ink">
+            <span lang="kn" class="font-semibold">ಸ್ಥಳ:</span> {venue}
+          </p>
+
+          {
+            mapUrl && (
+              <a
+                href={mapUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="border-2 border-rani px-4 py-2 font-ui text-sm font-semibold text-rani underline-offset-4 transition-colors duration-200 hover:bg-rani hover:text-cream"
+              >
+                View map · <span lang="kn" class="normal-case">ನಕ್ಷೆ ನೋಡಿ</span>
+              </a>
+            )
+          }
+
+          {
+            contact && (
+              <p class="font-ui text-base text-stone">
+                <span lang="kn" class="font-semibold">ಸಂಪರ್ಕ:</span> {contact}
+              </p>
+            )
+          }
+
+          <p class="font-body text-lg text-stone">{summary}</p>
+        </div>
+      </div>
+
+      <Beads class="mt-12 w-44 text-turmeric" />
+
+      <div class="prose-kadali mt-8 max-w-3xl">
+        <Content />
+      </div>
+    </div>
+  </article>
+
+  {
+    others.length > 0 && (
+      <section class="bg-jasmine">
+        <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+          <h2 class="font-display text-2xl font-semibold text-ink sm:text-3xl">
+            Other upcoming events ·{' '}
+            <span lang="kn">ಇತರ ಮುಂಬರುವ ಕಾರ್ಯಕ್ರಮಗಳು</span>
+          </h2>
+          <ul class="mt-8 grid gap-6 sm:grid-cols-2">
+            {others.map((other) => (
+              <li>
+                <EventCard event={other} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <script type="application/ld+json" set:html={JSON.stringify(eventSchema)} />
+</BaseLayout>

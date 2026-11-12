@@ -1,0 +1,24 @@
+---
+/**
+ * Bilingual category chip — links back to the filtered articles index.
+ * Label style: "ಸಂಸ್ಕೃತಿ · Culture".
+ */
+import { CATEGORY_LABELS, type ArticleCategory } from './categories';
+
+interface Props {
+  category: ArticleCategory;
+  class?: string;
+}
+
+const { category, class: className } = Astro.props;
+const { kn, en } = CATEGORY_LABELS[category];
+---
+
+<a
+  href={`/articles/?category=${category}`}
+  class={`inline-flex items-center gap-1.5 self-start border border-rani/30 bg-cream px-2.5 py-1 font-ui text-xs font-semibold tracking-wider uppercase text-rani transition-colors duration-200 hover:border-rani hover:bg-rani hover:text-cream ${className ?? ''}`}
+>
+  <span lang="kn" class="tracking-normal normal-case">{kn}</span>
+  <span aria-hidden="true">·</span>
+  <span>{en}</span>
+</a>

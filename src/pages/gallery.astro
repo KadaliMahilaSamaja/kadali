@@ -1,0 +1,64 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../components/BaseLayout.astro';
+import GalleryGroup from '../components/gallery/GalleryGroup.astro';
+import Lightbox from '../components/gallery/Lightbox.astro';
+
+// Newest gallery first.
+const galleries = (await getCollection('galleries')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+// `event` is a free-text event title; link it to the event detail page when
+// a title match exists, otherwise the header shows it as plain text.
+const events = await getCollection('events');
+const eventHrefByTitle = new Map(
+  events.map((ev) => [ev.data.title, `/events/${ev.id}`]),
+);
+---
+
+<BaseLayout
+  title="Gallery — Kadali"
+  description="Photographs from Kadali's gatherings — melas, vachana circles, and everyday moments of the collective."
+>
+  <section class="bg-cream">
+    <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 md:py-16">
+      <header class="max-w-2xl">
+        <p class="font-ui text-sm font-semibold tracking-widest text-rani uppercase">
+          Moments from the collective · <span lang="kn">ಛಾಯಾಚಿತ್ರ ಸಂಗ್ರಹ</span>
+        </p>
+        <h1 class="mt-3 font-display text-4xl font-semibold text-ink sm:text-5xl">
+          Gallery
+        </h1>
+        <p class="mt-4 font-body text-lg text-stone">
+          Frames gathered by our members — stalls and storytelling, long
+          lunches on banana leaves, and the quiet in-between moments. Select a
+          photograph to view it larger.
+        </p>
+      </header>
+
+      <div class="mt-10 md:mt-14">
+        {
+          galleries.length === 0 ? (
+            <p class="font-body text-lg text-stone">
+              No photographs yet — check back after our next gathering.
+            </p>
+          ) : (
+            galleries.map((gallery) => (
+              <GalleryGroup
+                gallery={gallery}
+                eventHref={
+                  gallery.data.event
+                    ? eventHrefByTitle.get(gallery.data.event)
+                    : undefined
+                }
+              />
+            ))
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <Lightbox />
+</BaseLayout>

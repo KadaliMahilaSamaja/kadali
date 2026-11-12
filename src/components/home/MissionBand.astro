@@ -1,0 +1,53 @@
+---
+import Beads from '../motifs/Beads.astro';
+
+const pillars = [
+  {
+    title: 'Culture',
+    kn: 'ಸಂಸ್ಕೃತಿ',
+    body: 'Thursday kasuti nights, the annual monsoon mela, and reading circles for Kannada writing old and new. We keep the crafts and songs of coastal Karnataka in working hands, not glass cases.',
+  },
+  {
+    title: 'Seva',
+    kn: 'ಸೇವೆ',
+    body: 'School kit drives for the Zilla Parishad school in Hirebetu, collective lunches at every mela, and quiet help for members through illness and loss. Seva at Kadali is unspectacular and constant.',
+  },
+  {
+    title: 'Spirituality',
+    kn: 'ಆಧ್ಯಾತ್ಮಿಕತೆ',
+    body: 'The vachana circle meets monthly to read Akkamahadevi aloud, in Kannada first and then in English. No gurus, no prescriptions — we read, we wonder, and we leave the doors of the vachanas open.',
+  },
+];
+---
+
+<section class="bg-ink text-cream" aria-labelledby="mission-heading">
+  <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:py-24">
+    <div class="text-center">
+      <p class="font-ui text-xs font-semibold tracking-[0.25em] text-turmeric uppercase">
+        What holds us together
+      </p>
+      <h2 id="mission-heading" class="mt-4 font-display text-3xl font-semibold md:text-4xl">
+        Three pillars, one circle
+      </h2>
+      <Beads class="mx-auto mt-6 w-40 text-turmeric" />
+    </div>
+
+    <div class="mt-10 grid gap-10 sm:grid-cols-3 sm:gap-8">
+      {
+        pillars.map((pillar) => (
+          <div class="text-center sm:text-left">
+            <h3 class="font-display text-2xl">
+              {pillar.title}
+              <span lang="kn" class="ml-1 align-middle font-ui text-base text-cream/60">
+                {pillar.kn}
+              </span>
+            </h3>
+            <p class="mt-3 font-body text-base leading-relaxed text-cream/75">
+              {pillar.body}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,47 @@
+---
+import Arch from '../motifs/Arch.astro';
+
+interface Props {
+  heading: string;
+  description: string;
+}
+
+const { heading, description } = Astro.props;
+---
+
+<section class="relative overflow-hidden bg-rani text-cream">
+  <!-- Temple arch behind the text, purely decorative. -->
+  <Arch
+    width={520}
+    class="pointer-events-none absolute top-6 left-1/2 -translate-x-1/2 text-cream/10"
+  />
+  <div
+    class="relative mx-auto flex max-w-6xl flex-col items-center px-4 py-20 text-center sm:px-6 md:py-28"
+  >
+    <p lang="kn" class="font-ui text-sm tracking-[0.35em] text-turmeric">
+      ಕದಲಿ ಮಹಿಳಾ ಸಂಘ
+    </p>
+    <h1
+      class="mt-6 max-w-3xl font-display text-5xl font-semibold md:text-6xl"
+    >
+      {heading}
+    </h1>
+    <p class="mt-6 max-w-2xl font-body text-xl text-cream/85">
+      {description}
+    </p>
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+      <a
+        href="/articles"
+        class="bg-cream px-6 py-3 font-ui text-sm font-semibold text-rani transition-colors duration-200 hover:bg-jasmine"
+      >
+        Read the journal
+      </a>
+      <a
+        href="/events"
+        class="border border-cream/60 px-6 py-3 font-ui text-sm font-semibold text-cream transition-colors duration-200 hover:bg-cream/10"
+      >
+        See upcoming events
+      </a>
+    </div>
+  </div>
+</section>

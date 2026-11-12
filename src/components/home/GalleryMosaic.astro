@@ -1,0 +1,82 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import KasutiBorder from '../motifs/KasutiBorder.astro';
+import { formatDate } from './dates';
+
+interface Props {
+  gallery: CollectionEntry<'galleries'>;
+}
+
+const { gallery } = Astro.props;
+// Mosaic shows at most 6 frames; one spans, the rest sit on the grid.
+const photos = gallery.data.photos.slice(0, 6);
+const [lead, ...rest] = photos;
+---
+
+<section class="bg-cream" aria-labelledby="gallery-preview-heading">
+  <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:py-20">
+    <div class="max-w-2xl">
+      <p class="font-ui text-xs font-semibold tracking-[0.25em] text-rani uppercase">
+        From the gallery
+      </p>
+      <h2 id="gallery-preview-heading" class="mt-3 font-display text-3xl font-semibold">
+        {gallery.data.title}
+      </h2>
+      <p class="mt-2 font-ui text-sm text-stone">
+        {formatDate(gallery.data.date)}
+        {gallery.data.event ? ` · ${gallery.data.event}` : ''}
+      </p>
+      <KasutiBorder class="mt-5 text-turmeric" />
+    </div>
+
+    <div class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3">
+      {
+        lead && (
+          <a
+            href="/gallery"
+            class="group col-span-2 row-span-2 overflow-hidden border border-ink/10"
+            tabindex="-1"
+            aria-hidden="true"
+          >
+            <img
+              src={lead.image}
+              alt={lead.caption ?? gallery.data.title}
+              width="800"
+              height="800"
+              loading="lazy"
+              decoding="async"
+              class="aspect-square w-full object-cover transition-transform duration-200 group-hover:scale-[1.02] sm:aspect-auto sm:h-full"
+            />
+          </a>
+        )
+      }
+      {
+        rest.map((photo) => (
+          <a
+            href="/gallery"
+            class="group overflow-hidden border border-ink/10"
+            tabindex="-1"
+            aria-hidden="true"
+          >
+            <img
+              src={photo.image}
+              alt={photo.caption ?? gallery.data.title}
+              width="800"
+              height="800"
+              loading="lazy"
+              decoding="async"
+              class="aspect-square w-full object-cover transition-transform duration-200 group-hover:scale-[1.02]"
+            />
+          </a>
+        ))
+      }
+    </div>
+
+    <a
+      href="/gallery"
+      class="underline-reveal mt-6 inline-block font-ui text-sm font-semibold text-rani"
+    >
+      View the full gallery →
+    </a>
+  </div>
+</section>

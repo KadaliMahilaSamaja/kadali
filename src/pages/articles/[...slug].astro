@@ -1,0 +1,119 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../components/BaseLayout.astro';
+import Beads from '../../components/motifs/Beads.astro';
+import CategoryChip from '../../components/articles/CategoryChip.astro';
+import ArticleDate from '../../components/articles/ArticleDate.astro';
+import ArticleCard from '../../components/articles/ArticleCard.astro';
+import ShareLinks from '../../components/articles/ShareLinks.astro';
+
+export async function getStaticPaths() {
+  // Drafts excluded; newest first so related picks the freshest matches.
+  const articles = (
+    await getCollection('articles', ({ data }) => !data.draft)
+  ).sort((a, b) => +b.data.pubDate - +a.data.pubDate);
+
+  return articles.map((post) => {
+    // Related = same category, exclude self, newest first, max 3.
+    const related = articles
+      .filter(
+        (other) =>
+          other.id !== post.id && other.data.category === post.data.category,
+      )
+      .slice(0, 3);
+
+    return { params: { slug: post.id }, props: { post, related } };
+  });
+}
+
+interface Props {
+  post: CollectionEntry<'articles'>;
+  related: CollectionEntry<'articles'>[];
+}
+
+const { post, related } = Astro.props;
+const { title, description, cover, coverAlt, author, pubDate } = post.data;
+const { Content } = await render(post);
+
+const shareUrl = new URL(
+  Astro.url.pathname,
+  Astro.site ?? 'https://kadali.example.org',
+).href;
+---
+
+<BaseLayout title={`${title} · Kadali`} description={description} image={cover} type="article">
+  <article class="bg-cream">
+    <!-- Breadcrumb + article header -->
+    <div class="mx-auto max-w-3xl px-4 pt-10 sm:px-6">
+      <nav aria-label="Breadcrumb" class="font-ui text-sm text-stone">
+        <ol class="flex flex-wrap items-center gap-2">
+          <li>
+            <a href="/" class="underline-offset-4 hover:text-rani hover:underline">Home</a>
+          </li>
+          <li aria-hidden="true">/</li>
+          <li>
+            <a href="/articles" class="underline-offset-4 hover:text-rani hover:underline">Articles</a>
+          </li>
+          <li aria-hidden="true">/</li>
+          <li aria-current="page" class="text-ink">{title}</li>
+        </ol>
+      </nav>
+
+      <header class="mt-10">
+        <CategoryChip category={post.data.category} />
+        <h1 class="mt-5 font-display text-4xl leading-tight font-semibold text-ink md:text-5xl">
+          {title}
+        </h1>
+        <p class="mt-6 font-ui text-sm text-stone">
+          By {author} · <ArticleDate date={pubDate} />
+        </p>
+      </header>
+    </div>
+
+    <!-- Cover: full-width with the temple-arch top mask (above fold, no lazy) -->
+    <div class="mx-auto mt-10 max-w-4xl px-4 sm:px-6">
+      <div class="overflow-hidden rounded-t-[999px] border border-ink/10">
+        <img
+          src={cover}
+          alt={coverAlt}
+          width={1200}
+          height={675}
+          decoding="async"
+          class="aspect-[16/9] w-full object-cover"
+        />
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="prose-kadali mx-auto mt-12 max-w-3xl px-4 sm:px-6">
+      <Content />
+    </div>
+  </article>
+
+  <Beads class="mx-auto mt-14 block w-44 text-turmeric" />
+
+  {
+    related.length > 0 && (
+      <section class="mt-14 bg-jasmine">
+        <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+          <h2 class="font-display text-2xl font-semibold text-ink">
+            Related articles
+            <span class="text-stone" aria-hidden="true">·</span>
+            <span lang="kn" class="text-rani">ಸಂಬಂಧಿತ ಲೇಖನಗಳು</span>
+          </h2>
+          <div class="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {related.map((rel) => (
+              <ArticleCard post={rel} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="bg-cream">
+    <div class="mx-auto max-w-3xl px-4 py-12 sm:px-6">
+      <ShareLinks url={shareUrl} title={title} />
+    </div>
+  </section>
+</BaseLayout>

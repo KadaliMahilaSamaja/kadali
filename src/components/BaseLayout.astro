@@ -8,6 +8,7 @@ import '../styles/global.css';
 import Seo from './Seo.astro';
 import Header from './Header.astro';
 import Footer from './Footer.astro';
+import JsonLd from './JsonLd.astro';
 
 // Preload only the display face (Fraunces) — its variable wght file covers
 // the 400–700 range we use. Other faces load via CSS with swap display.
@@ -21,6 +22,32 @@ interface Props {
 }
 
 const { title, description, image, type = 'website' } = Astro.props;
+
+// Site-wide JSON-LD: Organization + WebSite, injected once on every page.
+// Social URLs are placeholders — swap in the club's real profiles when they exist.
+const siteUrl = Astro.site
+  ? new URL('/', Astro.site).href
+  : 'https://kadali.example.org/';
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Kadali',
+    url: siteUrl,
+    logo: new URL('/favicon.svg', siteUrl).href,
+    sameAs: [
+      'https://www.instagram.com/',
+      'https://www.youtube.com/',
+      'https://wa.me/',
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Kadali',
+    url: siteUrl,
+  },
+];
 ---
 
 <!doctype html>
@@ -34,6 +61,7 @@ const { title, description, image, type = 'website' } = Astro.props;
       href={frauncesUrl}
       crossorigin
     />
+    <JsonLd data={jsonLd} />
   </head>
   <body
     class="grid min-h-screen grid-rows-[auto_1fr_auto] bg-cream font-ui text-ink"

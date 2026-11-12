@@ -1,0 +1,58 @@
+---
+/**
+ * Featured event hero card — temple-arch-masked poster beside an editorial
+ * content column. Rendered as the first item of the upcoming group.
+ */
+import type { CollectionEntry } from 'astro:content';
+import EventDate from './EventDate.astro';
+import CancelledBadge from './CancelledBadge.astro';
+
+interface Props {
+  event: CollectionEntry<'events'>;
+}
+
+const { event } = Astro.props;
+const { title, poster, summary, venue, endAt, startAt, status } = event.data;
+const href = `/events/${event.id}`;
+---
+
+<article class="border border-ink/10 bg-cream">
+  <a href={href} class="group grid md:grid-cols-2">
+    <div class="overflow-hidden rounded-t-[999px]">
+      <img
+        src={poster}
+        alt={`${title} poster`}
+        width="850"
+        height="1100"
+        loading="lazy"
+        decoding="async"
+        class="h-auto w-full object-cover transition-transform duration-200 group-hover:scale-[1.02] md:h-full"
+      />
+    </div>
+    <div class="flex flex-col items-start gap-4 p-6 sm:p-8">
+      {status === 'cancelled' && <CancelledBadge />}
+      <p
+        class="font-ui text-xs font-semibold uppercase tracking-wider text-rani"
+      >
+        Featured · <span lang="kn" class="normal-case">ವಿಶೇಷ</span>
+      </p>
+      <h3 class="font-display text-2xl leading-snug sm:text-3xl">
+        <span
+          class="text-ink underline-offset-4 group-hover:text-rani group-hover:underline group-hover:decoration-rani group-hover:decoration-2"
+        >
+          {title}
+        </span>
+      </h3>
+      <EventDate startAt={startAt} endAt={endAt} />
+      <p class="font-ui text-sm text-stone">
+        <span lang="kn" class="font-semibold">ಸ್ಥಳ:</span> {venue}
+      </p>
+      <p class="line-clamp-4 font-body text-base text-stone">{summary}</p>
+      <span
+        class="mt-auto font-ui text-sm font-semibold text-rani underline-offset-4 group-hover:underline group-hover:decoration-2"
+      >
+        View details →
+      </span>
+    </div>
+  </a>
+</article>

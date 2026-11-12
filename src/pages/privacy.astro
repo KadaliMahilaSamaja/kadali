@@ -1,0 +1,110 @@
+---
+/**
+ * Privacy page — static policy, code-managed copy (edit here, not in CMS).
+ * ⚠️ Contact details are placeholders; keep in sync with contact.astro and
+ * Footer.astro.
+ */
+import BaseLayout from '../components/BaseLayout.astro';
+import PageHero from '../components/pages/PageHero.astro';
+
+// Single source of the "last updated" date; hardcode, do not use the build date.
+const lastUpdated = '2026-11-12';
+---
+
+<BaseLayout
+  title="Privacy Policy — Kadali"
+  description="Kadali's privacy policy in plain words: no analytics, no tracking pixels, no cookies from this site, Cloudflare edge logs only, photos with consent."
+>
+  <PageHero
+    eyebrow="Privacy"
+    title="Privacy policy"
+    kn="ಗೋಪ್ಯತೆ"
+    lede="The whole policy without the usual fog: nothing collected, nothing tracked, nothing sold — because there is nothing to sell."
+    tone="cream"
+  />
+
+  <article
+    class="prose-kadali mx-auto max-w-3xl px-4 py-16 sm:px-6"
+  >
+    <p class="font-ui text-sm text-stone">
+      Last updated <time datetime={lastUpdated}>12 November 2026</time>.
+    </p>
+
+    <h2>The short version</h2>
+    <ul>
+      <li>No analytics, no tracking pixels, no advertising — there is none on this site.</li>
+      <li>This site sets no cookies of its own.</li>
+      <li>A WhatsApp or email message goes to the club, not into a database here.</li>
+      <li>Our host (Cloudflare) keeps routine edge logs for security; we do not mine them.</li>
+      <li>Photos of members appear only with consent; removal on request.</li>
+      <li>This policy changes only when our practice does — the date at the top says so.</li>
+    </ul>
+
+    <h2>What we collect</h2>
+    <p>
+      Nothing, deliberately. The pages of this site are static files: your
+      browser asks for a page and receives it, and nothing follows you
+      afterwards. There are no analytics scripts, no tracking pixels, no
+      embedded advertising, and no contact form that would ask you to leave
+      personal information behind.
+    </p>
+    <p>
+      If you contact us by WhatsApp, phone or email, what you send us stays
+      with the club officers who read it, used only to answer you and to
+      organise club life. It is not shared further, and it is never passed to
+      any service that would repurpose it.
+    </p>
+
+    <h2>Where the site runs</h2>
+    <p>
+      Kadali is served through Cloudflare's network. As with any site on
+      Cloudflare, requests are logged at the edge — IP address, timestamp,
+      requested URL and browser user agent — for security and abuse
+      prevention. We do not run analytics or advertising on top of these
+      logs, and a browsing session here cannot be linked to you as a person
+      by us.
+    </p>
+
+    <h2>Cookies</h2>
+    <p>
+      The public site sets no cookies and reads none back. Members who
+      publish content for the site use a separate, login-protected admin
+      area, which has its own authentication on that service; that login is
+      not part of the public site.
+    </p>
+
+    <h2>Links that leave this site</h2>
+    <p>
+      Our WhatsApp, email and map links deliberately take you to other
+      services, which operate under their own privacy policies. We choose
+      links instead of embedded widgets precisely so their code does not run
+      on our pages.
+    </p>
+
+    <h2>Photos and content</h2>
+    <p>
+      Photographs of members and events are published only with consent, and
+      any photo can be removed on request — write to
+      <a href="mailto:hello@example.org">hello@example.org</a> and we will
+      take it down promptly. Text and photographs on this site are © Kadali
+      unless noted; ask before republishing. Quotations from the vachanas and
+      other folk material belong to everyone, and we claim no ownership over
+      the heritage we write about.
+    </p>
+
+    <h2>Changes to this policy</h2>
+    <p>
+      We update this page only when what we actually do changes, and we
+      change the date at the top when we do. If anything here ever looks
+      out of step with how the club behaves, please tell us.
+    </p>
+
+    <h2>Questions</h2>
+    <p>
+      Ask us directly — by email at
+      <a href="mailto:hello@example.org">hello@example.org</a> or through the
+      <a href="/contact">contact page</a>, which lists our phone and
+      WhatsApp numbers. A person reads what arrives.
+    </p>
+  </article>
+</BaseLayout>

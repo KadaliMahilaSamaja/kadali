@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../components/BaseLayout.astro';
+import Arch from '../components/motifs/Arch.astro';
+import Beads from '../components/motifs/Beads.astro';
+
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/articles', label: 'Articles' },
+  { href: '/events', label: 'Events' },
+];
+---
+
+<BaseLayout
+  title="Page not found — Kadali"
+  description="The page you were looking for has wandered off. Head back home or browse our articles and events."
+>
+  <section class="relative overflow-hidden">
+    <div
+      class="mx-auto flex max-w-6xl flex-col items-center px-4 py-20 text-center sm:px-6 sm:py-28"
+    >
+      <!-- 404 numeral inside a temple arch, decorative -->
+      <div class="relative flex justify-center">
+        <Arch width={220} class="text-rani/20" />
+        <span
+          aria-hidden="true"
+          class="absolute inset-x-0 bottom-5 font-display text-6xl font-semibold tracking-tight text-rani sm:text-7xl"
+        >
+          404
+        </span>
+      </div>
+
+      <h1
+        class="mt-8 font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
+      >
+        This page has wandered off
+      </h1>
+      <p class="mt-2 font-ui text-sm font-medium text-stone">
+        <span lang="kn">ಪುಟ ಸಿಗಲಿಲ್ಲ</span>
+      </p>
+
+      <Beads class="mt-8 w-40 text-rani" />
+
+      <p class="mt-8 max-w-md font-body text-lg leading-relaxed text-stone">
+        The page you're looking for doesn't exist or has moved. Try one of
+        these paths instead.
+      </p>
+
+      <ul class="mt-8 flex flex-wrap items-center justify-center gap-3">
+        {
+          links.map(({ href, label }, index) => (
+            <li>
+              <a
+                href={href}
+                class:list={[
+                  'inline-flex items-center rounded-full px-5 py-2.5 font-ui text-sm font-semibold transition-colors duration-200',
+                  index === 0
+                    ? 'bg-rani text-cream hover:bg-ink'
+                    : 'border border-ink/15 text-ink hover:border-rani hover:text-rani',
+                ]}
+              >
+                {label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

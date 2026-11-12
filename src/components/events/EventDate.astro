@@ -1,0 +1,37 @@
+---
+/**
+ * Event date block — big Fraunces day number, Kannada month, year, and the
+ * IST time range. Jasmine tile with a hairline ink border.
+ */
+import { istInstant, istTimeRange } from './format';
+
+interface Props {
+  startAt: Date;
+  endAt?: Date;
+  /** compact = card grids, regular = default, large = event detail. */
+  size?: 'compact' | 'regular' | 'large';
+  class?: string;
+}
+
+const { startAt, endAt, size = 'regular', class: className } = Astro.props;
+const { day, monthKn, year } = istInstant(startAt);
+const time = istTimeRange(startAt, endAt);
+
+const daySize = {
+  compact: 'text-3xl',
+  regular: 'text-4xl',
+  large: 'text-5xl',
+}[size];
+const pad = size === 'large' ? 'px-5 py-4' : 'px-4 py-3';
+---
+
+<div class={`flex w-fit items-center gap-4 border border-ink/10 bg-jasmine ${pad} ${className ?? ''}`}>
+  <span class={`font-display font-semibold text-rani ${daySize}`}>{day}</span>
+  <span class="flex flex-col font-ui leading-tight">
+    <span class={size === 'compact' ? 'text-xs' : 'text-sm'}>
+      <span lang="kn" class="font-semibold text-ink">{monthKn}</span>
+      <span class="text-stone">{year}</span>
+    </span>
+    <span class={`${size === 'compact' ? 'text-xs' : 'text-sm'} text-stone`}>{time}</span>
+  </span>
+</div>
