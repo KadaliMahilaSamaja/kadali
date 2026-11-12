@@ -15,7 +15,7 @@ Practical guides: [publishing guide](publishing-guide.md) (members) and [admin g
 | Editor | Sveltia CMS, pinned `@0.262.4` from unpkg, served at `/admin` |
 | Authentication | sveltia-cms-auth on a free Cloudflare Worker + a GitHub App scoped to the single repository |
 | Hosting | Cloudflare Pages (free), builds from `main` only |
-| Repository | `kadali-org/kadali`, public GitHub organization repo; content, photos, and site code in one repo |
+| Repository | `KadaliMahilaSamaja/kadali`, public GitHub organization repo; content, photos, and site code in one repo |
 | Kannada | Noto Sans Kannada + Noto Serif Kannada variable fonts bundled locally |
 
 ## 2. Topology
@@ -24,7 +24,7 @@ Practical guides: [publishing guide](publishing-guide.md) (members) and [admin g
 flowchart LR
     phone["Member phone<br>(Chrome, Android)"] -->|"opens"| admin["Sveltia CMS editor SPA<br>kadali.org/admin"]
     admin -->|"sign in"| worker["sveltia-cms-auth<br>Cloudflare Worker"]
-    worker -->|"GitHub App token<br>(stays in browser)"| repo["GitHub repo<br>kadali-org/kadali<br>content + photos + code"]
+    worker -->|"GitHub App token<br>(stays in browser)"| repo["GitHub repo<br>KadaliMahilaSamaja/kadali<br>content + photos + code"]
     admin -->|"drafts, edits, publish"| repo
     repo -->|"merge to main<br>triggers build"| pages["Cloudflare Pages<br>npm run build"]
     pages -->|"static deploy"| site["Public site<br>kadali.org"]
@@ -114,7 +114,7 @@ flowchart LR
 
 ## 6. Build and deploy pipeline
 
-- Cloudflare Pages project connected to `kadali-org/kadali`; production branch `main`; build `npm run build`; output `dist`.
+- Cloudflare Pages project connected to `KadaliMahilaSamaja/kadali`; production branch `main`; build `npm run build`; output `dist`.
 - Only merges to `main` build. Branch build controls exclude `cms/*` from preview deployments — this protects the 500 builds/month free quota, because every saved draft would otherwise trigger a build.
 - A draft with empty required fields would break the Astro zod schema on its own branch; since those branches are not built, this costs nothing and production is unaffected.
 - Free-plan margins: 500 builds/month, 20k files, 25 MiB per file, unlimited bandwidth; Worker 100k requests/day; GitHub guidance under ~1 GB per repo, 100 MiB per file hard cap.

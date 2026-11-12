@@ -4,7 +4,7 @@
 #
 # SETUP TODOs for the club admin (details in docs/admin-guide.md):
 #
-#   1. backend.repo — replace the placeholder `kadali-org/kadali` with the
+#   1. backend.repo — replace the placeholder `KadaliMahilaSamaja/kadali` with the
 #      real GitHub repository once the organisation exists (format: owner/repo).
 #
 #   2. backend.base_url — replace with the URL of YOUR deployed
@@ -21,7 +21,7 @@
 
 backend:
   name: github
-  repo: kadali-org/kadali # TODO: replace with the real owner/repo
+  repo: KadaliMahilaSamaja/kadali # TODO: replace with the real owner/repo
   branch: main
   base_url: https://sveltia-cms-auth.example.workers.dev # TODO: replace with your sveltia-cms-auth Worker URL
   auth_methods: [oauth] # OAuth sign-in only (see base_url TODO)

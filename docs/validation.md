@@ -14,7 +14,7 @@ Date: 2026-11-11. All claims source-linked.
 - **Documented limitation (explicit):** a member with Write is *always* able to bypass the CMS and edit any repo file directly on GitHub. Mitigation = blast-radius control, not prevention: single repo contains only website + content (no secrets in repo; deploy creds live in Cloudflare), `main` protected with required review so nothing reaches the public site un-reviewed.
 - Branch protection + required reviews: **free for public org repos** (private needs paid). Draft branches are publicly readable in a public repo → drafts are non-confidential. Acceptable for a club; noted in docs.
 
-**Decision:** single public org repo `kadali-org/kadali` (website + content + admin). Members = Write. `main` protected, 1 required review. Editorial workflow ON for content collections.
+**Decision:** single public org repo `KadaliMahilaSamaja/kadali` (website + content + admin). Members = Write. `main` protected, 1 required review. Editorial workflow ON for content collections.
 
 ## 2. Zero-cost quotas
 

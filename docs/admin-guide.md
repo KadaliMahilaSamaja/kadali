@@ -17,8 +17,8 @@ Do the steps in this order. Each step has the exact click-path.
 
 1. Sign in at github.com with the admin account.
 2. Click the **+** dropdown (top right) and choose **New organization**. Pick the free plan.
-3. Name it `kadali-org` (or your chosen name).
-4. Create the repository: **New repository** button, name `kadali`, visibility **Public**, and push the website code to it. The final name is `kadali-org/kadali`.
+3. Name it `KadaliMahilaSamaja` (or your chosen name).
+4. Create the repository: **New repository** button, name `kadali`, visibility **Public**, and push the website code to it. The final name is `KadaliMahilaSamaja/kadali`.
 5. Why public: branch protection with required reviews is free for public organization repositories. Draft branches are then publicly readable — never keep confidential text in drafts.
 
 ### A2. Deploy the sveltia-cms-auth Worker
@@ -60,7 +60,7 @@ Local development sign-in only: temporarily add `localhost, cms.netlify.com` to 
 
 Edit `public/admin/config.yml` in the repository and replace the three `TODO` placeholders:
 
-1. `backend.repo` → `kadali-org/kadali`.
+1. `backend.repo` → `KadaliMahilaSamaja/kadali`.
 2. `backend.base_url` → the Worker URL from A2, e.g. `https://sveltia-cms-auth.YOUR-SUBDOMAIN.workers.dev`.
 3. `site_url` → the real site URL, e.g. `https://kadali.org`.
 
@@ -84,7 +84,7 @@ Every saved draft creates a branch named `cms/...`. Without this step each draft
 
 ### A8. Protect the main branch
 
-1. On GitHub, open `kadali-org/kadali` > **Settings**.
+1. On GitHub, open `KadaliMahilaSamaja/kadali` > **Settings**.
 2. In the sidebar, under "Code, planning, and automation", click **Branches**.
 3. Under "Branch protection rules", click **Add classic branch protection rule**.
 4. **Branch name pattern**: `main`.
@@ -124,7 +124,7 @@ Members sign in with their own GitHub account. Membership = collaborator access 
 ### Invite a member
 
 1. She creates a free GitHub account (github.com > **Sign up**) and tells you her account name.
-2. On GitHub, open `kadali-org/kadali` > **Settings** > sidebar "Access" section > **Collaborators & teams**.
+2. On GitHub, open `KadaliMahilaSamaja/kadali` > **Settings** > sidebar "Access" section > **Collaborators & teams**.
 3. Next to "Manage access", click **Add people**.
 4. Type her account name and click the matching name.
 5. Under "Choose a role", select **Write**, then click **Add NAME to REPOSITORY**.
@@ -182,7 +182,7 @@ Members have Write access, so they can technically bypass the CMS and edit any f
 
 **Restore the whole site** (deleted Pages project, lost Cloudflare account):
 
-1. The repository still has everything. Recreate the Pages project: **Workers & Pages** > **Create application** > **Pages** > **Connect to Git** > select `kadali-org/kadali`, with the same settings as A6 (production branch `main`, `npm run build`, `dist`).
+1. The repository still has everything. Recreate the Pages project: **Workers & Pages** > **Create application** > **Pages** > **Connect to Git** > select `KadaliMahilaSamaja/kadali`, with the same settings as A6 (production branch `main`, `npm run build`, `dist`).
 2. Redo the two Cloudflare settings that do not survive: branch build skip (A7) and custom domain (A9).
 3. If the Worker was deleted, redeploy it from the sveltia-cms-auth README button and redo A3/A4 (the GitHub App registration survives on GitHub; only re-enter the Worker variables).
 
