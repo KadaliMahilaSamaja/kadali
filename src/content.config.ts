@@ -78,6 +78,27 @@ const galleries = defineCollection({
   }),
 });
 
+// Managing-committee members, shown role-grouped on the About page.
+// Frontmatter only — the markdown body is unused.
+const people = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/people' }),
+  schema: z.object({
+    name: z.string(),
+    nameKn: z.string().optional(), // Kannada rendering, shown under the name
+    role: z.enum([
+      'president',
+      'vice_president',
+      'secretary',
+      'joint_secretary',
+      'treasurer',
+      'member',
+    ]),
+    photo: z.string(), // path under public/, e.g. /images/uploads/photo.svg
+    order: z.number().default(99), // display order within the role group
+    bio: z.string().optional(), // 1-2 lines: tenure in Kadali + what she handles
+  }),
+});
+
 const settings = defineCollection({
   loader: file('src/content/settings/site.json'),
   schema: z.object({
@@ -96,5 +117,6 @@ export const collections = {
   events,
   announcements,
   galleries,
+  people,
   'site-settings': settings,
 };

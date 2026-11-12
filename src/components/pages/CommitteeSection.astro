@@ -1,0 +1,100 @@
+---
+/**
+ * The committee — role-grouped member cards for the About page.
+ * Order: president → vice-president → secretary → joint secretary →
+ * treasurer → members; within each role group by `order`, then name.
+ * The whole section is hidden when the `people` collection is empty.
+ */
+import { getCollection } from 'astro:content';
+
+const ROLE_ORDER = [
+  'president',
+  'vice_president',
+  'secretary',
+  'joint_secretary',
+  'treasurer',
+  'member',
+] as const;
+
+type Role = (typeof ROLE_ORDER)[number];
+
+/** Bilingual role labels — English + Kannada, shown on every card. */
+const ROLE_LABELS: Record<Role, { en: string; kn: string }> = {
+  president: { en: 'President', kn: 'ಅಧ್ಯಕ್ಷೆ' },
+  vice_president: { en: 'Vice-president', kn: 'ಉಪಾಧ್ಯಕ್ಷೆ' },
+  secretary: { en: 'Secretary', kn: 'ಕಾರ್ಯದರ್ಶಿ' },
+  joint_secretary: { en: 'Joint secretary', kn: 'ಸಹ ಕಾರ್ಯದರ್ಶಿ' },
+  treasurer: { en: 'Treasurer', kn: 'ಕೋಶಾಧಿಕಾರಿ' },
+  member: { en: 'Member', kn: 'ಸದಸ್ಯೆ' },
+};
+
+const people = await getCollection('people');
+const committee = people.sort(
+  (a, b) =>
+    ROLE_ORDER.indexOf(a.data.role) - ROLE_ORDER.indexOf(b.data.role) ||
+    a.data.order - b.data.order ||
+    a.data.name.localeCompare(b.data.name),
+);
+---
+
+{
+  committee.length > 0 && (
+    <section class="bg-jasmine">
+      <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+        <h2 class="font-display text-3xl font-semibold text-ink">
+          The committee
+        </h2>
+        <p lang="kn" class="mt-2 font-display text-2xl font-semibold text-rani">
+          ಸಮಿತಿ
+        </p>
+
+        <div class="mt-10 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 xl:grid-cols-4">
+          {
+            committee.map((person) => {
+              const { name, nameKn, role, photo, bio } = person.data;
+              const roleLabel = ROLE_LABELS[role];
+              return (
+                <article class="flex h-full flex-col items-center border border-ink/10 bg-cream px-4 pb-6 pt-8 text-center sm:px-6">
+                  <div class="w-full overflow-hidden rounded-t-[999px] border border-ink/10">
+                    <img
+                      src={photo}
+                      alt={`Portrait of ${name}`}
+                      width={640}
+                      height={800}
+                      loading="lazy"
+                      decoding="async"
+                      class="aspect-[4/5] w-full object-cover"
+                    />
+                  </div>
+                  <h3 class="mt-5 font-display text-xl font-semibold text-ink">
+                    {name}
+                    {nameKn && (
+                      <span
+                        lang="kn"
+                        class="mt-0.5 block font-display text-lg font-medium text-stone"
+                      >
+                        {nameKn}
+                      </span>
+                    )}
+                  </h3>
+                  <p class="mt-2 font-ui text-xs font-semibold tracking-wider uppercase text-rani">
+                    <span lang="kn" class="tracking-normal normal-case">
+                      {roleLabel.kn}
+                    </span>
+                    <span aria-hidden="true">·</span>
+                    <span>{roleLabel.en}</span>
+                  </p>
+                  {bio && (
+                    <p class="mt-3 font-body text-sm leading-relaxed text-stone">
+                      {bio}
+                    </p>
+                  )}
+                </article>
+              );
+            })
+          }
+        </div>
+      </div>
+    </section>
+  )
+}

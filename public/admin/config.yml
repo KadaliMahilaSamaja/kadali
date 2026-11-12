@@ -261,6 +261,66 @@ collections:
             label: Caption
             widget: string
             required: false
+  # --------------------------------------------------------------- Committee
+  - name: people
+    label: Committee
+    label_singular: Member
+    description: >-
+      The managing-committee members shown on the About page. Add a photo,
+      choose her role, and she appears in the committee list in the right
+      order.
+    folder: src/content/people
+    identifier_field: name # the entry file name is generated from the name
+    summary: '{{name}} — {{role}}'
+    editor:
+      preview: true
+    fields:
+      - name: name
+        label: Name
+        widget: string
+      - name: nameKn
+        label: Name in Kannada
+        widget: string
+        required: false
+        hint: >-
+          Optional. Her name written in Kannada — shown under her name on
+          the website.
+      - name: role
+        label: Role
+        widget: select
+        options:
+          - label: 'President (ಅಧ್ಯಕ್ಷೆ)'
+            value: president
+          - label: 'Vice-president (ಉಪಾಧ್ಯಕ್ಷೆ)'
+            value: vice_president
+          - label: 'Secretary (ಕಾರ್ಯದರ್ಶಿ)'
+            value: secretary
+          - label: 'Joint secretary (ಸಹ ಕಾರ್ಯದರ್ಶಿ)'
+            value: joint_secretary
+          - label: 'Treasurer (ಕೋಶಾಧಿಕಾರಿ)'
+            value: treasurer
+          - label: 'Member (ಸದಸ್ಯೆ)'
+            value: member
+        hint: >-
+          Picks the group she appears in on the About page. The website
+          shows the Kannada role name by itself.
+      - name: photo
+        label: Photo
+        widget: image
+      - name: order
+        label: Display order
+        widget: number
+        default: 99
+        hint: >-
+          Optional. Smaller numbers come first within the same role
+          (1 before 2). Leave as is if it does not matter.
+      - name: bio
+        label: Short introduction
+        widget: text
+        required: false
+        hint: >-
+          One or two lines — how long she has been in Kadali and what she
+          handles.
   # ---------------------------------------------------------------- Homepage
   - name: settings
     label: Homepage
