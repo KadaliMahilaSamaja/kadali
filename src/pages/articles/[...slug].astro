@@ -1,8 +1,9 @@
 ---
-import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { getCollection, getEntry, render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../components/BaseLayout.astro';
 import Beads from '../../components/motifs/Beads.astro';
 import CategoryChip from '../../components/articles/CategoryChip.astro';
+import TagChip from '../../components/articles/TagChip.astro';
 import ArticleDate from '../../components/articles/ArticleDate.astro';
 import ArticleCard from '../../components/articles/ArticleCard.astro';
 import ShareLinks from '../../components/articles/ShareLinks.astro';
@@ -13,25 +14,33 @@ export async function getStaticPaths() {
     await getCollection('articles', ({ data }) => !data.draft)
   ).sort((a, b) => +b.data.pubDate - +a.data.pubDate);
 
-  return articles.map((post) => {
-    // Related = same category, exclude self, newest first, max 3.
-    const related = articles
-      .filter(
-        (other) =>
-          other.id !== post.id && other.data.category === post.data.category,
-      )
-      .slice(0, 3);
+  return Promise.all(
+    articles.map(async (post) => {
+      // Related = same category, exclude self, newest first, max 3.
+      const related = articles
+        .filter(
+          (other) =>
+            other.id !== post.id && other.data.category === post.data.category,
+        )
+        .slice(0, 3);
 
-    return { params: { slug: post.id }, props: { post, related } };
-  });
+      // Resolved here so the page can chip-link straight to the event.
+      const event = post.data.event
+        ? await getEntry(post.data.event)
+        : undefined;
+
+      return { params: { slug: post.id }, props: { post, related, event } };
+    }),
+  );
 }
 
 interface Props {
   post: CollectionEntry<'articles'>;
   related: CollectionEntry<'articles'>[];
+  event?: CollectionEntry<'events'>;
 }
 
-const { post, related } = Astro.props;
+const { post, related, event } = Astro.props;
 const { title, description, cover, coverAlt, author, pubDate } = post.data;
 const { Content } = await render(post);
 
@@ -60,7 +69,22 @@ const shareUrl = new URL(
       </nav>
 
       <header class="mt-10">
-        <CategoryChip category={post.data.category} />
+        <div class="flex flex-wrap items-center gap-2">
+          <CategoryChip category={post.data.category} />
+          {
+            event && (
+              <a
+                href={`/events/${event.id}`}
+                class="inline-flex items-center gap-1.5 self-start border border-rani/30 bg-cream px-2.5 py-1 font-ui text-xs font-semibold tracking-wider uppercase text-rani transition-colors duration-200 hover:border-rani hover:bg-rani hover:text-cream"
+              >
+                <span lang="kn" class="tracking-normal normal-case">ಕಾರ್ಯಕ್ರಮ</span>
+                <span aria-hidden="true">·</span>
+                <span class="normal-case">{event.data.title}</span>
+              </a>
+            )
+          }
+          {post.data.tags.map((tag) => <TagChip tag={tag} />)}
+        </div>
         <h1 class="mt-5 font-display text-4xl leading-tight font-semibold text-ink md:text-5xl">
           {title}
         </h1>

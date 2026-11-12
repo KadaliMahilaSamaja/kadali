@@ -1,0 +1,21 @@
+---
+/**
+ * Tag chip — links back to the articles index filtered by the tag
+ * (`?tag=…`). Tags are free-form short strings, so unlike CategoryChip
+ * they carry no Kannada label; display is the tag itself with a leading
+ * hash, lowercased.
+ */
+interface Props {
+  tag: string;
+  class?: string;
+}
+
+const { tag, class: className } = Astro.props;
+---
+
+<a
+  href={`/articles/?tag=${encodeURIComponent(tag)}`}
+  class={`inline-flex items-center gap-0.5 self-start border border-ink/20 bg-jasmine px-2.5 py-1 font-ui text-xs font-semibold lowercase text-stone transition-colors duration-200 hover:border-rani hover:bg-rani hover:text-cream ${className ?? ''}`}
+>
+  <span aria-hidden="true">#</span><span>{tag}</span>
+</a>

@@ -6,11 +6,28 @@ import Beads from '../../components/motifs/Beads.astro';
 import EventDate from '../../components/events/EventDate.astro';
 import EventCard from '../../components/events/EventCard.astro';
 import CancelledBadge from '../../components/events/CancelledBadge.astro';
+import ArticleCard from '../../components/articles/ArticleCard.astro';
 import { istIso } from '../../components/events/format';
 import { deriveStatus, sortEvents } from '../../lib/events';
 
 export async function getStaticPaths() {
   const events = await getCollection('events');
+  // Newest-first stories that articles have filed under an event. Each
+  // article's event reference is resolved once, then grouped by event id.
+  const published = (
+    await getCollection('articles', ({ data }) => !data.draft)
+  ).sort((a, b) => +b.data.pubDate - +a.data.pubDate);
+
+  const storiesByEventId = new Map<string, CollectionEntry<'articles'>[]>();
+  for (const article of published) {
+    // The event reference stores {collection, id}; group by the id.
+    const ref = article.data.event;
+    if (!ref) continue;
+    const bucket = storiesByEventId.get(ref.id) ?? [];
+    bucket.push(article);
+    storiesByEventId.set(ref.id, bucket);
+  }
+
   return events.map((event) => {
     const others = sortEvents(
       events.filter(
@@ -18,16 +35,20 @@ export async function getStaticPaths() {
           candidate.id !== event.id && deriveStatus(candidate) === 'upcoming',
       ),
     ).slice(0, 2);
-    return { params: { slug: event.id }, props: { event, others } };
+    return {
+      params: { slug: event.id },
+      props: { event, others, stories: storiesByEventId.get(event.id) ?? [] },
+    };
   });
 }
 
 interface Props {
   event: CollectionEntry<'events'>;
   others: CollectionEntry<'events'>[];
+  stories: CollectionEntry<'articles'>[];
 }
 
-const { event, others } = Astro.props;
+const { event, others, stories } = Astro.props;
 const { Content } = await render(event);
 const { title, poster, summary, venue, mapUrl, contact, startAt, endAt } =
   event.data;
@@ -129,6 +150,24 @@ const eventSchema = {
       </div>
     </div>
   </article>
+
+  {
+    stories.length > 0 && (
+      <section class="bg-jasmine">
+        <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+          <h2 class="font-display text-2xl font-semibold text-ink sm:text-3xl">
+            Stories from this event ·{' '}
+            <span lang="kn">ಈ ಕಾರ್ಯಕ್ರಮದ ಕಥನಗಳು</span>
+          </h2>
+          <div class="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {stories.map((story) => (
+              <ArticleCard post={story} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   {
     others.length > 0 && (
