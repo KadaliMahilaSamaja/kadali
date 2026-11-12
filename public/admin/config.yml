@@ -23,7 +23,7 @@ backend:
   name: github
   repo: KadaliMahilaSamaja/kadali # TODO: replace with the real owner/repo
   branch: main
-  base_url: https://sveltia-cms-auth.example.workers.dev # TODO: replace with your sveltia-cms-auth Worker URL
+  base_url: https://kadali-cms-auth.abhijith-nuchinj.workers.dev
   auth_methods: [oauth] # OAuth sign-in only (see base_url TODO)
 
 # Editorial Workflow for article/event/announcement/gallery content.
@@ -34,7 +34,7 @@ publish_mode:
   stages: [draft, pending_publish]
   direct_publish: false
 
-site_url: https://kadali.example.org # TODO: replace with the real site URL
+site_url: https://kadali.pages.dev
 
 # Images uploaded in the CMS are committed to public/images/uploads and
 # referenced from the site as /images/uploads/...

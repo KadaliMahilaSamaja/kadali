@@ -51,7 +51,7 @@ Members only need to authorize this app once at their first sign-in; they do not
 3. Add:
    - `GITHUB_CLIENT_ID` = Client ID from A3.
    - `GITHUB_CLIENT_SECRET` = the secret from A3. Tick **Secret** so it is hidden.
-   - `ALLOWED_DOMAINS` = the site hostnames allowed to receive tokens, comma-separated. Example once the real domain is live: `kadali.org, www.kadali.org`. Use the placeholder `kadali.example.org` until then. This stops other websites from using your Worker.
+   - `ALLOWED_DOMAINS` = the site hostnames allowed to receive tokens, comma-separated. Example once the real domain is live: `kadali.org, www.kadali.org`. Use the placeholder `kadali.pages.dev` until then. This stops other websites from using your Worker.
 4. Click **Save and deploy**.
 
 Local development sign-in only: temporarily add `localhost, cms.netlify.com` to `ALLOWED_DOMAINS`, or set `site_domain` in the CMS config for local use. Never deploy that config to production.
@@ -128,7 +128,7 @@ Members sign in with their own GitHub account. Membership = collaborator access 
 3. Next to "Manage access", click **Add people**.
 4. Type her account name and click the matching name.
 5. Under "Choose a role", select **Write**, then click **Add NAME to REPOSITORY**.
-6. GitHub emails her an invitation; she must accept it. After that she can sign in at `kadali.example.org/admin`.
+6. GitHub emails her an invitation; she must accept it. After that she can sign in at `kadali.pages.dev/admin`.
 
 ### Remove a member
 
