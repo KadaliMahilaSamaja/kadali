@@ -23,11 +23,9 @@ const articles = (
 ).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 let featuredArticle: CollectionEntry<'articles'> | undefined;
-const featuredArticleSlug = settings?.data.featuredArticle;
-if (featuredArticleSlug) {
-  const entry = await getEntry('articles', featuredArticleSlug).catch(
-    () => undefined,
-  );
+const featuredArticleRef = settings?.data.featuredArticle;
+if (featuredArticleRef) {
+  const entry = await getEntry(featuredArticleRef).catch(() => undefined);
   if (entry && !entry.data.draft) featuredArticle = entry;
 }
 featuredArticle ??= articles.find((article) => article.data.featured);
@@ -55,11 +53,9 @@ const galleries = (await getCollection('galleries')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
 let featuredGallery: CollectionEntry<'galleries'> | undefined;
-const featuredGallerySlug = settings?.data.featuredGallery;
-if (featuredGallerySlug) {
-  const entry = await getEntry('galleries', featuredGallerySlug).catch(
-    () => undefined,
-  );
+const featuredGalleryRef = settings?.data.featuredGallery;
+if (featuredGalleryRef) {
+  const entry = await getEntry(featuredGalleryRef).catch(() => undefined);
   if (entry) featuredGallery = entry;
 }
 featuredGallery ??= galleries.at(0);
