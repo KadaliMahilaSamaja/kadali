@@ -95,6 +95,25 @@ collections:
         widget: select
         options: [culture, literature, seva, spirituality, community]
         hint: Picks the section the article is filed under.
+      - name: event
+        label: Related event
+        widget: relation
+        collection: events
+        value_field: '{{slug}}'
+        display_fields: ['{{title}}']
+        search_fields: ['{{title}}']
+        required: false
+        hint: >-
+          Optional. Link this story to an event — the event page lists it
+          under "Stories from this event".
+      - name: tags
+        label: Tags
+        widget: list
+        label_singular: Tag
+        required: false
+        hint: >-
+          Optional short labels (e.g. kasuti, vachana) shown as chips;
+          readers can filter the Articles page by tag.
       - name: pubDate
         label: Publish date
         widget: datetime

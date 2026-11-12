@@ -23,6 +23,13 @@ const articles = defineCollection({
       'community',
     ]),
     pubDate: z.coerce.date(),
+    // Optional link to the event this story belongs to (stored as the
+    // event's id, e.g. 'monsoon-mela'). The event page lists matching
+    // stories under "Stories from this event".
+    event: reference('events').optional(),
+    // Optional free-form short labels (e.g. 'kasuti'). Rendered as chips
+    // and filterable on the articles index via ?tag=.
+    tags: z.array(z.string()).default([]),
     featured: z.boolean().default(false),
     draft: z.boolean().default(false),
   }),

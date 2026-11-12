@@ -16,7 +16,7 @@ interface Props {
 }
 
 const { post, arch = false } = Astro.props;
-const { title, description, cover, coverAlt, author, category, pubDate } =
+const { title, description, cover, coverAlt, author, category, pubDate, tags } =
   post.data;
 const { kn, en } = CATEGORY_LABELS[category];
 ---
@@ -26,6 +26,7 @@ const { kn, en } = CATEGORY_LABELS[category];
   data-title={title}
   data-description={description}
   data-category={category}
+  data-tags={tags.join(' ')}
   class="group h-full border border-ink/10 bg-cream"
 >
   <a href={`/articles/${post.id}`} class="flex h-full flex-col">
@@ -54,6 +55,18 @@ const { kn, en } = CATEGORY_LABELS[category];
         </span>
       </h3>
       <p class="font-body text-base text-stone">{description}</p>
+      {
+        tags.length > 0 && (
+          <ul class="flex flex-wrap gap-1.5" aria-label="Tags">
+            {tags.map((tag) => (
+              <li class="border border-ink/15 bg-jasmine px-2 py-0.5 font-ui text-xs font-medium lowercase text-stone">
+                <span aria-hidden="true">#</span>
+                {tag}
+              </li>
+            ))}
+          </ul>
+        )
+      }
       <p class="mt-auto pt-3 font-ui text-sm text-stone">
         {author} · <ArticleDate date={pubDate} />
       </p>

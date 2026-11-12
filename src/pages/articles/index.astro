@@ -18,6 +18,9 @@ const articles = (
 const featured = articles.find((article) => article.data.featured) ?? articles[0];
 const rest = articles.filter((article) => article.id !== featured?.id);
 
+// Distinct tags in use, alphabetically, for the filter chips below.
+const allTags = [...new Set(articles.flatMap((article) => article.data.tags))].sort();
+
 const filterChipBase =
   'border border-ink/15 bg-cream px-3 py-1.5 font-ui text-sm font-medium text-ink transition-colors duration-200 aria-[current=true]:border-rani aria-[current=true]:bg-rani aria-[current=true]:text-cream';
 ---
@@ -125,6 +128,25 @@ const filterChipBase =
         </nav>
       </div>
 
+      {
+        allTags.length > 0 && (
+          <nav aria-label="Filter articles by tag" class="mt-4 flex flex-wrap gap-2">
+            {allTags.map((tag) => (
+              <a
+                href={`/articles/?tag=${encodeURIComponent(tag)}`}
+                data-tag-link
+                data-tag={tag}
+                aria-current="false"
+                class={filterChipBase}
+              >
+                <span aria-hidden="true">#</span>
+                {tag}
+              </a>
+            ))}
+          </nav>
+        )
+      }
+
       <!-- Article grid: first card gets the temple-arch top -->
       <div data-article-grid class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {rest.map((post, index) => <ArticleCard post={post} arch={index === 0} />)}
@@ -153,12 +175,16 @@ const filterChipBase =
   const links = Array.from(
     document.querySelectorAll<HTMLAnchorElement>('[data-category-link]'),
   );
+  const tagLinks = Array.from(
+    document.querySelectorAll<HTMLAnchorElement>('[data-tag-link]'),
+  );
   const emptyMessage = document.querySelector<HTMLElement>('[data-article-empty]');
 
   // Reveal the search control now that script support is confirmed.
   if (searchInput) searchInput.hidden = false;
 
   let activeCategory = '';
+  let activeTag = '';
 
   function applyFilters() {
     const query = (searchInput?.value ?? '').trim().toLowerCase();
@@ -167,9 +193,15 @@ const filterChipBase =
     for (const card of cards) {
       const matchesCategory =
         !activeCategory || card.dataset.category === activeCategory;
-      const haystack = `${card.dataset.title ?? ''} ${card.dataset.description ?? ''}`.toLowerCase();
+      const matchesTag =
+        !activeTag ||
+        (card.dataset.tags ?? '')
+          .toLowerCase()
+          .split(/\s+/)
+          .includes(activeTag.toLowerCase());
+      const haystack = `${card.dataset.title ?? ''} ${card.dataset.description ?? ''} ${card.dataset.tags ?? ''}`.toLowerCase();
       const matchesQuery = !query || haystack.includes(query);
-      const show = matchesCategory && matchesQuery;
+      const show = matchesCategory && matchesTag && matchesQuery;
       card.classList.toggle('hidden', !show);
       if (show) visible += 1;
     }
@@ -180,12 +212,20 @@ const filterChipBase =
       const isActive = (link.dataset.category ?? '') === activeCategory;
       link.setAttribute('aria-current', String(isActive));
     }
+
+    for (const link of tagLinks) {
+      const isActive =
+        (link.dataset.tag ?? '').toLowerCase() === activeTag.toLowerCase();
+      link.setAttribute('aria-current', String(isActive));
+    }
   }
 
   function syncUrl() {
     const url = new URL(window.location.href);
     if (activeCategory) url.searchParams.set('category', activeCategory);
     else url.searchParams.delete('category');
+    if (activeTag) url.searchParams.set('tag', activeTag);
+    else url.searchParams.delete('tag');
     window.history.replaceState(null, '', url);
   }
 
@@ -201,10 +241,31 @@ const filterChipBase =
 
   searchInput?.addEventListener('input', applyFilters);
 
-  // Restore a shared/bookmarked ?category= filter on load.
-  const initial = new URLSearchParams(window.location.search).get('category');
+  for (const link of tagLinks) {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      const next = link.dataset.tag ?? '';
+      activeTag = activeTag.toLowerCase() === next.toLowerCase() ? '' : next;
+      syncUrl();
+      applyFilters();
+    });
+  }
+
+  // Restore a shared/bookmarked ?category= / ?tag= filter on load.
+  const params = new URLSearchParams(window.location.search);
+  const initial = params.get('category');
   if (initial && links.some((link) => link.dataset.category === initial)) {
     activeCategory = initial;
+    applyFilters();
+  }
+  const initialTag = params.get('tag');
+  if (
+    initialTag &&
+    tagLinks.some(
+      (link) => (link.dataset.tag ?? '').toLowerCase() === initialTag.toLowerCase(),
+    )
+  ) {
+    activeTag = initialTag;
     applyFilters();
   }
 </script>

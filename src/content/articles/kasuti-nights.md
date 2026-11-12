@@ -5,6 +5,8 @@ cover: "/images/uploads/cover-kasuti-nights.svg"
 coverAlt: "A strip of kasuti cross-stitch diamonds over a temple arch outline"
 author: "Lalita Hegde"
 category: "culture"
+event: monsoon-mela
+tags: [kasuti, crafts, heritage]
 pubDate: 2026-09-05
 ---
 
