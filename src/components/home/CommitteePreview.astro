@@ -62,14 +62,13 @@ const committee = (await getCollection('people')).sort(
           </div>
         </div>
 
-        {/* The mockup's swipe band: member cards scroll sideways at every
-            size, the next face always peeking past the edge. */}
-        <div class="rail-x mt-10 pb-2">
+        {/* Mobile: swipe band */}
+        <div class="rail-x mt-10 pb-2 md:hidden">
           {committee.map((person, i) => {
             const { name, nameKn, role, photo } = person.data;
             return (
               <div
-                class="reveal min-w-[64%] snap-center sm:min-w-[38%] md:min-w-[16rem]"
+                class="reveal min-w-[64%] snap-center sm:min-w-[38%]"
                 style={`--reveal-delay: ${i * 70}ms`}
               >
                 <article class="flex h-full flex-col items-center rounded-b-[2rem] border border-ink/10 bg-milk px-3 pb-5 pt-6 text-center sm:px-4">
@@ -95,9 +94,42 @@ const committee = (await getCollection('people')).sort(
             );
           })}
         </div>
-        <p class="swipe-hint" aria-hidden="true">
+        <p class="swipe-hint md:hidden" aria-hidden="true">
           ಸರಿಸಿ ಪರಿಚಯ ಪಡೆಯಿರಿ
         </p>
+
+        {/* Tablet & Desktop: clean grid */}
+        <div class="hidden md:grid md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
+          {committee.map((person, i) => {
+            const { name, nameKn, role, photo } = person.data;
+            return (
+              <div
+                class="reveal"
+                style={`--reveal-delay: ${i * 60}ms`}
+              >
+                <article class="group flex h-full flex-col items-center rounded-b-[2rem] border border-ink/10 bg-milk px-4 pb-6 pt-6 text-center transition-transform duration-300 hover:-translate-y-1">
+                  <div class="w-full overflow-hidden rounded-t-[999px] border border-ink/10">
+                    <img
+                      src={photo}
+                      alt={`ಕದಳಿ ಸಮಿತಿಯ ಸದಸ್ಸೆ ${nameKn ?? name}`}
+                      width="720"
+                      height="900"
+                      loading="lazy"
+                      decoding="async"
+                      class="aspect-[4/5] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    />
+                  </div>
+                  <h3 class="mt-4 text-lg font-semibold leading-snug">
+                    <span lang="kn">{nameKn ?? name}</span>
+                  </h3>
+                  <p class="mt-1.5 font-ui text-sm font-semibold text-leaf">
+                    <span lang="kn">{ROLE_LABELS_KN[role]}</span>
+                  </p>
+                </article>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   )

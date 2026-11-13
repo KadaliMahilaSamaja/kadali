@@ -16,7 +16,7 @@ const href = `/events/${event.id}`;
 <article
   class:list={[
     'group flex h-full flex-col border border-ink/10 bg-milk',
-    wide && 'md:flex-row',
+    wide ? 'overflow-hidden rounded-t-[3rem] md:rounded-t-none md:rounded-l-[9rem] md:flex-row' : '',
   ]}
 >
   <a
@@ -24,7 +24,7 @@ const href = `/events/${event.id}`;
     class:list={[
       'relative overflow-hidden',
       wide
-        ? 'md:w-64 md:shrink-0 md:rounded-l-[9rem]'
+        ? 'md:w-72 lg:w-80 md:shrink-0 md:rounded-l-[9rem]'
         : 'rounded-t-[9rem]',
     ]}
     tabindex="-1"
@@ -90,9 +90,20 @@ const href = `/events/${event.id}`;
     </p>
     {
       wide && (
-        <p class="mt-3 line-clamp-3 font-body text-base text-stone">
-          <span lang="kn">{summary}</span>
-        </p>
+        <>
+          <p class="mt-3 line-clamp-3 font-body text-base text-stone">
+            <span lang="kn">{summary}</span>
+          </p>
+          <div class="mt-5">
+            <a
+              href={href}
+              class="inline-flex min-h-[42px] items-center justify-center gap-1.5 rounded-full bg-leaf px-6 py-2 font-ui text-sm font-semibold text-milk transition-colors hover:bg-turmeric hover:text-ink focus-visible:outline-leaf active:translate-y-[1px]"
+            >
+              <span>ಕಾರ್ಯಕ್ರಮದ ವಿವರ</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </>
       )
     }
   </div>

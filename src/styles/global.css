@@ -21,6 +21,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
   }
 
   /* Floor 34: clip horizontal overflow on both, never hidden, never 100vw */
@@ -131,6 +132,12 @@
     font-size: var(--text-sm);
     font-weight: 600;
     letter-spacing: 0.08em;
+  }
+
+  /* Seamless transition into footer when previous section has a dark leaf band */
+  main:has(> section:last-child.bg-leaf) + footer,
+  main:has(> .bg-leaf:last-child) + footer {
+    margin-top: 0;
   }
 
   /* Long-form article markdown (apply to the rendered body container) */

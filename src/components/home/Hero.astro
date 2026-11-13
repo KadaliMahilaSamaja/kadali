@@ -219,10 +219,10 @@ const afterWords = 140 + wordCount * 90;
   .hero-title {
     font-family: var(--font-kn-serif);
     font-weight: 500;
-    /* Noto Serif Kannada runs wider than the mockup's Tiro — cap the size so
-       each beat line ("ಭಕ್ತಿ ಬೇರು.") stays one rendered line. */
-    font-size: clamp(2.4rem, 1rem + 4.5vw, 4rem);
-    line-height: 1.18;
+    /* Fluid font size with Kannada clearance: 1.28 line-height gives room for
+       stacked ottakshara (subscript consonants) and vowel signs. */
+    font-size: clamp(2rem, 0.9rem + 4.2vw, 4rem);
+    line-height: 1.28;
     color: var(--color-milk);
     text-wrap: initial;
   }
@@ -406,10 +406,17 @@ const afterWords = 140 + wordCount * 90;
     pointer-events: none;
   }
 
+  @media (max-width: 47.99rem) {
+    .art-caption {
+      display: none;
+    }
+  }
+
   .scroll-cue {
     position: absolute;
     bottom: 14px;
-    left: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 5;
     display: flex;
     align-items: center;
