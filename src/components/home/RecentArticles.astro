@@ -1,0 +1,69 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from './dates';
+import { CATEGORY_LABELS } from '../articles/categories';
+
+interface Props {
+  articles: CollectionEntry<'articles'>[];
+}
+
+const { articles } = Astro.props;
+---
+
+<section class="bg-jasmine" aria-labelledby="recent-articles-heading">
+  <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:py-24">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <h2 id="recent-articles-heading" class="reveal text-section font-bold">
+        ಇತ್ತೀಚಿನ ಬರಹಗಳು
+      </h2>
+      <a
+        href="/articles"
+        class="underline-reveal font-ui text-base font-semibold text-leaf active:text-sindoor"
+      >
+        ಎಲ್ಲಾ ಬರಹಗಳು
+      </a>
+    </div>
+
+    <div class="mt-10 grid gap-6 md:grid-cols-2">
+      {
+        articles.map((article, i) => {
+          const { title, description, cover, coverAlt, author, category, pubDate } =
+            article.data;
+          const href = `/articles/${article.id}`;
+          return (
+            <article class="reveal group flex h-full flex-col border border-ink/10 bg-cream" style={`--reveal-delay: ${i * 90}ms`}>
+              <a href={href} class="overflow-hidden" tabindex="-1" aria-hidden="true">
+                <img
+                  src={cover}
+                  alt=""
+                  width="1200"
+                  height="675"
+                  loading="lazy"
+                  decoding="async"
+                  class="aspect-[16/9] w-full object-cover"
+                />
+              </a>
+              <div class="flex flex-1 flex-col p-5 sm:p-6">
+                <span class="badge w-fit px-2 py-1 text-xs">
+                  <span lang="kn">{CATEGORY_LABELS[category].kn}</span>
+                </span>
+                <h3 class="mt-3 text-2xl leading-snug">
+                  <a href={href} class="underline-reveal text-leaf">{title}</a>
+                </h3>
+                <p class="mt-3 line-clamp-3 font-body text-base text-stone">
+                  <span lang="kn">{description}</span>
+                </p>
+                <p class="mt-4 font-ui text-sm text-stone">
+                  <span lang="kn">{author}</span>
+                </p>
+                <p class="mt-0.5 font-ui text-sm text-stone">
+                  <span lang="kn">{formatDate(pubDate)}</span>
+                </p>
+              </div>
+            </article>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>

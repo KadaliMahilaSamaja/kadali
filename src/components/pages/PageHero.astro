@@ -1,7 +1,7 @@
 ---
 /**
  * Shared intro band for the standalone pages (about / contact / privacy).
- * Alternates section treatment per the design brief: rani / jasmine / cream.
+ * Alternates section treatment per the design brief: leaf / jasmine / cream.
  * Decorative Arch sits off to the right on wider screens.
  */
 import Arch from '../motifs/Arch.astro';
@@ -12,14 +12,14 @@ interface Props {
   /** Kannada subtitle line — always rendered with lang="kn". */
   kn?: string;
   lede?: string;
-  tone?: 'rani' | 'jasmine' | 'cream';
+  tone?: 'leaf' | 'jasmine' | 'cream';
 }
 
-const { eyebrow, title, kn, lede, tone = 'rani' } = Astro.props;
-const onRani = tone === 'rani';
+const { eyebrow, title, kn, lede, tone = 'leaf' } = Astro.props;
+const onLeaf = tone === 'leaf';
 
 const tones: Record<NonNullable<Props['tone']>, string> = {
-  rani: 'bg-rani text-cream',
+  leaf: 'bg-leaf text-milk',
   jasmine: 'bg-jasmine text-ink',
   cream: 'bg-cream text-ink border-b border-ink/10',
 };
@@ -30,19 +30,24 @@ const tones: Record<NonNullable<Props['tone']>, string> = {
     width={150}
     class:list={[
       'absolute -right-6 top-10 hidden sm:block',
-      onRani ? 'text-cream/15' : 'text-rani/10',
+      onLeaf ? 'text-milk/15' : 'text-leaf/10',
     ]}
   />
   <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
     <p
       class:list={[
         'font-ui text-xs font-semibold tracking-[0.2em] uppercase',
-        onRani ? 'text-cream/80' : 'text-rani',
+        onLeaf ? 'text-milk/80' : 'text-leaf',
       ]}
     >
       {eyebrow}
     </p>
-    <h1 class="mt-4 max-w-3xl font-display text-4xl font-semibold sm:text-5xl">
+    <h1
+      class:list={[
+        'mt-4 max-w-3xl font-display text-4xl font-bold sm:text-5xl',
+        onLeaf && 'text-milk',
+      ]}
+    >
       {title}
     </h1>
     {
@@ -51,7 +56,7 @@ const tones: Record<NonNullable<Props['tone']>, string> = {
           lang="kn"
           class:list={[
             'mt-3 font-display text-xl',
-            onRani ? 'text-cream/90' : 'text-rani',
+            onLeaf ? 'text-milk/90' : 'text-leaf',
           ]}
         >
           {kn}
@@ -63,7 +68,7 @@ const tones: Record<NonNullable<Props['tone']>, string> = {
         <p
           class:list={[
             'mt-5 max-w-2xl font-body text-lg',
-            onRani ? 'text-cream/85' : 'text-stone',
+            onLeaf ? 'text-milk/85' : 'text-stone',
           ]}
         >
           {lede}

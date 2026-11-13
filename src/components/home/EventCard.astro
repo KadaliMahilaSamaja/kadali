@@ -4,20 +4,28 @@ import { dayOfMonth, knMonth, timeRangeIST, yearOf } from './dates';
 
 interface Props {
   event: CollectionEntry<'events'>;
+  /** Wide layout for a lone event: poster beside details, not a lone grid cell. */
+  wide?: boolean;
 }
 
-const { event } = Astro.props;
+const { event, wide = false } = Astro.props;
 const { title, poster, summary, venue, startAt, endAt } = event.data;
 const href = `/events/${event.id}`;
 ---
 
-<article class="group flex h-full flex-col border border-ink/10 bg-cream">
+<article
+  class:list={[
+    'group flex h-full flex-col border border-ink/10 bg-jasmine',
+    wide && 'md:flex-row',
+  ]}
+>
   <a
     href={href}
-    class="overflow-hidden"
+    class:list={['overflow-hidden', wide && 'md:w-60 md:shrink-0']}
     tabindex="-1"
     aria-hidden="true"
   >
+    <!-- Posters are portrait (850x1100); the slot keeps their aspect -->
     <img
       src={poster}
       alt=""
@@ -25,29 +33,34 @@ const href = `/events/${event.id}`;
       height="1100"
       loading="lazy"
       decoding="async"
-      class="aspect-[4/3] w-full object-cover transition-transform duration-200 group-hover:scale-[1.02]"
+      class:list={[
+        'aspect-[4/5] w-full object-cover',
+        wide && 'md:h-full md:min-h-full',
+      ]}
     />
   </a>
-  <div class="flex flex-1 gap-4 p-5 sm:gap-5">
+  <div class:list={['flex flex-1 gap-4 p-5 sm:gap-5', wide && 'md:items-start md:p-6']}>
     <div class="w-14 shrink-0 border-r border-ink/10 pr-3 text-center">
-      <p class="font-display text-3xl leading-none text-rani">
+      <p class="text-3xl leading-none text-leaf font-semibold">
         {dayOfMonth(startAt)}
       </p>
-      <p class="mt-1 font-ui text-[0.7rem] leading-tight text-stone">
+      <p class="mt-1 font-ui text-xs leading-tight text-stone">
         <span lang="kn">{knMonth(startAt)}</span>
       </p>
-      <p class="font-ui text-[0.7rem] text-stone">{yearOf(startAt)}</p>
+      <p class="font-ui text-xs text-stone">{yearOf(startAt)}</p>
     </div>
     <div class="min-w-0 flex-1">
-      <p class="font-ui text-xs font-semibold tracking-wider text-rani uppercase">
-        {timeRangeIST(startAt, endAt)}
+      <p class="font-ui text-sm font-medium text-leaf">
+        <span lang="kn">{timeRangeIST(startAt, endAt)}</span>
       </p>
-      <h3 class="mt-1 font-display text-xl leading-snug">
-        <a href={href} class="underline-reveal text-ink">{title}</a>
+      <h3 class="mt-1 text-xl leading-snug">
+        <a href={href} class="underline-reveal text-leaf">{title}</a>
       </h3>
-      <p class="mt-2 font-ui text-sm text-stone">{venue}</p>
-      <p class="mt-2 line-clamp-2 font-body text-base text-stone">
-        {summary}
+      <p class="mt-2 font-ui text-sm text-stone">
+        <span lang="kn">{venue}</span>
+      </p>
+      <p class="mt-2 line-clamp-3 font-body text-base text-stone">
+        <span lang="kn">{summary}</span>
       </p>
     </div>
   </div>

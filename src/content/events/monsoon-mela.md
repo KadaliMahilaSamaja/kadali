@@ -1,14 +1,14 @@
 ---
-title: "Monsoon Mela 2026"
+title: "ಮಾನ್ಸೂನ್ ಮೆಳಾ 2026"
 poster: "/images/uploads/poster-monsoon-mela.svg"
-summary: "A day-long mela of kasuti stalls, vachana storytelling for children, and a collective lunch — our biggest fundraiser of the year."
-venue: "Kadiyali Community Hall, Udupi"
+summary: "ಕಸುತಿ ಅಂಗಡಿಗಳು, ಮಕ್ಕಳಿಗಾಗಿ ವಚನ ಕಥೆಗಳು, ಸಾಮೂಹಿಕ ಊಟ. ವರುಷದ ಅತಿ ದೊಡ್ಡ ದಿನದ ಮೆಳಾ."
+venue: "ಕಾಡಿಯಳಿ ಸಮುದಾಯ ಭವನ, ಉಡುಪಿ"
 startAt: 2026-09-20T10:00:00+05:30
 endAt: 2026-09-20T16:00:00+05:30
 status: auto
 featured: false
 ---
 
-The Monsoon Mela is the one day in the year when every working group of the club shares a hall. Kasuti members sold stitched pouches and table runners; the vachana circle ran storytelling corners for children; the seva group collected school supplies for the year ahead.
+ಮಾನ್ಸೂನ್ ಮೆಳಾ ಎಂದರೆ ಸಂಘದ ಎಲ್ಲಾ ಕೆಲಸದ ಗುಂಪುಗಳೂ ಒಂದೇ ಭವನ ಹಂಚಿಕೊಳ್ಳುವ ವರುಷದ ಒಂದೇ ದಿನ. ಕಸುತಿ ಗುಂಪು ಹೆಣೆದ ಪಿಂಗಾಣಿ ಚೀಲ, ಮೆಜಿನ ರಂಬೆಗಳ ಮಾರಾಟ ಇಟ್ಟಿತ್ತು; ವಚನ ವೃತ್ತ ಮಕ್ಕಳಿಗಾಗಿ ಕಥೆಯ ಮೂಲೆ ನಡೆಸಿತ್ತು; ಸೇವಾ ಗುಂಪು ಮುಂದಿನ ವರುಷಕ್ಕೆ ಶಾಲಾ ಸಾಮಗ್ರಿ ಸಂಗ್ರಹಿಸಿತ್ತು.
 
-The 2026 mela raised enough to fund the winter kit drive for the Zilla Parishad school in Hirebetu. Thank you to every woman who cooked, stitched, carried chairs, or simply came.
+2026ರ ಮೆಳಾ ಹೈರೆಬೆಟು ಜಿಲ್ಲಾ ಪಂಚಾಯಿತಿ ಶಾಲೆಯ ಚಳಿಗಾಲದ ಕಿಟ್ ಯೋಜನೆಗೆ ಸಾಕಷ್ಟು ಸಂಗ್ರಹ ಬೆಳೆಸಿತು. ಅಡುಗೆ ಮಾಡಿದ, ಹೆಣೆದ, ಕುರ್ಚಿ ಹೊತ್ತ, ಕೇವಲ ಬಂದ ಪ್ರತಿಯೊಬ್ಬ ಮಹಿಳೆಗೂ ವಂದನೆ.

@@ -1,0 +1,67 @@
+---
+/**
+ * Layered mandala medallion — dotted outer ring, a ring of sixteen solid
+ * petals, an inner star of eight outlined petals and a dotted heart.
+ * The brochure's big orange medallion. Ink it with currentColor via `class`.
+ */
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+
+const outerPetals = Array.from({ length: 16 }, (_, i) => i * 22.5);
+const innerPetals = Array.from({ length: 8 }, (_, i) => i * 45);
+const heartDots = Array.from({ length: 8 }, (_, i) => i * 45);
+---
+
+<svg
+  viewBox="0 0 200 200"
+  fill="none"
+  class={className}
+  aria-hidden="true"
+  role="presentation"
+>
+  <!-- dotted outer rim -->
+  <circle
+    cx="100"
+    cy="100"
+    r="95"
+    stroke="currentColor"
+    stroke-width="3"
+    stroke-linecap="round"
+    stroke-dasharray="0.2 11"></circle>
+
+  <!-- sixteen solid petals -->
+  {outerPetals.map((angle) => (
+    <path
+      d="M100 10 C 107 30 107 44 100 55 C 93 44 93 30 100 10 Z"
+      fill="currentColor"
+      transform={`rotate(${angle} 100 100)`}
+    />
+  ))}
+
+  <!-- eight outlined diamond petals -->
+  {innerPetals.map((angle) => (
+    <path
+      d="M100 46 L114 82 L100 118 L86 82 Z"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linejoin="round"
+      transform={`rotate(${angle + 22.5} 100 100)`}
+    />
+  ))}
+
+  <!-- dotted heart -->
+  <circle cx="100" cy="100" r="22" stroke="currentColor" stroke-width="2.5"></circle>
+  <circle cx="100" cy="100" r="11" fill="currentColor"></circle>
+  {heartDots.map((angle) => (
+    <circle
+      cx="100"
+      cy="34"
+      r="2.2"
+      fill="currentColor"
+      transform={`rotate(${angle + 22.5} 100 100)`}
+    />
+  ))}
+</svg>

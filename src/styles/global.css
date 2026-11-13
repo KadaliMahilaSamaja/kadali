@@ -1,3 +1,19 @@
+/* Hallmark · shape: Devi-field scroll — split hero, five object sections · genre: editorial · theme: brand · redesign: full
+ * hero: Split — Kannada display left, Akkamahadevi painting right on the leaf field; stacked on phones · nav: kept wordmark + drawer, Kannada labels · footer: kept three-band mast, Kannada · imagery: the painting (real) + CMS photo slots · signature: the Akkamahadevi painting, full-strength on the first screen
+ * axes: light/high-contrast-serif/warm · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P: hero owns screen one, five sections follow at one gap scale · H: 5-word Kannada head + one sentence, painting right · E: max-w-6xl capped, gutters grow at 1920 · S: every section an object (pillar set, event cards, article cards, people grid, ink join band) · R: py-16/py-20 rhythm, heads lead their sections · V: ~200 visible words · weakest: photo slots hold seed SVGs until the club uploads real photos — CMS slots kept, named in the handoff */
+/* Hallmark · waive 77 · the ink join band is the page's single one-line-and-action band · a statement for Kadali set large, before the footer */
+/* Hallmark · waive 79 · the painting rests on quiet painted ground below the fold · the arch motif fills the field, the screen breathes */
+/* Hallmark · waive 49b · Kannada compound titles wrap to two lines by design · nowrap would clip the screen */
+/* Hallmark · waive 26b · no form control exists on this screen · hover, focus and active states shipped on every link and button */
+/* Hallmark · waive 37 · four font slots, each one role · the Kannada serif stands in as the body voice for Kannada prose */
+/* Hallmark · answered F3 · the hero h1 sets its own lines with nowrap word spans · balance only evens them, never breaks a Kannada conjunct */
+/* Hallmark · dismissed 28a · the lazy images sit below the fold · the LCP is the eager hero painting */
+/* Hallmark · reworded the homepage headings into Kannada at the user's request · the same sections, translated ("upcoming events" to ಮುಂಬರುವ ಕಾರ್ಯಕ್ರಮಗಳು and the rest) */
+/* Hallmark · dropped the announcements and gallery-preview homepage sections · the user named the homepage's sections; both routes and CMS collections remain (kept: links 10/10) */
+/* Hallmark · hero-review: fix · 2 findings · 2 resolved · finish-review: subagent · 4 findings · 4 resolved */
+/* Hallmark · built: the project · redesign: polish (motion) · hero word stagger + scroll reveals + mobile snap rails · transform/opacity only · visible without scripting · reduced-motion neutralised above */
+/* Hallmark · redesign: full v3.0.0 · cultural-brochure skin — peach ground (cream/jasmine), deep-leaf green frame on header + join band + footer, turmeric badges and motifs (Mandala, Bloom, FlowerLine), display headings in the poster sans (Work Sans + Noto Sans Kannada) · serif stays for prose */
 /* Kadali global styles — Tailwind v4 CSS-first entry. */
 @import "tailwindcss";
 @import "./tokens.css";
@@ -7,6 +23,15 @@
     scroll-behavior: smooth;
   }
 
+  /* Floor 34: clip horizontal overflow on both, never hidden, never 100vw */
+  html {
+    overflow-x: clip;
+  }
+
+  body {
+    overflow-x: clip;
+  }
+
   body {
     background-color: var(--color-cream);
     color: var(--color-ink);
@@ -14,6 +39,8 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  /* Brochure voice: every heading green and poster-bold unless a section
+     overrides (dark bands set cream on their headings explicitly). */
   h1,
   h2,
   h3,
@@ -21,17 +48,31 @@
   h5,
   h6 {
     font-family: var(--font-display);
-    font-weight: 600;
+    font-weight: 700;
+    color: var(--color-leaf);
     text-wrap: balance;
+    overflow-wrap: break-word;
   }
 
   :lang(kn) {
     font-family: var(--font-kn);
   }
 
-  /* Keyboard focus: 2px solid rani ring, offset from the edge */
+  /* Kannada headings carry the same poster-sans voice as the Latin display */
+  h1:lang(kn),
+  h2:lang(kn),
+  h3:lang(kn),
+  h4:lang(kn),
+  h5:lang(kn),
+  h6:lang(kn) {
+    font-family: var(--font-kn);
+    /* Kannada stacks conjuncts high and low — display sizes need the room */
+    line-height: 1.3;
+  }
+
+  /* Keyboard focus: 2px solid leaf ring, offset from the edge */
   :focus-visible {
-    outline: 2px solid var(--color-rani);
+    outline: 2px solid var(--color-leaf);
     outline-offset: 2px;
     border-radius: 2px;
   }
@@ -39,6 +80,12 @@
   ::selection {
     background-color: var(--color-turmeric);
     color: var(--color-ink);
+  }
+
+  /* F16: the browser chrome joins the palette */
+  body {
+    caret-color: var(--color-leaf);
+    scrollbar-color: var(--color-turmeric) var(--color-cream);
   }
 
   /* Respect users who prefer reduced motion */
@@ -57,6 +104,35 @@
 }
 
 @layer components {
+  /* Underline that sweeps in from the left on hover (pairs with the 1.02
+     image scale on card hovers; reduced motion is neutralised above). */
+  .underline-reveal {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1.5px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: background-size 200ms ease;
+  }
+  .underline-reveal:hover,
+  .group:hover .underline-reveal {
+    background-size: 100% 1.5px;
+  }
+
+  /* Brochure badge — the turmeric offer-chip from the reference art.
+     Ink text on turmeric passes at 5.7:1 (milk would fail at 2.4:1). */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    background-color: var(--color-turmeric);
+    color: var(--color-ink);
+    padding: 0.3rem 0.8rem;
+    font-family: var(--font-ui);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+
   /* Long-form article markdown (apply to the rendered body container) */
   .prose-kadali {
     font-family: var(--font-body);
@@ -72,8 +148,8 @@
   .prose-kadali h2,
   .prose-kadali h3 {
     font-family: var(--font-display);
-    font-weight: 600;
-    color: var(--color-ink);
+    font-weight: 700;
+    color: var(--color-leaf);
   }
 
   .prose-kadali h2 {
@@ -87,7 +163,7 @@
   }
 
   .prose-kadali a {
-    color: var(--color-rani);
+    color: var(--color-leaf);
     text-decoration: underline;
     text-decoration-color: var(--color-turmeric);
     text-decoration-thickness: 2px;
@@ -95,11 +171,11 @@
   }
 
   .prose-kadali a:hover {
-    text-decoration-color: var(--color-rani);
+    text-decoration-color: var(--color-leaf);
   }
 
   .prose-kadali blockquote {
-    border-left: 3px solid var(--color-rani);
+    border: 1px solid color-mix(in srgb, var(--color-ink) 10%, transparent);
     background-color: var(--color-jasmine);
     padding: 1rem 1.25rem;
     font-style: italic;
@@ -115,7 +191,7 @@
 
   .prose-kadali img {
     border-radius: 0; /* sharp edges are the Kadali look */
-    box-shadow: 0 10px 30px rgb(34 20 16 / 0.12);
+    box-shadow: var(--shadow-photo);
   }
 
   .prose-kadali ul,
@@ -145,5 +221,85 @@
   .prose-kadali hr {
     border: 0;
     border-top: 1px solid color-mix(in srgb, var(--color-stone) 35%, transparent);
+  }
+}
+
+@layer components {
+  /* ——— Homepage motion (polish run) — transform and opacity only ——— */
+
+  /* Hero entrance: each Kannada word rises into place on its own delay,
+     then the sentence, actions and painting follow. Pure CSS: runs with
+     scripting off; reduced motion is neutralised in the base layer. */
+  @keyframes kadali-rise {
+    from {
+      opacity: 0;
+      transform: translateY(0.6em);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes kadali-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .hero-rise {
+    display: inline-block;
+    animation: kadali-rise 650ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .hero-fade {
+    animation: kadali-fade 900ms ease-out both;
+  }
+
+  /* Scroll reveals: hidden only when the page's own script has marked the
+     document, so the page is fully visible with scripting off. */
+  html.js .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 600ms ease-out,
+      transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  html.js .reveal.is-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Rail children fade only: a vertical shift inside a horizontal overflow
+     container would spawn a vertical scrollbar mid-swipe. */
+  html.js .rail > .reveal {
+    transform: none;
+    transition: opacity 600ms ease-out;
+  }
+
+  /* Mobile-first snap rail: cards peek past the edge on phones, return to
+     the page grid from md up. Applied in the section markup. */
+  .rail {
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  @media (min-width: 48rem) {
+    .rail {
+      display: grid;
+      gap: 1.5rem;
+      overflow-x: visible;
+      scroll-snap-type: none;
+    }
   }
 }

@@ -4,5 +4,5 @@ nameKn: "ವಸುಧಾ ಭಾಗವತ"
 role: president
 photo: "/images/uploads/member-vasudha.svg"
 order: 1
-bio: "In Kadali since its first vachana circle in 2019. Chairs the monthly meeting and keeps the door open for new members."
+bio: "2019ರ ಮೊದಲ ವಚನ ವೃತ್ತದಿಂದ ಕದಲಿಯಲ್ಲಿ. ತಿಂಗಳ ಸಭೆ ನಡೆಸುತ್ತಾ, ಹೊಸ ಸದಸ್ಸೆಯರಿಗೆ ಬಾಗಿಲು ತೆರೆದಿಡುತ್ತಾರೆ."
 ---

@@ -1,9 +1,10 @@
 /**
- * Date formatting for the home components.
+ * Date formatting for the home components — Kannada output, IST pinned.
  *
  * Everything renders in IST (Asia/Kolkata) so build output is identical no
- * matter which machine or timezone builds the site. Kannada month names are
- * a fixed table rather than Intl output so we never depend on ICU data.
+ * matter which machine or timezone builds the site. Kannada month names and
+ * day-period words are fixed tables rather than Intl output so we never
+ * depend on ICU data.
  */
 
 const KN_MONTHS = [
@@ -23,12 +24,6 @@ const KN_MONTHS = [
 
 const TZ = 'Asia/Kolkata';
 
-const fullDateFmt = new Intl.DateTimeFormat('en-IN', {
-  timeZone: TZ,
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric',
-});
 const dayFmt = new Intl.DateTimeFormat('en-IN', { timeZone: TZ, day: 'numeric' });
 const monthIdxFmt = new Intl.DateTimeFormat('en-US', {
   timeZone: TZ,
@@ -42,9 +37,9 @@ const clockFmt = new Intl.DateTimeFormat('en-IN', {
   hour12: true,
 });
 
-/** "13 December 2026" (en-IN, IST). */
+/** "13 ಡಿಸೆಂಬರ್ 2026" (Kannada month, IST). */
 export function formatDate(date: Date): string {
-  return fullDateFmt.format(date);
+  return `${dayFmt.format(date)} ${knMonth(date)} ${yearFmt.format(date)}`;
 }
 
 /** "13" — the big day number for date blocks. */
@@ -63,16 +58,42 @@ export function yearOf(date: Date): string {
   return yearFmt.format(date);
 }
 
-/** "4:00 – 6:30 pm IST" — meridiem deduped when both ends share it. */
-export function timeRangeIST(start: Date, end?: Date): string {
-  const from = clockFmt.format(start);
-  if (!end) return `${from} IST`;
+/** Day-period word by clock hour: morning, noon, evening, night. */
+function knPeriod(hour: number): string {
+  if (hour >= 5 && hour < 12) return 'ಬೆಳಿಗ್ಗೆ';
+  if (hour >= 12 && hour < 17) return 'ಮಧ್ಯಾಹ್ನ';
+  if (hour >= 17 && hour < 20) return 'ಸಂಜೆ';
+  return 'ರಾತ್ರಿ';
+}
 
-  const to = clockFmt.format(end);
-  const meridiem = (t: string) => t.replace(/\s+/g, ' ').slice(-2).toLowerCase();
-  if (meridiem(from) === meridiem(to)) {
-    const bare = from.replace(/\s*(am|pm)\s*$/i, '');
-    return `${bare} – ${to} IST`;
+/**
+ * "ಮಧ್ಯಾಹ್ನ 4:00 – ಸಂಜೆ 6:30" — the period word is dropped from the second
+ * time when both ends share it. Hour numerals are 12-hour, IST.
+ */
+export function timeRangeIST(start: Date, end?: Date): string {
+  const from = knClock(start);
+  if (!end) return from;
+
+  const to = knClock(end);
+  if (knPeriod(istHour(start)) === knPeriod(istHour(end))) {
+    // Same period: strip the leading word from the second time.
+    return `${from} – ${to.replace(/^\S+\s+/, '')}`;
   }
-  return `${from} – ${to} IST`;
+  return `${from} – ${to}`;
+}
+
+/** "ಸಂಜೆ 4:00" — period word + 12-hour clock, from Intl's IST parts. */
+function knClock(date: Date): string {
+  const parts = clockFmt.formatToParts(date);
+  const hour = Number(parts.find((p) => p.type === 'hour')?.value ?? 0);
+  const minute = parts.find((p) => p.type === 'minute')?.value ?? '00';
+  return `${knPeriod(istHour(date))} ${hour % 12 || 12}:${minute}`;
+}
+
+/** The IST clock hour (0–23), derived from Intl parts, not build-machine time. */
+function istHour(date: Date): number {
+  const parts = clockFmt.formatToParts(date);
+  const hour = Number(parts.find((p) => p.type === 'hour')?.value ?? 0);
+  const dayPeriod = parts.find((p) => p.type === 'dayPeriod')?.value ?? '';
+  return dayPeriod.toUpperCase() === 'PM' ? (hour % 12) + 12 : hour % 12;
 }

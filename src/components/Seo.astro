@@ -7,10 +7,10 @@ interface Props {
 }
 
 const {
-  title = 'Kadali',
+  title = 'ಕದಲಿ ಮಹಿಳಾ ಸಂಘ (Kadali), ಉಡುಪಿ',
   description =
-    "Kadali is a women's cultural collective in Karnataka — vachana circles, kasuti stitching, seva, and community.",
-  image = '/images/og-default.svg',
+    'ಅಕ್ಕಮಹಾದೇವಿಯ ವಚನಗಳ ನೆನಪಲ್ಲಿ ಬೆಳೆಯುವ, ಉಡುಪಿಯ ಮಹಿಳೆಯರ ಒಡನಾಡು. ವಚನ ವೃತ್ತ, ಕಸುತಿ ಹೆಣಿಗೆ, ಸೇವೆ.',
+  image = '/images/akkamahadevi-hero.png',
   type = 'website',
 } = Astro.props;
 
@@ -29,7 +29,7 @@ const ogImage = new URL(image, Astro.site ?? 'https://kadali.example.org').href;
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 
-<meta property="og:site_name" content="Kadali" />
+<meta property="og:site_name" content="ಕದಲಿ ಮಹಿಳಾ ಸಂಘ" />
 <meta property="og:type" content={type} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />

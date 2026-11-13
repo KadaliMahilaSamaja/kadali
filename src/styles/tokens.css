@@ -5,24 +5,33 @@
  * contrast on the cream background.
  */
 @theme {
-  /* Palette — Karnataka-inspired */
-  --color-ink: #221410; /* near-black warm brown, body text */
-  --color-rani: #8e1f3b; /* primary — Karnataka rani maroon */
+  /* Palette — warm cultural-brochure: peach ground, deep-leaf green frame,
+     turmeric-orange accents, white florals. */
+  --color-ink: #20281f; /* green-tinted near-black, body text */
+  --color-leaf: #1d5f3c; /* primary — deep leaf green, headings & chrome bands */
   --color-sindoor: #c03a2b; /* accent — use sparingly */
-  --color-turmeric: #d9972b; /* accent */
-  --color-cream: #fbf6ed; /* page background */
-  --color-jasmine: #f3eada; /* alternate section background */
-  --color-stone: #6b5d52; /* muted text */
+  --color-turmeric: #e8862e; /* accent — badges, motifs, primary CTA */
+  --color-cream: #f9ead3; /* page background — warm peach */
+  --color-jasmine: #f2ddb9; /* alternate section background — deeper peach */
+  --color-milk: #fffdf7; /* warm white — text on green bands, floral motifs */
+  --color-stone: #55645a; /* muted text — green-grey */
 
   /* Type families */
-  --font-display: "Fraunces Variable", "Noto Serif Kannada Variable", Georgia,
-    serif;
-  --font-body: "Newsreader Variable", "Noto Serif Kannada Variable", Georgia,
-    serif;
+  --font-display: "Work Sans Variable", "Noto Sans Kannada Variable", system-ui,
+    sans-serif;
+  /* Kannada-first: the literary serif carries body prose in both scripts */
+  --font-body: "Noto Serif Kannada Variable", Georgia, serif;
   --font-ui: "Work Sans Variable", "Noto Sans Kannada Variable", system-ui,
     sans-serif;
   --font-kn: "Noto Sans Kannada Variable", "Noto Serif Kannada Variable",
     "Work Sans Variable", sans-serif;
+  /* Kannada display face — kept for prose headings if the serif voice returns */
+  --font-kn-serif: "Noto Serif Kannada Variable", Georgia, serif;
+
+  /* Devi figure shadow on the peach ground (Floor 1: no colour literals past tokens) */
+  --drop-shadow-devi: 0 18px 30px rgb(32 40 31 / 0.35);
+  /* Long-form photo shadow (prose pages) */
+  --shadow-photo: 0 10px 30px rgb(32 40 31 / 0.14);
 
   /* Type scale — starts at 0.875rem; display sizes are clamp-based fluid */
   --text-sm: 0.875rem;
@@ -43,4 +52,7 @@
   --text-5xl--line-height: 1.15;
   --text-6xl: clamp(3rem, 2.4rem + 3.5vw, 3.75rem);
   --text-6xl--line-height: 1.1;
+  /* Section heads — sit under the display hero without shrinking out */
+  --text-section: clamp(2rem, 1.5rem + 2.2vw, 3.25rem);
+  --text-section--line-height: 1.25;
 }

@@ -4,5 +4,5 @@ nameKn: "ಸುನಂದಾ ಹೆಗಡೆ"
 role: treasurer
 photo: "/images/uploads/member-sunanda.svg"
 order: 1
-bio: "With Kadali since the 2021 mela. Keeps the accounts and the festival budget small, honest and readable."
+bio: "2021ರ ಮೆಳಾದಿಂದ ಕದಲಿಯಲ್ಲಿ. ಲೆಕ್ಕ ಪುಸ್ತಕ ಮತ್ತು ಹಬ್ಬದ ಬಜೆಟ್ ಸಣ್ಣ, ಪ್ರಾಮಾಣಿಕ, ಓದಲರ್ಹವಾಗಿ ಇಡುತ್ತಾರೆ."
 ---

@@ -1,16 +1,16 @@
 ---
-title: "Vachana Jayanthi Community Reading"
+title: "ವಚನ ಜಯಂತಿ ಸಾಮೂಹಿಕ ವಾಚನ"
 poster: "/images/uploads/poster-vachana-jayanthi.svg"
-summary: "An evening of shared reading for Akkamahadevi's birthday week — vachanas, songs, and stories from members across the district."
-venue: "District Public Library Hall, Udupi"
+summary: "ಅಕ್ಕಮಹಾದೇವಿ ಜಯಂತಿ ವಾರದ ಸಾಮೂಹಿಕ ವಾಚನದ ಸಂಜೆ: ವಚನಗಳು, ಭಕ್ತಿಗೀತೆಗಳು, ಜಿಲ್ಲೆಯ ಸದಸ್ಸೆಯರ ನೆನಪುಗಳು."
+venue: "ಜಿಲ್ಲಾ ಸಾರ್ವಜನಿಕ ಗ್ರಂಥಾಲಯದ ಸಭಾಂಗಣ, ಉಡುಪಿ"
 mapUrl: "https://www.google.com/maps/search/?api=1&query=District+Public+Library+Udupi"
-contact: "Vasudha Nayak — hello@example.org"
+contact: "ವಸುಧಾ ನಾಯಕ್, hello@example.org"
 startAt: 2026-12-13T16:00:00+05:30
 endAt: 2026-12-13T18:30:00+05:30
 status: auto
 featured: true
 ---
 
-Every December we mark the week of Akkamahadevi's jayanthi with a public reading. Members choose one vachana each, read it in Kannada, and share what it has come to mean in their own lives. Beginners are explicitly welcome — half of us could not read a vachana a year ago.
+ಪ್ರತಿ ಡಿಸೆಂಬರ್‌ನಲ್ಲಿ ಅಕ್ಕಮಹಾದೇವಿ ಜಯಂತಿ ವಾರವನ್ನು ಒಂದು ಸಾರ್ವಜನಿಕ ವಾಚನದ ಮೂಲಕ ಗುರುತಿಸುತ್ತೇವೆ. ಪ್ರತಿಯೊಬ್ಬ ಸದಸ್ಸೆ ತನ್ನ ನೆಚ್ಚಿನ ಒಂದು ವಚನ ಆಯ್ದು ಕನ್ನಡದಲ್ಲಿ ಓದಿ, ಅದು ತನ್ನ ಬದುಕಿನಲ್ಲಿ ಎಂಥ ಅರ್ಥ ಬೆಳೆಸಿತು ಎಂದು ಹಂಚಿಕೊಳ್ಳುತ್ತಾಳೆ. ಹೊಸಬರ ಸ್ವಾಗತ ಸ್ಪಷ್ಟವಾಗಿ ಇದೆ. ಒಂದು ವರುಷದ ಹಿಂದೆ ನಮ್ಮಲ್ಲಿ ಅರ್ಧದಷ್ಟು ಜನ ವಚನವನ್ನೇ ಓದಲಾರಿತ್ತಿಲ್ಲ.
 
-The library hall seats eighty. Filter coffee and jowar roti parcels follow the reading. Bring your mothers, your daughters, and your neighbours.
+ಗ್ರಂಥಾಲಯದ ಸಭಾಂಗಣದಲ್ಲಿ ಎಂಬತ್ತು ಜನ ಕೂತರೆ ಸಾಕು. ವಾಚನದ ಬಳಿಕ ಫಿಲ್ಟರ್ ಕಾಫಿ ಮತ್ತು ಜೋಳದ ರೊಟ್ಟಿ ಪಾರ್ಸೆಲ್. ತಾಯಿಯರನ್ನು, ಹೆಣ್ಣು ಮಕ್ಕಳನ್ನು, ಪಕ್ಕದ ಮನೆಯವರನ್ನು ಕರೆತನ್ನಿ.

@@ -1,21 +1,21 @@
 ---
-title: "Kasuti Nights: Stitching the Old Patterns"
-description: "On Thursday evenings we count threads the way our great-grandmothers did, reviving kasuti's geometric stitches one diamond at a time."
+title: "ಕಸುತಿ ರಾತ್ರಿಗಳು: ಹಳೆಯ ನಮೂನೆಗಳ ಹೆಣಿಗೆ"
+description: "ಗುರುವಾರ ಸಂಜೆ ಮೊದಲನೆಯ ಅಜ್ಜಿಯರ ಹಾದಿಯಲ್ಲೇ ದಾರ ಎಣಿಸುತ್ತಾ, ಕಸುತಿಯ ರಂಬೆ-ನಮೂನೆಗಳನ್ನು ಒಂದೊಂದಾಗಿ ಬದುಕಿಸುತ್ತಿದ್ದೇವೆ."
 cover: "/images/uploads/cover-kasuti-nights.svg"
-coverAlt: "A strip of kasuti cross-stitch diamonds over a temple arch outline"
-author: "Lalita Hegde"
+coverAlt: "ದೇವಾಲಯದ ಕಮಾನಿನ ಮೇಲೆ ಕಸುತಿಯ ರಂಬೆ ಹೆಣಿಗೆಯ ಪಟ್ಟಿ"
+author: "ಲಲಿತಾ ಹೆಗಡೆ"
 category: "culture"
 event: monsoon-mela
 tags: [kasuti, crafts, heritage]
 pubDate: 2026-09-05
 ---
 
-Kasuti is a counting craft. No frames, no traced designs — just even-weave cloth, a needle, and a woman who can keep numbers in her head. The motifs repeat like temple friezes: diamonds, lily buds, chariots, peacocks, each one built from straight stitches stepped across the fabric.
+ಕಸುತಿ ಎಂದರೆ ಎಣಿಕೆಯ ಕೆಲಸ. ಹೆಣಿಗೆಯ ಚೌಕಟ್ಟಿಲ್ಲ, ಬರೆದ ನಮೂನೆಯಿಲ್ಲ. ಸಮನಾಗೆ ಹೆಣೆದ ಬಟ್ಟೆ, ಒಂದು ಹೆಡ್ಡಿ, ಮತ್ತು ಎಣಿಕೆಯನ್ನು ತಲೆಯಲ್ಲೇ ಇಟ್ಟುಕೊಳ್ಳುವ ಒಬ್ಬ ಮಹಿಳೆ, ಅಷ್ಟೇ. ದೇವಾಲಯದ ಗೋಡೆಯ ಕೆತ್ತನೆಗಳಂತೆ ನಮೂನೆಗಳು ಬಂದುಹೋಗುತ್ತವೆ: ರಂಬೆ, ನಾಗಮುಗುಳಿ, ರಥ, ನವಿಲು. ಬಟ್ಟೆಯ ಮೇಲೆ ನೇರ ಹೊಡೆತಗಳ ಮೇಲೆ ಹೊಡೆತಗಳಿಂದ ಕಟ್ಟಿದವು.
 
-Our Thursday kasuti nights began with three members and one faded cloth a grandmother lent us for copying. Now a dozen of us sit around a single lamp, arguing about whether the border pattern on the borrowed cloth was Ilkal-born or came up from the northern districts, and stitching anyway.
+ನಮ್ಮ ಗುರುವಾರದ ಕಸುತಿ ರಾತ್ರಿ ಶುರುವಾದದ್ದು ಮೂರು ಸದಸ್ಯೆಯರು, ನಕಲು ಹೊಡೆಯಲು ಒಬ್ಬ ಅಜ್ಜಿ ಸಾಲ ಕೊಟ್ಟ ಒಂದು ಮಸುಕು ಬಣ್ಣದ ಬಟ್ಟೆಯೊಂದಿಗೆ. ಈಗ ಹನ್ನೆರಡು ಮಂದಿ ಒಂದೇ ದೀಪದ ಸುತ್ತ ಕುಳಿತು, ಆ ಬಟ್ಟೆಯ ಬುಡದ ಪಟ್ಟಿ ಇಲಕಲ್ಲಿನದೋ ಉತ್ತರದ ಜಿಲ್ಲೆಗಳಿಂದ ಬಂದದ್ದೋ ಎಂಬ ವಾದವನ್ನೇ ಹಾಕಿಕೊಂಡು ಹೆಣೆಯುತ್ತಾ ಕುಳಿತಿರುತ್ತೇವೆ.
 
-We are slow, and that is the point. Kasuti does not hurry. Somewhere between the counting and the correcting, the conversation turns to families, harvests, school fees, and grief — the way it must have turned a hundred years ago in the courtyards this stitch first lived in.
+ನಾವು ನಿಧಾನ; ಅದೇ ತಿರುವು. ಕಸುತಿ ಆತುರವನ್ನು ಒಪ್ಪುವುದಿಲ್ಲ. ಎಣಿಸುವ ಮತ್ತು ತಿದ್ದುವ ನಡುವಲ್ಲಿ ಮಾತು ಮನೆ-ಮಠ, ಬೆಳೆ, ಶಾಲಾ ಶುಲ್ಕ, ಶೋಕಗಳ ಕಡೆ ತಿರುಗುತ್ತದೆ. ಈ ಹೆಣಿಗೆ ಮೊದಲು ಬಾಳಿದ ಆಂಗಳಗಳಲ್ಲಿ ನೂರು ವರುಷಗಳ ಹಿಂದೆಯೂ ಹೀಗೆಯೇ ತಿರುಗಿರಬೇಕು.
 
-Newcomers get a needle, a scrap of cloth, and our full patience.
+ಹೊಸಬರಿಗೆ ಒಂದು ಹೆಡ್ಡಿ, ಬಟ್ಟೆಯ ಒಂದು ತುಂಡು, ನಮ್ಮ ಇಡೀ ತಾಳ್ಮೆ.
 
 <!-- Seed content placeholder — replace with real articles before launch. -->

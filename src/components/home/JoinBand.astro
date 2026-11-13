@@ -1,0 +1,40 @@
+---
+import Beads from '../motifs/Beads.astro';
+import Mandala from '../motifs/Mandala.astro';
+import FlowerLine from '../motifs/FlowerLine.astro';
+---
+
+<section
+  class="relative overflow-hidden bg-leaf text-milk"
+  aria-labelledby="join-heading"
+>
+  <!-- White florals on the green band, brochure-frame style -->
+  <Mandala
+    class="reveal pointer-events-none absolute -top-16 -left-16 w-56 text-turmeric/25 sm:w-72"
+  />
+  <FlowerLine
+    class="reveal pointer-events-none absolute -right-6 -bottom-8 w-28 rotate-12 text-milk/10 sm:w-36"
+  />
+  <FlowerLine
+    class="reveal pointer-events-none absolute top-10 right-10 w-16 -rotate-12 text-milk/10"
+  />
+
+  <div class="reveal relative mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 md:py-24">
+    <Beads class="mx-auto w-40 text-turmeric" />
+    <h2 id="join-heading" class="mt-8 text-section font-bold text-milk">
+      ಬನ್ನಿ, ಒಮ್ಮೆ ಕುಳಿತು ನೋಡಿ
+    </h2>
+    <p class="mt-5 font-body text-xl text-milk/85">
+      ಅರ್ಜಿ ಬೇಡ, ಶುಲ್ಕ ಇಲ್ಲ. ಒಂದು ಸಂದೇಶ ಸಾಕು; ಮುಂದಿನ ಸಭೆ ಎಲ್ಲಿ ಎಂದು
+      ಹೇಳಿಕೊಡುತ್ತೇವೆ.
+    </p>
+    <div class="mt-8">
+      <a
+        href="/contact"
+        class="inline-flex min-h-[48px] items-center justify-center bg-turmeric px-8 py-3 font-ui text-base font-semibold text-ink transition-colors duration-200 hover:bg-milk focus-visible:outline-milk active:translate-y-[1px]"
+      >
+        ಸಂಪರ್ಕಿಸಿ
+      </a>
+    </div>
+  </div>
+</section>

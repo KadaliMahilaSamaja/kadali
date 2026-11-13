@@ -1,5 +1,8 @@
 ---
-import Arch from '../motifs/Arch.astro';
+import Mandala from '../motifs/Mandala.astro';
+import Bloom from '../motifs/Bloom.astro';
+import FlowerLine from '../motifs/FlowerLine.astro';
+import KasutiBorder from '../motifs/KasutiBorder.astro';
 
 interface Props {
   heading: string;
@@ -7,41 +10,106 @@ interface Props {
 }
 
 const { heading, description } = Astro.props;
+
+/* Kannada line-breaks at syllable boundaries inside a word; wrapping each
+   word unbreakably keeps breaks at the spaces the author wrote. */
+const words = heading.split(/\s+/);
+/* Entrance choreography: each word 90ms apart, then sentence, actions, art. */
+const wordDelay = (i: number) => 120 + i * 90;
+const afterWords = 120 + words.length * 90;
 ---
 
-<section class="relative overflow-hidden bg-rani text-cream">
-  <!-- Temple arch behind the text, purely decorative. -->
-  <Arch
-    width={520}
-    class="pointer-events-none absolute top-6 left-1/2 -translate-x-1/2 text-cream/10"
+<section
+  class="relative overflow-hidden bg-cream text-ink md:flex md:min-h-[calc(100svh-65px)] md:flex-col md:justify-center"
+>
+  <!-- Brochure scatter: turmeric mandala peeking from the top corner, white
+       outline florals and small blooms across the peach panel. -->
+  <Mandala
+    class="hero-fade pointer-events-none absolute -top-14 -right-14 w-48 text-turmeric/90 sm:w-64 md:-top-20 md:-right-16 md:w-80"
   />
+  <FlowerLine
+    class="hero-fade pointer-events-none absolute top-24 left-4 hidden w-20 -rotate-12 text-milk lg:left-10 lg:w-24 md:block"
+  />
+  <FlowerLine
+    class="hero-fade pointer-events-none absolute bottom-24 left-6 w-16 rotate-12 text-milk/90 md:bottom-16 md:left-16 md:w-20"
+  />
+  <FlowerLine
+    class="hero-fade pointer-events-none absolute top-1/3 right-6 w-14 rotate-45 text-milk md:w-16"
+  />
+  <Bloom
+    class="hero-fade pointer-events-none absolute right-10 bottom-40 w-7 text-turmeric/80 md:w-9"
+  />
+  <Bloom
+    class="hero-fade pointer-events-none absolute top-28 left-1/3 hidden w-6 text-turmeric/70 md:block"
+  />
+
   <div
-    class="relative mx-auto flex max-w-6xl flex-col items-center px-4 py-20 text-center sm:px-6 md:py-28"
+    class="relative mx-auto grid w-full max-w-6xl gap-8 px-4 pt-14 pb-16 sm:px-6 md:grid-cols-[1fr_1.25fr] md:items-center md:gap-10 md:pt-16 md:pb-20 lg:gap-14"
   >
-    <p lang="kn" class="font-ui text-sm tracking-[0.35em] text-turmeric">
-      ಕದಲಿ ಮಹಿಳಾ ಸಂಘ
-    </p>
-    <h1
-      class="mt-6 max-w-3xl font-display text-5xl font-semibold md:text-6xl"
-    >
-      {heading}
-    </h1>
-    <p class="mt-6 max-w-2xl font-body text-xl text-cream/85">
-      {description}
-    </p>
-    <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
-      <a
-        href="/articles"
-        class="bg-cream px-6 py-3 font-ui text-sm font-semibold text-rani transition-colors duration-200 hover:bg-jasmine"
+    <!-- Word block: badge kicker, one display head, one sentence, two actions -->
+    <div class="min-w-0">
+      <span class="badge hero-fade [animation-delay:40ms]">
+        <span lang="kn">ಕದಲಿ ಮಹಿಳಾ ಸಂಘ</span>
+        <span aria-hidden="true">•</span>
+        <span lang="kn">ಉಡುಪಿ</span>
+      </span>
+      <h1
+        class="mt-5 max-w-xl text-4xl leading-[1.3] font-bold text-leaf sm:text-5xl md:text-6xl"
       >
-        Read the journal
-      </a>
-      <a
-        href="/events"
-        class="border border-cream/60 px-6 py-3 font-ui text-sm font-semibold text-cream transition-colors duration-200 hover:bg-cream/10"
+        {words.map((word, i) => (
+          <>
+            {i > 0 && ' '}
+            <span class="hero-rise whitespace-nowrap" style={`animation-delay: ${wordDelay(i)}ms`}>
+              {word}
+            </span>
+          </>
+        ))}
+      </h1>
+      <p
+        class="hero-rise mt-5 max-w-lg font-body text-lg text-stone md:text-xl"
+        style={`animation-delay: ${afterWords}ms`}
       >
-        See upcoming events
-      </a>
+        {description}
+      </p>
+      <div
+        class="hero-rise mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4"
+        style={`animation-delay: ${afterWords + 120}ms`}
+      >
+        <a
+          href="/contact"
+          class="inline-flex min-h-[48px] items-center justify-center bg-turmeric px-7 py-3 font-ui text-base font-semibold text-ink transition-colors duration-200 hover:bg-leaf hover:text-milk focus-visible:outline-leaf active:translate-y-[1px]"
+        >
+          ಸಂಪರ್ಕಿಸಿ
+        </a>
+        <a
+          href="/events"
+          class="inline-flex min-h-[48px] items-center justify-center border border-leaf/60 px-7 py-3 font-ui text-base font-semibold text-leaf transition-colors duration-200 hover:bg-leaf/10 focus-visible:outline-leaf active:bg-leaf/15"
+        >
+          ಕಾರ್ಯಕ್ರಮಗಳು ನೋಡಿ
+        </a>
+      </div>
+    </div>
+
+    <!-- Akkamahadevi — the club's namesake, the painting first screen -->
+    <div class="hero-fade relative mx-auto w-full max-w-md md:max-w-none" style="animation-delay: 250ms">
+      <picture>
+        <source srcset="/images/akkamahadevi-hero.webp" type="image/webp" />
+        <img
+          src="/images/akkamahadevi-hero.png"
+          alt="ಬಾಳೆಗಿಡಗಳ ನಡುವೆ ಧ್ಯಾನದಲ್ಲಿ ಕುಳಿತ ಅಕ್ಕಮಹಾದೇವಿ"
+          width="972"
+          height="569"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          class="drop-shadow-devi mx-auto h-auto w-full md:w-[118%] md:max-w-none"
+        />
+      </picture>
     </div>
   </div>
+
+  <!-- Kasuti frieze as the hero's ground line -->
+  <KasutiBorder
+    class="hero-fade absolute inset-x-0 bottom-0 text-leaf/30 opacity-70 [animation-delay:500ms]"
+  />
 </section>

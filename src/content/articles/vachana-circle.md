@@ -1,20 +1,20 @@
 ---
-title: "Reading Akkamahadevi Together"
-description: "Every second Sunday our vachana circle gathers to read Akkamahadevi aloud — in Kannada first, then in English — and to wonder together."
+title: "ಅಕ್ಕಮಹಾದೇವಿಯನ್ನು ಒಟ್ಟಾಗಿ ಓದುವುದು"
+description: "ಪ್ರತಿ ಎರಡನೇ ಭಾನುವಾರ ವಚನ ವೃತ್ತ ಸೇರುತ್ತದೆ. ಅಕ್ಕಮಹಾದೇವಿಯ ವಚನಗಳನ್ನು ಕನ್ನಡದಲ್ಲಿ ಸಾವಕಾಶ ಓದಿ, ಒಟ್ಟಾಗಿ ಚಿಂತಿಸುತ್ತಾ."
 cover: "/images/uploads/cover-vachana-circle.svg"
-coverAlt: "A temple arch drawn in rani maroon above a row of turmeric beads"
-author: "Vasudha Nayak"
+coverAlt: "ರಾಣಿ ಕೆಂಪು ಬಣ್ಣದ ದೇವಾಲಯದ ಕಮಾನು, ಕೆಳಗೆ ಅರಿಶಿನದ ಮಣಿಗಳ ಸಾಲು"
+author: "ವಸುಧಾ ನಾಯಕ್"
 category: "spirituality"
 pubDate: 2026-10-18
 featured: true
 ---
 
-The vachana circle meets on the second Sunday of every month, in the back room of the district library where the ceiling fan still creaks. We read Akkamahadevi slowly. Her vachanas — those sharp, wandering songs addressed to Chennamallikarjuna — ask what a woman must give up to belong entirely to herself.
+ವಚನ ವೃತ್ತ ಪ್ರತಿ ತಿಂಗಳ ಎರಡನೇ ಭಾನುವಾರ, ಜಿಲ್ಲಾ ಗ್ರಂಥಾಲಯದ ಹಿಂಭಾಗದ ಕೋಣೆಯಲ್ಲಿ ಸೇರುತ್ತದೆ. ಅಲ್ಲಿನ ಛಾವಣಿಯ ಫ್ಯಾನ್ ಇನ್ನೂ ಕೊರಕೊರಕ ಶಬ್ದ ಮಾಡುತ್ತಲೇ ಇರುತ್ತದೆ. ನಾವು ಅಕ್ಕಮಹಾದೇವಿಯನ್ನು ಸಾವಕಾಶ ಓದುತ್ತೇವೆ. ಚೆನ್ನಮಲ್ಲಿಕಾರ್ಜುನನಿಗೆ ನೇರವಾಗಿ ಹೇಳಿದ ಆಕೆಯ ವಚನಗಳು (ಆ ಮುಳ್ಳಿನಂತಹ, ಅಲೆಮಾರಿ ಹಾಡುಗಳು) ಒಂದು ಪ್ರಶ್ನೆಯನ್ನು ಕೇಳುತ್ತವೆ: ಸಂಪೂರ್ಣವಾಗಿ ತನ್ನದೇ ಆಗಲು ಒಬ್ಬ ಮಹಿಳೆ ಏನೇನು ಬಿಡಬೇಕು?
 
-Some of us came for the poetry. Some came because our grandmothers quoted her while sweeping the courtyard and we only now understand what they meant. We take turns reading aloud, first in Kannada, then translating for whoever needs English that day. Nobody explains; everybody wonders.
+ಕೆಲವರು ಕವನದ ಹಂಬಲದಿಂದ ಬಂದವರು. ಇನ್ನು ಕೆಲವರು ಬಂದದ್ದು ಅಂಗಳ ಒರೆಯುವಾಗ ಅಜ್ಜಿಯರು ಅಕ್ಕನ ವಚನ ಹೇಳುತ್ತಿದ್ದ ಮಾತುಗಳ ಅರ್ಥ ಈಗ ಅರಿತದ್ದರಿಂದ. ಸಾಲು ಸಾಲಾಗಿ ಜೋರಾಗಿ ಓದುತ್ತೇವೆ; ಮೊದಲು ಕನ್ನಡದಲ್ಲಿ, ಬಳಿಕ ಆ ದಿನ ಇಂಗ್ಲಿಷ್ ಬೇಕಿರುವವರಿಗೆ ಅದರ ಅರ್ಥ. ಯಾರೂ ಬೋಧಿಸುವುದಿಲ್ಲ; ಎಲ್ಲರೂ ಒಟ್ಟಾಗಿ ಚಿಂತಿಸುತ್ತಾರೆ.
 
-When she sings that she has no father, no mother, no home — that the whole world is her family — someone always laughs, and someone always quietly wipes her eyes.
+ತಂದೆಯಿಲ್ಲ, ತಾಯಿಯಿಲ್ಲ, ಮನೆಯಿಲ್ಲ. ಇಡೀ ಜಗತ್ತೇ ನನ್ನ ಮನೆ ಎಂದಾಕೆ ಹಾಡಿದಾಗ, ಯಾರೋ ನಗುತ್ತಾರೆ, ಯಾರೋ ನಿಧಾನವಾಗಿ ಕಣ್ಣು ಒರೆಸುತ್ತಾರೆ.
 
-Come as you are. Bring a vachana you love, or bring nothing at all. There is a chair, and there is filter coffee.
+ಹೀಗೆಯೇ ಬನ್ನಿ. ನೆಚ್ಚಿನ ವಚನವೊಂದು ಜೊತೆ ತನ್ನಿ, ಅಥವಾ ಏನೂ ತರಬೇಡಿ. ಒಂದು ಕುರ್ಚಿ ಇದೆ, ಫಿಲ್ಟರ್ ಕಾಫಿ ಇದೆ.
 
 <!-- Seed content placeholder — replace with real articles before launch. -->

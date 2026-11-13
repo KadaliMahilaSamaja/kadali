@@ -1,13 +1,12 @@
 ---
-import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '../components/BaseLayout.astro';
 import Hero from '../components/home/Hero.astro';
-import Intro from '../components/home/Intro.astro';
+import Aim from '../components/home/Aim.astro';
 import EventCard from '../components/home/EventCard.astro';
-import FeaturedArticle from '../components/home/FeaturedArticle.astro';
-import AnnouncementList from '../components/home/AnnouncementList.astro';
-import GalleryMosaic from '../components/home/GalleryMosaic.astro';
-import MissionBand from '../components/home/MissionBand.astro';
+import RecentArticles from '../components/home/RecentArticles.astro';
+import CommitteePreview from '../components/home/CommitteePreview.astro';
+import JoinBand from '../components/home/JoinBand.astro';
 import { deriveStatus, sortEvents } from '../lib/events';
 
 const now = new Date();
@@ -15,21 +14,19 @@ const now = new Date();
 // --- Site settings (single file() entry, id 'site') -------------------------
 const settings = (await getCollection('site-settings')).at(0);
 
-// --- Featured article -------------------------------------------------------
-// settings ref → most recent featured:true → most recent overall; a dangling
-// reference or a draft falls through to the next tier.
+// --- Recent articles (newest first, max 2) ----------------------------------
 const articles = (
   await getCollection('articles', ({ data }) => !data.draft)
 ).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
-let featuredArticle: CollectionEntry<'articles'> | undefined;
+// Settings' featured pick floats to the front if it is published.
 const featuredArticleRef = settings?.data.featuredArticle;
 if (featuredArticleRef) {
   const entry = await getEntry(featuredArticleRef).catch(() => undefined);
-  if (entry && !entry.data.draft) featuredArticle = entry;
+  if (entry && !entry.data.draft) articles.unshift(entry);
 }
-featuredArticle ??= articles.find((article) => article.data.featured);
-featuredArticle ??= articles.at(0);
+const recentArticles = [...new Map(articles.map((a) => [a.id, a])).values()]
+  .slice(0, 2);
 
 // --- Upcoming events (derived status, soonest first, max 3) ------------------
 const events = await getCollection('events');
@@ -38,76 +35,56 @@ const upcomingEvents = sortEvents(
   'asc',
 ).slice(0, 3);
 
-// --- Announcements (expired dropped at build time, newest first, max 3) -----
-const announcements = (
-  await getCollection(
-    'announcements',
-    ({ data }) => !data.expiryDate || data.expiryDate > now,
-  )
-)
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 3);
-
-// --- Featured gallery --------------------------------------------------------
-const galleries = (await getCollection('galleries')).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-);
-let featuredGallery: CollectionEntry<'galleries'> | undefined;
-const featuredGalleryRef = settings?.data.featuredGallery;
-if (featuredGalleryRef) {
-  const entry = await getEntry(featuredGalleryRef).catch(() => undefined);
-  if (entry) featuredGallery = entry;
-}
-featuredGallery ??= galleries.at(0);
-
-// --- Intro image: freshest announcement photo, else a gallery photo ---------
-const announcementWithImage = announcements.find((a) => a.data.image);
-const introImage =
-  announcementWithImage?.data.image ??
-  featuredGallery?.data.photos.at(0)?.image;
-const introImageAlt = announcementWithImage
-  ? `Photo from the announcement “${announcementWithImage.data.title}”`
-  : (featuredGallery?.data.photos.at(0)?.caption ??
-    'Kadali members gathered at a recent event');
-
 const heroHeading =
-  settings?.data.heroHeading ?? 'A circle of women, a circle of stories';
+  settings?.data.heroHeading ?? 'ವಚನ, ಕಸುತಿ, ಸೇವೆ ಒಂದೇ ವೃತ್ತದಲ್ಲಿ';
 const heroDescription =
   settings?.data.heroDescription ??
-  "Kadali is a women's cultural collective in Karnataka — vachana circles, kasuti stitching, seva, and community.";
+  'ಉಡುಪಿಯ ಕದಲಿ ಮಹಿಳಾ ಸಂಘ, ಅಕ್ಕಮಹಾದೇವಿಯ ವಚನಗಳ ನೆನಪಲ್ಲಿ ಬೆಳೆಯುವ ಒಡನಾಡು.';
 ---
 
 <BaseLayout
-  title="ಕದಲಿ · Kadali — A Women's Cultural Collective in Karnataka"
+  title="ಕದಲಿ ಮಹಿಳಾ ಸಂಘ, ಉಡುಪಿಯ ಮಹಿಳೆಯರ ಒಡನಾಡು"
   description={heroDescription}
 >
   <Hero heading={heroHeading} description={heroDescription} />
 
-  <Intro image={introImage} imageAlt={introImageAlt} />
+  <Aim />
 
   {
     upcomingEvents.length > 0 && (
-      <section class="bg-jasmine" aria-labelledby="upcoming-events-heading">
-        <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:py-20">
-          <div class="flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <p class="font-ui text-xs font-semibold tracking-[0.25em] text-rani uppercase">
-                Mark the date
-              </p>
-              <h2 id="upcoming-events-heading" class="mt-3 font-display text-3xl font-semibold">
-                Upcoming events
-              </h2>
-            </div>
+      <section class="bg-cream" aria-labelledby="upcoming-events-heading">
+        <div class="mx-auto max-w-6xl px-0 py-16 sm:px-6 md:py-20">
+          <div class="flex flex-wrap items-end justify-between gap-4 px-4 md:px-0">
+            <h2
+              id="upcoming-events-heading"
+              class="reveal text-section font-bold"
+            >
+              ಮುಂಬರುವ ಕಾರ್ಯಕ್ರಮಗಳು
+            </h2>
             <a
               href="/events"
-              class="underline-reveal font-ui text-sm font-semibold text-rani"
+              class="underline-reveal font-ui text-base font-semibold text-leaf active:text-sindoor"
             >
-              All events →
+              ಎಲ್ಲಾ ಕಾರ್ಯಕ್ರಮಗಳು
             </a>
           </div>
-          <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {upcomingEvents.map((event) => (
-              <EventCard event={event} />
+          {/* Mobile-first: a swipeable snap rail with the next poster peeking;
+              the page grid returns from md up. */}
+          <div
+            class:list={[
+              'rail mt-10 px-4 pb-2 sm:px-6 md:px-0 md:pb-0',
+              upcomingEvents.length === 1
+                ? 'sm:max-w-3xl'
+                : 'md:grid-cols-2 lg:grid-cols-3',
+            ]}
+          >
+            {upcomingEvents.map((event, i) => (
+              <div
+                class="reveal min-w-[86%] snap-center sm:min-w-[55%] md:min-w-0"
+                style={`--reveal-delay: ${i * 90}ms`}
+              >
+                <EventCard event={event} wide={upcomingEvents.length === 1} />
+              </div>
             ))}
           </div>
         </div>
@@ -115,30 +92,35 @@ const heroDescription =
     )
   }
 
-  {featuredArticle && <FeaturedArticle article={featuredArticle} />}
+  <RecentArticles articles={recentArticles} />
 
-  {announcements.length > 0 && (
-    <AnnouncementList announcements={announcements} />
-  )}
+  <CommitteePreview />
 
-  {featuredGallery && <GalleryMosaic gallery={featuredGallery} />}
-
-  <MissionBand />
-
-  <style is:global>
-    /* Underline that sweeps in from the left on hover (pairs with the
-       1.02 image scale on card/featured hovers). Reduced motion is already
-       neutralised by the global.css prefers-reduced-motion block. */
-    .underline-reveal {
-      background-image: linear-gradient(currentColor, currentColor);
-      background-size: 0% 1.5px;
-      background-repeat: no-repeat;
-      background-position: 0 100%;
-      transition: background-size 200ms ease;
-    }
-    .underline-reveal:hover,
-    .group:hover .underline-reveal {
-      background-size: 100% 1.5px;
-    }
-  </style>
+  <JoinBand />
 </BaseLayout>
+
+<script is:inline>
+  // Mark the document before paint so reveal styles apply only when the
+  // observer below can un-hide them; without scripting the page stays visible.
+  document.documentElement.classList.add('js');
+</script>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-in');
+            io.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -8% 0px' },
+    );
+    els.forEach((el) => io.observe(el));
+  } else {
+    els.forEach((el) => el.classList.add('is-in'));
+  }
+</script>

@@ -21,7 +21,7 @@ const href = `/events/${event.id}`;
 <li>
   <a href={href} class="group flex items-center gap-4 py-4 sm:gap-6">
     <div class="w-14 shrink-0 text-center sm:w-16">
-      <span class="font-display text-2xl font-semibold text-rani sm:text-3xl">
+      <span class="font-display text-2xl font-semibold text-leaf sm:text-3xl">
         {day}
       </span>
       <span class="block font-ui text-xs leading-tight">
@@ -32,7 +32,7 @@ const href = `/events/${event.id}`;
     <div class="min-w-0 flex-1">
       <h3 class="font-display text-lg leading-snug">
         <span
-          class="text-ink underline-offset-4 group-hover:text-rani group-hover:underline group-hover:decoration-rani group-hover:decoration-2"
+          class="text-ink underline-offset-4 group-hover:text-leaf group-hover:underline group-hover:decoration-leaf group-hover:decoration-2"
         >
           {title}
         </span>
@@ -43,6 +43,6 @@ const href = `/events/${event.id}`;
       </p>
     </div>
     {status === 'cancelled' && <div class="hidden sm:block"><CancelledBadge /></div>}
-    <span aria-hidden="true" class="text-rani">→</span>
+    <span aria-hidden="true" class="text-leaf">→</span>
   </a>
 </li>
