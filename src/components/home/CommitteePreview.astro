@@ -1,4 +1,6 @@
 ---
+import Bloom from '../motifs/Bloom.astro';
+
 /**
  * Homepage committee preview — role-grouped member cards, Kannada primary.
  * Order: president → vice-president → secretary → joint secretary →
@@ -38,15 +40,19 @@ const committee = (await getCollection('people')).sort(
   committee.length > 0 && (
     <section class="bg-cream" aria-labelledby="committee-heading">
       <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:py-20">
-        <div class="flex flex-wrap items-end justify-between gap-4 px-4 md:px-0">
-          <h2 id="committee-heading" class="reveal text-section font-bold">
+        <div class="reveal text-center">
+          <h2 id="committee-heading" class="text-section font-bold">
             ನಿರ್ವಹಣಾ ಸಮಿತಿ
           </h2>
+          <Bloom class="mx-auto mt-4 w-8 text-turmeric" />
+        </div>
+        <div class="mt-4 flex justify-end px-4 md:px-0">
           <a
             href="/about"
-            class="underline-reveal font-ui text-base font-semibold text-leaf active:text-sindoor"
+            class="underline-reveal inline-flex items-center gap-1.5 font-ui text-base font-semibold text-leaf active:text-sindoor"
           >
-            ಸಂಪೂರ್ಣ ಸಮಿತಿ
+            <span lang="kn">ಸಂಪೂರ್ಣ ಸಮಿತಿ</span>
+            <span aria-hidden="true">→</span>
           </a>
         </div>
 
@@ -60,7 +66,7 @@ const committee = (await getCollection('people')).sort(
                 class="reveal min-w-[64%] snap-center sm:min-w-[40%] md:min-w-0"
                 style={`--reveal-delay: ${i * 70}ms`}
               >
-                <article class="flex h-full flex-col items-center border border-ink/10 bg-jasmine px-3 pb-5 pt-6 text-center sm:px-4">
+                <article class="flex h-full flex-col items-center rounded-b-[2rem] border border-ink/10 bg-milk px-3 pb-5 pt-6 text-center sm:px-4">
                   <div class="w-full overflow-hidden rounded-t-[999px] border border-ink/10">
                     <img
                       src={photo}

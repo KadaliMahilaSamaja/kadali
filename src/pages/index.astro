@@ -7,6 +7,7 @@ import EventCard from '../components/home/EventCard.astro';
 import RecentArticles from '../components/home/RecentArticles.astro';
 import CommitteePreview from '../components/home/CommitteePreview.astro';
 import JoinBand from '../components/home/JoinBand.astro';
+import Bloom from '../components/motifs/Bloom.astro';
 import { deriveStatus, sortEvents } from '../lib/events';
 
 const now = new Date();
@@ -54,18 +55,22 @@ const heroDescription =
     upcomingEvents.length > 0 && (
       <section class="bg-cream" aria-labelledby="upcoming-events-heading">
         <div class="mx-auto max-w-6xl px-0 py-16 sm:px-6 md:py-20">
-          <div class="flex flex-wrap items-end justify-between gap-4 px-4 md:px-0">
+          <div class="reveal text-center">
             <h2
               id="upcoming-events-heading"
-              class="reveal text-section font-bold"
+              class="text-section font-bold"
             >
               ಮುಂಬರುವ ಕಾರ್ಯಕ್ರಮಗಳು
             </h2>
+            <Bloom class="mx-auto mt-4 w-8 text-turmeric" />
+          </div>
+          <div class="mt-4 flex justify-end px-4 md:px-0">
             <a
               href="/events"
-              class="underline-reveal font-ui text-base font-semibold text-leaf active:text-sindoor"
+              class="underline-reveal inline-flex items-center gap-1.5 font-ui text-base font-semibold text-leaf active:text-sindoor"
             >
-              ಎಲ್ಲಾ ಕಾರ್ಯಕ್ರಮಗಳು
+              <span lang="kn">ಎಲ್ಲಾ ಕಾರ್ಯಕ್ರಮಗಳು</span>
+              <span aria-hidden="true">→</span>
             </a>
           </div>
           {/* Mobile-first: a swipeable snap rail with the next poster peeking;

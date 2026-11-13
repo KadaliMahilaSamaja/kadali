@@ -1,32 +1,40 @@
 ---
-import KasutiBorder from '../motifs/KasutiBorder.astro';
 import Bloom from '../motifs/Bloom.astro';
 import FlowerLine from '../motifs/FlowerLine.astro';
 
 const pillars = [
   {
+    icon: 'spirit',
+    title: 'ಆಧ್ಯಾತ್ಮ',
+    gloss: 'spiritual roots',
+    body: 'ತಿಂಗಳ ವಚನ ವೃತ್ತ, ಭಜನೆಯ ಬೆಳಗು. ಅಕ್ಕನ ಹಾಡುಗಳನ್ನು ಕನ್ನಡದಲ್ಲೇ ಒಟ್ಟಾಗಿ ಓದುತ್ತಾ.',
+  },
+  {
+    icon: 'people',
     title: 'ಸಂಸ್ಕೃತಿ',
-    gloss: 'culture',
+    gloss: 'community & culture',
     body: 'ಕಸುತಿ ಹೆಣಿಗೆಯ ಸಂಜೆಗಳು, ಜಾನಪದ ಹಾಡುಗಳು, ಹಬ್ಬದ ಮೆಳಾ. ಹಳೆಯ ಕೈವಾಡ ಇಂದಿನ ಕೈಯಲ್ಲಿ.',
   },
   {
-    title: 'ಸೇವೆ',
-    gloss: 'seva',
-    body: 'ಅಗತ್ಯದ ವೇಳೆ ಊಟ, ಆಸ್ಪತ್ರೆಗೆ ಜೊತೆ, ಜೂನಿಗೆ ಶಾಲಾ ಚೀಲಗಳ ಕೋಶ. ಸದ್ದಿಲ್ಲದ, ನಿರಂತರ ಸೇವೆ.',
+    icon: 'book',
+    title: 'ಕಲಿಕೆ',
+    gloss: 'learning & growth',
+    body: 'ವಚನಗಳ ಓದು, ಕಸುತಿಯ ಹೆಣಿಗೆ, ಹೊಸ ಕೆಲಸದ ತರಬೇತಿ — ಕಲಿಕೆಗೆ ವಯಸ್ಸಿಲ್ಲ.',
   },
   {
-    title: 'ಆಧ್ಯಾತ್ಮ',
-    gloss: 'spirituality',
-    body: 'ತಿಂಗಳ ವಚನ ವೃತ್ತ, ಭಜನೆಯ ಬೆಳಗು. ಅಕ್ಕನ ಹಾಡುಗಳನ್ನು ಕನ್ನಡದಲ್ಲೇ ಒಟ್ಟಾಗಿ ಓದುತ್ತಾ.',
+    icon: 'heart',
+    title: 'ಸೇವೆ',
+    gloss: 'social impact',
+    body: 'ಅಗತ್ಯದ ವೇಳೆ ಊಟ, ಆಸ್ಪತ್ರೆಗೆ ಜೊತೆ, ಜೂನಿಗೆ ಶಾಲಾ ಚೀಲಗಳ ಕೋಶ. ಸದ್ದಿಲ್ಲದ, ನಿರಂತರ ಸೇವೆ.',
   },
 ];
 ---
 
 <section
-  class="relative overflow-hidden bg-jasmine"
+  class="relative overflow-hidden bg-cream"
   aria-labelledby="aim-heading"
 >
-  <!-- white outline florals on the deeper peach, brochure style -->
+  <!-- white outline florals on the cream, barely-there brochure scatter -->
   <FlowerLine
     class="pointer-events-none absolute -top-8 right-8 w-24 rotate-12 text-milk/70 sm:w-32"
   />
@@ -35,29 +43,80 @@ const pillars = [
   />
 
   <div class="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 md:py-24">
-    <div class="reveal max-w-2xl">
+    <div class="reveal mx-auto max-w-2xl text-center">
       <h2 id="aim-heading" class="text-section font-bold">ನಮ್ಮ ಉದ್ದೇಶ</h2>
+      <Bloom class="mx-auto mt-4 w-8 text-turmeric" />
       <p
-        class="mt-5 max-w-2xl font-display text-xl leading-relaxed text-ink md:text-2xl"
+        class="mt-5 font-display text-xl leading-relaxed text-ink md:text-2xl"
       >
         ಕದಲಿ ಎಂದರೆ ಬಾಳೆಗಿಡ. ಯಾರು ಬಂದರೂ ನೆರಳು, ಯಾರಿಗಾದರೂ ಫಲ. ಅದರಂತೆಯೇ,
         ಪ್ರತಿಯೊಬ್ಬ ಮಹಿಳೆಗೂ ತೆರೆದಿರುವ ವೃತ್ತ ಇದು.
       </p>
-      <KasutiBorder class="mt-6 w-44 text-turmeric" />
     </div>
 
-    <div class="mt-10 grid gap-10 sm:grid-cols-3 sm:gap-8">
+    <!-- Temple-arch cards: the shrine window from the brochure, as quiet
+         milk-on-cream tiles. -->
+    <div class="mt-12 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
       {
         pillars.map((pillar, i) => (
           <div class="reveal" style={`--reveal-delay: ${i * 90}ms`}>
-            <Bloom class="w-8 text-turmeric" />
-            <h3 class="mt-3 text-2xl font-bold">{pillar.title}</h3>
-            <p lang="en" class="mt-0.5 font-ui text-sm text-stone">
-              {pillar.gloss}
-            </p>
-            <p class="mt-3 font-body text-base leading-relaxed text-stone">
-              {pillar.body}
-            </p>
+            <article class="flex h-full flex-col items-center rounded-t-[9rem] border border-ink/10 bg-milk px-4 pb-7 pt-14 text-center sm:px-6">
+              <span class="text-turmeric" aria-hidden="true">
+                {pillar.icon === 'spirit' && <Bloom class="block w-10" />}
+                {pillar.icon === 'people' && (
+                  <svg
+                    class="block w-10"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="9" cy="8" r="3.2" />
+                    <circle cx="16.5" cy="9.5" r="2.6" />
+                    <path d="M3.5 19c.6-3.2 2.9-5 5.5-5s4.9 1.8 5.5 5" />
+                    <path d="M14.5 14.6c2.3.3 4.2 1.9 4.8 4.4" />
+                  </svg>
+                )}
+                {pillar.icon === 'book' && (
+                  <svg
+                    class="block w-10"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M12 6.5C10.2 5 7.8 4.5 4.5 4.5v13c3.3 0 5.7.5 7.5 2 1.8-1.5 4.2-2 7.5-2v-13c-3.3 0-5.7.5-7.5 2Z" />
+                    <path d="M12 6.5v13" />
+                  </svg>
+                )}
+                {pillar.icon === 'heart' && (
+                  <svg
+                    class="block w-10"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M12 20s-7.5-4.6-9.3-9C1.6 8 3.4 5 6.5 5c2 0 3.6 1.2 4.4 2.9L12 9l1.1-1.1C13.9 6.2 15.5 5 17.5 5c3.1 0 4.9 3 3.8 6-1.8 4.4-9.3 9-9.3 9Z" />
+                  </svg>
+                )}
+              </span>
+              <h3 class="mt-4 text-xl font-bold">{pillar.title}</h3>
+              <p lang="en" class="mt-0.5 font-ui text-xs text-stone">
+                {pillar.gloss}
+              </p>
+              <p
+                class="mt-3 font-body text-sm leading-relaxed text-stone sm:text-base"
+              >
+                <span lang="kn">{pillar.body}</span>
+              </p>
+            </article>
           </div>
         ))
       }

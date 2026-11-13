@@ -11,7 +11,7 @@ const links = [
 const current = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
 
-<header class="sticky top-0 z-40 border-b border-milk/15 bg-leaf/95 text-milk backdrop-blur">
+<header class="sticky top-0 z-40 border-b border-ink/10 bg-cream/95 text-ink backdrop-blur">
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
     <a href="/" class="flex items-center gap-2.5" aria-label="ಕದಲಿ — ಮುಖಪುಟ">
       <svg
@@ -27,9 +27,9 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
         <circle cx="10.5" cy="18.5" r="1.2" fill="var(--color-leaf)"></circle>
         <circle cx="21.5" cy="18" r="1.2" fill="var(--color-leaf)"></circle>
       </svg>
-      <span class="font-display text-xl font-semibold tracking-tight">
+      <span class="font-display text-xl font-semibold tracking-tight text-leaf">
         <span lang="kn">ಕದಲಿ</span>
-        <span class="ml-1.5 align-middle font-ui text-xs font-medium text-milk/70"
+        <span class="ml-1.5 align-middle font-ui text-xs font-medium text-stone"
           >Kadali</span
         >
       </span>
@@ -44,9 +44,9 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
                 href={href}
                 aria-current={current === href ? 'page' : undefined}
                 class:list={[
-                  'font-ui text-base font-medium text-milk/80 transition-colors hover:text-milk active:text-milk',
+                  'font-ui text-base font-medium text-ink/75 transition-colors hover:text-leaf active:text-leaf',
                   current === href &&
-                    'font-semibold text-milk underline decoration-turmeric decoration-2 underline-offset-8',
+                    'font-semibold text-leaf underline decoration-turmeric decoration-2 underline-offset-8',
                 ]}
               >
                 {label}
@@ -57,32 +57,40 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
       </ul>
     </nav>
 
-    <button
-      id="nav-toggle"
-      type="button"
-      class="inline-flex size-11 items-center justify-center rounded-sm text-milk transition-colors hover:bg-milk/10 active:bg-milk/15 md:hidden"
-      aria-expanded="false"
-      aria-controls="nav-drawer"
-    >
-      <span class="sr-only">ಮೆನು</span>
-      <svg
-        class="size-6"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        aria-hidden="true"
+    <div class="flex items-center gap-2">
+      <a
+        href="/contact"
+        class="inline-flex min-h-[40px] items-center justify-center rounded-full bg-turmeric px-5 py-2 font-ui text-sm font-semibold text-ink transition-colors duration-200 hover:bg-leaf hover:text-milk focus-visible:outline-leaf active:translate-y-[1px]"
       >
-        <path class="nav-icon-open" d="M4 7h16M4 12h16M4 17h16"></path>
-        <path class="nav-icon-close hidden" d="M6 6l12 12M18 6L6 18"></path>
-      </svg>
-    </button>
+        <span lang="kn">ಸೇರಿ</span>
+      </a>
+      <button
+        id="nav-toggle"
+        type="button"
+        class="inline-flex size-11 items-center justify-center rounded-sm text-ink transition-colors hover:bg-ink/5 active:bg-ink/10 md:hidden"
+        aria-expanded="false"
+        aria-controls="nav-drawer"
+      >
+        <span class="sr-only">ಮೆನು</span>
+        <svg
+          class="size-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <path class="nav-icon-open" d="M4 7h16M4 12h16M4 17h16"></path>
+          <path class="nav-icon-close hidden" d="M6 6l12 12M18 6L6 18"></path>
+        </svg>
+      </button>
+    </div>
   </div>
 
   <nav
     id="nav-drawer"
-    class="hidden border-t border-milk/15 bg-leaf text-milk md:!hidden"
+    class="hidden border-t border-ink/10 bg-cream text-ink md:!hidden"
     aria-label="Primary mobile"
   >
     <ul class="mx-auto max-w-6xl px-4 py-2 sm:px-6">
@@ -93,8 +101,8 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
               href={href}
               aria-current={current === href ? 'page' : undefined}
               class:list={[
-                'block border-b border-milk/10 px-1 py-3.5 font-ui text-lg font-medium text-milk/85 last:border-0 hover:text-milk active:text-milk',
-                current === href && 'font-semibold text-milk',
+                'block border-b border-ink/10 px-1 py-3.5 font-ui text-lg font-medium text-ink/85 last:border-0 hover:text-leaf active:text-leaf',
+                current === href && 'font-semibold text-leaf',
               ]}
             >
               {label}
@@ -103,6 +111,14 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
         ))
       }
     </ul>
+    <div class="mx-auto max-w-6xl px-4 pb-4 sm:px-6">
+      <a
+        href="/contact"
+        class="flex min-h-[48px] items-center justify-center rounded-full bg-turmeric px-7 py-3 font-ui text-base font-semibold text-ink transition-colors duration-200 hover:bg-leaf hover:text-milk focus-visible:outline-leaf active:translate-y-[1px]"
+      >
+        <span lang="kn">ಸೇರಿ</span>
+      </a>
+    </div>
   </nav>
 </header>
 
