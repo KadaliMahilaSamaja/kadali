@@ -1,118 +1,36 @@
 ---
 /**
- * Contact page — card grid of ways to reach the club. No contact form:
- * the site is fully static, so messages go straight to the club's own
- * phone/WhatsApp/email instead of into a backend nobody watches.
- *
- * ⚠️ All values below are PLACEHOLDERs — replace before launch.
- * Footer.astro shows the same placeholders; update both together.
+ * Contact page — ways to reach the samaja. No contact form: the site is
+ * fully static, so messages go straight to the club's own email instead
+ * of into a backend nobody watches.
  */
 import BaseLayout from '../components/BaseLayout.astro';
 import PageHero from '../components/pages/PageHero.astro';
 
-const PLACEHOLDER = {
-  phone: '+91 00000 00000',
-  phoneHref: 'tel:+910000000000',
-  whatsappHref: 'https://wa.me/910000000000',
-  email: 'hello@example.org',
-  emailHref: 'mailto:hello@example.org',
-  addressLines: [
-    'Kadali Mahila Sangha',
-    'Placeholder address line',
-    'Udupi, Karnataka 576101',
-  ],
-  mapHref: 'https://www.google.com/maps/search/?api=1&query=Udupi%2C+Karnataka',
+const CONTACT = {
+  email: 'contact@kadali.org',
+  emailHref: 'mailto:contact@kadali.org',
+  addressLines: ['ಕದಳಿ ವನಿತಾ ಸಮಾಜ', 'ಚೌಕಿ ಮಠ', 'ಶಿವಮೊಗ್ಗ, ಕರ್ನಾಟಕ'],
+  mapHref:
+    'https://www.google.com/maps/search/?api=1&query=Chowki+Matha+Shivamogga',
 };
 ---
 
 <BaseLayout
-  title="Contact Kadali — Get in Touch"
-  description="Reach Kadali by WhatsApp, phone or email, or find us in person in Udupi, Karnataka. No forms — one message is enough."
+  title="ಸಂಪರ್ಕ · ಕದಳಿ ವನಿತಾ ಸಮಾಜ"
+  description="ಕದಳಿ ವನಿತಾ ಸಮಾಜವನ್ನು ಸಂಪರ್ಕಿಸಿ — ಇಮೇಲ್ contact@kadali.org, ಅಥವಾ ಶಿವಮೊಗ್ಗದ ಚೌಕಿ ಮಠದಲ್ಲಿ ಭೇಟಿಯಾಗಿ."
 >
   <PageHero
-    eyebrow="Contact"
-    title="Get in touch"
-    kn="ಸಂಪರ್ಕ"
-    lede="One message is enough — by WhatsApp, phone or email. We reply when the day's work allows, usually within a couple of days."
+    eyebrow="ಕದಳಿ ವನಿತಾ ಸಮಾಜ"
+    title="ನಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸಿ"
+    lede="ಒಂದು ಸಂದೇಶ ಸಾಕು — ಇಮೇಲ್ ಬರೆಯಿರಿ ಅಥವಾ ಶಿವಮೊಗ್ಗದ ಚೌಕಿ ಮಠಕ್ಕೆ ಬನ್ನಿ. ದಿನದ ಕೆಲಸಗಳ ನಡುವೆ ಉತ್ತರಿಸುತ್ತೇವೆ."
     tone="jasmine"
   />
 
   <section class="bg-cream">
     <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-      <h2 class="sr-only">Ways to reach us</h2>
+      <h2 class="sr-only">ಸಂಪರ್ಕದ ದಾರಿಗಳು</h2>
       <ul class="grid gap-6 sm:grid-cols-2">
-        <!-- WhatsApp -->
-        <li class="flex flex-col border border-ink/10 bg-jasmine p-6">
-          <div class="flex items-center gap-3">
-            <svg
-              class="size-6 shrink-0 text-leaf"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.8"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M4 5h16v11H9l-5 4V5Z"></path>
-            </svg>
-            <h3 class="font-ui text-xs font-semibold tracking-[0.2em] uppercase text-stone">
-              WhatsApp
-            </h3>
-          </div>
-          <p class="mt-4 font-display text-xl font-semibold text-ink">
-            {PLACEHOLDER.phone}
-          </p>
-          <p class="mt-2 font-body text-base text-stone">
-            The fastest way to reach the club — message us any time and
-            someone usually replies the same day.
-          </p>
-          <a
-            href={PLACEHOLDER.whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="mt-auto self-start pt-4 font-ui text-sm font-semibold text-leaf underline-offset-4 hover:underline"
-          >
-            Open a chat<span aria-hidden="true"> ↗</span>
-          </a>
-        </li>
-
-        <!-- Phone -->
-        <li class="flex flex-col border border-ink/10 bg-jasmine p-6">
-          <div class="flex items-center gap-3">
-            <svg
-              class="size-6 shrink-0 text-leaf"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.8"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <path
-                d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2Z"
-              ></path>
-            </svg>
-            <h3 class="font-ui text-xs font-semibold tracking-[0.2em] uppercase text-stone">
-              Phone
-            </h3>
-          </div>
-          <p class="mt-4 font-display text-xl font-semibold text-ink">
-            {PLACEHOLDER.phone}
-          </p>
-          <p class="mt-2 font-body text-base text-stone">
-            The same number as our WhatsApp — call for a voice, or leave a
-            message if we are mid-circle.
-          </p>
-          <a
-            href={PLACEHOLDER.phoneHref}
-            class="mt-auto self-start pt-4 font-ui text-sm font-semibold text-leaf underline-offset-4 hover:underline"
-          >
-            Call us
-          </a>
-        </li>
-
         <!-- Email -->
         <li class="flex flex-col border border-ink/10 bg-jasmine p-6">
           <div class="flex items-center gap-3">
@@ -129,22 +47,25 @@ const PLACEHOLDER = {
               <rect x="3" y="5" width="18" height="14" rx="1"></rect>
               <path d="m3 7 9 6 9-6"></path>
             </svg>
-            <h3 class="font-ui text-xs font-semibold tracking-[0.2em] uppercase text-stone">
-              Email
+            <h3
+              class="font-ui text-xs font-semibold tracking-[0.2em] text-stone"
+            >
+              <span>ಇಮೇಲ್</span>
             </h3>
           </div>
           <p class="mt-4 font-display text-xl font-semibold break-all text-ink">
-            {PLACEHOLDER.email}
+            {CONTACT.email}
           </p>
           <p class="mt-2 font-body text-base text-stone">
-            For longer matters, documents, or anything you would rather put in
-            writing.
+            ಸದಸ್ಯತ್ವ, ಕಾರ್ಯಕ್ರಮಗಳು, ಬರಹಗಳ ಹಂಚಿಕೆ — ಬರೆದು ಇಟ್ಟರೆ
+            ಸಾಕು.
           </p>
           <a
-            href={PLACEHOLDER.emailHref}
+            href={CONTACT.emailHref}
             class="mt-auto self-start pt-4 font-ui text-sm font-semibold text-leaf underline-offset-4 hover:underline"
           >
-            Write to us
+            <span>ಇಮೇಲ್ ಬರೆಯಿರಿ</span>
+            <span aria-hidden="true"> ↗</span>
           </a>
         </li>
 
@@ -166,42 +87,45 @@ const PLACEHOLDER = {
               ></path>
               <circle cx="12" cy="10" r="2.5"></circle>
             </svg>
-            <h3 class="font-ui text-xs font-semibold tracking-[0.2em] uppercase text-stone">
-              Visit
+            <h3
+              class="font-ui text-xs font-semibold tracking-[0.2em] text-stone"
+            >
+              <span>ಭೇಟಿ</span>
             </h3>
           </div>
-          <address class="mt-4 font-display text-xl font-semibold not-italic text-ink">
+          <address
+            class="mt-4 font-display text-xl font-semibold not-italic text-ink"
+          >
             {
-              PLACEHOLDER.addressLines.map((line, i) => (
+              CONTACT.addressLines.map((line, i) => (
                 <span class:list={['block', i > 0 && 'mt-0.5']}>{line}</span>
               ))
             }
           </address>
           <p class="mt-2 font-body text-base text-stone">
-            We gather in person around Udupi; a message first gets you the
-            exact doorstep.
+            ಸಭೆಗಳು ಶಿವಮೊಗ್ಗದ ಚೌಕಿ ಮಠದ ಸುತ್ತ ನಡೆಯುತ್ತವೆ; ಮೊದಲು ಸಂದೇಶ
+            ಕಳಿಸಿದರೆ ಸರಿಯಾದ ಸಮಯ ಹೇಳಿಕೊಡುತ್ತೇವೆ.
           </p>
           <a
-            href={PLACEHOLDER.mapHref}
+            href={CONTACT.mapHref}
             target="_blank"
             rel="noopener noreferrer"
             class="mt-auto self-start pt-4 font-ui text-sm font-semibold text-leaf underline-offset-4 hover:underline"
           >
-            Find us on the map<span aria-hidden="true"> ↗</span>
+            <span>ನಕ್ಷೆಯಲ್ಲಿ ನೋಡಿ</span>
+            <span aria-hidden="true"> ↗</span>
           </a>
         </li>
       </ul>
 
       <div class="mt-10 border border-ink/10 bg-jasmine p-6 sm:p-8">
         <h2 class="font-display text-2xl font-semibold text-ink">
-          No form — on purpose
+          <span>ಅರ್ಜಿ ಇಲ್ಲ — ಬೇಕಾಗಿಲ್ಲ</span>
         </h2>
         <p class="mt-3 max-w-2xl font-body text-base text-stone">
-          This site has no backend and nothing to submit into: no contact
-          form, no database, no data trail. The WhatsApp link opens a chat on
-          your own phone; the email link opens your own mail app. Your message
-          goes to the club, not to a server we keep. Members coordinate
-          day-to-day in a WhatsApp group — ask, and we will add you.
+          ಈ ಜಾಲತಾಣದಲ್ಲಿ ಯಾವುದೇ ಫಾರ್ಮ್ ಇಲ್ಲ, ದತ್ತಾಂಶ ಸಂಗ್ರಹವಿಲ್ಲ. ಇಮೇಲ್
+          ಕೊಂಡಿ ನಿಮ್ಮದೇ ಮೇಲ್ ಅಪ್ಲಿಕೇಶನ್ ತೆರೆಯುತ್ತದೆ — ನಿಮ್ಮ ಸಂದೇಶ
+          ನೇರವಾಗಿ ಸಮಾಜಕ್ಕೆ ಬರುತ್ತದೆ, ಬೇರೆ ಯಾವುದೇ ಸರ್ವರ್‌ಗೆ ಹೋಗುವುದಿಲ್ಲ.
         </p>
       </div>
     </div>

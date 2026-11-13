@@ -34,7 +34,7 @@ publish_mode:
   stages: [draft, pending_publish]
   direct_publish: false
 
-site_url: https://kadali.pages.dev
+site_url: https://kadali.org
 
 # Images uploaded in the CMS are committed to public/images/uploads and
 # referenced from the site as /images/uploads/...
@@ -88,8 +88,26 @@ collections:
         widget: string
         hint: Short description of the image for screen readers.
       - name: author
-        label: Author
+        label: ಲೇಖಕಿಯ ಹೆಸರು / Author
         widget: string
+        hint: ಲೇಖಕಿಯ ಹೆಸರು (Name of the author, e.g. ರೇಣುಕಾ ಶಿವಾನಂದಪ್ಪ).
+      - name: authorPhoto
+        label: ಲೇಖಕಿಯ ಭಾವಚಿತ್ರ / Author Photo
+        widget: image
+        required: false
+        hint: >-
+          ಲೇಖಕಿಯ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ ಅಥವಾ ಆಯ್ಕೆಮಾಡಿ (Upload or choose author photo).
+          ಖಾಲಿ ಬಿಟ್ಟರೆ ಪ್ರೊಫೈಲ್ ಅಥವಾ ಡಿಫಾಲ್ಟ್ ಫೋಟೋ ಬಳಕೆಯಾಗುತ್ತದೆ.
+      - name: authorRole
+        label: ಲೇಖಕಿಯ ಹುದ್ದೆ / Author Role
+        widget: string
+        required: false
+        hint: 'ಉದಾ: ಸಂಸ್ಥಾಪಕರು · ಹಿರಿಯ ಮಾರ್ಗದರ್ಶಕರು, ಸದಸ್ಯೆ (Optional role or title).'
+      - name: authorBio
+        label: ಲೇಖಕಿಯ ಪರಿಚಯ / Author Bio
+        widget: text
+        required: false
+        hint: ಲೇಖಕಿಯ ಬಗ್ಗೆ ಸಂಕ್ಷಿಪ್ತ ವಿವರಣೆ (Short biography of the author).
       - name: category
         label: Category
         widget: select
@@ -289,16 +307,18 @@ collections:
         label: Role
         widget: select
         options:
-          - label: 'President (ಅಧ್ಯಕ್ಷೆ)'
+          - label: 'President (ಅಧ್ಯಕ್ಷರು)'
             value: president
-          - label: 'Vice-president (ಉಪಾಧ್ಯಕ್ಷೆ)'
+          - label: 'Vice-president (ಉಪಾಧ್ಯಕ್ಷರು)'
             value: vice_president
           - label: 'Secretary (ಕಾರ್ಯದರ್ಶಿ)'
             value: secretary
-          - label: 'Joint secretary (ಸಹ ಕಾರ್ಯದರ್ಶಿ)'
+          - label: 'Joint secretary (ಸಹಕಾರ್ಯದರ್ಶಿ)'
             value: joint_secretary
-          - label: 'Treasurer (ಕೋಶಾಧಿಕಾರಿ)'
+          - label: 'Treasurer (ಖಜಾಂಚಿ)'
             value: treasurer
+          - label: 'Director (ನಿರ್ದೇಶಕರು)'
+            value: director
           - label: 'Member (ಸದಸ್ಯೆ)'
             value: member
         hint: >-

@@ -7,6 +7,9 @@ import TagChip from '../../components/articles/TagChip.astro';
 import ArticleDate from '../../components/articles/ArticleDate.astro';
 import ArticleCard from '../../components/articles/ArticleCard.astro';
 import ShareLinks from '../../components/articles/ShareLinks.astro';
+import AuthorBio from '../../components/articles/AuthorBio.astro';
+import ArticleLightbox from '../../components/articles/ArticleLightbox.astro';
+import { getAuthorProfile } from '../../lib/authors';
 
 export async function getStaticPaths() {
   // Drafts excluded; newest first so related picks the freshest matches.
@@ -44,24 +47,32 @@ const { post, related, event } = Astro.props;
 const { title, description, cover, coverAlt, author, pubDate } = post.data;
 const { Content } = await render(post);
 
+const allArticles = await getCollection('articles', ({ data }) => !data.draft);
+const authorProfile = await getAuthorProfile(author, {
+  photo: post.data.authorPhoto,
+  role: post.data.authorRole,
+  bio: post.data.authorBio,
+});
+const authorArticlesCount = allArticles.filter((a) => a.data.author === author).length;
+
 const shareUrl = new URL(
   Astro.url.pathname,
-  Astro.site ?? 'https://kadali.example.org',
+  Astro.site ?? 'https://kadali.org',
 ).href;
 ---
 
-<BaseLayout title={`${title} · Kadali`} description={description} image={cover} type="article">
+<BaseLayout title={`${title} · ಕದಳಿ ವನಿತಾ ಸಮಾಜ`} description={description} image={cover} type="article">
   <article class="bg-cream">
     <!-- Breadcrumb + article header -->
     <div class="mx-auto max-w-3xl px-4 pt-10 sm:px-6">
-      <nav aria-label="Breadcrumb" class="font-ui text-sm text-stone">
+      <nav aria-label="ಸ್ಥಳ ಸೂಚಿ" class="font-ui text-sm text-stone">
         <ol class="flex flex-wrap items-center gap-2">
           <li>
-            <a href="/" class="underline-offset-4 hover:text-leaf hover:underline">Home</a>
+            <a href="/" class="underline-offset-4 hover:text-leaf hover:underline">ಮುಖಪುಟ</a>
           </li>
           <li aria-hidden="true">/</li>
           <li>
-            <a href="/articles" class="underline-offset-4 hover:text-leaf hover:underline">Articles</a>
+            <a href="/articles" class="underline-offset-4 hover:text-leaf hover:underline">ಬರಹಗಳು</a>
           </li>
           <li aria-hidden="true">/</li>
           <li aria-current="page" class="text-ink">{title}</li>
@@ -88,15 +99,38 @@ const shareUrl = new URL(
         <h1 class="mt-5 font-display text-4xl leading-tight font-semibold text-ink md:text-5xl">
           {title}
         </h1>
-        <p class="mt-6 font-ui text-sm text-stone">
-          By {author} · <ArticleDate date={pubDate} />
-        </p>
+        <div class="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            href={`/articles?author=${encodeURIComponent(author)}`}
+            class="group inline-flex items-center gap-2.5 rounded-full border border-ink/15 bg-milk py-1 pl-1.5 pr-3.5 transition-colors duration-200 hover:border-leaf hover:bg-jasmine"
+            title={`${author} ಅವರ ಎಲ್ಲಾ ಬರಹಗಳನ್ನು ನೋಡಿ`}
+          >
+            {authorProfile.photo ? (
+              <img
+                src={authorProfile.photo}
+                alt={author}
+                width="28"
+                height="28"
+                class="size-7 rounded-full object-cover border border-ink/10"
+              />
+            ) : (
+              <span class="flex size-7 items-center justify-center rounded-full bg-leaf text-milk font-ui text-xs font-bold">
+                {author.slice(0, 1)}
+              </span>
+            )}
+            <span class="font-ui text-sm text-ink">
+              <span class="text-stone">ಲೇಖಕಿ:</span> <strong class="font-semibold text-leaf group-hover:underline">{author}</strong>
+            </span>
+          </a>
+          <span class="text-stone/40 font-ui text-sm" aria-hidden="true">·</span>
+          <ArticleDate date={pubDate} />
+        </div>
       </header>
     </div>
 
     <!-- Cover: full-width with the temple-arch top mask (above fold, no lazy) -->
-    <div class="mx-auto mt-10 max-w-4xl px-4 sm:px-6">
-      <div class="overflow-hidden rounded-t-[999px] border border-ink/10">
+    <div class="article-cover mx-auto mt-10 max-w-4xl px-4 sm:px-6">
+      <div class="overflow-hidden rounded-t-[999px] border border-ink/10 bg-jasmine/30">
         <img
           src={cover}
           alt={coverAlt}
@@ -111,6 +145,7 @@ const shareUrl = new URL(
     <!-- Body -->
     <div class="prose-kadali mx-auto mt-12 max-w-3xl px-4 sm:px-6">
       <Content />
+      <AuthorBio author={authorProfile} articlesCount={authorArticlesCount} />
     </div>
   </article>
 
@@ -121,9 +156,7 @@ const shareUrl = new URL(
       <section class="mt-14 bg-jasmine">
         <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
           <h2 class="font-display text-2xl font-semibold text-ink">
-            Related articles
-            <span class="text-stone" aria-hidden="true">·</span>
-            <span lang="kn" class="text-leaf">ಸಂಬಂಧಿತ ಲೇಖನಗಳು</span>
+            <span lang="kn" class="text-leaf">ಸಂಬಂಧಿತ ಬರಹಗಳು</span>
           </h2>
           <div class="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((rel) => (
@@ -140,4 +173,6 @@ const shareUrl = new URL(
       <ShareLinks url={shareUrl} title={title} />
     </div>
   </section>
+
+  <ArticleLightbox />
 </BaseLayout>

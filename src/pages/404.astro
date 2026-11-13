@@ -4,15 +4,15 @@ import Arch from '../components/motifs/Arch.astro';
 import Beads from '../components/motifs/Beads.astro';
 
 const links = [
-  { href: '/', label: 'Home' },
-  { href: '/articles', label: 'Articles' },
-  { href: '/events', label: 'Events' },
+  { href: '/', label: 'ಮುಖಪುಟ' },
+  { href: '/articles', label: 'ಬರಹಗಳು' },
+  { href: '/events', label: 'ಕಾರ್ಯಕ್ರಮಗಳು' },
 ];
 ---
 
 <BaseLayout
-  title="Page not found — Kadali"
-  description="The page you were looking for has wandered off. Head back home or browse our articles and events."
+  title="ಪುಟ ಸಿಗುದಿಲ್ಲ · ಕದಳಿ ವನಿತಾ ಸಮಾಜ"
+  description="ನೀವು ಹುಡುಕುತ್ತಿದ್ದ ಪುಟ ಸಿಗಲಿಲ್ಲ. ಮುಖಪುಟಕ್ಕೆ ಹಿಂತಿರುಗಿ ಅಥವಾ ಬರಹಗಳು, ಕಾರ್ಯಕ್ರಮಗಳನ್ನು ನೋಡಿ."
 >
   <section class="relative overflow-hidden">
     <div
@@ -32,17 +32,14 @@ const links = [
       <h1
         class="mt-8 font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
       >
-        This page has wandered off
+        ಈ ಪುಟ ಎಲ್ಲೋ ತಪ್ಪಿಹೋಗಿದೆ
       </h1>
-      <p class="mt-2 font-ui text-sm font-medium text-stone">
-        <span lang="kn">ಪುಟ ಸಿಗಲಿಲ್ಲ</span>
-      </p>
 
       <Beads class="mt-8 w-40 text-leaf" />
 
       <p class="mt-8 max-w-md font-body text-lg leading-relaxed text-stone">
-        The page you're looking for doesn't exist or has moved. Try one of
-        these paths instead.
+        ನೀವು ಹುಡುಕುತ್ತಿರುವ ಪುಟ ಇಲ್ಲ ಅಥವಾ ಸ್ಥಳಾಂತರಗೊಂಡಿದೆ. ಬದಲಿಗೆ
+        ಈ ದಾರಿಗಳನ್ನು ಪ್ರಯತ್ನಿಸಿ.
       </p>
 
       <ul class="mt-8 flex flex-wrap items-center justify-center gap-3">

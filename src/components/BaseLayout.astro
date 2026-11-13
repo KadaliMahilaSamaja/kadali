@@ -26,15 +26,23 @@ const { title, description, image, type = 'website' } = Astro.props;
 // Social URLs are placeholders — swap in the club's real profiles when they exist.
 const siteUrl = Astro.site
   ? new URL('/', Astro.site).href
-  : 'https://kadali.example.org/';
+  : 'https://kadali.org/';
 const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'ಕದಲಿ ಮಹಿಳಾ ಸಂಘ',
-    alternateName: 'Kadali',
+    name: 'ಕದಳಿ ವನಿತಾ ಸಮಾಜ',
+    alternateName: 'Kadali Vanita Samaja',
     url: siteUrl,
     logo: new URL('/favicon.svg', siteUrl).href,
+    email: 'contact@kadali.org',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'ಚೌಕಿ ಮಠ (Chowki Matha)',
+      addressLocality: 'ಶಿವಮೊಗ್ಗ (Shivamogga)',
+      addressRegion: 'Karnataka',
+      addressCountry: 'IN',
+    },
     sameAs: [
       'https://www.instagram.com/',
       'https://www.youtube.com/',
@@ -44,8 +52,8 @@ const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'ಕದಲಿ ಮಹಿಳಾ ಸಂಘ',
-    alternateName: 'Kadali',
+    name: 'ಕದಳಿ ವನಿತಾ ಸಮಾಜ',
+    alternateName: 'Kadali Vanita Samaja',
     url: siteUrl,
   },
 ];

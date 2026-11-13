@@ -1,7 +1,7 @@
 ---
 /**
- * One gallery entry: KasutiBorder header (title, en-IN date + Kannada date,
- * optional linked event) followed by a masonry-ish CSS-columns photo grid.
+ * One gallery entry: KasutiBorder header (title, Kannada date, optional
+ * linked event) followed by a masonry-ish CSS-columns photo grid.
  * The section carries `data-gallery` so the lightbox script can scope
  * prev/next cycling to this group's photos only.
  */
@@ -19,20 +19,38 @@ const { gallery, eventHref } = Astro.props;
 const { title, date, event, photos } = gallery.data;
 
 // Build-time formatting; UTC keeps the rendered date stable across host TZs.
-const dateFormatter = new Intl.DateTimeFormat('en-IN', {
+// Kannada month names are a fixed table — Node's ICU data for kn is not
+// guaranteed on every build machine.
+const KN_MONTHS = [
+  'ಜನವರಿ',
+  'ಫೆಬ್ರವರಿ',
+  'ಮಾರ್ಚ್',
+  'ಏಪ್ರಿಲ್',
+  'ಮೇ',
+  'ಜೂನ್',
+  'ಜುಲೈ',
+  'ಆಗಸ್ಟ್',
+  'ಸೆಪ್ಟೆಂಬರ್',
+  'ಅಕ್ಟೋಬರ್',
+  'ನವೆಂಬರ್',
+  'ಡಿಸೆಂಬರ್',
+] as const;
+
+const dayFmt = new Intl.DateTimeFormat('en-IN', {
   day: 'numeric',
-  month: 'long',
+  timeZone: 'UTC',
+});
+const monthIdxFmt = new Intl.DateTimeFormat('en-US', {
+  month: 'numeric',
+  timeZone: 'UTC',
+});
+const yearFmt = new Intl.DateTimeFormat('en-IN', {
   year: 'numeric',
   timeZone: 'UTC',
 });
-const knDateFormatter = new Intl.DateTimeFormat('kn-IN', {
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric',
-  timeZone: 'UTC',
-});
-const dateLabel = dateFormatter.format(date);
-const knDateLabel = knDateFormatter.format(date);
+const dateLabel = `${dayFmt.format(date)} ${
+  KN_MONTHS[Number(monthIdxFmt.format(date)) - 1] ?? ''
+} ${yearFmt.format(date)}`;
 const headingId = `gallery-heading-${gallery.id}`;
 ---
 
@@ -48,16 +66,14 @@ const headingId = `gallery-heading-${gallery.id}`;
       <h2 id={headingId} class="font-display text-2xl font-semibold text-ink md:text-3xl">
         {title}
       </h2>
-      <p class="font-ui text-sm text-stone">
+      <p lang="kn" class="font-ui text-sm text-stone">
         {dateLabel}
-        <span aria-hidden="true"> · </span>
-        <span lang="kn">{knDateLabel}</span>
       </p>
     </div>
     {
       event && (
         <p class="mt-1 font-ui text-sm text-stone">
-          {'From '}
+          <span lang="kn">ಕಾರ್ಯಕ್ರಮ: </span>
           {eventHref ? (
             <a
               href={eventHref}

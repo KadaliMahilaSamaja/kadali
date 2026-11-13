@@ -2,9 +2,9 @@
 title: "ವಚನ ಜಯಂತಿ ಸಾಮೂಹಿಕ ವಾಚನ"
 poster: "/images/uploads/poster-vachana-jayanthi.svg"
 summary: "ಅಕ್ಕಮಹಾದೇವಿ ಜಯಂತಿ ವಾರದ ಸಾಮೂಹಿಕ ವಾಚನದ ಸಂಜೆ: ವಚನಗಳು, ಭಕ್ತಿಗೀತೆಗಳು, ಜಿಲ್ಲೆಯ ಸದಸ್ಸೆಯರ ನೆನಪುಗಳು."
-venue: "ಜಿಲ್ಲಾ ಸಾರ್ವಜನಿಕ ಗ್ರಂಥಾಲಯದ ಸಭಾಂಗಣ, ಉಡುಪಿ"
-mapUrl: "https://www.google.com/maps/search/?api=1&query=District+Public+Library+Udupi"
-contact: "ವಸುಧಾ ನಾಯಕ್, hello@example.org"
+venue: "ಜಿಲ್ಲಾ ಸಾರ್ವಜನಿಕ ಗ್ರಂಥಾಲಯದ ಸಭಾಂಗಣ, ಶಿವಮೊಗ್ಗ"
+mapUrl: "https://www.google.com/maps/search/?api=1&query=District+Public+Library+Shivamogga"
+contact: "ವಸುಧಾ ನಾಯಕ್, contact@kadali.org"
 startAt: 2026-12-13T16:00:00+05:30
 endAt: 2026-12-13T18:30:00+05:30
 status: auto

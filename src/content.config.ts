@@ -15,6 +15,9 @@ const articles = defineCollection({
     cover: z.string(), // path under public/, e.g. /images/uploads/cover.svg
     coverAlt: z.string(),
     author: z.string(),
+    authorPhoto: z.string().optional(),
+    authorRole: z.string().optional(),
+    authorBio: z.string().optional(),
     category: z.enum([
       'culture',
       'literature',
@@ -91,6 +94,7 @@ const people = defineCollection({
       'secretary',
       'joint_secretary',
       'treasurer',
+      'director',
       'member',
     ]),
     photo: z.string(), // path under public/, e.g. /images/uploads/photo.svg

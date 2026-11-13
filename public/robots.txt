@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 
-Sitemap: https://kadali.pages.dev/sitemap-index.xml
+Sitemap: https://kadali.org/sitemap-index.xml

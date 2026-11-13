@@ -5,8 +5,8 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  // Placeholder production URL — update when the real domain is set.
-  site: 'https://kadali.pages.dev',
+  // Production domain (kadali.org).
+  site: 'https://kadali.org',
   output: 'static',
   compressHTML: true,
   integrations: [sitemap()],

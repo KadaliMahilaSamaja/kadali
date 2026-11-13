@@ -1,310 +1,421 @@
 ---
 /**
- * About page.
- * NOTE: all copy is code-managed — it lives here on purpose, not in the CMS.
- * Club-run edits to this prose happen in this file, via pull request.
+ * About page — ಕದಳಿ ವನಿತಾ ಸಮಾಜ, ಶಿವಮೊಗ್ಗ.
+ * 1993ರಿಂದ ಇಂದಿನವರೆಗಿನ ಮೂರು ದಶಕಗಳ ಸಾರ್ಥಕ ಪಯಣ, ಸಂಸ್ಥಾಪನೆಯ ಹಿನ್ನೆಲೆ,
+ * ಧ್ಯೇಯೋದ್ದೇಶಗಳು ಮತ್ತು ಪ್ರಮುಖ ಸಾಧನೆಗಳ ಅಧಿಕೃತ ವಿವರ.
  */
 import BaseLayout from '../components/BaseLayout.astro';
 import PageHero from '../components/pages/PageHero.astro';
 import Beads from '../components/motifs/Beads.astro';
+import FlowerLine from '../motifs/FlowerLine.astro';
 import CommitteeSection from '../components/pages/CommitteeSection.astro';
 ---
 
 <BaseLayout
-  title="About Kadali — A Women's Collective Inspired by Akkamahadevi"
-  description="Kadali is a women's social, cultural and spiritual organisation in Karnataka, inspired by the twelfth-century vachana poet Akkamahadevi."
+  title="ನಮ್ಮ ಬಗ್ಗೆ · ಕದಳಿ ವನಿತಾ ಸಮಾಜ, ಶಿವಮೊಗ್ಗ"
+  description="1993ರಲ್ಲಿ ಶಿವಮೊಗ್ಗದಲ್ಲಿ ಜ್ಯೋತಿ ಬೆಳಗುವ ಮೂಲಕ ಆರಂಭವಾದ ಕದಳಿ ವನಿತಾ ಸಮಾಜದ ಮೂರು ದಶಕಗಳ ಸಾರ್ಥಕ ಸೇವಾ ಪಯಣ, ಮಹಿಳಾ ಸಬಲೀಕರಣ ಮತ್ತು ಸಾಧನೆಗಳ ವಿವರ."
 >
   <PageHero
-    eyebrow="About"
-    title="A circle of women, kept open"
-    kn="ಕದಲಿ ಮಹಿಳಾ ಸಂಘ"
-    lede="Kadali is a women's organisation in Karnataka — social, cultural and spiritual at once, because in our experience those three things refuse to be separated."
+    eyebrow="ಕದಳಿ ವನಿತಾ ಸಮಾಜ · ಶಿವಮೊಗ್ಗ"
+    title="ಸಮಾಜಸೇವೆಯೇ ಬದುಕಿನ ಉಸಿರು · ಮಹಿಳಾ ಸಬಲೀಕರಣವೇ ಸಂಕಲ್ಪ"
+    kn="ಮೂರು ದಶಕಗಳಿಗೂ ಮೀರಿದ ಸಾರ್ಥಕ ಸೇವಾ ಪಯಣ (1993 – 2026)"
+    lede="ಜನಸೇವೆ, ಜನಸಂಘಟನೆ ಹಾಗೂ ಸಮಾಜಮುಖಿ ಚಿಂತನೆಯೊಂದಿಗೆ ಆರಂಭವಾದ ಕದಳಿ ವನಿತಾ ಸಮಾಜವು ಮಹಿಳೆಯರಲ್ಲಿ ಜಾಗೃತಿ, ಆತ್ಮವಿಶ್ವಾಸ, ಸಂಸ್ಕೃತಿ ಮತ್ತು ಸಮಾಜಮುಖಿ ಸೇವೆಯ ಬೆಳಕನ್ನು ನಿರಂತರವಾಗಿ ಹರಡುತ್ತಿದೆ."
     tone="leaf"
   />
 
-  <!-- Who we are -->
+  <!-- 1. ಸಂಸ್ಥಾಪನೆ ಮತ್ತು ಹಿನ್ನೆಲೆ (Founding & History) -->
   <section class="bg-cream">
     <div
-      class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-12"
+      class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:grid lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-14"
     >
       <div>
-        <h2 class="font-display text-3xl font-semibold text-ink">Who we are</h2>
-        <div class="mt-6 max-w-2xl space-y-5">
-          <p class="font-body text-lg text-stone">
-            Kadali is a women's organisation in Karnataka. We are homemakers
-            and teachers, shopkeepers and retirees, grandmothers and women who
-            moved here last month. What we share is a habit of gathering — to
-            sing, to sew, to mark the festivals, to sit with a text, to help
-            when help is needed.
+        <p class="font-ui text-xs font-semibold tracking-[0.2em] uppercase text-leaf">
+          ಸ್ಥಾಪನೆಯ ಇತಿಹಾಸ
+        </p>
+        <h2 class="mt-2 font-display text-3xl font-semibold text-ink sm:text-4xl">
+          ಜ್ಯೋತಿ ಬೆಳಗಿಸಿ ಆರಂಭವಾದ ಸೇವಾ ಪಯಣ
+        </h2>
+
+        <div class="mt-8 space-y-5 font-body text-lg leading-relaxed text-stone">
+          <p>
+            ಜನಸೇವೆ, ಜನಸಂಘಟನೆ ಹಾಗೂ ಸಮಾಜಮುಖಿ ಚಿಂತನೆಗಳ ವಾತಾವರಣದಲ್ಲಿ ಬೆಳೆದು ಬಂದ ಅಕ್ಕನವರು (ರೇಣುಕಾ ಶಿವಾನಂದಪ್ಪ) ತಮ್ಮ ಜನ್ಮಸ್ಥಳವಾದ ಶಿವಮೊಗ್ಗ ಜಿಲ್ಲೆಗೆ ಬಂದು ನೆಲೆಸಿದ ಸಂದರ್ಭದಲ್ಲಿ, ಇಲ್ಲಿನ ಮಹಿಳೆಯರನ್ನು ಸಂಘಟಿಸಿ, ಅವರಲ್ಲಿ ಜಾಗೃತಿ, ಆತ್ಮವಿಶ್ವಾಸ ಹಾಗೂ ಸಾಮಾಜಿಕ ಪ್ರಜ್ಞೆಯನ್ನು ಮೂಡಿಸಬೇಕೆಂಬ ಮಹತ್ತರ ಆಶಯ ಅವರಲ್ಲಿ ಮೂಡಿತು. ಈ ಚಿಂತನೆಯೇ ಮುಂದೆ ಕದಳಿ ವನಿತಾ ಸಮಾಜದ ಸ್ಥಾಪನೆಗೆ ದೃಢ ಪ್ರೇರಣೆಯಾಯಿತು.
           </p>
-          <p class="font-body text-lg text-stone">
-            Our name is the coastal Kannada word for the plantain tree —
-            <span lang="kn">ಕದಲಿ</span> — the one that stands in every
-            courtyard, feeds whoever asks, and offers shade without being
-            asked. It is also the place where tradition says Akkamahadevi's
-            long journey came to rest. Both meanings suit us.
+          <p>
+            ಕೆಲವು ಸಮಾನ ಮನಸ್ಕ ಸ್ನೇಹಿತೆಯರ ಸಹಕಾರ, ಪ್ರೋತ್ಸಾಹ ಮತ್ತು ಸಮರ್ಪಣಾ ಮನೋಭಾವದೊಂದಿಗೆ <strong class="font-semibold text-ink">ದಿನಾಂಕ 12-03-1993 ರಂದು</strong> ಕದಳಿ ವನಿತಾ ಸಮಾಜ ಅಸ್ತಿತ್ವಕ್ಕೆ ಬಂದು, ಒಂದು ಸಶಕ್ತ ಸಂಘಟನೆಯಾಗಿ ರೂಪುಗೊಂಡಿತು.
           </p>
-          <p class="font-body text-lg text-stone">
-            There is no entrance test and no dress code beyond ordinary
-            decency. If you are a woman who wants a circle — to speak plainly
-            in, to work with your hands in, to be quiet in — a seat is already
-            kept open.
+          <p>
+            ಅಂದಿನ ಶಿವಮೊಗ್ಗ ಜಿಲ್ಲಾಧಿಕಾರಿಗಳ ಪತ್ನಿಯಾದ <strong class="font-semibold text-ink">ಶ್ರೀಮತಿ ಪ್ರೇಮಲತಾ ಸದಾಶಿವಯ್ಯನವರ</strong> ಅಮೃತ ಹಸ್ತದಿಂದ ಜ್ಯೋತಿ ಬೆಳಗಿಸುವ ಮೂಲಕ ಅತ್ಯಂತ ಸರಳ ಹಾಗೂ ಅರ್ಥಪೂರ್ಣ ಸಮಾರಂಭದಲ್ಲಿ ಸಮಾಜಕ್ಕೆ ಚಾಲನೆ ನೀಡಲಾಯಿತು. ಅಂದು ಬೆಳಗಿದ ಆ ಜ್ಯೋತಿ ಇಂದು ಸಹಸ್ರಾರು ಮಹಿಳೆಯರ ಬದುಕಿನಲ್ಲಿ ಜ್ಞಾನ, ಜಾಗೃತಿ, ಆತ್ಮವಿಶ್ವಾಸ ಮತ್ತು ಸೇವೆಯ ಬೆಳಕನ್ನು ಹರಡುತ್ತಿದೆ.
           </p>
         </div>
+
+        <!-- Featured Founding Photo -->
+        <figure class="mt-10 overflow-hidden border border-ink/10 bg-jasmine p-3">
+          <div class="overflow-hidden rounded-t-[999px] border border-ink/10">
+            <img
+              src="/images/uploads/poster-deepa-lighting.jpg"
+              alt="ಜ್ಯೋತಿ ಬೆಳಗಿಸುವ ಮೂಲಕ ಕದಳಿ ವನಿತಾ ಸಮಾಜದ ಸೇವಾ ಪಯಣಕ್ಕೆ ಚಾಲನೆ ನೀಡಿದ ಮಂಗಳಕರ ಕ್ಷಣದ ಕಲಾಚಿತ್ರ"
+              width="1200"
+              height="675"
+              loading="lazy"
+              decoding="async"
+              class="aspect-[16/9] w-full object-cover"
+            />
+          </div>
+          <figcaption class="mt-3 px-2 pb-1 font-ui text-sm text-stone text-center">
+            ಮಂಗಳಕರ ಜ್ಯೋತಿ ಬೆಳಗಿಸುವ ಮೂಲಕ ಆರಂಭವಾದ ಕದಳಿ ವನಿತಾ ಸಮಾಜದ ಸೇವಾ ಪಯಣ
+          </figcaption>
+        </figure>
       </div>
 
-      <aside class="mt-12 self-start border border-ink/10 bg-jasmine p-6 lg:mt-0 lg:p-8">
+      <!-- Quick Summary Aside -->
+      <aside class="mt-12 self-start border border-ink/10 bg-jasmine p-6 sm:p-8 lg:mt-0">
         <h3 class="font-ui text-xs font-semibold tracking-[0.2em] uppercase text-leaf">
-          In short
+          ಒಂದು ನೋಟದಲ್ಲಿ
         </h3>
-        <dl class="mt-5 space-y-4">
-          <div>
+        <dl class="mt-6 space-y-5">
+          <div class="border-b border-ink/10 pb-3">
             <dt class="font-ui text-xs font-semibold tracking-wide uppercase text-stone">
-              Focus
+              ಸ್ಥಾಪನೆ ದಿನಾಂಕ
+            </dt>
+            <dd class="mt-1 font-display text-lg font-semibold text-ink">
+              12 ಮಾರ್ಚ್ 1993
+            </dd>
+          </div>
+          <div class="border-b border-ink/10 pb-3">
+            <dt class="font-ui text-xs font-semibold tracking-wide uppercase text-stone">
+              ಸ್ಥಳ
             </dt>
             <dd class="mt-1 font-body text-base text-ink">
-              Culture, seva, spirituality
+              ಶಿವಮೊಗ್ಗ, ಕರ್ನಾಟಕ
+            </dd>
+          </div>
+          <div class="border-b border-ink/10 pb-3">
+            <dt class="font-ui text-xs font-semibold tracking-wide uppercase text-stone">
+              ಆದರ್ಶ ಪ್ರೇರಣೆ
+            </dt>
+            <dd class="mt-1 font-body text-base text-ink">
+              ಶರಣೆ ಅಕ್ಕಮಹಾದೇವಿ ಹಾಗೂ ಬಸವಾದಿ ಶರಣರ ಸಮಾನತೆ, ಕಾಯಕ ಮತ್ತು ದಾಸೋಹ ತತ್ವಗಳು
+            </dd>
+          </div>
+          <div class="border-b border-ink/10 pb-3">
+            <dt class="font-ui text-xs font-semibold tracking-wide uppercase text-stone">
+              ಹೆಸರಿನ ಹಿನ್ನೆಲೆ
+            </dt>
+            <dd class="mt-1 font-body text-base text-ink">
+              <span lang="kn" class="font-semibold text-leaf">ಕದಳಿ</span> — ಬಾಳೆಗಿಡ (ಆಶ್ರಯ ಮತ್ತು ತಂಪು ನೀಡುವ ನಿಸರ್ಗದ ಸಂಕೇತ) ಹಾಗೂ ಅಕ್ಕಮಹಾದೇವಿ ಐಕ್ಯವಾದ ಪವಿತ್ರ ಕದಳಿ ವನ.
+            </dd>
+          </div>
+          <div class="border-b border-ink/10 pb-3">
+            <dt class="font-ui text-xs font-semibold tracking-wide uppercase text-stone">
+              ಸಾರ್ಥಕ ಮೈಲಿಗಲ್ಲು
+            </dt>
+            <dd class="mt-1 font-body text-base text-ink">
+              ರಜತ ಮಹೋತ್ಸವ (ಬೆಳ್ಳಿ ಹಬ್ಬ) ಪೂರೈಸಿ 35ನೇ ವರ್ಷದತ್ತ ಸಾಗುತ್ತಿರುವ ಹೆಮ್ಮೆಯ ಇತಿಹಾಸ
             </dd>
           </div>
           <div>
             <dt class="font-ui text-xs font-semibold tracking-wide uppercase text-stone">
-              Inspiration
+              ಸದಸ್ಯತ್ವ
             </dt>
             <dd class="mt-1 font-body text-base text-ink">
-              <span lang="kn">ಅಕ್ಕಮಹಾದೇವಿ</span> · Akkamahadevi, the
-              twelfth-century vachana poet
-            </dd>
-          </div>
-          <div>
-            <dt class="font-ui text-xs font-semibold tracking-wide uppercase text-stone">
-              Name
-            </dt>
-            <dd class="mt-1 font-body text-base text-ink">
-              <span lang="kn">ಕದಲಿ</span> — coastal Kannada for the plantain
-              tree
-            </dd>
-          </div>
-          <div>
-            <dt class="font-ui text-xs font-semibold tracking-wide uppercase text-stone">
-              Doors
-            </dt>
-            <dd class="mt-1 font-body text-base text-ink">Open to all women</dd>
-          </div>
-          <div>
-            <dt class="font-ui text-xs font-semibold tracking-wide uppercase text-stone">
-              First step
-            </dt>
-            <dd class="mt-1 font-body text-base text-ink">
-              A message — <a
-                href="/contact"
-                class="font-medium text-leaf underline-offset-4 hover:underline">contact
-                us</a
-              > and someone will point you to the next gathering.
+              ಎಲ್ಲಾ ವರ್ಗದ ಮಹಿಳೆಯರಿಗೂ ಮುಕ್ತ ಸ್ವಾಗತ
             </dd>
           </div>
         </dl>
+
+        <div class="mt-8 pt-4 border-t border-ink/10">
+          <a
+            href="/contact"
+            class="inline-flex items-center gap-2 font-ui text-sm font-semibold text-leaf underline-offset-4 hover:underline"
+          >
+            <span>ಸಮಾಜದೊಂದಿಗೆ ಸಂಪರ್ಕದಲ್ಲಿರಿ</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
       </aside>
     </div>
   </section>
 
   <div class="bg-cream">
-    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6">
       <Beads class="w-40 text-turmeric" />
     </div>
   </div>
 
-  <!-- Inspiration: Akkamahadevi -->
+  <!-- 2. ಸಮಾಜದ ಉದ್ದೇಶ ಮತ್ತು ಧ್ಯೇಯಗಳು (Aims & Objectives) -->
   <section class="bg-jasmine">
     <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-      <h2 class="font-display text-3xl font-semibold text-ink">
-        Our inspiration
-      </h2>
-      <p
-        lang="kn"
-        class="mt-2 font-display text-2xl font-semibold text-leaf"
-      >
-        ಅಕ್ಕಮಹಾದೇವಿ · Akkamahadevi
-      </p>
+      <div class="max-w-3xl">
+        <p class="font-ui text-xs font-semibold tracking-[0.2em] uppercase text-leaf">
+          ಮೂಲ ಸಂಕಲ್ಪ
+        </p>
+        <h2 class="mt-2 font-display text-3xl font-semibold text-ink sm:text-4xl">
+          ಸಮಾಜದ ಉದ್ದೇಶ ಮತ್ತು ಧ್ಯೇಯಗಳು
+        </h2>
+        <p class="mt-4 font-body text-lg text-stone">
+          ಯಾವುದೇ ಸಂಘಟನೆ ಸ್ಥಾಪನೆಯಾಗುವಾಗ ಅದರ ಹಿಂದೆ ಒಂದು ದೂರದೃಷ್ಟಿ ಇರುತ್ತದೆ. ಕದಳಿ ವನಿತಾ ಸಮಾಜವು ಮಹಿಳೆಯರ ಸರ್ವತೋಮುಖ ಅಭಿವೃದ್ಧಿಯನ್ನು ತನ್ನ ಪ್ರಮುಖ ಗುರಿಯನ್ನಾಗಿ ಸ್ವೀಕರಿಸಿದೆ.
+        </p>
+      </div>
 
-      <div
-        class="mt-8 lg:grid lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-12"
-      >
-        <div class="max-w-2xl space-y-5">
-          <p class="font-body text-lg text-stone">
-            In the twelfth century, a girl from Udutadi (<span lang="kn"
-              >ಉಡುತಡಿ</span
-            >) in the Shivamogga hills refused the life that had been arranged
-            for her, walked out of her hometown, and kept walking across
-            Karnataka — singing. Her songs are vachanas (<span lang="kn"
-              >ವಚನ</span
-            >): short, plain-spoken Kannada poems, addressed without ornament
-            to the <span lang="kn">ಚೆನ್ನಮಲ್ಲಿಕಾರ್ಜುನ</span> (Chennamallikarjuna)
-            she loved.
-          </p>
-          <p class="font-body text-lg text-stone">
-            She stood among the poet-saints of the Virashaiva world —
-            Basavanna's gatherings at Kalyana, Allama Prabhu's questions — and
-            argued as their equal, which the century did not expect of a woman
-            and she did not care. Tradition holds that her road ended at
-            Kadali, where she is said to have merged with the one she had been
-            singing to all along.
-          </p>
-          <p class="font-body text-lg text-stone">
-            We are not saints and we are not wandering. But we keep her habits
-            where we can: speak plainly, hold the door open for the next
-            woman, and let devotion be something you can carry — a song at
-            dawn, a stitch in the evening — rather than a performance. Our
-            vachana circles often begin with one of her poems.
+      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <!-- Pillar 1 -->
+        <div class="border border-ink/10 bg-cream p-6">
+          <div class="font-ui text-xs font-semibold text-turmeric">01</div>
+          <h3 class="mt-2 font-display text-xl font-semibold text-ink">
+            ಮಹಿಳಾ ಸಬಲೀಕರಣ & ಜಾಗೃತಿ
+          </h3>
+          <p class="mt-3 font-body text-base text-stone">
+            ಮಹಿಳೆಯರ ವರ್ತಮಾನವನ್ನು ಸುಧಾರಿಸುವುದರ ಜೊತೆಗೆ ಅವರ ಭವಿಷ್ಯವನ್ನು ಉಜ್ವಲಗೊಳಿಸುವಂತಹ ತಿಳುವಳಿಕೆ, ಅರಿವು ಮತ್ತು ಆತ್ಮವಿಶ್ವಾಸವನ್ನು ಪ್ರತಿಯೊಬ್ಬ ಸದಸ್ಯೆಯಲ್ಲಿಯೂ ಮೂಡಿಸುವುದು.
           </p>
         </div>
 
-        <blockquote
-          class="mt-10 self-start border-l-4 border-leaf pl-6 lg:mt-0"
-        >
-          <p class="font-display text-2xl leading-snug text-ink italic">
-            She kept nothing — not the house, not the name people gave her,
-            not even shame — and so had both hands free for the road.
+        <!-- Pillar 2 -->
+        <div class="border border-ink/10 bg-cream p-6">
+          <div class="font-ui text-xs font-semibold text-turmeric">02</div>
+          <h3 class="mt-2 font-display text-xl font-semibold text-ink">
+            ವಿದ್ಯಾಭ್ಯಾಸ & ಪ್ರತಿಭೆಗೆ ಪ್ರೋತ್ಸಾಹ
+          </h3>
+          <p class="mt-3 font-body text-base text-stone">
+            ಮಹಿಳೆಯರ ವಿದ್ಯಾಭ್ಯಾಸಕ್ಕೆ ಪ್ರೋತ್ಸಾಹ ನೀಡುವುದು, ಅಗತ್ಯವಿರುವವರಿಗೆ ನೆರವಿನ ಹಸ್ತ ಚಾಚುವುದು ಹಾಗೂ ಅವರ ಪ್ರತಿಭೆ ಮತ್ತು ಸಾಮರ್ಥ್ಯಗಳನ್ನು ಗುರುತಿಸಿ ಸಾಮಾಜಿಕ, ಶೈಕ್ಷಣಿಕ ಬೆಳವಣಿಗೆಗೆ ಪೂರಕ ಕಾರ್ಯಕ್ರಮಗಳನ್ನು ನಡೆಸುವುದು.
           </p>
-          <footer class="mt-4 font-ui text-sm text-stone">
-            — how we tell her story, in the spirit of her vachanas
-          </footer>
-        </blockquote>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="border border-ink/10 bg-cream p-6">
+          <div class="font-ui text-xs font-semibold text-turmeric">03</div>
+          <h3 class="mt-2 font-display text-xl font-semibold text-ink">
+            ಶರಣ ಸಾಹಿತ್ಯ & ವಚನ ಸಂದೇಶ
+          </h3>
+          <p class="mt-3 font-body text-base text-stone">
+            ವಿಶ್ವಮಾನವೀಯತೆಯ ತತ್ವಗಳು ಹಾಗೂ ಬಸವಣ್ಣನವರ ಸಮಾನತೆ, ಕಾಯಕ, ದಾಸೋಹ ಮತ್ತು ಮಾನವೀಯ ಮೌಲ್ಯಗಳನ್ನು ಬಿತ್ತುವುದು; ಶರಣ ಸಾಹಿತ್ಯ ಮತ್ತು ವಚನ ಸಾಹಿತ್ಯದ ಮಹತ್ವವನ್ನು ಎಲ್ಲ ವರ್ಗದ ಜನರಿಗೆ ತಲುಪಿಸುವುದು.
+          </p>
+        </div>
+
+        <!-- Pillar 4 -->
+        <div class="border border-ink/10 bg-cream p-6">
+          <div class="font-ui text-xs font-semibold text-turmeric">04</div>
+          <h3 class="mt-2 font-display text-xl font-semibold text-ink">
+            ಸಮಾಜ ನಿರ್ಮಾಣದಲ್ಲಿ ಮಹಿಳೆಯ ಪಾತ್ರ
+          </h3>
+          <p class="mt-3 font-body text-base text-stone">
+            ಮಹಿಳೆಯರು ಕೇವಲ ಕುಟುಂಬದ ಜವಾಬ್ದಾರಿಯನ್ನು ಮಾತ್ರವಲ್ಲದೆ ಸಮಾಜದ ನಿರ್ಮಾಣದಲ್ಲಿಯೂ ಪ್ರಮುಖ ಪಾತ್ರ ವಹಿಸಬಲ್ಲರು ಎಂಬ ಅರಿವನ್ನು ಮೂಡಿಸುವುದು.
+          </p>
+        </div>
+
+        <!-- Pillar 5 -->
+        <div class="border border-ink/10 bg-cream p-6">
+          <div class="font-ui text-xs font-semibold text-turmeric">05</div>
+          <h3 class="mt-2 font-display text-xl font-semibold text-ink">
+            ರಾಷ್ಟ್ರೀಯ ಹಬ್ಬಗಳು & ಸಂಸ್ಕೃತಿ
+          </h3>
+          <p class="mt-3 font-body text-base text-stone">
+            ರಾಷ್ಟ್ರೀಯ ಹಬ್ಬಗಳು ಹಾಗೂ ಮಹನೀಯರ ಜಯಂತಿಗಳನ್ನು ಆಚರಿಸುವ ಮೂಲಕ ದೇಶಭಕ್ತಿ, ಭಾರತೀಯ ಸಂಸ್ಕೃತಿ ಮತ್ತು ಸಾಮಾಜಿಕ ಜವಾಬ್ದಾರಿಯ ಭಾವನೆಯನ್ನು ಬೆಳೆಸುವುದು.
+          </p>
+        </div>
+
+        <!-- Pillar 6 -->
+        <div class="border border-ink/10 bg-cream p-6">
+          <div class="font-ui text-xs font-semibold text-turmeric">06</div>
+          <h3 class="mt-2 font-display text-xl font-semibold text-ink">
+            ಆರೋಗ್ಯ & ಸಮುದಾಯ ಕಾಳಜಿ
+          </h3>
+          <p class="mt-3 font-body text-base text-stone">
+            ಉಚಿತ ಆರೋಗ್ಯ ತಪಾಸಣಾ ಶಿಬಿರಗಳು, ಯೋಗ ತರಬೇತಿ ಹಾಗೂ ನೇತ್ರದಾನ ಜಾಗೃತಿಯ ಮೂಲಕ ಸಮುದಾಯದ ದೈಹಿಕ ಮತ್ತು ಮಾನಸಿಕ ಆರೋಗ್ಯ ಸುಧಾರಣೆಗೆ ಶ್ರಮಿಸುವುದು.
+          </p>
+        </div>
       </div>
     </div>
   </section>
 
   <div class="bg-jasmine">
-    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6">
       <Beads class="w-40 text-turmeric" />
     </div>
   </div>
 
-  <!-- What we do -->
+  <!-- 3. ಪ್ರಮುಖ ಸಾಧನೆಗಳು (Major Achievements from Article 1) -->
   <section class="bg-cream">
-    <div
-      class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12"
-    >
-      <div class="lg:sticky lg:top-24 lg:self-start">
-        <h2 class="font-display text-3xl font-semibold text-ink">
-          What we do
-        </h2>
-        <p class="mt-6 max-w-md font-body text-lg text-stone">
-          Three words cover most of our calendar, and none of them is for
-          show. Everything below happens in ordinary rooms with the fan
-          running — come once and you will see.
+    <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+      <div class="max-w-3xl">
+        <p class="font-ui text-xs font-semibold tracking-[0.2em] uppercase text-leaf">
+          ಮೂರು ದಶಕಗಳ ಸಾಧನೆಗಳು
         </p>
-        <figure class="mt-10 max-w-md border border-ink/10 bg-jasmine p-3">
-          <img
-            src="/images/uploads/cover-kasuti-nights.svg"
-            alt="Kasuti embroidery — counted-thread patterns worked in geometric motifs"
-            width="800"
-            height="600"
-            loading="lazy"
-            decoding="async"
-            class="h-auto w-full"
-          />
-          <figcaption class="mt-3 px-1 pb-1 font-ui text-xs text-stone">
-            Kasuti (<span lang="kn">ಕಸುತಿ</span>) — counted-thread work, a
-            regular hands-on evening at Kadali.
-          </figcaption>
-        </figure>
+        <h2 class="mt-2 font-display text-3xl font-semibold text-ink sm:text-4xl">
+          ಸಮಾಜದ ಪ್ರಮುಖ ಮೈಲಿಗಲ್ಲುಗಳು ಮತ್ತು ಕಾರ್ಯಕ್ರಮಗಳು
+        </h2>
+        <p class="mt-4 font-body text-lg text-stone">
+          ಕದಳಿ ವನಿತಾ ಸಮಾಜವು ತನ್ನ ಉದ್ದೇಶಗಳಿಗೆ ಅನುಗುಣವಾಗಿ ಹಲವು ಅರ್ಥಪೂರ್ಣ ಯೋಜನೆಗಳನ್ನು ಹಮ್ಮಿಕೊಂಡು ಮಹಿಳೆಯರ ಬದುಕಿಗೆ ಹೊಸ ಬೆಳಕು ನೀಡಿದೆ.
+        </p>
       </div>
 
-      <div class="mt-12 lg:mt-0">
-        <article class="border-t border-ink/10 py-8 first:border-t-0 first:pt-0 lg:pt-2">
-          <div class="flex items-baseline gap-3">
-            <span class="font-ui text-sm font-semibold text-turmeric" aria-hidden="true"
-              >01</span
-            >
-            <h3 class="font-display text-2xl font-semibold text-ink">
-              <span lang="kn">ಸಂಸ್ಕೃತಿ</span>
-              <span aria-hidden="true" class="text-leaf">·</span> Culture
+      <div class="mt-12 space-y-12">
+        <!-- Achievement 1: Kadali Siri Award -->
+        <article class="grid gap-8 border border-ink/10 bg-milk p-6 sm:p-8 md:grid-cols-2 md:items-center">
+          <div>
+            <div class="inline-block rounded-full bg-turmeric/20 px-3 py-1 font-ui text-xs font-semibold text-leaf">
+              ಗೌರವ ಪ್ರಶಸ್ತಿ
+            </div>
+            <h3 class="mt-3 font-display text-2xl font-bold text-ink sm:text-3xl">
+              ಶ್ರೀಮತಿ ಕದಳಿ ಸಿರಿ ಪ್ರಶಸ್ತಿ
             </h3>
+            <p class="mt-4 font-body text-base leading-relaxed text-stone">
+              ರಾಜ್ಯಮಟ್ಟದಲ್ಲಿ ವಿವಿಧ ಕ್ಷೇತ್ರಗಳಲ್ಲಿ ವಿಶಿಷ್ಟ ಸಾಧನೆ ಮಾಡಿದ ಮಹಿಳೆಯರನ್ನು ಗುರುತಿಸಿ, ಗೌರವಿಸಿ, ಪ್ರೋತ್ಸಾಹಿಸುವ ಉದ್ದೇಶದಿಂದ <strong class="font-semibold text-ink">ಶ್ರೀಮತಿ ಕದಳಿ ಸಿರಿ ಪ್ರಶಸ್ತಿಯನ್ನು</strong> ಸ್ಥಾಪಿಸಲಾಗಿದೆ. ಸಾಧಕ ಮಹಿಳೆಯರ ಸೇವೆ ಮತ್ತು ಪ್ರತಿಭೆಗೆ ಗೌರವ ಸಲ್ಲಿಸುವುದರ ಜೊತೆಗೆ ಇತರ ಮಹಿಳೆಯರಿಗೂ ಸಾಧನೆಯ ಹಾದಿಯಲ್ಲಿ ಮುನ್ನಡೆಯಲು ಇದು ಮಹತ್ತರ ಪ್ರೇರಣೆಯಾಗಿದೆ.
+            </p>
           </div>
-          <p class="mt-3 max-w-xl font-body text-base text-stone">
-            Kasuti (<span lang="kn">ಕಸುತಿ</span>) embroidery learned from the
-            women who still know the counts, folk songs in the old tunes,
-            trips to Yakshagana when the season allows, and festival melas
-            where everyone cooks one dish too many. Culture here is hands-on
-            and slightly noisy.
-          </p>
+          <div class="overflow-hidden rounded-t-[3rem] border border-ink/10">
+            <img
+              src="/images/uploads/poster-kadali-siri-award.jpg"
+              alt="ಶ್ರೀಮತಿ ಕದಳಿ ಸಿರಿ ಪ್ರಶಸ್ತಿ ಗೌರವ ಕಲಾಚಿತ್ರ"
+              width="800"
+              height="450"
+              loading="lazy"
+              decoding="async"
+              class="aspect-[16/9] w-full object-cover"
+            />
+          </div>
         </article>
 
-        <article class="border-t border-ink/10 py-8">
-          <div class="flex items-baseline gap-3">
-            <span class="font-ui text-sm font-semibold text-turmeric" aria-hidden="true"
-              >02</span
-            >
-            <h3 class="font-display text-2xl font-semibold text-ink">
-              <span lang="kn">ಸೇವೆ</span>
-              <span aria-hidden="true" class="text-leaf">·</span> Seva
-            </h3>
+        <!-- Achievement 2: Health Camps & Eye Donation -->
+        <article class="grid gap-8 border border-ink/10 bg-milk p-6 sm:p-8 md:grid-cols-2 md:items-center">
+          <div class="order-2 md:order-1 overflow-hidden rounded-t-[3rem] border border-ink/10">
+            <img
+              src="/images/uploads/poster-health-seva.jpg"
+              alt="ಮಹಿಳೆಯರಿಗಾಗಿ ಆಯೋಜಿಸಲಾದ ಉಚಿತ ಆರೋಗ್ಯ ಮತ್ತು ನೇತ್ರ ತಪಾಸಣಾ ಸೇವಾ ಕಲಾಚಿತ್ರ"
+              width="800"
+              height="450"
+              loading="lazy"
+              decoding="async"
+              class="aspect-[16/9] w-full object-cover"
+            />
           </div>
-          <p class="mt-3 max-w-xl font-body text-base text-stone">
-            Quiet, organised service: meals collected for a family in crisis,
-            rides to the hospital, school bags gathered before June. No
-            committee where one person will do; the point is that help arrives
-            while it still helps.
-          </p>
+          <div class="order-1 md:order-2">
+            <div class="inline-block rounded-full bg-turmeric/20 px-3 py-1 font-ui text-xs font-semibold text-leaf">
+              ಆರೋಗ್ಯ ಮತ್ತು ಮಾನವೀಯ ಸೇವೆ
+            </div>
+            <h3 class="mt-3 font-display text-2xl font-bold text-ink sm:text-3xl">
+              ನೇತ್ರದಾನ ಜಾಗೃತಿ ಮತ್ತು ಆರೋಗ್ಯ ಶಿಬಿರಗಳು
+            </h3>
+            <p class="mt-4 font-body text-base leading-relaxed text-stone">
+              "ನಮ್ಮ ಕಣ್ಣುಗಳು ಮತ್ತೊಬ್ಬರ ಬದುಕಿನಲ್ಲಿ ಬೆಳಕಾಗಬಹುದು" ಎಂಬ ಉದಾತ್ತ ಸಂದೇಶದೊಂದಿಗೆ ನೇತ್ರದಾನದ ಮಹತ್ವದ ಬಗ್ಗೆ ನಿರಂತರ ಅರಿವು ಮೂಡಿಸಿ ಯಶಸ್ವಿ ಯೋಜನೆಯನ್ನು ನಿರ್ವಹಿಸಲಾಗಿದೆ. ಜೊತೆಗೆ ಪ್ರತಿವರ್ಷ ಮಹಿಳೆಯರ ಆರೋಗ್ಯದ ಕಾಳಜಿಯೊಂದಿಗೆ ಉಚಿತ ವೈದ್ಯಕೀಯ ತಪಾಸಣಾ ಶಿಬಿರಗಳು ಹಾಗೂ ಯೋಗ ತರಬೇತಿ ಶಿಬಿರಗಳನ್ನು ಹಮ್ಮಿಕೊಳ್ಳಲಾಗುತ್ತಿದೆ.
+            </p>
+          </div>
         </article>
 
-        <article class="border-t border-ink/10 py-8">
-          <div class="flex items-baseline gap-3">
-            <span class="font-ui text-sm font-semibold text-turmeric" aria-hidden="true"
-              >03</span
-            >
-            <h3 class="font-display text-2xl font-semibold text-ink">
-              <span lang="kn">ಆಧ್ಯಾತ್ಮ</span>
-              <span aria-hidden="true" class="text-leaf">·</span> Spirituality
+        <!-- Achievement 3: Vachanayana Cultural Drama -->
+        <article class="grid gap-8 border border-ink/10 bg-milk p-6 sm:p-8 md:grid-cols-2 md:items-center">
+          <div>
+            <div class="inline-block rounded-full bg-turmeric/20 px-3 py-1 font-ui text-xs font-semibold text-leaf">
+              ಸಾಂಸ್ಕೃತಿಕ ಹಿರಿಮೆ
+            </div>
+            <h3 class="mt-3 font-display text-2xl font-bold text-ink sm:text-3xl">
+              'ವಚನಯಾನ' ನಾಟಕ ಹಾಗೂ ಸಾಂಸ್ಕೃತಿಕ ಚಟುವಟಿಕೆಗಳು
             </h3>
+            <p class="mt-4 font-body text-base leading-relaxed text-stone">
+              ಶರಣರ ಆದರ್ಶ ಜೀವನ, ವಚನಗಳಲ್ಲಿರುವ ಮಾನವೀಯ ಮೌಲ್ಯಗಳು ಹಾಗೂ ಬಸವ ತತ್ವಗಳನ್ನು ಜನರಿಗೆ ತಲುಪಿಸಲು ವಿಶೇಷವಾಗಿ ಶರಣೆ ಅಕ್ಕನಾಗವ್ವನವರ ಸ್ಮರಣಾರ್ಥ ಬಸವ ಕೇಂದ್ರದ ಸಹಕಾರದೊಂದಿಗೆ <strong class="font-semibold text-ink">'ವಚನಯಾನ'</strong> ಎಂಬ ನಾಟಕವನ್ನು ಸಿದ್ಧಪಡಿಸಿ ಹಲವು ಬಾರಿ ಯಶಸ್ವಿಯಾಗಿ ಪ್ರದರ್ಶಿಸಿರುವುದು ಸಮಾಜದ ಸಾಂಸ್ಕೃತಿಕ ಸಾಧನೆಗಳಲ್ಲಿ ಮಹತ್ವದ ಮೈಲಿಗಲ್ಲಾಗಿದೆ.
+            </p>
           </div>
-          <p class="mt-3 max-w-xl font-body text-base text-stone">
-            Vachana circles, bhajan mornings, festival observances, the
-            occasional temple pilgrimage. God is discussed freely and plainly,
-            in Akka's manner, and nobody's way of praying is examined.
-          </p>
+          <div class="overflow-hidden rounded-t-[3rem] border border-ink/10">
+            <img
+              src="/images/uploads/poster-vachanayana-play.jpg"
+              alt="'ವಚನಯಾನ' ನಾಟಕ ರಂಗಪ್ರಯೋಗದ ಕಲಾಚಿತ್ರ"
+              width="800"
+              height="450"
+              loading="lazy"
+              decoding="async"
+              class="aspect-[16/9] w-full object-cover"
+            />
+          </div>
         </article>
       </div>
     </div>
   </section>
 
+  <!-- 4. ಮೂರು ದಶಕಗಳ ಪಯಣ & ಬೆಳ್ಳಿ ಹಬ್ಬ (Journey & Solidarity) -->
+  <section class="bg-jasmine">
+    <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-20">
+      <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+        <div>
+          <p class="font-ui text-xs font-semibold tracking-[0.2em] uppercase text-leaf">
+            ಸದಸ್ಯೆಯರ ಒಗ್ಗಟ್ಟು
+          </p>
+          <h2 class="mt-2 font-display text-3xl font-semibold text-ink sm:text-4xl">
+            ಮೂರು ದಶಕಗಳಿಗೂ ಮೀರಿದ ಸಾರ್ಥಕ ಪಯಣ
+          </h2>
+          <p class="mt-5 font-body text-lg leading-relaxed text-stone">
+            1993ರಲ್ಲಿ ಆರಂಭವಾದ ಕದಳಿ ವನಿತಾ ಸಮಾಜವು 2026ರವರೆಗೆ ನಿರಂತರವಾಗಿ ತನ್ನ ಸೇವಾ ಪಯಣವನ್ನು ಮುನ್ನಡೆಸಿಕೊಂಡು ಬಂದಿದೆ. ಈ ದೀರ್ಘ ಪಯಣದಲ್ಲಿ ಸದಸ್ಯೆಯರ ಅಪಾರ ಆಸಕ್ತಿ, ಹಿರಿಯರ ಮಾರ್ಗದರ್ಶನ, ಸಾರ್ವಜನಿಕರ ಪ್ರೋತ್ಸಾಹ ಮತ್ತು ವಿವಿಧ ಸಂಘಟನೆಗಳ ಸಹಕಾರದಿಂದ ಸಮಾಜವು ತನ್ನದೇ ಆದ ವಿಶಿಷ್ಟ ಛಾಪನ್ನು ಮೂಡಿಸಿದೆ.
+          </p>
+          <p class="mt-4 font-body text-lg leading-relaxed text-stone">
+            ಸಮಾಜದ ಮೇಲಿನ ಜನರ ವಿಶ್ವಾಸ ಮತ್ತು ಸದಸ್ಯೆಯರ ನಿರಂತರ ಭಾಗವಹಿಸುವಿಕೆಯ ಫಲವಾಗಿ ಬೆಳ್ಳಿ ಹಬ್ಬವನ್ನು (ರಜತ ಮಹೋತ್ಸವ) ಅತ್ಯಂತ ಸಂಭ್ರಮದಿಂದ ಆಚರಿಸಿದ ಹೆಗ್ಗಳಿಕೆ ನಮ್ಮದಾಗಿದೆ. ಇಂದು 35ನೇ ವರ್ಷದತ್ತ ಸಾಗುತ್ತಿರುವ ಈ ಸಂಸ್ಥೆಯ ಪಯಣವು ಕೇವಲ ವರ್ಷಗಳ ಲೆಕ್ಕಾಚಾರವಲ್ಲ; ಅದು ಸೇವೆ, ಸಂಘಟನೆ, ಸಾಧನೆ, ಸಹಕಾರ ಮತ್ತು ಸಮರ್ಪಣೆಯ ಸುದೀರ್ಘ ಇತಿಹಾಸವಾಗಿದೆ.
+          </p>
+
+          <blockquote class="mt-8 border-l-4 border-leaf pl-5 font-display text-xl leading-snug italic text-ink">
+            “ಹಿಂದಿನ ತಲೆಮಾರಿನವರ ಅನುಭವ ಮತ್ತು ಇಂದಿನ ಪೀಳಿಗೆಯವರ ನವೀನ ಚಿಂತನೆಗಳು ಒಂದಾಗಿ ಸಾಗಿದಾಗ ಮಾತ್ರ ಸಂಸ್ಥೆಯ ಬೆಳವಣಿಗೆ ಇನ್ನಷ್ಟು ಎತ್ತರಕ್ಕೆ ತಲುಪಲು ಸಾಧ್ಯ.”
+            <footer class="mt-2 font-ui text-sm font-semibold not-italic text-leaf">
+              — ರೇಣುಕಾ ಶಿವಾನಂದಪ್ಪ, ಸಂಸ್ಥಾಪಕರು / ಹಿರಿಯ ಮಾರ್ಗದರ್ಶಕರು
+            </footer>
+          </blockquote>
+        </div>
+
+        <figure class="overflow-hidden border border-ink/10 bg-cream p-3">
+          <div class="overflow-hidden rounded-t-[3rem] border border-ink/10">
+            <img
+              src="/images/uploads/poster-community-journey.jpg"
+              alt="ಕದಳಿ ವನಿತಾ ಸಮಾಜದ ಮೂರು ದಶಕಗಳ ಸಾರ್ಥಕ ಪಯಣದ ಕಲಾಚಿತ್ರ"
+              width="800"
+              height="500"
+              loading="lazy"
+              decoding="async"
+              class="aspect-[4/3] w-full object-cover"
+            />
+          </div>
+          <figcaption class="mt-3 px-2 pb-1 font-ui text-sm text-stone text-center">
+            ಮೂರು ದಶಕಗಳ ಸಾರ್ಥಕ ಪಯಣದಲ್ಲಿ ಸಮಾಜಮುಖಿ ಕಾರ್ಯಗಳಲ್ಲಿ ಜೊತೆಯಾಗಿ ನಿಂತ ಸದಸ್ಯೆಯರು
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
   <div class="bg-cream">
-    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6">
       <Beads class="w-40 text-turmeric" />
     </div>
   </div>
 
-  <!-- The committee -->
+  <!-- 5. ನಮ್ಮ ಕಾರ್ಯಕಾರಿ ಸಮಿತಿ (The Committee) -->
   <CommitteeSection />
 
-  <!-- Join us -->
+  <!-- 6. ಕದಳಿಗೆ ಸೇರಿ (Join Us Banner) -->
   <section class="bg-ink text-cream">
     <div class="mx-auto max-w-6xl px-4 py-16 text-center sm:px-6 sm:py-20">
       <Beads class="mx-auto w-40 text-turmeric" />
-      <h2 class="mt-8 font-display text-3xl font-semibold sm:text-4xl">
-        Join us
+      <h2 class="mt-8 font-display text-3xl font-semibold sm:text-4xl text-cream">
+        ಕದಳಿ ವನಿತಾ ಸಮಾಜಕ್ಕೆ ಸೇರಿ
       </h2>
-      <p lang="kn" class="mt-3 font-display text-xl text-cream/90">
-        ಕದಲಿಗೆ ಸೇರಿ
+      <p lang="kn" class="mt-3 font-display text-xl text-turmeric">
+        ಮಹಿಳಾ ಶಕ್ತಿ ಮತ್ತಷ್ಟು ಬಲಗೊಳ್ಳಲಿ · ಸೇವೆ ನಿರಂತರವಾಗಿರಲಿ
       </p>
-      <p class="mx-auto mt-5 max-w-xl font-body text-lg text-cream/85">
-        Come once as a guest and see how it feels. The easiest first step is a
-        message — a WhatsApp note or a phone call — and someone will tell you
-        when and where we next gather. Bring nothing; the plantain tree has
-        always been enough for guests.
+      <p class="mx-auto mt-5 max-w-2xl font-body text-lg leading-relaxed text-cream/85">
+        ಕದಳಿ ವನಿತಾ ಸಮಾಜದ ಯಾವುದೇ ಕಾರ್ಯಕ್ರಮದಲ್ಲಿ ಅತಿಥಿಯಾಗಿ ಪಾಲ್ಗೊಳ್ಳಿ, ನಮ್ಮ ಒಡನಾಟವನ್ನು ಅನುಭವಿಸಿ. ನೀವು ಸದಸ್ಯರಾಗಲು, ಕಾರ್ಯಕ್ರಮಗಳಲ್ಲಿ ಭಾಗವಹಿಸಲು ಅಥವಾ ಸೇವಾ ಕಾರ್ಯಗಳಲ್ಲಿ ಕೈಜೋಡಿಸಲು ಇಂದೇ ನಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸಿ.
       </p>
       <div class="mt-8 flex flex-wrap justify-center gap-4">
         <a
           href="/contact"
-          class="rounded-sm bg-cream px-6 py-3 font-ui text-sm font-semibold text-ink transition-colors hover:bg-jasmine"
+          class="rounded-full bg-turmeric px-8 py-3 font-ui text-sm font-semibold text-ink transition-colors duration-200 hover:bg-cream active:translate-y-[1px]"
         >
-          Get in touch
+          ಸಂಪರ್ಕಿಸಿ
         </a>
         <a
           href="/events"
-          class="rounded-sm border border-cream/40 px-6 py-3 font-ui text-sm font-semibold text-cream transition-colors hover:border-cream"
+          class="rounded-full border border-cream/40 px-8 py-3 font-ui text-sm font-semibold text-cream transition-colors duration-200 hover:border-cream hover:bg-cream/10 active:translate-y-[1px]"
         >
-          See upcoming events
+          ಕಾರ್ಯಕ್ರಮಗಳನ್ನು ನೋಡಿ
+        </a>
+        <a
+          href="/articles"
+          class="rounded-full border border-cream/40 px-8 py-3 font-ui text-sm font-semibold text-cream transition-colors duration-200 hover:border-cream hover:bg-cream/10 active:translate-y-[1px]"
+        >
+          ಬರಹಗಳನ್ನು ಓದಿ
         </a>
       </div>
     </div>

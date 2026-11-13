@@ -39,7 +39,7 @@ const href = `/events/${event.id}`;
       </h3>
       <p class="mt-1 font-ui text-sm text-stone">
         {venue} · {time}
-        {status === 'cancelled' && <span class="sr-only">(cancelled)</span>}
+        {status === 'cancelled' && <span class="sr-only">(ರದ್ದು)</span>}
       </p>
     </div>
     {status === 'cancelled' && <div class="hidden sm:block"><CancelledBadge /></div>}

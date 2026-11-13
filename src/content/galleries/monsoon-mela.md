@@ -1,14 +1,14 @@
 ---
-title: "Monsoon Mela 2026"
+title: "ಮಾನ್ಸೂನ್ ಮೆಳಾ 2026"
 date: 2026-09-20
-event: "Monsoon Mela 2026"
+event: "ಮಾನ್ಸೂನ್ ಮೆಳಾ 2026"
 photos:
   - image: "/images/uploads/gallery-1.svg"
-    caption: "The kasuti stall at opening hour."
+    caption: "ತೆರೆಯುವ ವೇಳೆಯ ಕಸುತಿ ಅಂಗಡಿ."
   - image: "/images/uploads/gallery-2.svg"
-    caption: "Storytelling corner for children."
+    caption: "ಮಕ್ಕಳಿಗಾಗಿ ಕಥೆ ಹೇಳುವ ಮೂಲೆ."
   - image: "/images/uploads/gallery-3.svg"
-    caption: "The collective lunch, served on banana leaves."
+    caption: "ಬಾಳೆ ಎಲೆಯಲ್ಲಿ ಸಾಮೂಹಿಕ ಊಟ."
 ---
 
-Photographs from the Monsoon Mela 2026, taken by members. Selected frames from a day of stalls, stories, and a very long lunch.
+ಸದಸ್ಸೆಯರು ತೆಗೆದ 2026ರ ಮಾನ್ಸೂನ್ ಮೆಳಾದ ಛಾಯಾಚಿತ್ರಗಳು. ಅಂಗಡಿ, ಕಥೆ, ಉದ್ದನೆಯ ಊಟದ ದಿನದ ಆಯ್ದ ಚೌಕಟ್ಟುಗಳು.

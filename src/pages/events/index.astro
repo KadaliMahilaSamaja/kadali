@@ -39,32 +39,32 @@ const restUpcoming = featured
 ---
 
 <BaseLayout
-  title="Events · ಕಾರ್ಯಕ್ರಮಗಳು — Kadali"
-  description="Upcoming and past events by the Kadali women's collective — melas, vachana readings, workshops, and seva drives around Udupi."
+  title="ಕಾರ್ಯಕ್ರಮಗಳು · ಕದಳಿ ವನಿತಾ ಸಮಾಜ"
+  description="ಸಮಾಜದ ಮುಂಬರುವ ಮತ್ತು ಹಿಂದಿನ ಕಾರ್ಯಕ್ರಮಗಳು — ಹಬ್ಬಗಳು, ವಚನ ವಾಚನ, ತರಬೇತಿ, ಸೇವಾ ಕಾರ್ಯಗಳು."
 >
   <section class="bg-cream">
     <div class="mx-auto max-w-6xl px-4 pt-12 pb-8 sm:px-6 md:pt-16">
       <h1 class="font-display text-4xl font-semibold text-ink sm:text-5xl">
-        Events · <span lang="kn">ಕಾರ್ಯಕ್ರಮಗಳು</span>
+        <span lang="kn">ಕಾರ್ಯಕ್ರಮಗಳು</span>
       </h1>
       <p class="mt-4 max-w-2xl font-body text-lg text-stone">
-        Everything the collective is gathering for — come join us.
+        ಸಮಾಜ ಸೇರುತ್ತಿರುವ ಎಲ್ಲಾ ಸಂದರ್ಭಗಳು — ಬನ್ನಿ, ನಮ್ಮೊಂದಿಗೆ ಆಚರಿಸಿ.
       </p>
       <Beads class="mt-8 w-44 text-turmeric" />
 
       <!-- Tab-like anchors: works without JS, offsets the sticky header -->
-      <nav aria-label="Event groups" class="mt-8 flex flex-wrap gap-3">
+      <nav aria-label="ಕಾರ್ಯಕ್ರಮ ಗುಂಪುಗಳು" class="mt-8 flex flex-wrap gap-3">
         <a
           href="#upcoming"
           class="border border-ink/10 bg-jasmine px-4 py-2 font-ui text-sm font-semibold text-ink underline-offset-4 hover:border-leaf hover:text-leaf hover:underline"
         >
-          Upcoming <span lang="kn">ಮುಂಬರುವ</span> ({upcomingEntries.length})
+          <span lang="kn">ಮುಂಬರುವ</span> ({upcomingEntries.length})
         </a>
         <a
           href="#past"
           class="border border-ink/10 bg-jasmine px-4 py-2 font-ui text-sm font-semibold text-ink underline-offset-4 hover:border-leaf hover:text-leaf hover:underline"
         >
-          Past <span lang="kn">ನಡೆದ</span> ({pastEntries.length})
+          <span lang="kn">ನಡೆದ</span> ({pastEntries.length})
         </a>
       </nav>
     </div>
@@ -73,7 +73,7 @@ const restUpcoming = featured
   <section id="upcoming" class="scroll-mt-24 bg-cream">
     <div class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
       <h2 class="font-display text-3xl font-semibold text-ink">
-        Upcoming <span lang="kn">ಮುಂಬರುವ ಕಾರ್ಯಕ್ರಮಗಳು</span>
+        <span lang="kn">ಮುಂಬರುವ ಕಾರ್ಯಕ್ರಮಗಳು</span>
       </h2>
 
       {
@@ -94,8 +94,7 @@ const restUpcoming = featured
           </>
         ) : (
           <p class="mt-6 font-body text-lg text-stone">
-            Nothing on the calendar right now — check back soon.{' '}
-            <span lang="kn">ಯಾವುದೇ ಮುಂಬರುವ ಕಾರ್ಯಕ್ರಮಗಳಿಲ್ಲ.</span>
+            <span lang="kn">ಈಗ ಕ್ಯಾಲೆಂಡರಿನಲ್ಲಿ ಏನೂ ಇಲ್ಲ — ಶೀಘ್ರದಲ್ಲೇ ಇನ್ನೊಮ್ಮೆ ನೋಡಿ.</span>
           </p>
         )
       }
@@ -105,7 +104,7 @@ const restUpcoming = featured
   <section id="past" class="scroll-mt-24 bg-jasmine">
     <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
       <h2 class="font-display text-3xl font-semibold text-ink">
-        Past <span lang="kn">ನಡೆದ ಕಾರ್ಯಕ್ರಮಗಳು</span>
+        <span lang="kn">ನಡೆದ ಕಾರ್ಯಕ್ರಮಗಳು</span>
       </h2>
 
       {
@@ -117,8 +116,7 @@ const restUpcoming = featured
           </ul>
         ) : (
           <p class="mt-6 font-body text-lg text-stone">
-            No past events recorded yet.{' '}
-            <span lang="kn">ಇದುವರೆಗೆ ಕಾರ್ಯಕ್ರಮಗಳಿಲ್ಲ.</span>
+            <span lang="kn">ಇದುವರೆಗೆ ದಾಖಲಾದ ಕಾರ್ಯಕ್ರಮಗಳಿಲ್ಲ.</span>
           </p>
         )
       }

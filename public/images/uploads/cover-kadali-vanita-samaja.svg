@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="ಕಮಾನಿನೊಳಗೆ ಬೆಳಗುವ ಜ್ಯೋತಿ">
+  <rect width="1200" height="675" fill="#F2DDB9"/>
+  <g fill="none" stroke="#1D5F3C" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M300 620 V300 C300 178 442 108 600 58 C758 108 900 178 900 300 V620" stroke-width="8"/>
+    <path d="M352 620 V318 C352 214 468 152 600 106 C732 152 848 214 848 318 V620" stroke-width="3" opacity="0.45"/>
+    <path d="M262 620 H938" stroke-width="6"/>
+    <path d="M600 106 V258" stroke-width="4"/>
+  </g>
+  <circle cx="600" cy="258" r="9" fill="#E8862E"/>
+  <path d="M520 300 H680 L659 381 Q600 409 541 381 Z" fill="#FFFDF7" stroke="#1D5F3C" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M512 300 Q600 324 688 300" fill="none" stroke="#1D5F3C" stroke-width="5" stroke-linecap="round"/>
+  <path d="M600 236 C619 266 625 291 600 310 C575 291 581 266 600 236 Z" fill="#E8862E"/>
+  <path d="M600 266 C608 281 611 294 600 305 C589 294 592 281 600 266 Z" fill="#C03A2B"/>
+  <g fill="#E8862E">
+    <circle cx="398" cy="566" r="9"/>
+    <circle cx="448" cy="574" r="9"/>
+    <circle cx="498" cy="579" r="9"/>
+    <circle cx="549" cy="582" r="9"/>
+    <circle cx="600" cy="583" r="9"/>
+    <circle cx="651" cy="582" r="9"/>
+    <circle cx="702" cy="579" r="9"/>
+    <circle cx="752" cy="574" r="9"/>
+    <circle cx="802" cy="566" r="9"/>
+  </g>
+</svg>

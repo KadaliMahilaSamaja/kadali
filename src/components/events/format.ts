@@ -2,16 +2,34 @@
  * IST date/time formatting for events. All Kadali events happen in
  * Karnataka, so every value is rendered in Asia/Kolkata (+05:30) regardless
  * of the offset the seed frontmatter used.
+ *
+ * Month names and day-period words are fixed tables rather than Intl output
+ * so we never depend on the build machine's ICU data for `kn`.
  */
 
-const KN_MONTH = new Intl.DateTimeFormat('kn', {
-  timeZone: 'Asia/Kolkata',
-  month: 'long',
-});
+const KN_MONTHS = [
+  'ಜನವರಿ',
+  'ಫೆಬ್ರವರಿ',
+  'ಮಾರ್ಚ್',
+  'ಏಪ್ರಿಲ್',
+  'ಮೇ',
+  'ಜೂನ್',
+  'ಜುಲೈ',
+  'ಆಗಸ್ಟ್',
+  'ಸೆಪ್ಟೆಂಬರ್',
+  'ಅಕ್ಟೋಬರ್',
+  'ನವೆಂಬರ್',
+  'ಡಿಸೆಂಬರ್',
+] as const;
 
 const IST_DAY = new Intl.DateTimeFormat('en-IN', {
   timeZone: 'Asia/Kolkata',
   day: 'numeric',
+});
+
+const IST_MONTH = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'Asia/Kolkata',
+  month: 'numeric',
 });
 
 const IST_YEAR = new Intl.DateTimeFormat('en-IN', {
@@ -36,25 +54,49 @@ export interface IstInstant {
 export function istInstant(date: Date): IstInstant {
   return {
     day: IST_DAY.format(date),
-    monthKn: KN_MONTH.format(date),
+    monthKn: KN_MONTHS[Number(IST_MONTH.format(date)) - 1] ?? '',
     year: IST_YEAR.format(date),
   };
 }
 
+/** Day-period word by clock hour: morning, noon, evening, night. */
+function knPeriod(hour: number): string {
+  if (hour >= 5 && hour < 12) return 'ಬೆಳಿಗ್ಗೆ';
+  if (hour >= 12 && hour < 17) return 'ಮಧ್ಯಾಹ್ನ';
+  if (hour >= 17 && hour < 20) return 'ಸಂಜೆ';
+  return 'ರಾತ್ರಿ';
+}
+
+/** The IST clock hour (0–23), derived from Intl parts, not build-machine time. */
+function istHour(date: Date): number {
+  const parts = IST_TIME.formatToParts(date);
+  const hour = Number(parts.find((p) => p.type === 'hour')?.value ?? 0);
+  const dayPeriod = parts.find((p) => p.type === 'dayPeriod')?.value ?? '';
+  return dayPeriod.toUpperCase() === 'PM' ? (hour % 12) + 12 : hour % 12;
+}
+
+/** "ಸಂಜೆ 4:00" — period word + 12-hour clock, from Intl's IST parts. */
+function knClock(date: Date): string {
+  const parts = IST_TIME.formatToParts(date);
+  const hour = Number(parts.find((p) => p.type === 'hour')?.value ?? 0);
+  const minute = parts.find((p) => p.type === 'minute')?.value ?? '00';
+  return `${knPeriod(istHour(date))} ${hour % 12 || 12}:${minute}`;
+}
+
 /**
- * Time range with shared meridiem folded, e.g. "4:00 – 6:30 pm IST".
- * A single time renders as "4:00 pm IST".
+ * Time range with the shared period word folded,
+ * e.g. "ಮಧ್ಯಾಹ್ನ 4:00 – ಸಂಜೆ 6:30". A single time renders as "ಸಂಜೆ 4:00".
  */
 export function istTimeRange(start: Date, end?: Date): string {
-  const startLabel = IST_TIME.format(start).toLowerCase();
-  if (!end) return `${startLabel} IST`;
-  const endLabel = IST_TIME.format(end).toLowerCase();
-  const startMeridiem = startLabel.slice(-2);
-  const endMeridiem = endLabel.slice(-2);
-  if (startMeridiem === endMeridiem) {
-    return `${startLabel.slice(0, -(startMeridiem.length + 1))} – ${endLabel} IST`;
+  const from = knClock(start);
+  if (!end) return from;
+
+  const to = knClock(end);
+  if (knPeriod(istHour(start)) === knPeriod(istHour(end))) {
+    // Same period: strip the leading word from the second time.
+    return `${from} – ${to.replace(/^\S+\s+/, '')}`;
   }
-  return `${startLabel} – ${endLabel} IST`;
+  return `${from} – ${to}`;
 }
 
 /** ISO 8601 instant pinned to the +05:30 offset for JSON-LD startDate/endDate. */

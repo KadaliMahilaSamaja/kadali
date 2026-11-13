@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-grad-deepa" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F7EEDD"/>
+      <stop offset="100%" stop-color="#F0D5A8"/>
+    </linearGradient>
+    <radialGradient id="flame-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFDD55" stop-opacity="0.8"/>
+      <stop offset="60%" stop-color="#E8862E" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#C03A2B" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#1C201A" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Background Ground -->
+  <rect width="1200" height="675" fill="url(#bg-grad-deepa)"/>
+
+  <!-- Geometric Decorative Border (Kasuti Diamond Motif) -->
+  <rect x="24" y="24" width="1152" height="627" fill="none" stroke="#1D5F3C" stroke-width="3" stroke-dasharray="14 7"/>
+  <rect x="36" y="36" width="1128" height="603" fill="none" stroke="#E8862E" stroke-width="1.5"/>
+
+  <!-- Four Corner Kasuti Diamonds -->
+  <g fill="#1D5F3C">
+    <path d="M50 50 L60 40 L70 50 L60 60 Z"/>
+    <path d="M1150 50 L1140 40 L1130 50 L1140 60 Z"/>
+    <path d="M50 625 L60 615 L70 625 L60 635 Z"/>
+    <path d="M1150 625 L1140 615 L1130 625 L1140 635 Z"/>
+  </g>
+
+  <!-- Temple Arch in Leaf Green -->
+  <g fill="none" stroke="#1D5F3C" stroke-linecap="round" stroke-linejoin="round" filter="url(#soft-shadow)">
+    <!-- Outer Arch -->
+    <path d="M260 620 V320 C260 170 420 80 600 40 C780 80 940 170 940 320 V620" stroke-width="8"/>
+    <!-- Inner Arch Frame -->
+    <path d="M310 620 V335 C310 215 440 135 600 95 C760 135 890 215 890 335 V620" stroke-width="3" stroke-dasharray="10 5" opacity="0.6"/>
+    <!-- Arch Finial / Kalasha Pinnacle -->
+    <path d="M600 20 V40" stroke-width="5"/>
+    <circle cx="600" cy="18" r="8" fill="#E8862E" stroke="#1D5F3C" stroke-width="2"/>
+    <!-- Base Line -->
+    <path d="M220 620 H980" stroke-width="6"/>
+  </g>
+
+  <!-- Radiant Sunburst / Halo behind the Lamp -->
+  <circle cx="600" cy="300" r="210" fill="url(#flame-glow)"/>
+  <g stroke="#E8862E" stroke-width="1.5" opacity="0.35" stroke-linecap="round">
+    <line x1="600" y1="90" x2="600" y2="120"/>
+    <line x1="600" y1="480" x2="600" y2="510"/>
+    <line x1="390" y1="300" x2="420" y2="300"/>
+    <line x1="780" y1="300" x2="810" y2="300"/>
+    <line x1="452" y1="152" x2="473" y2="173"/>
+    <line x1="727" y1="427" x2="748" y2="448"/>
+    <line x1="452" y1="448" x2="473" y2="427"/>
+    <line x1="727" y1="173" x2="748" y2="152"/>
+  </g>
+
+  <!-- Hanging Jasmine / Marigold Flower Garlands (Torana) -->
+  <g fill="#FFFDF7" stroke="#E8862E" stroke-width="1.5">
+    <!-- Left Swag -->
+    <path d="M260 220 Q430 320 600 250" fill="none" stroke="#1D5F3C" stroke-width="2.5"/>
+    <!-- Right Swag -->
+    <path d="M600 250 Q770 320 940 220" fill="none" stroke="#1D5F3C" stroke-width="2.5"/>
+    <!-- Jasmine Buds left -->
+    <circle cx="320" cy="245" r="7"/>
+    <circle cx="370" cy="270" r="7"/>
+    <circle cx="430" cy="285" r="7" fill="#E8862E"/>
+    <circle cx="490" cy="285" r="7"/>
+    <circle cx="550" cy="270" r="7"/>
+    <!-- Jasmine Buds right -->
+    <circle cx="650" cy="270" r="7"/>
+    <circle cx="710" cy="285" r="7"/>
+    <circle cx="770" cy="285" r="7" fill="#E8862E"/>
+    <circle cx="830" cy="270" r="7"/>
+    <circle cx="880" cy="245" r="7"/>
+  </g>
+
+  <!-- Ornate Brass Oil Lamp (Samayi / Kuthu Vilakku) in Center -->
+  <g id="samayi-lamp" filter="url(#soft-shadow)">
+    <!-- Base pedestal -->
+    <path d="M510 620 L530 580 H670 L690 620 Z" fill="#E8862E" stroke="#1D5F3C" stroke-width="4"/>
+    <rect x="545" y="565" width="110" height="15" rx="5" fill="#FFC83B" stroke="#1D5F3C" stroke-width="3"/>
+    
+    <!-- Central Pillar / Stem -->
+    <path d="M585 565 V360 H615 V565 Z" fill="#E8862E" stroke="#1D5F3C" stroke-width="3"/>
+    <!-- Decorative rings on stem -->
+    <ellipse cx="600" cy="510" rx="25" ry="8" fill="#FFC83B" stroke="#1D5F3C" stroke-width="2"/>
+    <ellipse cx="600" cy="440" rx="30" ry="10" fill="#FFC83B" stroke="#1D5F3C" stroke-width="2"/>
+    
+    <!-- Main Oil Bowl (Agalu) -->
+    <path d="M480 360 C480 410 720 410 720 360 Q600 375 480 360 Z" fill="#FFC83B" stroke="#1D5F3C" stroke-width="4"/>
+    <ellipse cx="600" cy="360" rx="120" ry="16" fill="#E8862E" stroke="#1D5F3C" stroke-width="3"/>
+
+    <!-- Upper Tier Miniature Bowl -->
+    <path d="M540 260 C540 290 660 290 660 260 Q600 270 540 260 Z" fill="#FFC83B" stroke="#1D5F3C" stroke-width="3"/>
+    <ellipse cx="600" cy="260" rx="60" ry="10" fill="#E8862E" stroke="#1D5F3C" stroke-width="2"/>
+    <!-- Stem connecting tiers -->
+    <rect x="590" y="260" width="20" height="100" fill="#E8862E" stroke="#1D5F3C" stroke-width="2"/>
+
+    <!-- Top Crown / Kalasha & Bird finial (Hamsa) -->
+    <path d="M590 200 L600 170 L610 200 Z" fill="#FFC83B" stroke="#1D5F3C" stroke-width="2"/>
+    <ellipse cx="600" cy="210" rx="16" ry="14" fill="#E8862E" stroke="#1D5F3C" stroke-width="2"/>
+    <rect x="593" y="218" width="14" height="42" fill="#FFC83B" stroke="#1D5F3C" stroke-width="2"/>
+
+    <!-- Wicks and Flames -->
+    <!-- Center Top Flame -->
+    <g transform="translate(600, 155)">
+      <path d="M0 -30 C15 -10 12 10 0 16 C-12 10 -15 -10 0 -30 Z" fill="#FFDD55" stroke="#C03A2B" stroke-width="2"/>
+      <path d="M0 -15 C6 -4 5 6 0 10 C-5 6 -6 -4 0 -15 Z" fill="#C03A2B"/>
+    </g>
+
+    <!-- Side Flames from Main Bowl -->
+    <!-- Left Wick Flame -->
+    <g transform="translate(485, 345)">
+      <path d="M0 -24 C10 -8 8 8 0 12 C-8 8 -10 -8 0 -24 Z" fill="#FFDD55" stroke="#C03A2B" stroke-width="1.8"/>
+      <path d="M0 -10 C4 -2 3 4 0 7 C-3 4 -4 -2 0 -10 Z" fill="#C03A2B"/>
+    </g>
+    <!-- Right Wick Flame -->
+    <g transform="translate(715, 345)">
+      <path d="M0 -24 C10 -8 8 8 0 12 C-8 8 -10 -8 0 -24 Z" fill="#FFDD55" stroke="#C03A2B" stroke-width="1.8"/>
+      <path d="M0 -10 C4 -2 3 4 0 7 C-3 4 -4 -2 0 -10 Z" fill="#C03A2B"/>
+    </g>
+    <!-- Mid-Left Flame -->
+    <g transform="translate(535, 355)">
+      <path d="M0 -20 C8 -6 6 6 0 10 C-6 6 -8 -6 0 -20 Z" fill="#FFDD55" stroke="#C03A2B" stroke-width="1.5"/>
+    </g>
+    <!-- Mid-Right Flame -->
+    <g transform="translate(665, 355)">
+      <path d="M0 -20 C8 -6 6 6 0 10 C-6 6 -8 -6 0 -20 Z" fill="#FFDD55" stroke="#C03A2B" stroke-width="1.5"/>
+    </g>
+  </g>
+
+  <!-- Base Rangoli / Kolam Lotus Motif -->
+  <g fill="none" stroke="#1D5F3C" stroke-width="2" opacity="0.7">
+    <ellipse cx="600" cy="620" rx="160" ry="24"/>
+    <ellipse cx="600" cy="620" rx="120" ry="16" stroke-dasharray="6 4"/>
+    <!-- Petals on ground -->
+    <circle cx="460" cy="620" r="6" fill="#C03A2B" stroke="none"/>
+    <circle cx="500" cy="628" r="6" fill="#E8862E" stroke="none"/>
+    <circle cx="700" cy="628" r="6" fill="#E8862E" stroke="none"/>
+    <circle cx="740" cy="620" r="6" fill="#C03A2B" stroke="none"/>
+  </g>
+
+  <!-- Auspicious Banner at Bottom Center -->
+  <g transform="translate(600, 580)">
+    <!-- Ribbon banner -->
+    <path d="M-180 0 H180 L160 38 H-160 Z" fill="#1D5F3C"/>
+    <text x="0" y="26" text-anchor="middle" fill="#FFFDF7" font-family="'Noto Sans Kannada', 'Segoe UI', sans-serif" font-size="19" font-weight="700" letter-spacing="1">
+      ಕದಳಿ ವನಿತಾ ಸಮಾಜ · ಸ್ಥಾಪನೆ 1993
+    </text>
+  </g>
+</svg>

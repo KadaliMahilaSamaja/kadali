@@ -17,15 +17,15 @@ const link = encodeURIComponent(url);
 
 const shares = [
   {
-    label: 'WhatsApp',
+    label: 'ವಾಟ್ಸ್‌ಆಪ್',
     href: `https://wa.me/?text=${text}%20${link}`,
   },
   {
-    label: 'Facebook',
+    label: 'ಫೇಸ್‌ಬುಕ್',
     href: `https://www.facebook.com/sharer/sharer.php?u=${link}`,
   },
   {
-    label: 'X',
+    label: 'ಎಕ್ಸ್ (ಟ್ವಿಟರ್)',
     href: `https://twitter.com/intent/tweet?text=${text}&url=${link}`,
   },
 ];
@@ -36,7 +36,6 @@ const buttonClass =
 
 <div data-share class="flex flex-wrap items-center gap-3">
   <h2 class="font-ui text-sm font-semibold tracking-wide uppercase text-ink">
-    Share
     <span lang="kn" class="font-normal tracking-normal normal-case text-leaf">ಹಂಚಿಕೆ</span>
   </h2>
   <ul class="flex flex-wrap items-center gap-2">
@@ -51,7 +50,7 @@ const buttonClass =
     }
     <li>
       <button type="button" data-copy-link={url} class={buttonClass}>
-        Copy link
+        ಕೊಂಡಿ ಕಾಪಿ ಮಾಡಿ
       </button>
     </li>
   </ul>
@@ -59,7 +58,7 @@ const buttonClass =
 </div>
 
 <script>
-  const COPY_LABEL = 'Copy link';
+  const COPY_LABEL = 'ಕೊಂಡಿ ಕಾಪಿ ಮಾಡಿ';
 
   for (const button of document.querySelectorAll<HTMLButtonElement>(
     '[data-copy-link]',
@@ -90,8 +89,8 @@ const buttonClass =
         ?.querySelector<HTMLElement>('[data-copy-status]');
       if (status) {
         status.textContent = copied
-          ? 'Link copied'
-          : 'Could not copy — share the address bar link instead';
+          ? 'ಕೊಂಡಿ ಕಾಪಿ ಆಯಿತು'
+          : 'ಕಾಪಿ ಆಗಲಿಲ್ಲ — ವಿಳಾಸ ಪಟ್ಟಿಯ ಕೊಂಡಿಯನ್ನು ಹಂಚಿಕೊಳ್ಳಿ';
       }
       button.textContent = COPY_LABEL;
 

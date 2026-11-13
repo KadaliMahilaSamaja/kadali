@@ -1,7 +1,6 @@
 ---
 /**
- * Bilingual date byline: en-IN formatted date (e.g. "18 October 2026")
- * followed by the Kannada month name in a lang="kn" span.
+ * Kannada date byline, e.g. "18 ಅಕ್ಟೋಬರ್ 2026".
  * Month map is hardcoded — Node's ICU data for kn is not guaranteed
  * on every build machine.
  */
@@ -27,17 +26,16 @@ const KN_MONTHS = [
   'ಡಿಸೆಂಬರ್',
 ] as const;
 
-const formatter = new Intl.DateTimeFormat('en-IN', {
+const dayFmt = new Intl.DateTimeFormat('en-IN', {
   day: 'numeric',
-  month: 'long',
+});
+const yearFmt = new Intl.DateTimeFormat('en-IN', {
   year: 'numeric',
 });
 ---
 
-<span class={className}>
+<span lang="kn" class={className}>
   <time datetime={date.toISOString().slice(0, 10)}>
-    {formatter.format(date)}
+    {dayFmt.format(date)} {KN_MONTHS[date.getMonth()]} {yearFmt.format(date)}
   </time>
-  <span aria-hidden="true"> · </span>
-  <span lang="kn">{KN_MONTHS[date.getMonth()]}</span>
 </span>

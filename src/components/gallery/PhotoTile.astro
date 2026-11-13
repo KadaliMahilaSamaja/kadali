@@ -13,7 +13,7 @@ interface Props {
 }
 
 const { src, caption } = Astro.props;
-const alt = caption ?? 'Photograph from the Kadali gallery';
+const alt = caption ?? 'ಕದಳಿ ಚಿತ್ರಶಾಲೆಯ ಛಾಯಾಚಿತ್ರ';
 
 // Seed SVGs are square 800x800; real photos will vary, but intrinsic
 // width/height only guards layout before the image decodes, so square
@@ -28,7 +28,7 @@ const HEIGHT = 800;
   data-photo-button
   data-photo-src={src}
   data-caption={caption ?? ''}
-  aria-label={caption ? `View photo: ${caption}` : 'View photo'}
+  aria-label={caption ? `ಛಾಯಾಚಿತ್ರ ನೋಡಿ: ${caption}` : 'ಛಾಯಾಚಿತ್ರ ನೋಡಿ'}
 >
   <img
     src={src}

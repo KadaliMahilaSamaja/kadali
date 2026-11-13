@@ -189,9 +189,70 @@
     content: "”";
   }
 
+  .prose-kadali figure {
+    margin: 2.25em 0;
+    padding: 0.75rem;
+    background-color: color-mix(in srgb, var(--color-jasmine) 50%, var(--color-cream));
+    border: 1px solid color-mix(in srgb, var(--color-ink) 12%, transparent);
+  }
+
+  .prose-kadali figure img,
   .prose-kadali img {
     border-radius: 0; /* sharp edges are the Kadali look */
     box-shadow: var(--shadow-photo);
+    width: 100%;
+    height: auto;
+    display: block;
+    cursor: zoom-in;
+    transition: transform 0.25s ease, filter 0.25s ease;
+  }
+
+  .prose-kadali figure img:hover,
+  .prose-kadali img:hover {
+    filter: brightness(1.02);
+  }
+
+  .prose-kadali figcaption {
+    font-family: var(--font-ui);
+    font-size: var(--text-sm);
+    color: var(--color-stone);
+    text-align: center;
+    padding: 0.75rem 0.5rem 0.25rem;
+    line-height: 1.5;
+  }
+
+  /* Enhanced markdown image + caption block presentation */
+  .prose-kadali p:has(> img) {
+    margin: 2.25em 0;
+    padding: 0.75rem;
+    background-color: color-mix(in srgb, var(--color-jasmine) 50%, var(--color-cream));
+    border: 1px solid color-mix(in srgb, var(--color-ink) 12%, transparent);
+    text-align: center;
+  }
+
+  .prose-kadali p:has(> img) > em {
+    display: block;
+    margin-top: 0.65rem;
+    font-style: normal;
+    font-family: var(--font-ui);
+    font-size: var(--text-sm);
+    color: var(--color-stone);
+    line-height: 1.5;
+  }
+
+  .prose-kadali p:has(> img) > em::before {
+    content: "✦ ";
+    color: var(--color-turmeric);
+    font-size: 0.8em;
+  }
+
+  .article-cover img {
+    cursor: zoom-in;
+    transition: transform 0.3s ease;
+  }
+
+  .article-cover:hover img {
+    transform: scale(1.015);
   }
 
   .prose-kadali ul,
@@ -209,13 +270,6 @@
 
   .prose-kadali li + li {
     margin-top: 0.4em;
-  }
-
-  .prose-kadali figcaption,
-  .prose-kadali caption {
-    font-family: var(--font-ui);
-    font-size: var(--text-sm);
-    color: var(--color-stone);
   }
 
   .prose-kadali hr {
@@ -301,5 +355,50 @@
       overflow-x: visible;
       scroll-snap-type: none;
     }
+  }
+
+  /* Always-horizontal snap rail — the mockup's swipe bands, kept draggable
+     at every breakpoint; the next card always peeks past the edge. */
+  .rail-x {
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    scroll-padding-inline: 1rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* "ಸರಿಸಿ ನೋಡಿ ⟶" — the swipe affordance under a rail */
+  .swipe-hint {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.9rem;
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--color-stone);
+  }
+
+  .swipe-hint::after {
+    content: '⟶';
+    font-size: 1rem;
+    line-height: 1;
+    color: var(--color-turmeric);
+  }
+
+  /* Scroll-driven word light-up (the mockup's word-reveal): words sit dim
+     until the page's script lights them as the paragraph crosses the
+     viewport. Without scripting the paragraph stays fully visible. */
+  html.js .word-reveal .w {
+    opacity: 0.18;
+    transition: opacity 350ms ease;
+  }
+
+  html.js .word-reveal .w.lit {
+    opacity: 1;
   }
 }

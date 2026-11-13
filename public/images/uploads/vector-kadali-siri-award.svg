@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-grad-award" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FDFBF5"/>
+      <stop offset="100%" stop-color="#F4E3C7"/>
+    </linearGradient>
+    <linearGradient id="shawl-grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#C03A2B"/>
+      <stop offset="50%" stop-color="#D94E3E"/>
+      <stop offset="100%" stop-color="#A82B1D"/>
+    </linearGradient>
+    <linearGradient id="gold-trophy" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFE885"/>
+      <stop offset="50%" stop-color="#E8862E"/>
+      <stop offset="100%" stop-color="#C96B18"/>
+    </linearGradient>
+    <filter id="award-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#1C201A" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+
+  <!-- Background Ground -->
+  <rect width="1200" height="675" fill="url(#bg-grad-award)"/>
+
+  <!-- Outer Decorative Border -->
+  <rect x="24" y="24" width="1152" height="627" fill="none" stroke="#1D5F3C" stroke-width="3"/>
+  <rect x="36" y="36" width="1128" height="603" fill="none" stroke="#E8862E" stroke-width="1.5" stroke-dasharray="8 6"/>
+
+  <!-- Left & Right Decorative Shawl Drapes (Ilkal/Mysore Silk Shalu) -->
+  <g id="silk-shawls" filter="url(#award-shadow)">
+    <!-- Left draped silk shawl -->
+    <path d="M120 100 C180 180 140 360 160 560 L240 560 C210 380 260 200 180 100 Z" fill="url(#shawl-grad)" stroke="#1D5F3C" stroke-width="3"/>
+    <!-- Kasuti Gold Border on Shawl -->
+    <path d="M150 560 L240 560" stroke="#FFDD55" stroke-width="18" stroke-dasharray="10 5"/>
+    <path d="M150 535 L240 535" stroke="#1D5F3C" stroke-width="4"/>
+    <!-- Tassels -->
+    <line x1="160" y1="560" x2="160" y2="585" stroke="#E8862E" stroke-width="3"/>
+    <line x1="180" y1="560" x2="180" y2="585" stroke="#E8862E" stroke-width="3"/>
+    <line x1="200" y1="560" x2="200" y2="585" stroke="#E8862E" stroke-width="3"/>
+    <line x1="220" y1="560" x2="220" y2="585" stroke="#E8862E" stroke-width="3"/>
+
+    <!-- Right draped silk shawl (mirrored) -->
+    <path d="M1080 100 C1020 180 1060 360 1040 560 L960 560 C990 380 940 200 1020 100 Z" fill="url(#shawl-grad)" stroke="#1D5F3C" stroke-width="3"/>
+    <!-- Kasuti Gold Border on Shawl -->
+    <path d="M960 560 L1050 560" stroke="#FFDD55" stroke-width="18" stroke-dasharray="10 5"/>
+    <path d="M960 535 L1050 535" stroke="#1D5F3C" stroke-width="4"/>
+    <!-- Tassels -->
+    <line x1="980" y1="560" x2="980" y2="585" stroke="#E8862E" stroke-width="3"/>
+    <line x1="1000" y1="560" x2="1000" y2="585" stroke="#E8862E" stroke-width="3"/>
+    <line x1="1020" y1="560" x2="1020" y2="585" stroke="#E8862E" stroke-width="3"/>
+    <line x1="1040" y1="560" x2="1040" y2="585" stroke="#E8862E" stroke-width="3"/>
+  </g>
+
+  <!-- Central Award Medallion / Kalasha Trophy -->
+  <g transform="translate(600, 260)" filter="url(#award-shadow)">
+    <!-- Back Arch Halo -->
+    <path d="M-170 170 V-30 C-170 -130 -80 -180 0 -210 C80 -180 170 -130 170 -30 V170" fill="none" stroke="#1D5F3C" stroke-width="4"/>
+    <path d="M-150 170 V-20 C-150 -110 -70 -160 0 -185 C70 -160 150 -110 150 -20 V170" fill="#FFFDF7" stroke="#E8862E" stroke-width="2"/>
+
+    <!-- Auspicious Kalasha Trophy Body -->
+    <!-- Pedestal Base -->
+    <rect x="-90" y="150" width="180" height="24" rx="4" fill="#1D5F3C"/>
+    <rect x="-70" y="130" width="140" height="20" fill="url(#gold-trophy)" stroke="#1D5F3C" stroke-width="3"/>
+    <rect x="-40" y="100" width="80" height="30" fill="url(#gold-trophy)" stroke="#1D5F3C" stroke-width="2"/>
+
+    <!-- Round Kalasha Pot -->
+    <circle cx="0" cy="30" r="95" fill="url(#gold-trophy)" stroke="#1D5F3C" stroke-width="4"/>
+    <ellipse cx="0" cy="-60" rx="60" ry="14" fill="#E8862E" stroke="#1D5F3C" stroke-width="3"/>
+
+    <!-- Decorative Swastika / Shanka / Lotus motif on Pot -->
+    <circle cx="0" cy="30" r="48" fill="#FFFDF7" stroke="#1D5F3C" stroke-width="2"/>
+    <!-- Lotus bloom inside trophy -->
+    <g fill="#E8862E">
+      <path d="M0 5 Q14 -18 0 -30 Q-14 -18 0 5 Z"/>
+      <path d="M0 5 Q24 -8 30 -22 Q16 -32 0 5 Z"/>
+      <path d="M0 5 Q-24 -8 -30 -22 Q-16 -32 0 5 Z"/>
+    </g>
+
+    <!-- Mango Leaves on top of Kalasha -->
+    <g fill="#1D5F3C" stroke="#2E7D4E" stroke-width="1.5">
+      <path d="M-50 -60 Q-80 -120 -35 -140 Q-20 -90 -35 -60 Z"/>
+      <path d="M50 -60 Q80 -120 35 -140 Q20 -90 35 -60 Z"/>
+      <path d="M-25 -65 Q-30 -140 0 -160 Q10 -110 -10 -65 Z"/>
+      <path d="M25 -65 Q30 -140 0 -160 Q-10 -110 10 -65 Z"/>
+    </g>
+
+    <!-- Coconut on top -->
+    <path d="M-30 -65 C-35 -115 35 -115 30 -65 Z" fill="#995D28" stroke="#1D5F3C" stroke-width="3"/>
+    <!-- Coconut fibers -->
+    <line x1="0" y1="-115" x2="0" y2="-125" stroke="#995D28" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- Surrounding Fresh Flower Garland (Marigold & Jasmine) -->
+    <g fill="#E8862E" stroke="#1D5F3C" stroke-width="1.5">
+      <circle cx="-100" cy="-20" r="14"/>
+      <circle cx="-120" cy="40" r="14"/>
+      <circle cx="-105" cy="100" r="14"/>
+      <circle cx="-65" cy="145" r="14" fill="#FFFDF7"/>
+      
+      <circle cx="100" cy="-20" r="14"/>
+      <circle cx="120" cy="40" r="14"/>
+      <circle cx="105" cy="100" r="14"/>
+      <circle cx="65" cy="145" r="14" fill="#FFFDF7"/>
+    </g>
+  </g>
+
+  <!-- Award Name & Title Banner at Bottom -->
+  <g transform="translate(600, 520)">
+    <!-- Medallion Bar -->
+    <rect x="-350" y="0" width="700" height="54" rx="27" fill="#1D5F3C" filter="url(#award-shadow)"/>
+    <rect x="-342" y="5" width="684" height="44" rx="22" fill="none" stroke="#E8862E" stroke-width="2"/>
+
+    <text x="0" y="34" text-anchor="middle" fill="#FFFDF7" font-family="'Noto Sans Kannada', 'Segoe UI', sans-serif" font-size="24" font-weight="800" letter-spacing="1.5">
+      ಶ್ರೀಮತಿ ಕದಳಿ ಸಿರಿ ಪ್ರಶಸ್ತಿ
+    </text>
+  </g>
+
+  <!-- Sub-caption line -->
+  <text x="600" y="610" text-anchor="middle" fill="#55645A" font-family="'Noto Sans Kannada', 'Segoe UI', sans-serif" font-size="16" font-weight="600">
+    ರಾಜ್ಯಮಟ್ಟದಲ್ಲಿ ವಿಶಿಷ್ಟ ಸಾಧನೆಗೈದ ಸಾಧಕ ಮಹಿಳೆಯರಿಗೆ ಕದಳಿ ವನಿತಾ ಸಮಾಜದ ಗೌರವಾರ್ಪಣೆ
+  </text>
+</svg>

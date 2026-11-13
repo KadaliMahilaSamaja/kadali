@@ -7,9 +7,9 @@ interface Props {
 }
 
 const {
-  title = 'ಕದಲಿ ಮಹಿಳಾ ಸಂಘ (Kadali), ಉಡುಪಿ',
+  title = 'ಕದಳಿ ವನಿತಾ ಸಮಾಜ, ಶಿವಮೊಗ್ಗ',
   description =
-    'ಅಕ್ಕಮಹಾದೇವಿಯ ವಚನಗಳ ನೆನಪಲ್ಲಿ ಬೆಳೆಯುವ, ಉಡುಪಿಯ ಮಹಿಳೆಯರ ಒಡನಾಡು. ವಚನ ವೃತ್ತ, ಕಸುತಿ ಹೆಣಿಗೆ, ಸೇವೆ.',
+    'ಅಕ್ಕಮಹಾದೇವಿಯ ವಚನಗಳ ನೆನಪಲ್ಲಿ ಬೆಳೆಯುವ, ಶಿವಮೊಗ್ಗದ ಮಹಿಳೆಯರ ಒಡನಾಡು. ವಚನ ವೃತ್ತ, ಕಸುತಿ ಹೆಣಿಗೆ, ಸೇವೆ.',
   image = '/images/akkamahadevi-hero.png',
   type = 'website',
 } = Astro.props;
@@ -17,7 +17,7 @@ const {
 const canonical = Astro.site
   ? new URL(Astro.url.pathname, Astro.site).href
   : Astro.url.pathname;
-const ogImage = new URL(image, Astro.site ?? 'https://kadali.example.org').href;
+const ogImage = new URL(image, Astro.site ?? 'https://kadali.org').href;
 ---
 
 <meta charset="utf-8" />
@@ -29,7 +29,7 @@ const ogImage = new URL(image, Astro.site ?? 'https://kadali.example.org').href;
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 
-<meta property="og:site_name" content="ಕದಲಿ ಮಹಿಳಾ ಸಂಘ" />
+<meta property="og:site_name" content="ಕದಳಿ ವನಿತಾ ಸಮಾಜ" />
 <meta property="og:type" content={type} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />

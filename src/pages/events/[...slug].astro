@@ -54,7 +54,7 @@ const { title, poster, summary, venue, mapUrl, contact, startAt, endAt } =
   event.data;
 
 const statusLabel = deriveStatus(event);
-const siteUrl = (Astro.site ?? new URL('https://kadali.example.org')).href;
+const siteUrl = (Astro.site ?? new URL('https://kadali.org')).href;
 
 // Structured data: instants pinned to +05:30 so search engines read IST.
 const eventSchema = {
@@ -70,22 +70,22 @@ const eventSchema = {
       : 'https://schema.org/EventScheduled',
   location: { '@type': 'Place', name: venue },
   image: [new URL(poster, siteUrl).href],
-  organizer: { '@type': 'Organization', name: 'Kadali', url: siteUrl },
+  organizer: { '@type': 'Organization', name: 'ಕದಳಿ ವನಿತಾ ಸಮಾಜ', url: siteUrl },
 };
 ---
 
 <BaseLayout
-  title={`${title} · Events — Kadali`}
+  title={`${title} · ಕಾರ್ಯಕ್ರಮಗಳು — ಕದಳಿ ವನಿತಾ ಸಮಾಜ`}
   description={summary}
   image={poster}
   type="article"
 >
   <article class="bg-cream">
     <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:py-16">
-      <nav aria-label="Breadcrumb" class="font-ui text-sm text-stone">
-        <a href="/" class="hover:text-leaf hover:underline">Home</a>
+      <nav aria-label="ಸ್ಥಳ ಸೂಚಿ" class="font-ui text-sm text-stone">
+        <a href="/" class="hover:text-leaf hover:underline">ಮುಖಪುಟ</a>
         <span aria-hidden="true"> / </span>
-        <a href="/events" class="hover:text-leaf hover:underline">Events</a>
+        <a href="/events" class="hover:text-leaf hover:underline">ಕಾರ್ಯಕ್ರಮಗಳು</a>
         <span aria-hidden="true"> / </span>
         <span aria-current="page" class="text-ink">{title}</span>
       </nav>
@@ -96,7 +96,7 @@ const eventSchema = {
           <div class="overflow-hidden rounded-t-[999px] border border-ink/10">
             <img
               src={poster}
-              alt={`${title} poster`}
+              alt={`${title} — ಪೋಸ್ಟರ್`}
               width="850"
               height="1100"
               loading="eager"
@@ -126,7 +126,7 @@ const eventSchema = {
                 rel="noopener noreferrer"
                 class="border-2 border-leaf px-4 py-2 font-ui text-sm font-semibold text-leaf underline-offset-4 transition-colors duration-200 hover:bg-leaf hover:text-cream"
               >
-                View map · <span lang="kn" class="normal-case">ನಕ್ಷೆ ನೋಡಿ</span>
+                ನಕ್ಷೆಯಲ್ಲಿ ನೋಡಿ <span aria-hidden="true">↗</span>
               </a>
             )
           }
@@ -156,7 +156,6 @@ const eventSchema = {
       <section class="bg-jasmine">
         <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
           <h2 class="font-display text-2xl font-semibold text-ink sm:text-3xl">
-            Stories from this event ·{' '}
             <span lang="kn">ಈ ಕಾರ್ಯಕ್ರಮದ ಕಥನಗಳು</span>
           </h2>
           <div class="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -174,7 +173,6 @@ const eventSchema = {
       <section class="bg-jasmine">
         <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
           <h2 class="font-display text-2xl font-semibold text-ink sm:text-3xl">
-            Other upcoming events ·{' '}
             <span lang="kn">ಇತರ ಮುಂಬರುವ ಕಾರ್ಯಕ್ರಮಗಳು</span>
           </h2>
           <ul class="mt-8 grid gap-6 sm:grid-cols-2">

@@ -13,23 +13,31 @@ const { articles } = Astro.props;
 
 <section class="bg-cream" aria-labelledby="recent-articles-heading">
   <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:py-24">
-    <div class="reveal text-center">
-      <h2 id="recent-articles-heading" class="text-section font-bold">
-        ಇತ್ತೀಚಿನ ಬರಹಗಳು
-      </h2>
-      <Bloom class="mx-auto mt-4 w-8 text-turmeric" />
-    </div>
-    <div class="mt-4 flex justify-end">
-      <a
-        href="/articles"
-        class="underline-reveal inline-flex items-center gap-1.5 font-ui text-base font-semibold text-leaf active:text-sindoor"
-      >
-        <span lang="kn">ಎಲ್ಲಾ ಬರಹಗಳು</span>
-        <span aria-hidden="true">→</span>
-      </a>
+    <div class="reveal flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+      <div>
+        <p class="eyebrow-kn">ಕದಳಿಯ ಬರಹಗಳು</p>
+        <h2 id="recent-articles-heading" class="text-section font-bold">
+          ನಮ್ಮ ಕಥೆಗಳು, ನಮ್ಮ ಮಾತು
+        </h2>
+      </div>
+      <div class="md:pb-2 md:text-right">
+        <p class="max-w-sm font-body text-lg leading-relaxed text-stone">
+          ವಚನದ ಚಿಂತನೆಗಳಿಂದ ಸದಸ್ಯೆಯರ ನೆನಪುಗಳವರೆಗೆ — ನಮ್ಮದೇ ಧ್ವನಿಯಲ್ಲಿ ಹೇಳುವ
+          ಕಥೆಗಳು.
+        </p>
+        <a
+          href="/articles"
+          class="underline-reveal mt-3 inline-flex items-center gap-1.5 font-ui text-base font-semibold text-leaf active:text-sindoor"
+        >
+          <span>ಎಲ್ಲಾ ಬರಹಗಳು</span>
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
     </div>
 
-    <div class="mt-10 grid gap-6 md:grid-cols-2">
+    <!-- The mockup's swipe band: cards scroll sideways at every size, the
+         next story always peeking past the edge. -->
+    <div class="rail-x mt-10 pb-2">
       {
         articles.map((article, i) => {
           const { title, description, cover, coverAlt, author, category, pubDate } =
@@ -37,47 +45,61 @@ const { articles } = Astro.props;
           const href = `/articles/${article.id}`;
           return (
             <article
-              class="reveal group flex h-full flex-col border border-ink/10 bg-milk"
+              class="reveal flex min-w-[86%] snap-center sm:min-w-[58%] lg:min-w-[30rem]"
               style={`--reveal-delay: ${i * 90}ms`}
             >
-              <a
-                href={href}
-                class="overflow-hidden rounded-t-[3rem]"
-                tabindex="-1"
-                aria-hidden="true"
-              >
-                <img
-                  src={cover}
-                  alt=""
-                  width="1200"
-                  height="675"
-                  loading="lazy"
-                  decoding="async"
-                  class="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                />
-              </a>
-              <div class="flex flex-1 flex-col p-5 sm:p-6">
-                <span class="badge w-fit rounded-full px-3 py-1 text-xs">
-                  <span lang="kn">{CATEGORY_LABELS[category].kn}</span>
-                </span>
-                <h3 class="mt-3 text-2xl leading-snug">
-                  <a href={href} class="underline-reveal text-leaf">
-                    <span lang="kn">{title}</span>
-                  </a>
-                </h3>
-                <p class="mt-3 line-clamp-3 font-body text-base text-stone">
-                  <span lang="kn">{description}</span>
-                </p>
-                <p class="mt-4 font-ui text-sm text-stone">
-                  <span lang="kn">{author}</span>
-                  <span aria-hidden="true"> • </span>
-                  <span lang="kn">{formatDate(pubDate)}</span>
-                </p>
+              <div class="group flex w-full flex-col border border-ink/10 bg-milk">
+                <a
+                  href={href}
+                  class="overflow-hidden rounded-t-[3rem]"
+                  tabindex="-1"
+                  aria-hidden="true"
+                >
+                  <img
+                    src={cover}
+                    alt=""
+                    width="1200"
+                    height="675"
+                    loading="lazy"
+                    decoding="async"
+                    class="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  />
+                </a>
+                <div class="flex flex-1 flex-col p-5 sm:p-6">
+                  <span class="badge w-fit rounded-full px-3 py-1 text-xs">
+                    <span lang="kn">{CATEGORY_LABELS[category].kn}</span>
+                  </span>
+                  <h3 class="mt-3 text-2xl leading-snug">
+                    <a href={href} class="underline-reveal text-leaf">
+                      <span lang="kn">{title}</span>
+                    </a>
+                  </h3>
+                  <p class="mt-3 line-clamp-3 font-body text-base text-stone">
+                    <span lang="kn">{description}</span>
+                  </p>
+                  <p class="mt-4 font-ui text-sm text-stone">
+                    <span class="text-stone/75">ಲೇಖಕಿ: </span><span lang="kn" class="font-medium text-ink">{author}</span>
+                    <span aria-hidden="true"> • </span>
+                    <span lang="kn">{formatDate(pubDate)}</span>
+                  </p>
+                </div>
               </div>
             </article>
           );
         })
       }
     </div>
+    <p class="swipe-hint" aria-hidden="true">ಸರಿಸಿ ಓದಿ</p>
   </div>
 </section>
+
+<style>
+  /* Section eyebrow — the mockup's rust kicker line, in Kannada */
+  .eyebrow-kn {
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--color-sindoor);
+  }
+</style>
