@@ -449,6 +449,14 @@ const afterWords = 140 + wordCount * 90;
     }
   }
 
+  /* Below md the art flows under the cue's fixed slot; hiding it keeps the
+       figure's base clean. Declared after the base rule so it wins the tie. */
+  @media (max-width: 47.99rem) {
+    .scroll-cue {
+      display: none;
+    }
+  }
+
   /* ——— From md: the painting anchors to the panel's bottom-right corner,
          large and partly behind the copy, as in the mockup ——— */
   @media (min-width: 48rem) {

@@ -43,9 +43,14 @@ const href = `/events/${event.id}`;
         wide && 'md:h-full md:min-h-full md:aspect-auto',
       ]}
     />
-    <!-- Date coin riding the arch's foot, brochure style -->
+    <!-- Date coin riding the arch's foot, brochure style. On the wide card
+         the poster's bottom-left is a 9rem curve that clips the coin, so it
+         stamps the straight top-right corner instead. -->
     <span
-      class="absolute bottom-3 left-3 flex w-16 flex-col items-center rounded-full border border-ink/10 bg-milk/95 px-2 py-2.5 text-center"
+      class:list={[
+        'absolute flex w-16 flex-col items-center rounded-full border border-ink/10 bg-milk/95 px-2 py-2.5 text-center',
+        wide ? 'top-4 right-4' : 'bottom-3 left-3',
+      ]}
     >
       <span class="text-2xl leading-none font-semibold text-leaf">
         {dayOfMonth(startAt)}

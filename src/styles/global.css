@@ -83,10 +83,10 @@
     color: var(--color-ink);
   }
 
-  /* F16: the browser chrome joins the palette */
+  /* F16: the caret joins the palette; the page scrollbar stays the browser's
+     default — the branded turmeric scrollbar reads as a glitch beside photos */
   body {
     caret-color: var(--color-leaf);
-    scrollbar-color: var(--color-turmeric) var(--color-cream);
   }
 
   /* Respect users who prefer reduced motion */
@@ -351,7 +351,9 @@
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     overscroll-behavior-x: contain;
-    scrollbar-width: thin;
+    /* The swipe hint below carries the affordance; a visible bar read as a
+       glitch against the cards. */
+    scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
   }
 
@@ -372,9 +374,16 @@
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     overscroll-behavior-x: contain;
-    scrollbar-width: thin;
+    /* Same as .rail: the swipe hint carries the affordance. */
+    scrollbar-width: none;
     scroll-padding-inline: 1rem;
     -webkit-overflow-scrolling: touch;
+  }
+
+  /* Chromium/Safari counterpart to scrollbar-width: none */
+  .rail::-webkit-scrollbar,
+  .rail-x::-webkit-scrollbar {
+    display: none;
   }
 
   /* "ಸರಿಸಿ ನೋಡಿ ⟶" — the swipe affordance under a rail */

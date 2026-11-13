@@ -38,7 +38,7 @@ const committee = (await getCollection('people')).sort(
 
 {
   committee.length > 0 && (
-    <section class="bg-cream" aria-labelledby="committee-heading">
+    <section class="border-t border-ink/10 bg-cream" aria-labelledby="committee-heading">
       <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:py-20">
         <div class="reveal flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div>
@@ -98,13 +98,14 @@ const committee = (await getCollection('people')).sort(
           ಸರಿಸಿ ಪರಿಚಯ ಪಡೆಯಿರಿ
         </p>
 
-        {/* Tablet & Desktop: clean grid */}
-        <div class="hidden md:grid md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
+        {/* Tablet & Desktop: centered wrap grid — a partial last row (e.g. a
+            lone 9th member) centres itself instead of hanging at ¼ width. */}
+        <div class="hidden md:flex md:flex-wrap md:justify-center gap-6 mt-10">
           {committee.map((person, i) => {
             const { name, nameKn, role, photo } = person.data;
             return (
               <div
-                class="reveal"
+                class="reveal w-[calc(50%-0.75rem)] md:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1.125rem)]"
                 style={`--reveal-delay: ${i * 60}ms`}
               >
                 <article class="group flex h-full flex-col items-center rounded-b-[2rem] border border-ink/10 bg-milk px-4 pb-6 pt-6 text-center transition-transform duration-300 hover:-translate-y-1">
