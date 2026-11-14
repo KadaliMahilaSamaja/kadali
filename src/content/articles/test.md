@@ -11,7 +11,7 @@ category: culture
 event: ''
 tags:
   - test
-pubDate: ''
+pubDate: 2026-11-14
 featured: true
 draft: false
 ---
