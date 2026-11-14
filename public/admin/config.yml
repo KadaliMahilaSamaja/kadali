@@ -23,7 +23,7 @@ backend:
   name: github
   repo: KadaliMahilaSamaja/kadali # TODO: replace with the real owner/repo
   branch: main
-  base_url: https://kadali-cms-auth.abhijith-nuchinj.workers.dev
+  base_url: https://sveltia-cms-auth.kadalivanitasamaja.workers.dev
   auth_methods: [oauth] # OAuth sign-in only (see base_url TODO)
 
 # Editorial Workflow for article/event/announcement/gallery content.
