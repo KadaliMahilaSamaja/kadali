@@ -63,8 +63,6 @@ const heroDescription =
   title="ಕದಳಿ ವನಿತಾ ಸಮಾಜ, ಶಿವಮೊಗ್ಗ"
   description={heroDescription}
 >
-  <Hero heading={heroHeading} description={heroDescription} />
-
   {
     activeAnnouncement && (
       <aside
@@ -91,11 +89,17 @@ const heroDescription =
     )
   }
 
+  <Hero
+    heading={heroHeading}
+    description={heroDescription}
+    withNotice={!!activeAnnouncement}
+  />
+
   <Aim />
 
   {
     upcomingEvents.length > 0 && (
-      <section class="border-t border-ink/10 bg-cream" aria-labelledby="upcoming-events-heading">
+      <section class="border-t border-ink/10 bg-jasmine" aria-labelledby="upcoming-events-heading">
         <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:py-20">
           <div class="reveal flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
             <div>
@@ -151,7 +155,7 @@ const heroDescription =
 
   {
     galleryPhotos.length > 0 && (
-      <section class="bg-cream border-t border-ink/10" aria-labelledby="gallery-preview-heading">
+      <section class="bg-jasmine border-t border-ink/10" aria-labelledby="gallery-preview-heading">
         <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:py-20">
           <div class="reveal flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
             <div>
@@ -210,17 +214,6 @@ const heroDescription =
   <JoinBand />
 </BaseLayout>
 
-<style>
-  /* Section eyebrow — the mockup's rust kicker line, in Kannada */
-  .eyebrow-kn {
-    font-family: var(--font-ui);
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    color: var(--color-sindoor);
-  }
-</style>
-
 <script is:inline>
   // Mark the document before paint so reveal styles apply only when the
   // observer below can un-hide them; without scripting the page stays visible.
@@ -241,7 +234,7 @@ const heroDescription =
           }
         }
       },
-      { threshold: 0.15, rootMargin: '0px 0px -8% 0px' },
+      { threshold: 0.05, rootMargin: '0px 0px -4% 0px' },
     );
     els.forEach((el) => io.observe(el));
   } else {

@@ -2,9 +2,11 @@
 interface Props {
   heading: string;
   description: string;
+  /** A notice ribbon sits above the hero — fold the strip into the min-height math. */
+  withNotice?: boolean;
 }
 
-const { heading, description } = Astro.props;
+const { heading, description, withNotice = false } = Astro.props;
 
 /* The mockup sets the headline as beat lines ("ಭಕ್ತಿ ಬೇರು. ಸಂಸ್ಕೃತಿ ಉಸಿರು.
    ಮಹಿಳೆಯರ ಒಗ್ಗಟ್ಟು.") — split on the full stops, keep the punctuation, and
@@ -27,7 +29,12 @@ const afterWords = 140 + wordCount * 90;
 ---
 
 <section
-  class="hero relative isolate overflow-hidden text-milk md:flex md:min-h-[calc(100svh-65px)] md:flex-col md:justify-center"
+  class:list={[
+    'hero relative isolate overflow-hidden text-milk md:flex md:flex-col md:justify-center',
+    withNotice
+      ? 'md:min-h-[calc(100svh-111px)]'
+      : 'md:min-h-[calc(100svh-65px)]',
+  ]}
 >
   <!-- Field: deep-leaf radial wash with faint diagonal gold stripes -->
   <div class="hero-field" aria-hidden="true"></div>

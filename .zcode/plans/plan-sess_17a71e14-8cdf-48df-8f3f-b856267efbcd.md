@@ -39,7 +39,7 @@ Type: `--font-display` re-points to the sans stack (`Work Sans` + `Noto Sans Kan
 
 **4. Home page** (`src/pages/index.astro` + `src/components/home/`)
 - Band rhythm: Hero cream → Aim jasmine → Events cream → Articles jasmine → Committee cream → Join green.
-- `Hero.astro`: peach panel — orange badge chip `ಕದಲಿ ಮಹಿಳಾ ಸಂಘ • ಉಡುಪಿ` above the green heading, white floral scatter + corner `Mandala` (turmeric), turmeric primary CTA / green outline secondary, Kasuti frieze bottom in green, Akkamahadevi painting kept (retint shadow). Arch motifs replaced by florals here.
+- `Hero.astro`: peach panel — orange badge chip `ಕದಳಿ ಮಹಿಳಾ ಸಂಘ • ಉಡುಪಿ` above the green heading, white floral scatter + corner `Mandala` (turmeric), turmeric primary CTA / green outline secondary, Kasuti frieze bottom in green, Akkamahadevi painting kept (retint shadow). Arch motifs replaced by florals here.
 - `Aim.astro`: small `Bloom` icon above each pillar title, white florals in corners.
 - `EventCard.astro` / inline events section: jasmine cards on cream, date block green, time in orange.
 - `RecentArticles.astro`: cream cards on jasmine; category label becomes a small orange badge chip.

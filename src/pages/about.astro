@@ -1,14 +1,72 @@
 ---
 /**
  * About page — ಕದಳಿ ವನಿತಾ ಸಮಾಜ, ಶಿವಮೊಗ್ಗ.
- * 1993ರಿಂದ ಇಂದಿನವರೆಗಿನ ಮೂರು ದಶಕಗಳ ಸಾರ್ಥಕ ಪಯಣ, ಸಂಸ್ಥಾಪನೆಯ ಹಿನ್ನೆಲೆ,
- * ಧ್ಯೇಯೋದ್ದೇಶಗಳು ಮತ್ತು ಪ್ರಮುಖ ಸಾಧನೆಗಳ ಅಧಿಕೃತ ವಿವರ.
+ * About Us-style summary: founding facts, mission, milestones and the committee,
+ * distilled from the founder's article (which carries the full narrative and
+ * photos — linked from here instead of duplicated).
  */
 import BaseLayout from '../components/BaseLayout.astro';
 import PageHero from '../components/pages/PageHero.astro';
 import Beads from '../components/motifs/Beads.astro';
-import FlowerLine from '../motifs/FlowerLine.astro';
 import CommitteeSection from '../components/pages/CommitteeSection.astro';
+
+const ARTICLE_URL = '/articles/kadali-vanita-samaja';
+
+/** Mission pillars — one short line each, independent of the article's prose. */
+const OBJECTIVES = [
+  {
+    title: 'ಮಹಿಳಾ ಸಬಲೀಕರಣ ಮತ್ತು ಜಾಗೃತಿ',
+    text: 'ಪ್ರತಿಯೊಬ್ಬ ಸದಸ್ಯೆಯಲ್ಲಿ ಅರಿವು ಮತ್ತು ಆತ್ಮವಿಶ್ವಾಸ ಮೂಡಿಸುವುದು.',
+  },
+  {
+    title: 'ವಿದ್ಯಾಭ್ಯಾಸ ಮತ್ತು ಪ್ರತಿಭೆಗೆ ಪ್ರೋತ್ಸಾಹ',
+    text: 'ಅಗತ್ಯವಿರುವವರಿಗೆ ನೆರವು, ಪ್ರತಿಭೆಗೆ ಗೌರವ.',
+  },
+  {
+    title: 'ಶರಣ ಸಾಹಿತ್ಯ ಮತ್ತು ವಚನ ಸಂದೇಶ',
+    text: 'ಸಮಾನತೆ, ಕಾಯಕ ಮತ್ತು ದಾಸೋಹ ತತ್ವಗಳನ್ನು ಎಲ್ಲ ವರ್ಗದ ಜನರಿಗೆ ತಲುಪಿಸುವುದು.',
+  },
+  {
+    title: 'ಸಮಾಜ ನಿರ್ಮಾಣದಲ್ಲಿ ಮಹಿಳೆಯ ಪಾತ್ರ',
+    text: 'ಮಹಿಳೆ ಕುಟುಂಬದಷ್ಟೇ ಸಮಾಜದ ನಿರ್ಮಾತೃ ಎಂಬ ಅರಿವು.',
+  },
+  {
+    title: 'ರಾಷ್ಟ್ರೀಯ ಹಬ್ಬಗಳು ಮತ್ತು ಸಂಸ್ಕೃತಿ',
+    text: 'ಹಬ್ಬ-ಜಯಂತಿಗಳ ಆಚರಣೆಯ ಮೂಲಕ ದೇಶಭಕ್ತಿ ಬೆಳೆಸುವುದು.',
+  },
+  {
+    title: 'ಆರೋಗ್ಯ ಮತ್ತು ಸಮುದಾಯ ಕಾಳಜಿ',
+    text: 'ಆರೋಗ್ಯ ಶಿಬಿರಗಳು, ಯೋಗ ಮತ್ತು ನೇತ್ರದಾನ ಜಾಗೃತಿ.',
+  },
+] as const;
+
+/** Three decades of milestones — fact lines distilled from the article. */
+const MILESTONES = [
+  {
+    title: 'ಶ್ರೀಮತಿ ಕದಳಿ ಸಿರಿ ಪ್ರಶಸ್ತಿ',
+    text: 'ರಾಜ್ಯಮಟ್ಟದಲ್ಲಿ ಸಾಧನೆ ಮಾಡಿದ ಮಹಿಳೆಯರಿಗೆ ಗೌರವ.',
+  },
+  {
+    title: 'ನೇತ್ರದಾನ ಜಾಗೃತಿ ಮತ್ತು ಯೋಜನೆ',
+    text: 'ಯಶಸ್ವಿಯಾಗಿ ನಿರ್ವಹಿಸಲಾದ ಮಾನವೀಯ ಸೇವಾ ಕಾರ್ಯ.',
+  },
+  {
+    title: 'ಉಚಿತ ಆರೋಗ್ಯ ತಪಾಸಣಾ ಶಿಬಿರಗಳು',
+    text: 'ಪ್ರತಿ ವರ್ಷ ಮಹಿಳೆಯರ ಆರೋಗ್ಯದ ಕಾಳಜಿ.',
+  },
+  {
+    title: 'ಯೋಗ ತರಬೇತಿ',
+    text: 'ದೈಹಿಕ ಮತ್ತು ಮಾನಸಿಕ ಆರೋಗ್ಯದ ಅಭ್ಯಾಸಕ್ಕೆ ಪ್ರೋತ್ಸಾಹ.',
+  },
+  {
+    title: "'ವಚನಯಾನ' ನಾಟಕ",
+    text: 'ಶರಣೆ ಅಕ್ಕನಾಗವ್ವ ಸ್ಮರಣಾರ್ಥ ಬಸವ ಕೇಂದ್ರದ ಸಹಕಾರದ ರಂಗಪ್ರಯೋಗ.',
+  },
+  {
+    title: 'ಪ್ರತಿಭಾ ಪ್ರದರ್ಶನ ಮತ್ತು ಅರಿವು ಕಾರ್ಯಕ್ರಮಗಳು',
+    text: 'ಸಾಮಾಜಿಕ ಮತ್ತು ಸಾಂಸ್ಕೃತಿಕ ಚಿಂತನೆಯ ವೇದಿಕೆ.',
+  },
+] as const;
 ---
 
 <BaseLayout
@@ -19,11 +77,11 @@ import CommitteeSection from '../components/pages/CommitteeSection.astro';
     eyebrow="ಕದಳಿ ವನಿತಾ ಸಮಾಜ · ಶಿವಮೊಗ್ಗ"
     title="ಸಮಾಜಸೇವೆಯೇ ಬದುಕಿನ ಉಸಿರು · ಮಹಿಳಾ ಸಬಲೀಕರಣವೇ ಸಂಕಲ್ಪ"
     kn="ಮೂರು ದಶಕಗಳಿಗೂ ಮೀರಿದ ಸಾರ್ಥಕ ಸೇವಾ ಪಯಣ (1993 – 2026)"
-    lede="ಜನಸೇವೆ, ಜನಸಂಘಟನೆ ಹಾಗೂ ಸಮಾಜಮುಖಿ ಚಿಂತನೆಯೊಂದಿಗೆ ಆರಂಭವಾದ ಕದಳಿ ವನಿತಾ ಸಮಾಜವು ಮಹಿಳೆಯರಲ್ಲಿ ಜಾಗೃತಿ, ಆತ್ಮವಿಶ್ವಾಸ, ಸಂಸ್ಕೃತಿ ಮತ್ತು ಸಮಾಜಮುಖಿ ಸೇವೆಯ ಬೆಳಕನ್ನು ನಿರಂತರವಾಗಿ ಹರಡುತ್ತಿದೆ."
+    lede="ಶಿವಮೊಗ್ಗದಲ್ಲಿ ಮಹಿಳಾ ಸಬಲೀಕರಣ, ಸಂಸ್ಕೃತಿ ಮತ್ತು ಸಮಾಜಸೇವೆಗಾಗಿ 1993ರಿಂದ ನಿರಂತರವಾಗಿ ದುಡಿಯುತ್ತಿರುವ ಸಂಘಟನೆ — ನಮ್ಮ ಹಿನ್ನೆಲೆ, ಧ್ಯೇಯ ಮತ್ತು ಸಮಿತಿಯ ಪರಿಚಯ."
     tone="leaf"
   />
 
-  <!-- 1. ಸಂಸ್ಥಾಪನೆ ಮತ್ತು ಹಿನ್ನೆಲೆ (Founding & History) -->
+  <!-- 1. ಸಂಸ್ಥಾಪನೆ — distilled facts; full story lives in the article -->
   <section class="bg-cream">
     <div
       class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:grid lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-14"
@@ -38,33 +96,25 @@ import CommitteeSection from '../components/pages/CommitteeSection.astro';
 
         <div class="mt-8 space-y-5 font-body text-lg leading-relaxed text-stone">
           <p>
-            ಜನಸೇವೆ, ಜನಸಂಘಟನೆ ಹಾಗೂ ಸಮಾಜಮುಖಿ ಚಿಂತನೆಗಳ ವಾತಾವರಣದಲ್ಲಿ ಬೆಳೆದು ಬಂದ ಅಕ್ಕನವರು (ರೇಣುಕಾ ಶಿವಾನಂದಪ್ಪ) ತಮ್ಮ ಜನ್ಮಸ್ಥಳವಾದ ಶಿವಮೊಗ್ಗ ಜಿಲ್ಲೆಗೆ ಬಂದು ನೆಲೆಸಿದ ಸಂದರ್ಭದಲ್ಲಿ, ಇಲ್ಲಿನ ಮಹಿಳೆಯರನ್ನು ಸಂಘಟಿಸಿ, ಅವರಲ್ಲಿ ಜಾಗೃತಿ, ಆತ್ಮವಿಶ್ವಾಸ ಹಾಗೂ ಸಾಮಾಜಿಕ ಪ್ರಜ್ಞೆಯನ್ನು ಮೂಡಿಸಬೇಕೆಂಬ ಮಹತ್ತರ ಆಶಯ ಅವರಲ್ಲಿ ಮೂಡಿತು. ಈ ಚಿಂತನೆಯೇ ಮುಂದೆ ಕದಳಿ ವನಿತಾ ಸಮಾಜದ ಸ್ಥಾಪನೆಗೆ ದೃಢ ಪ್ರೇರಣೆಯಾಯಿತು.
+            ಮಹಿಳೆಯರನ್ನು ಸಂಘಟಿಸಿ, ಅವರಲ್ಲಿ ಜಾಗೃತಿ ಮತ್ತು ಆತ್ಮವಿಶ್ವಾಸ ಮೂಡಿಸುವ ಆಶಯದೊಂದಿಗೆ
+            <strong class="font-semibold text-ink">ರೇಣುಕಾ ಶಿವಾನಂದಪ್ಪ</strong> ಹಾಗೂ ಸಮಾನ
+            ಮನಸ್ಕ ಸ್ನೇಹಿತೆಯರ ಸಮೂಹವೊಂದು <strong class="font-semibold text-ink">12 ಮಾರ್ಚ್
+            1993ರಂದು</strong> ಶಿವಮೊಗ್ಗದಲ್ಲಿ ಕದಳಿ ವನಿತಾ ಸಮಾಜವನ್ನು ಕಟ್ಟಿಬೆಳೆಸಿತು.
           </p>
           <p>
-            ಕೆಲವು ಸಮಾನ ಮನಸ್ಕ ಸ್ನೇಹಿತೆಯರ ಸಹಕಾರ, ಪ್ರೋತ್ಸಾಹ ಮತ್ತು ಸಮರ್ಪಣಾ ಮನೋಭಾವದೊಂದಿಗೆ <strong class="font-semibold text-ink">ದಿನಾಂಕ 12-03-1993 ರಂದು</strong> ಕದಳಿ ವನಿತಾ ಸಮಾಜ ಅಸ್ತಿತ್ವಕ್ಕೆ ಬಂದು, ಒಂದು ಸಶಕ್ತ ಸಂಘಟನೆಯಾಗಿ ರೂಪುಗೊಂಡಿತು.
-          </p>
-          <p>
-            ಅಂದಿನ ಶಿವಮೊಗ್ಗ ಜಿಲ್ಲಾಧಿಕಾರಿಗಳ ಪತ್ನಿಯಾದ <strong class="font-semibold text-ink">ಶ್ರೀಮತಿ ಪ್ರೇಮಲತಾ ಸದಾಶಿವಯ್ಯನವರ</strong> ಅಮೃತ ಹಸ್ತದಿಂದ ಜ್ಯೋತಿ ಬೆಳಗಿಸುವ ಮೂಲಕ ಅತ್ಯಂತ ಸರಳ ಹಾಗೂ ಅರ್ಥಪೂರ್ಣ ಸಮಾರಂಭದಲ್ಲಿ ಸಮಾಜಕ್ಕೆ ಚಾಲನೆ ನೀಡಲಾಯಿತು. ಅಂದು ಬೆಳಗಿದ ಆ ಜ್ಯೋತಿ ಇಂದು ಸಹಸ್ರಾರು ಮಹಿಳೆಯರ ಬದುಕಿನಲ್ಲಿ ಜ್ಞಾನ, ಜಾಗೃತಿ, ಆತ್ಮವಿಶ್ವಾಸ ಮತ್ತು ಸೇವೆಯ ಬೆಳಕನ್ನು ಹರಡುತ್ತಿದೆ.
+            ಅಂದಿನ ಜಿಲ್ಲಾಧಿಕಾರಿಗಳ ಪತ್ನಿ <strong class="font-semibold text-ink">ಶ್ರೀಮತಿ ಪ್ರೇಮಲತಾ
+            ಸದಾಶಿವಯ್ಯನವರ</strong> ಅಮೃತ ಹಸ್ತದ ಜ್ಯೋತಿ ಬೆಳಗುವಿಕೆಯೊಂದಿಗೆ ಸಮಾಜದ ಪಯಣ ಆರಂಭವಾಯಿತು; ಆ
+            ಬೆಳಕು ಇಂದು ಮೂರು ದಶಕಗಳಿಗೂ ಮೀರಿ ಸಹಸ್ರಾರು ಮಹಿಳೆಯರ ಬದುಕಿನಲ್ಲಿ ಮುಂದುವರಿದಿದೆ.
           </p>
         </div>
 
-        <!-- Featured Founding Photo -->
-        <figure class="mt-10 overflow-hidden border border-ink/10 bg-jasmine p-3">
-          <div class="overflow-hidden rounded-t-[999px] border border-ink/10">
-            <img
-              src="/images/uploads/poster-deepa-lighting.jpg"
-              alt="ಜ್ಯೋತಿ ಬೆಳಗಿಸುವ ಮೂಲಕ ಕದಳಿ ವನಿತಾ ಸಮಾಜದ ಸೇವಾ ಪಯಣಕ್ಕೆ ಚಾಲನೆ ನೀಡಿದ ಮಂಗಳಕರ ಕ್ಷಣದ ಕಲಾಚಿತ್ರ"
-              width="1200"
-              height="675"
-              loading="lazy"
-              decoding="async"
-              class="aspect-[16/9] w-full object-cover"
-            />
-          </div>
-          <figcaption class="mt-3 px-2 pb-1 font-ui text-sm text-stone text-center">
-            ಮಂಗಳಕರ ಜ್ಯೋತಿ ಬೆಳಗಿಸುವ ಮೂಲಕ ಆರಂಭವಾದ ಕದಳಿ ವನಿತಾ ಸಮಾಜದ ಸೇವಾ ಪಯಣ
-          </figcaption>
-        </figure>
+        <a
+          href={ARTICLE_URL}
+          class="mt-8 inline-flex items-center gap-2 rounded-full border border-leaf/40 bg-jasmine px-6 py-3 font-ui text-sm font-semibold text-leaf transition-colors duration-200 hover:border-leaf hover:bg-leaf hover:text-milk"
+        >
+          <span>ಸಂಸ್ಥಾಪಕರ ಬರಹದಲ್ಲಿ ಸಂಪೂರ್ಣ ಸ್ಥಾಪನಾ ಕಥೆ ಓದಿ</span>
+          <span aria-hidden="true">→</span>
+        </a>
       </div>
 
       <!-- Quick Summary Aside -->
@@ -79,6 +129,14 @@ import CommitteeSection from '../components/pages/CommitteeSection.astro';
             </dt>
             <dd class="mt-1 font-display text-lg font-semibold text-ink">
               12 ಮಾರ್ಚ್ 1993
+            </dd>
+          </div>
+          <div class="border-b border-ink/10 pb-3">
+            <dt class="font-ui text-xs font-semibold tracking-wide uppercase text-stone">
+              ಸಂಸ್ಥಾಪಕರು
+            </dt>
+            <dd class="mt-1 font-body text-base text-ink">
+              ರೇಣುಕಾ ಶಿವಾನಂದಪ್ಪ ಹಾಗೂ ಸಮಾನ ಮನಸ್ಕ ಸ್ನೇಹಿತೆಯರು
             </dd>
           </div>
           <div class="border-b border-ink/10 pb-3">
@@ -105,7 +163,7 @@ import CommitteeSection from '../components/pages/CommitteeSection.astro';
               <span lang="kn" class="font-semibold text-leaf">ಕದಳಿ</span> — ಬಾಳೆಗಿಡ (ಆಶ್ರಯ ಮತ್ತು ತಂಪು ನೀಡುವ ನಿಸರ್ಗದ ಸಂಕೇತ) ಹಾಗೂ ಅಕ್ಕಮಹಾದೇವಿ ಐಕ್ಯವಾದ ಪವಿತ್ರ ಕದಳಿ ವನ.
             </dd>
           </div>
-          <div class="border-b border-ink/10 pb-3">
+          <div>
             <dt class="font-ui text-xs font-semibold tracking-wide uppercase text-stone">
               ಸಾರ್ಥಕ ಮೈಲಿಗಲ್ಲು
             </dt>
@@ -142,7 +200,7 @@ import CommitteeSection from '../components/pages/CommitteeSection.astro';
     </div>
   </div>
 
-  <!-- 2. ಸಮಾಜದ ಉದ್ದೇಶ ಮತ್ತು ಧ್ಯೇಯಗಳು (Aims & Objectives) -->
+  <!-- 2. ಸಮಾಜದ ಧ್ಯೇಯಗಳು — one-line pillar summaries -->
   <section class="bg-jasmine">
     <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
       <div class="max-w-3xl">
@@ -153,76 +211,26 @@ import CommitteeSection from '../components/pages/CommitteeSection.astro';
           ಸಮಾಜದ ಉದ್ದೇಶ ಮತ್ತು ಧ್ಯೇಯಗಳು
         </h2>
         <p class="mt-4 font-body text-lg text-stone">
-          ಯಾವುದೇ ಸಂಘಟನೆ ಸ್ಥಾಪನೆಯಾಗುವಾಗ ಅದರ ಹಿಂದೆ ಒಂದು ದೂರದೃಷ್ಟಿ ಇರುತ್ತದೆ. ಕದಳಿ ವನಿತಾ ಸಮಾಜವು ಮಹಿಳೆಯರ ಸರ್ವತೋಮುಖ ಅಭಿವೃದ್ಧಿಯನ್ನು ತನ್ನ ಪ್ರಮುಖ ಗುರಿಯನ್ನಾಗಿ ಸ್ವೀಕರಿಸಿದೆ.
+          ಮಹಿಳೆಯರ ಸರ್ವತೋಮುಖ ಅಭಿವೃದ್ಧಿ — ಈ ಒಂದು ಗುರಿಯುಳ್ಳ ಸಂಕಲ್ಪದ ಮೇಲೆ ಸಮಾಜದ ಎಲ್ಲಾ ಕಾರ್ಯಕ್ರಮಗಳು ನಿಂತಿವೆ.
         </p>
       </div>
 
       <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <!-- Pillar 1 -->
-        <div class="border border-ink/10 bg-cream p-6">
-          <div class="font-ui text-xs font-semibold text-turmeric">01</div>
-          <h3 class="mt-2 font-display text-xl font-semibold text-ink">
-            ಮಹಿಳಾ ಸಬಲೀಕರಣ & ಜಾಗೃತಿ
-          </h3>
-          <p class="mt-3 font-body text-base text-stone">
-            ಮಹಿಳೆಯರ ವರ್ತಮಾನವನ್ನು ಸುಧಾರಿಸುವುದರ ಜೊತೆಗೆ ಅವರ ಭವಿಷ್ಯವನ್ನು ಉಜ್ವಲಗೊಳಿಸುವಂತಹ ತಿಳುವಳಿಕೆ, ಅರಿವು ಮತ್ತು ಆತ್ಮವಿಶ್ವಾಸವನ್ನು ಪ್ರತಿಯೊಬ್ಬ ಸದಸ್ಯೆಯಲ್ಲಿಯೂ ಮೂಡಿಸುವುದು.
-          </p>
-        </div>
-
-        <!-- Pillar 2 -->
-        <div class="border border-ink/10 bg-cream p-6">
-          <div class="font-ui text-xs font-semibold text-turmeric">02</div>
-          <h3 class="mt-2 font-display text-xl font-semibold text-ink">
-            ವಿದ್ಯಾಭ್ಯಾಸ & ಪ್ರತಿಭೆಗೆ ಪ್ರೋತ್ಸಾಹ
-          </h3>
-          <p class="mt-3 font-body text-base text-stone">
-            ಮಹಿಳೆಯರ ವಿದ್ಯಾಭ್ಯಾಸಕ್ಕೆ ಪ್ರೋತ್ಸಾಹ ನೀಡುವುದು, ಅಗತ್ಯವಿರುವವರಿಗೆ ನೆರವಿನ ಹಸ್ತ ಚಾಚುವುದು ಹಾಗೂ ಅವರ ಪ್ರತಿಭೆ ಮತ್ತು ಸಾಮರ್ಥ್ಯಗಳನ್ನು ಗುರುತಿಸಿ ಸಾಮಾಜಿಕ, ಶೈಕ್ಷಣಿಕ ಬೆಳವಣಿಗೆಗೆ ಪೂರಕ ಕಾರ್ಯಕ್ರಮಗಳನ್ನು ನಡೆಸುವುದು.
-          </p>
-        </div>
-
-        <!-- Pillar 3 -->
-        <div class="border border-ink/10 bg-cream p-6">
-          <div class="font-ui text-xs font-semibold text-turmeric">03</div>
-          <h3 class="mt-2 font-display text-xl font-semibold text-ink">
-            ಶರಣ ಸಾಹಿತ್ಯ & ವಚನ ಸಂದೇಶ
-          </h3>
-          <p class="mt-3 font-body text-base text-stone">
-            ವಿಶ್ವಮಾನವೀಯತೆಯ ತತ್ವಗಳು ಹಾಗೂ ಬಸವಣ್ಣನವರ ಸಮಾನತೆ, ಕಾಯಕ, ದಾಸೋಹ ಮತ್ತು ಮಾನವೀಯ ಮೌಲ್ಯಗಳನ್ನು ಬಿತ್ತುವುದು; ಶರಣ ಸಾಹಿತ್ಯ ಮತ್ತು ವಚನ ಸಾಹಿತ್ಯದ ಮಹತ್ವವನ್ನು ಎಲ್ಲ ವರ್ಗದ ಜನರಿಗೆ ತಲುಪಿಸುವುದು.
-          </p>
-        </div>
-
-        <!-- Pillar 4 -->
-        <div class="border border-ink/10 bg-cream p-6">
-          <div class="font-ui text-xs font-semibold text-turmeric">04</div>
-          <h3 class="mt-2 font-display text-xl font-semibold text-ink">
-            ಸಮಾಜ ನಿರ್ಮಾಣದಲ್ಲಿ ಮಹಿಳೆಯ ಪಾತ್ರ
-          </h3>
-          <p class="mt-3 font-body text-base text-stone">
-            ಮಹಿಳೆಯರು ಕೇವಲ ಕುಟುಂಬದ ಜವಾಬ್ದಾರಿಯನ್ನು ಮಾತ್ರವಲ್ಲದೆ ಸಮಾಜದ ನಿರ್ಮಾಣದಲ್ಲಿಯೂ ಪ್ರಮುಖ ಪಾತ್ರ ವಹಿಸಬಲ್ಲರು ಎಂಬ ಅರಿವನ್ನು ಮೂಡಿಸುವುದು.
-          </p>
-        </div>
-
-        <!-- Pillar 5 -->
-        <div class="border border-ink/10 bg-cream p-6">
-          <div class="font-ui text-xs font-semibold text-turmeric">05</div>
-          <h3 class="mt-2 font-display text-xl font-semibold text-ink">
-            ರಾಷ್ಟ್ರೀಯ ಹಬ್ಬಗಳು & ಸಂಸ್ಕೃತಿ
-          </h3>
-          <p class="mt-3 font-body text-base text-stone">
-            ರಾಷ್ಟ್ರೀಯ ಹಬ್ಬಗಳು ಹಾಗೂ ಮಹನೀಯರ ಜಯಂತಿಗಳನ್ನು ಆಚರಿಸುವ ಮೂಲಕ ದೇಶಭಕ್ತಿ, ಭಾರತೀಯ ಸಂಸ್ಕೃತಿ ಮತ್ತು ಸಾಮಾಜಿಕ ಜವಾಬ್ದಾರಿಯ ಭಾವನೆಯನ್ನು ಬೆಳೆಸುವುದು.
-          </p>
-        </div>
-
-        <!-- Pillar 6 -->
-        <div class="border border-ink/10 bg-cream p-6">
-          <div class="font-ui text-xs font-semibold text-turmeric">06</div>
-          <h3 class="mt-2 font-display text-xl font-semibold text-ink">
-            ಆರೋಗ್ಯ & ಸಮುದಾಯ ಕಾಳಜಿ
-          </h3>
-          <p class="mt-3 font-body text-base text-stone">
-            ಉಚಿತ ಆರೋಗ್ಯ ತಪಾಸಣಾ ಶಿಬಿರಗಳು, ಯೋಗ ತರಬೇತಿ ಹಾಗೂ ನೇತ್ರದಾನ ಜಾಗೃತಿಯ ಮೂಲಕ ಸಮುದಾಯದ ದೈಹಿಕ ಮತ್ತು ಮಾನಸಿಕ ಆರೋಗ್ಯ ಸುಧಾರಣೆಗೆ ಶ್ರಮಿಸುವುದು.
-          </p>
-        </div>
+        {
+          OBJECTIVES.map((objective, i) => (
+            <div class="border border-ink/10 bg-cream p-6">
+              <div class="font-ui text-xs font-semibold text-turmeric">
+                {String(i + 1).padStart(2, '0')}
+              </div>
+              <h3 class="mt-2 font-display text-xl font-semibold text-ink">
+                <span lang="kn">{objective.title}</span>
+              </h3>
+              <p class="mt-3 font-body text-base text-stone">
+                <span lang="kn">{objective.text}</span>
+              </p>
+            </div>
+          ))
+        }
       </div>
     </div>
   </section>
@@ -233,7 +241,7 @@ import CommitteeSection from '../components/pages/CommitteeSection.astro';
     </div>
   </div>
 
-  <!-- 3. ಪ್ರಮುಖ ಸಾಧನೆಗಳು (Major Achievements from Article 1) -->
+  <!-- 3. ಮೂರು ದಶಕಗಳ ಸಾಧನೆಗಳು — compact milestone grid; photos stay with the article -->
   <section class="bg-cream">
     <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
       <div class="max-w-3xl">
@@ -241,151 +249,58 @@ import CommitteeSection from '../components/pages/CommitteeSection.astro';
           ಮೂರು ದಶಕಗಳ ಸಾಧನೆಗಳು
         </p>
         <h2 class="mt-2 font-display text-3xl font-semibold text-ink sm:text-4xl">
-          ಸಮಾಜದ ಪ್ರಮುಖ ಮೈಲಿಗಲ್ಲುಗಳು ಮತ್ತು ಕಾರ್ಯಕ್ರಮಗಳು
+          ಪ್ರಮುಖ ಮೈಲಿಗಲ್ಲುಗಳು ಮತ್ತು ಕಾರ್ಯಕ್ರಮಗಳು
         </h2>
         <p class="mt-4 font-body text-lg text-stone">
-          ಕದಳಿ ವನಿತಾ ಸಮಾಜವು ತನ್ನ ಉದ್ದೇಶಗಳಿಗೆ ಅನುಗುಣವಾಗಿ ಹಲವು ಅರ್ಥಪೂರ್ಣ ಯೋಜನೆಗಳನ್ನು ಹಮ್ಮಿಕೊಂಡು ಮಹಿಳೆಯರ ಬದುಕಿಗೆ ಹೊಸ ಬೆಳಕು ನೀಡಿದೆ.
+          ಧ್ಯೇಯಗಳಿಗೆ ಅನುಗುಣವಾಗಿ ಸಮಾಜವು ನಿರಂತರವಾಗಿ ಹಮ್ಮಿಕೊಂಡು ಬಂದ ಪ್ರಮುಖ ಕಾರ್ಯಗಳು.
         </p>
       </div>
 
-      <div class="mt-12 space-y-12">
-        <!-- Achievement 1: Kadali Siri Award -->
-        <article class="grid gap-8 border border-ink/10 bg-milk p-6 sm:p-8 md:grid-cols-2 md:items-center">
-          <div>
-            <div class="inline-block rounded-full bg-turmeric/20 px-3 py-1 font-ui text-xs font-semibold text-leaf">
-              ಗೌರವ ಪ್ರಶಸ್ತಿ
+      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          MILESTONES.map((milestone) => (
+            <div class="flex gap-4 border border-ink/10 bg-milk p-6">
+              <span aria-hidden="true" class="mt-2 block h-2.5 w-2.5 shrink-0 rounded-full bg-turmeric" />
+              <div>
+                <h3 class="font-display text-lg font-semibold text-ink">
+                  <span lang="kn">{milestone.title}</span>
+                </h3>
+                <p class="mt-2 font-body text-base text-stone">
+                  <span lang="kn">{milestone.text}</span>
+                </p>
+              </div>
             </div>
-            <h3 class="mt-3 font-display text-2xl font-bold text-ink sm:text-3xl">
-              ಶ್ರೀಮತಿ ಕದಳಿ ಸಿರಿ ಪ್ರಶಸ್ತಿ
-            </h3>
-            <p class="mt-4 font-body text-base leading-relaxed text-stone">
-              ರಾಜ್ಯಮಟ್ಟದಲ್ಲಿ ವಿವಿಧ ಕ್ಷೇತ್ರಗಳಲ್ಲಿ ವಿಶಿಷ್ಟ ಸಾಧನೆ ಮಾಡಿದ ಮಹಿಳೆಯರನ್ನು ಗುರುತಿಸಿ, ಗೌರವಿಸಿ, ಪ್ರೋತ್ಸಾಹಿಸುವ ಉದ್ದೇಶದಿಂದ <strong class="font-semibold text-ink">ಶ್ರೀಮತಿ ಕದಳಿ ಸಿರಿ ಪ್ರಶಸ್ತಿಯನ್ನು</strong> ಸ್ಥಾಪಿಸಲಾಗಿದೆ. ಸಾಧಕ ಮಹಿಳೆಯರ ಸೇವೆ ಮತ್ತು ಪ್ರತಿಭೆಗೆ ಗೌರವ ಸಲ್ಲಿಸುವುದರ ಜೊತೆಗೆ ಇತರ ಮಹಿಳೆಯರಿಗೂ ಸಾಧನೆಯ ಹಾದಿಯಲ್ಲಿ ಮುನ್ನಡೆಯಲು ಇದು ಮಹತ್ತರ ಪ್ರೇರಣೆಯಾಗಿದೆ.
-            </p>
-          </div>
-          <div class="overflow-hidden rounded-t-[3rem] border border-ink/10">
-            <img
-              src="/images/uploads/poster-kadali-siri-award.jpg"
-              alt="ಶ್ರೀಮತಿ ಕದಳಿ ಸಿರಿ ಪ್ರಶಸ್ತಿ ಗೌರವ ಕಲಾಚಿತ್ರ"
-              width="800"
-              height="450"
-              loading="lazy"
-              decoding="async"
-              class="aspect-[16/9] w-full object-cover"
-            />
-          </div>
-        </article>
+          ))
+        }
+      </div>
 
-        <!-- Achievement 2: Health Camps & Eye Donation -->
-        <article class="grid gap-8 border border-ink/10 bg-milk p-6 sm:p-8 md:grid-cols-2 md:items-center">
-          <div class="order-2 md:order-1 overflow-hidden rounded-t-[3rem] border border-ink/10">
-            <img
-              src="/images/uploads/poster-health-seva.jpg"
-              alt="ಮಹಿಳೆಯರಿಗಾಗಿ ಆಯೋಜಿಸಲಾದ ಉಚಿತ ಆರೋಗ್ಯ ಮತ್ತು ನೇತ್ರ ತಪಾಸಣಾ ಸೇವಾ ಕಲಾಚಿತ್ರ"
-              width="800"
-              height="450"
-              loading="lazy"
-              decoding="async"
-              class="aspect-[16/9] w-full object-cover"
-            />
-          </div>
-          <div class="order-1 md:order-2">
-            <div class="inline-block rounded-full bg-turmeric/20 px-3 py-1 font-ui text-xs font-semibold text-leaf">
-              ಆರೋಗ್ಯ ಮತ್ತು ಮಾನವೀಯ ಸೇವೆ
-            </div>
-            <h3 class="mt-3 font-display text-2xl font-bold text-ink sm:text-3xl">
-              ನೇತ್ರದಾನ ಜಾಗೃತಿ ಮತ್ತು ಆರೋಗ್ಯ ಶಿಬಿರಗಳು
-            </h3>
-            <p class="mt-4 font-body text-base leading-relaxed text-stone">
-              "ನಮ್ಮ ಕಣ್ಣುಗಳು ಮತ್ತೊಬ್ಬರ ಬದುಕಿನಲ್ಲಿ ಬೆಳಕಾಗಬಹುದು" ಎಂಬ ಉದಾತ್ತ ಸಂದೇಶದೊಂದಿಗೆ ನೇತ್ರದಾನದ ಮಹತ್ವದ ಬಗ್ಗೆ ನಿರಂತರ ಅರಿವು ಮೂಡಿಸಿ ಯಶಸ್ವಿ ಯೋಜನೆಯನ್ನು ನಿರ್ವಹಿಸಲಾಗಿದೆ. ಜೊತೆಗೆ ಪ್ರತಿವರ್ಷ ಮಹಿಳೆಯರ ಆರೋಗ್ಯದ ಕಾಳಜಿಯೊಂದಿಗೆ ಉಚಿತ ವೈದ್ಯಕೀಯ ತಪಾಸಣಾ ಶಿಬಿರಗಳು ಹಾಗೂ ಯೋಗ ತರಬೇತಿ ಶಿಬಿರಗಳನ್ನು ಹಮ್ಮಿಕೊಳ್ಳಲಾಗುತ್ತಿದೆ.
-            </p>
-          </div>
-        </article>
+      <div class="mt-10">
+        <a
+          href={ARTICLE_URL}
+          class="inline-flex items-center gap-2 font-ui text-sm font-semibold text-leaf underline-offset-4 hover:underline"
+        >
+          <span>ಪ್ರತಿಯೊಂದು ಸಾಧನೆಯ ವಿವರವನ್ನು ಸಂಸ್ಥಾಪಕರ ಬರಹದಲ್ಲಿ ಓದಿ</span>
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
 
-        <!-- Achievement 3: Vachanayana Cultural Drama -->
-        <article class="grid gap-8 border border-ink/10 bg-milk p-6 sm:p-8 md:grid-cols-2 md:items-center">
-          <div>
-            <div class="inline-block rounded-full bg-turmeric/20 px-3 py-1 font-ui text-xs font-semibold text-leaf">
-              ಸಾಂಸ್ಕೃತಿಕ ಹಿರಿಮೆ
-            </div>
-            <h3 class="mt-3 font-display text-2xl font-bold text-ink sm:text-3xl">
-              'ವಚನಯಾನ' ನಾಟಕ ಹಾಗೂ ಸಾಂಸ್ಕೃತಿಕ ಚಟುವಟಿಕೆಗಳು
-            </h3>
-            <p class="mt-4 font-body text-base leading-relaxed text-stone">
-              ಶರಣರ ಆದರ್ಶ ಜೀವನ, ವಚನಗಳಲ್ಲಿರುವ ಮಾನವೀಯ ಮೌಲ್ಯಗಳು ಹಾಗೂ ಬಸವ ತತ್ವಗಳನ್ನು ಜನರಿಗೆ ತಲುಪಿಸಲು ವಿಶೇಷವಾಗಿ ಶರಣೆ ಅಕ್ಕನಾಗವ್ವನವರ ಸ್ಮರಣಾರ್ಥ ಬಸವ ಕೇಂದ್ರದ ಸಹಕಾರದೊಂದಿಗೆ <strong class="font-semibold text-ink">'ವಚನಯಾನ'</strong> ಎಂಬ ನಾಟಕವನ್ನು ಸಿದ್ಧಪಡಿಸಿ ಹಲವು ಬಾರಿ ಯಶಸ್ವಿಯಾಗಿ ಪ್ರದರ್ಶಿಸಿರುವುದು ಸಮಾಜದ ಸಾಂಸ್ಕೃತಿಕ ಸಾಧನೆಗಳಲ್ಲಿ ಮಹತ್ವದ ಮೈಲಿಗಲ್ಲಾಗಿದೆ.
-            </p>
-          </div>
-          <div class="overflow-hidden rounded-t-[3rem] border border-ink/10">
-            <img
-              src="/images/uploads/poster-vachanayana-play.jpg"
-              alt="'ವಚನಯಾನ' ನಾಟಕ ರಂಗಪ್ರಯೋಗದ ಕಲಾಚಿತ್ರ"
-              width="800"
-              height="450"
-              loading="lazy"
-              decoding="async"
-              class="aspect-[16/9] w-full object-cover"
-            />
-          </div>
-        </article>
+      <!-- Founder's words, carried over as a quote -->
+      <div class="mt-16 border-t border-ink/10 pt-12">
+        <Beads class="mx-auto w-40 text-turmeric" />
+        <blockquote class="mx-auto mt-8 max-w-3xl text-center font-display text-xl leading-snug italic text-ink sm:text-2xl">
+          “ಹಿಂದಿನ ತಲೆಮಾರಿನವರ ಅನುಭವ ಮತ್ತು ಇಂದಿನ ಪೀಳಿಗೆಯವರ ನವೀನ ಚಿಂತನೆಗಳು ಒಂದಾಗಿ ಸಾಗಿದಾಗ ಮಾತ್ರ ಸಂಸ್ಥೆಯ ಬೆಳವಣಿಗೆ ಇನ್ನಷ್ಟು ಎತ್ತರಕ್ಕೆ ತಲುಪಲು ಸಾಧ್ಯ.”
+          <footer class="mt-4 font-ui text-sm font-semibold not-italic text-leaf">
+            — ರೇಣುಕಾ ಶಿವಾನಂದಪ್ಪ, ಸಂಸ್ಥಾಪಕರು / ಹಿರಿಯ ಮಾರ್ಗದರ್ಶಕರು
+          </footer>
+        </blockquote>
       </div>
     </div>
   </section>
 
-  <!-- 4. ಮೂರು ದಶಕಗಳ ಪಯಣ & ಬೆಳ್ಳಿ ಹಬ್ಬ (Journey & Solidarity) -->
-  <section class="bg-jasmine">
-    <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-20">
-      <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
-        <div>
-          <p class="font-ui text-xs font-semibold tracking-[0.2em] uppercase text-leaf">
-            ಸದಸ್ಯೆಯರ ಒಗ್ಗಟ್ಟು
-          </p>
-          <h2 class="mt-2 font-display text-3xl font-semibold text-ink sm:text-4xl">
-            ಮೂರು ದಶಕಗಳಿಗೂ ಮೀರಿದ ಸಾರ್ಥಕ ಪಯಣ
-          </h2>
-          <p class="mt-5 font-body text-lg leading-relaxed text-stone">
-            1993ರಲ್ಲಿ ಆರಂಭವಾದ ಕದಳಿ ವನಿತಾ ಸಮಾಜವು 2026ರವರೆಗೆ ನಿರಂತರವಾಗಿ ತನ್ನ ಸೇವಾ ಪಯಣವನ್ನು ಮುನ್ನಡೆಸಿಕೊಂಡು ಬಂದಿದೆ. ಈ ದೀರ್ಘ ಪಯಣದಲ್ಲಿ ಸದಸ್ಯೆಯರ ಅಪಾರ ಆಸಕ್ತಿ, ಹಿರಿಯರ ಮಾರ್ಗದರ್ಶನ, ಸಾರ್ವಜನಿಕರ ಪ್ರೋತ್ಸಾಹ ಮತ್ತು ವಿವಿಧ ಸಂಘಟನೆಗಳ ಸಹಕಾರದಿಂದ ಸಮಾಜವು ತನ್ನದೇ ಆದ ವಿಶಿಷ್ಟ ಛಾಪನ್ನು ಮೂಡಿಸಿದೆ.
-          </p>
-          <p class="mt-4 font-body text-lg leading-relaxed text-stone">
-            ಸಮಾಜದ ಮೇಲಿನ ಜನರ ವಿಶ್ವಾಸ ಮತ್ತು ಸದಸ್ಯೆಯರ ನಿರಂತರ ಭಾಗವಹಿಸುವಿಕೆಯ ಫಲವಾಗಿ ಬೆಳ್ಳಿ ಹಬ್ಬವನ್ನು (ರಜತ ಮಹೋತ್ಸವ) ಅತ್ಯಂತ ಸಂಭ್ರಮದಿಂದ ಆಚರಿಸಿದ ಹೆಗ್ಗಳಿಕೆ ನಮ್ಮದಾಗಿದೆ. ಇಂದು 35ನೇ ವರ್ಷದತ್ತ ಸಾಗುತ್ತಿರುವ ಈ ಸಂಸ್ಥೆಯ ಪಯಣವು ಕೇವಲ ವರ್ಷಗಳ ಲೆಕ್ಕಾಚಾರವಲ್ಲ; ಅದು ಸೇವೆ, ಸಂಘಟನೆ, ಸಾಧನೆ, ಸಹಕಾರ ಮತ್ತು ಸಮರ್ಪಣೆಯ ಸುದೀರ್ಘ ಇತಿಹಾಸವಾಗಿದೆ.
-          </p>
-
-          <blockquote class="mt-8 border-l-4 border-leaf pl-5 font-display text-xl leading-snug italic text-ink">
-            “ಹಿಂದಿನ ತಲೆಮಾರಿನವರ ಅನುಭವ ಮತ್ತು ಇಂದಿನ ಪೀಳಿಗೆಯವರ ನವೀನ ಚಿಂತನೆಗಳು ಒಂದಾಗಿ ಸಾಗಿದಾಗ ಮಾತ್ರ ಸಂಸ್ಥೆಯ ಬೆಳವಣಿಗೆ ಇನ್ನಷ್ಟು ಎತ್ತರಕ್ಕೆ ತಲುಪಲು ಸಾಧ್ಯ.”
-            <footer class="mt-2 font-ui text-sm font-semibold not-italic text-leaf">
-              — ರೇಣುಕಾ ಶಿವಾನಂದಪ್ಪ, ಸಂಸ್ಥಾಪಕರು / ಹಿರಿಯ ಮಾರ್ಗದರ್ಶಕರು
-            </footer>
-          </blockquote>
-        </div>
-
-        <figure class="overflow-hidden border border-ink/10 bg-cream p-3">
-          <div class="overflow-hidden rounded-t-[3rem] border border-ink/10">
-            <img
-              src="/images/uploads/poster-community-journey.jpg"
-              alt="ಕದಳಿ ವನಿತಾ ಸಮಾಜದ ಮೂರು ದಶಕಗಳ ಸಾರ್ಥಕ ಪಯಣದ ಕಲಾಚಿತ್ರ"
-              width="800"
-              height="500"
-              loading="lazy"
-              decoding="async"
-              class="aspect-[4/3] w-full object-cover"
-            />
-          </div>
-          <figcaption class="mt-3 px-2 pb-1 font-ui text-sm text-stone text-center">
-            ಮೂರು ದಶಕಗಳ ಸಾರ್ಥಕ ಪಯಣದಲ್ಲಿ ಸಮಾಜಮುಖಿ ಕಾರ್ಯಗಳಲ್ಲಿ ಜೊತೆಯಾಗಿ ನಿಂತ ಸದಸ್ಯೆಯರು
-          </figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
-
-  <div class="bg-cream">
-    <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6">
-      <Beads class="w-40 text-turmeric" />
-    </div>
-  </div>
-
-  <!-- 5. ನಮ್ಮ ಕಾರ್ಯಕಾರಿ ಸಮಿತಿ (The Committee) -->
+  <!-- 4. ನಮ್ಮ ಕಾರ್ಯಕಾರಿ ಸಮಿತಿ (The Committee) -->
   <CommitteeSection />
 
-  <!-- 6. ಕದಳಿಗೆ ಸೇರಿ (Join Us Banner) -->
+  <!-- 5. ಕದಳಿಗೆ ಸೇರಿ (Join Us Banner) -->
   <section class="bg-ink text-cream">
     <div class="mx-auto max-w-6xl px-4 py-16 text-center sm:px-6 sm:py-20">
       <Beads class="mx-auto w-40 text-turmeric" />
@@ -412,7 +327,7 @@ import CommitteeSection from '../components/pages/CommitteeSection.astro';
           ಕಾರ್ಯಕ್ರಮಗಳನ್ನು ನೋಡಿ
         </a>
         <a
-          href="/articles"
+          href={ARTICLE_URL}
           class="rounded-full border border-cream/40 px-8 py-3 font-ui text-sm font-semibold text-cream transition-colors duration-200 hover:border-cream hover:bg-cream/10 active:translate-y-[1px]"
         >
           ಬರಹಗಳನ್ನು ಓದಿ

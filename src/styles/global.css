@@ -134,10 +134,14 @@
     letter-spacing: 0.08em;
   }
 
-  /* Seamless transition into footer when previous section has a dark leaf band */
-  main:has(> section:last-child.bg-leaf) + footer,
-  main:has(> .bg-leaf:last-child) + footer {
-    margin-top: 0;
+  /* Section eyebrow — the mockup's rust kicker line, in Kannada. Shared by
+     every homepage section head (was duplicated in four scoped styles). */
+  .eyebrow-kn {
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--color-sindoor);
   }
 
   /* Long-form article markdown (apply to the rendered body container) */
@@ -416,5 +420,17 @@
 
   html.js .word-reveal .w.lit {
     opacity: 1;
+  }
+}
+
+@layer utilities {
+  /* Seamless transition into the footer when the page ends on a dark leaf
+     band: zero the footer's .mt-16 so the join band and footer read as one
+     green bookend, the kasuti border as their divider. This MUST live in the
+     utilities layer — a components-layer rule loses to the .mt-16 utility
+     regardless of specificity (Tailwind v4 layer order: components < utilities). */
+  main:has(> section:last-child.bg-leaf) + footer,
+  main:has(> .bg-leaf:last-child) + footer {
+    margin-top: 0;
   }
 }

@@ -67,7 +67,7 @@ const pillars = [
           {
             introSegments.map((segment) =>
               segment.text.split(/\s+/).map((word) => (
-                <span class:list={['w', segment.strong && 'font-semibold']}>
+                <span class:list={['w', segment.strong ? 'font-semibold' : 'font-medium']}>
                   {word}{' '}
                 </span>
               )),
@@ -154,14 +154,3 @@ const pillars = [
     </div>
   </div>
 </section>
-
-<style>
-  /* Section eyebrow — the mockup's rust kicker line, in Kannada */
-  .eyebrow-kn {
-    font-family: var(--font-ui);
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    color: var(--color-sindoor);
-  }
-</style>
