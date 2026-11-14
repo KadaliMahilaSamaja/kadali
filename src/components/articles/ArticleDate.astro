@@ -1,41 +1,23 @@
 ---
 /**
- * Kannada date byline, e.g. "18 ಅಕ್ಟೋಬರ್ 2026".
- * Month map is hardcoded — Node's ICU data for kn is not guaranteed
- * on every build machine.
+ * Date byline in both languages, e.g. "18 ಅಕ್ಟೋಬರ್ 2026" / "18 October 2026".
+ * Month names come from the shared bilingual table in src/i18n/dates.ts —
+ * Node's ICU data for kn is not guaranteed on every build machine.
  */
+import { formatDate } from '../../i18n/dates';
+
 interface Props {
   date: Date;
   class?: string;
 }
 
 const { date, class: className } = Astro.props;
-
-const KN_MONTHS = [
-  'ಜನವರಿ',
-  'ಫೆಬ್ರವರಿ',
-  'ಮಾರ್ಚ್',
-  'ಏಪ್ರಿಲ್',
-  'ಮೇ',
-  'ಜೂನ್',
-  'ಜುಲೈ',
-  'ಆಗಸ್ಟ್',
-  'ಸೆಪ್ಟೆಂಬರ್',
-  'ಅಕ್ಟೋಬರ್',
-  'ನವೆಂಬರ್',
-  'ಡಿಸೆಂಬರ್',
-] as const;
-
-const dayFmt = new Intl.DateTimeFormat('en-IN', {
-  day: 'numeric',
-});
-const yearFmt = new Intl.DateTimeFormat('en-IN', {
-  year: 'numeric',
-});
+const label = formatDate(date);
 ---
 
-<span lang="kn" class={className}>
+<span class={className}>
   <time datetime={date.toISOString().slice(0, 10)}>
-    {dayFmt.format(date)} {KN_MONTHS[date.getMonth()]} {yearFmt.format(date)}
+    <span data-kn lang="kn">{label.kn}</span>
+    <span data-en>{label.en}</span>
   </time>
 </span>

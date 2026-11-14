@@ -4,12 +4,13 @@
  * Enables full-screen zoom and inspection for any image inside article bodies
  * and article covers. Progressive enhancement, vanilla JS, zero dependencies.
  */
+import { ui } from '../../i18n/ui';
 ---
 
 <dialog
   id="article-lightbox"
   class="m-auto w-[min(94vw,68rem)] max-w-full rounded-lg border border-ink/15 bg-cream p-0 text-ink shadow-2xl backdrop:bg-ink/80 backdrop:backdrop-blur-sm"
-  aria-label="ಚಿತ್ರ ವೀಕ್ಷಕ"
+  aria-label={ui.articles.viewerTitle.kn}
 >
   <div class="flex flex-col overflow-hidden">
     <!-- Header with caption preview and close button -->
@@ -17,7 +18,8 @@
       <div class="flex items-center gap-2">
         <span class="inline-block size-2 rounded-full bg-turmeric"></span>
         <p id="article-lightbox-title" class="font-ui text-sm font-semibold text-leaf truncate max-w-[20rem] sm:max-w-md">
-          ಚಿತ್ರ ವೀಕ್ಷಣೆ
+          <span data-kn lang="kn">{ui.articles.viewerTitle.kn}</span>
+          <span data-en>{ui.articles.viewerTitle.en}</span>
         </p>
       </div>
       <button
@@ -50,6 +52,9 @@
 </dialog>
 
 <script>
+  import { activeLocale } from '../../i18n/client';
+  import { ui } from '../../i18n/ui';
+
   function setupArticleLightbox() {
     const dialog = document.getElementById('article-lightbox') as HTMLDialogElement | null;
     const imgEl = document.getElementById('article-lightbox-img') as HTMLImageElement | null;
@@ -58,6 +63,16 @@
     const closeBtn = document.getElementById('article-lightbox-close');
 
     if (!dialog || !imgEl) return;
+
+    // Locale-aware fallback strings, read at use time.
+    const localized = () => {
+      const en = activeLocale() === 'en';
+      return {
+        zoomHint: en ? ui.articles.clickToZoom.en : ui.articles.clickToZoom.kn,
+        viewer: en ? ui.articles.viewerTitle.en : ui.articles.viewerTitle.kn,
+        branded: en ? ui.articles.viewerBranded.en : ui.articles.viewerBranded.kn,
+      };
+    };
 
     // Close on button click
     closeBtn?.addEventListener('click', () => dialog.close());
@@ -88,7 +103,7 @@
     targets.forEach((img) => {
       // Style cursor and hint
       img.classList.add('cursor-zoom-in', 'transition-transform', 'duration-200', 'hover:opacity-95');
-      img.setAttribute('title', 'ದೊಡ್ಡದಾಗಿ ನೋಡಲು ಕ್ಲಿಕ್ ಮಾಡಿ');
+      img.setAttribute('title', localized().zoomHint);
 
       img.addEventListener('click', () => {
         const src = img.currentSrc || img.src;
@@ -111,11 +126,12 @@
           caption = img.alt?.trim() ?? '';
         }
 
+        const strings = localized();
         imgEl.src = src;
-        imgEl.alt = caption || 'ಚಿತ್ರ ವೀಕ್ಷಣೆ';
+        imgEl.alt = caption || strings.viewer;
 
         if (titleEl) {
-          titleEl.textContent = caption || 'ಕದಳಿ ವನಿತಾ ಸಮಾಜ · ಚಿತ್ರ ವೀಕ್ಷಣೆ';
+          titleEl.textContent = caption || strings.branded;
         }
 
         if (captionEl) {

@@ -1,7 +1,8 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { formatDate } from './dates';
+import { formatDate } from '../../i18n/dates';
 import { CATEGORY_LABELS } from '../articles/categories';
+import { ui } from '../../i18n/ui';
 import Bloom from '../motifs/Bloom.astro';
 
 interface Props {
@@ -9,27 +10,33 @@ interface Props {
 }
 
 const { articles } = Astro.props;
+const { home } = ui;
 ---
 
 <section class="border-t border-ink/10 bg-cream" aria-labelledby="recent-articles-heading">
   <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:py-24">
     <div class="reveal flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
       <div>
-        <p class="eyebrow-kn">ಕದಳಿಯ ಬರಹಗಳು</p>
+        <p class="eyebrow-kn">
+          <span data-kn lang="kn">{home.writingsEyebrow.kn}</span>
+          <span data-en>{home.writingsEyebrow.en}</span>
+        </p>
         <h2 id="recent-articles-heading" class="text-section font-bold">
-          ನಮ್ಮ ಕಥೆಗಳು, ನಮ್ಮ ಮಾತು
+          <span data-kn lang="kn">{home.writingsHeading.kn}</span>
+          <span data-en>{home.writingsHeading.en}</span>
         </h2>
       </div>
       <div class="md:pb-2 md:text-right">
         <p class="max-w-sm font-body text-lg leading-relaxed text-stone">
-          ವಚನದ ಚಿಂತನೆಗಳಿಂದ ಸದಸ್ಯೆಯರ ನೆನಪುಗಳವರೆಗೆ — ನಮ್ಮದೇ ಧ್ವನಿಯಲ್ಲಿ ಹೇಳುವ
-          ಕಥೆಗಳು.
+          <span data-kn lang="kn">{home.writingsLede.kn}</span>
+          <span data-en class="font-serif">{home.writingsLede.en}</span>
         </p>
         <a
           href="/articles"
           class="underline-reveal mt-3 inline-flex items-center gap-1.5 font-ui text-base font-semibold text-leaf active:text-sindoor"
         >
-          <span>ಎಲ್ಲಾ ಬರಹಗಳು</span>
+          <span data-kn lang="kn">{home.allArticles.kn}</span>
+          <span data-en>{home.allArticles.en}</span>
           <span aria-hidden="true">→</span>
         </a>
       </div>
@@ -42,6 +49,8 @@ const { articles } = Astro.props;
           const { title, description, cover, coverAlt, author, category, pubDate } =
             article.data;
           const href = `/articles/${article.id}`;
+          const date = formatDate(pubDate);
+          const categoryLabel = CATEGORY_LABELS[category];
           return (
             <div class="reveal mt-10">
               <article class="group flex flex-col overflow-hidden border border-ink/10 bg-milk rounded-t-[3rem] md:rounded-t-none md:rounded-l-[4rem] md:flex-row">
@@ -63,7 +72,8 @@ const { articles } = Astro.props;
                 </a>
                 <div class="flex flex-1 flex-col justify-center p-6 sm:p-8 lg:p-10">
                   <span class="badge w-fit rounded-full px-3 py-1 text-xs">
-                    <span lang="kn">{CATEGORY_LABELS[category].kn}</span>
+                    <span data-kn lang="kn">{categoryLabel.kn}</span>
+                    <span data-en>{categoryLabel.en}</span>
                   </span>
                   <h3 class="mt-4 text-2xl font-bold leading-snug lg:text-3xl">
                     <a href={href} class="underline-reveal text-leaf">
@@ -75,16 +85,23 @@ const { articles } = Astro.props;
                   </p>
                   <div class="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-ink/10 pt-4">
                     <p class="font-ui text-sm text-stone">
-                      <span class="text-stone/75">ಲೇಖಕಿ: </span>
+                      <span class="text-stone/75">
+                        <span data-kn lang="kn">{home.by.kn}</span>
+                        <span data-en>{home.by.en}</span>
+                      </span>{' '}
                       <span lang="kn" class="font-medium text-ink">{author}</span>
                       <span aria-hidden="true"> • </span>
-                      <span lang="kn">{formatDate(pubDate)}</span>
+                      <span>
+                        <span data-kn lang="kn">{date.kn}</span>
+                        <span data-en>{date.en}</span>
+                      </span>
                     </p>
                     <a
                       href={href}
                       class="inline-flex items-center gap-1.5 font-ui text-sm font-semibold text-leaf transition-colors hover:text-sindoor"
                     >
-                      <span>ಪೂರ್ಣ ಲೇಖನ ಓದಿ</span>
+                      <span data-kn lang="kn">{home.readFullArticle.kn}</span>
+                      <span data-en>{home.readFullArticle.en}</span>
                       <span aria-hidden="true">→</span>
                     </a>
                   </div>
@@ -100,6 +117,8 @@ const { articles } = Astro.props;
               const { title, description, cover, author, category, pubDate } =
                 article.data;
               const href = `/articles/${article.id}`;
+              const date = formatDate(pubDate);
+              const categoryLabel = CATEGORY_LABELS[category];
               return (
                 <article
                   class="reveal flex min-w-[86%] snap-center sm:min-w-[58%] lg:min-w-[30rem]"
@@ -124,7 +143,8 @@ const { articles } = Astro.props;
                     </a>
                     <div class="flex flex-1 flex-col p-5 sm:p-6">
                       <span class="badge w-fit rounded-full px-3 py-1 text-xs">
-                        <span lang="kn">{CATEGORY_LABELS[category].kn}</span>
+                        <span data-kn lang="kn">{categoryLabel.kn}</span>
+                        <span data-en>{categoryLabel.en}</span>
                       </span>
                       <h3 class="mt-3 text-2xl leading-snug">
                         <a href={href} class="underline-reveal text-leaf">
@@ -135,10 +155,16 @@ const { articles } = Astro.props;
                         <span lang="kn">{description}</span>
                       </p>
                       <p class="mt-4 font-ui text-sm text-stone">
-                        <span class="text-stone/75">ಲೇಖಕಿ: </span>
+                        <span class="text-stone/75">
+                          <span data-kn lang="kn">{home.by.kn}</span>
+                          <span data-en>{home.by.en}</span>
+                        </span>{' '}
                         <span lang="kn" class="font-medium text-ink">{author}</span>
                         <span aria-hidden="true"> • </span>
-                        <span lang="kn">{formatDate(pubDate)}</span>
+                        <span>
+                          <span data-kn lang="kn">{date.kn}</span>
+                          <span data-en>{date.en}</span>
+                        </span>
                       </p>
                     </div>
                   </div>
@@ -147,7 +173,8 @@ const { articles } = Astro.props;
             })}
           </div>
           <p class="swipe-hint md:hidden" aria-hidden="true">
-            ಸರಿಸಿ ಓದಿ
+            <span data-kn lang="kn">{home.swipeRead.kn}</span>
+            <span data-en>{home.swipeRead.en}</span>
           </p>
         </>
       )

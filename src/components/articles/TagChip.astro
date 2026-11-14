@@ -17,5 +17,5 @@ const { tag, class: className } = Astro.props;
   href={`/articles/?tag=${encodeURIComponent(tag)}`}
   class={`inline-flex items-center gap-0.5 self-start border border-ink/20 bg-jasmine px-2.5 py-1 font-ui text-xs font-semibold lowercase text-stone transition-colors duration-200 hover:border-leaf hover:bg-leaf hover:text-cream ${className ?? ''}`}
 >
-  <span aria-hidden="true">#</span><span>{tag}</span>
+  <span aria-hidden="true">#</span><span lang="kn">{tag}</span>
 </a>

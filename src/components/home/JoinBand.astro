@@ -1,5 +1,8 @@
 ---
 import FlowerLine from '../motifs/FlowerLine.astro';
+import { ui } from '../../i18n/ui';
+
+const { home } = ui;
 ---
 
 <section
@@ -19,28 +22,32 @@ import FlowerLine from '../motifs/FlowerLine.astro';
 
   <div class="reveal relative mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 md:py-20">
     <p class="font-ui text-sm font-bold tracking-[0.1em] text-[#f3c87a]">
-      ನಿಮ್ಮನ್ನು ಸ್ವಾಗತಿಸುತ್ತೇವೆ
+      <span data-kn lang="kn">{home.joinEyebrow.kn}</span>
+      <span data-en>{home.joinEyebrow.en}</span>
     </p>
     <h2 id="join-heading" class="mt-4 text-section font-bold text-milk">
-      ಬನ್ನಿ, ನಮ್ಮೊಂದಿಗೆ ಬೆಸೆಯಿರಿ
+      <span data-kn lang="kn">{home.joinHeading.kn}</span>
+      <span data-en>{home.joinHeading.en}</span>
     </h2>
     <p class="mt-5 font-body text-xl text-milk/85">
-      ನಮ್ಮ ಕಾರ್ಯಕ್ರಮಗಳ ಬಗ್ಗೆ ತಿಳಿಯಲು, ಸದಸ್ಯರಾಗಲು ಅಥವಾ ನಿಮ್ಮ ಬರಹಗಳನ್ನು
-      ಹಂಚಿಕೊಳ್ಳಲು ನಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸಿ.
+      <span data-kn lang="kn">{home.joinLede.kn}</span>
+      <span data-en class="font-serif">{home.joinLede.en}</span>
     </p>
     <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
       <a
         href="/contact"
         class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-milk px-8 py-3 font-ui text-base font-semibold text-ink transition-colors duration-200 hover:bg-turmeric focus-visible:outline-milk active:translate-y-[1px]"
       >
-        <span>ಸಂಪರ್ಕಿಸಿ</span>
+        <span data-kn lang="kn">{home.contactUs.kn}</span>
+        <span data-en>{home.contactUs.en}</span>
         <span aria-hidden="true">↗</span>
       </a>
       <a
         href="mailto:contact@kadali.org?subject=%E0%B2%95%E0%B2%A6%E0%B2%B3%E0%B2%BF%20%E0%B2%B5%E0%B2%A8%E0%B2%BF%E0%B2%A4%E0%B2%BE%20%E0%B2%B8%E0%B2%AE%E0%B2%BE%E0%B2%9C%20%E2%80%94%20%E0%B2%B8%E0%B2%82%E0%B2%AA%E0%B2%B0%E0%B3%8D%E0%B2%95"
         class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-milk/40 px-8 py-3 font-ui text-base font-semibold text-milk transition-colors duration-200 hover:border-milk hover:bg-milk/10 focus-visible:outline-milk active:translate-y-[1px]"
       >
-        <span>ಇಮೇಲ್ ಕಳುಹಿಸಿ</span>
+        <span data-kn lang="kn">{home.sendEmail.kn}</span>
+        <span data-en>{home.sendEmail.en}</span>
       </a>
     </div>
   </div>

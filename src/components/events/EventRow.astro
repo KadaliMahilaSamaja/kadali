@@ -4,7 +4,8 @@
  * Used inside a divide-y list in the past group.
  */
 import type { CollectionEntry } from 'astro:content';
-import { istInstant, istTimeRange } from './format';
+import { istInstant, istTimeRange } from '../../i18n/dates';
+import { ui } from '../../i18n/ui';
 import CancelledBadge from './CancelledBadge.astro';
 
 interface Props {
@@ -13,7 +14,7 @@ interface Props {
 
 const { event } = Astro.props;
 const { title, venue, endAt, startAt, status } = event.data;
-const { day, monthKn, year } = istInstant(startAt);
+const { day, month, year } = istInstant(startAt);
 const time = istTimeRange(startAt, endAt);
 const href = `/events/${event.id}`;
 ---
@@ -25,7 +26,8 @@ const href = `/events/${event.id}`;
         {day}
       </span>
       <span class="block font-ui text-xs leading-tight">
-        <span lang="kn" class="text-ink">{monthKn}</span>
+        <span data-kn lang="kn" class="text-ink">{month.kn}</span>
+        <span data-en class="text-ink">{month.en}</span>
         <span class="text-stone">{year}</span>
       </span>
     </div>
@@ -34,12 +36,18 @@ const href = `/events/${event.id}`;
         <span
           class="text-ink underline-offset-4 group-hover:text-leaf group-hover:underline group-hover:decoration-leaf group-hover:decoration-2"
         >
-          {title}
+          <span lang="kn">{title}</span>
         </span>
       </h3>
       <p class="mt-1 font-ui text-sm text-stone">
-        {venue} · {time}
-        {status === 'cancelled' && <span class="sr-only">(ರದ್ದು)</span>}
+        <span lang="kn">{venue}</span> ·
+        <span data-kn lang="kn">{time.kn}</span>
+        <span data-en>{time.en}</span>
+        {status === 'cancelled' && (
+          <span class="sr-only">
+            (<span data-kn lang="kn">{ui.events.cancelledShort.kn}</span><span data-en>{ui.events.cancelledShort.en}</span>)
+          </span>
+        )}
       </p>
     </div>
     {status === 'cancelled' && <div class="hidden sm:block"><CancelledBadge /></div>}

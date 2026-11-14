@@ -1,12 +1,14 @@
 ---
 /**
- * One gallery entry: KasutiBorder header (title, Kannada date, optional
+ * One gallery entry: KasutiBorder header (title, bilingual date, optional
  * linked event) followed by a masonry-ish CSS-columns photo grid.
  * The section carries `data-gallery` so the lightbox script can scope
  * prev/next cycling to this group's photos only.
  */
 import type { CollectionEntry } from 'astro:content';
 import KasutiBorder from '../motifs/KasutiBorder.astro';
+import { utcInstant } from '../../i18n/dates';
+import { ui } from '../../i18n/ui';
 import PhotoTile from './PhotoTile.astro';
 
 interface Props {
@@ -19,38 +21,8 @@ const { gallery, eventHref } = Astro.props;
 const { title, date, event, photos } = gallery.data;
 
 // Build-time formatting; UTC keeps the rendered date stable across host TZs.
-// Kannada month names are a fixed table — Node's ICU data for kn is not
-// guaranteed on every build machine.
-const KN_MONTHS = [
-  'ಜನವರಿ',
-  'ಫೆಬ್ರವರಿ',
-  'ಮಾರ್ಚ್',
-  'ಏಪ್ರಿಲ್',
-  'ಮೇ',
-  'ಜೂನ್',
-  'ಜುಲೈ',
-  'ಆಗಸ್ಟ್',
-  'ಸೆಪ್ಟೆಂಬರ್',
-  'ಅಕ್ಟೋಬರ್',
-  'ನವೆಂಬರ್',
-  'ಡಿಸೆಂಬರ್',
-] as const;
-
-const dayFmt = new Intl.DateTimeFormat('en-IN', {
-  day: 'numeric',
-  timeZone: 'UTC',
-});
-const monthIdxFmt = new Intl.DateTimeFormat('en-US', {
-  month: 'numeric',
-  timeZone: 'UTC',
-});
-const yearFmt = new Intl.DateTimeFormat('en-IN', {
-  year: 'numeric',
-  timeZone: 'UTC',
-});
-const dateLabel = `${dayFmt.format(date)} ${
-  KN_MONTHS[Number(monthIdxFmt.format(date)) - 1] ?? ''
-} ${yearFmt.format(date)}`;
+// Month names come from the shared bilingual table in src/i18n/dates.ts.
+const { day, month, year } = utcInstant(date);
 const headingId = `gallery-heading-${gallery.id}`;
 ---
 
@@ -64,25 +36,29 @@ const headingId = `gallery-heading-${gallery.id}`;
     <KasutiBorder class="text-leaf" />
     <div class="mt-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
       <h2 id={headingId} class="font-display text-2xl font-semibold text-ink md:text-3xl">
-        {title}
+        <span lang="kn">{title}</span>
       </h2>
-      <p lang="kn" class="font-ui text-sm text-stone">
-        {dateLabel}
+      <p class="font-ui text-sm text-stone">
+        <span data-kn lang="kn">{day} {month.kn} {year}</span>
+        <span data-en>{day} {month.en} {year}</span>
       </p>
     </div>
     {
       event && (
         <p class="mt-1 font-ui text-sm text-stone">
-          <span lang="kn">ಕಾರ್ಯಕ್ರಮ: </span>
+          <span>
+            <span data-kn lang="kn">{ui.gallery.eventLabel.kn}</span>
+            <span data-en>{ui.gallery.eventLabel.en}</span>
+          </span>{' '}
           {eventHref ? (
             <a
               href={eventHref}
               class="font-medium text-leaf underline decoration-leaf/40 underline-offset-4 transition-colors duration-200 hover:decoration-leaf"
             >
-              {event}
+              <span lang="kn">{event}</span>
             </a>
           ) : (
-            <span>{event}</span>
+            <span><span lang="kn">{event}</span></span>
           )}
         </p>
       )

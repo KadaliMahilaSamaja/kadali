@@ -7,6 +7,7 @@
 import type { CollectionEntry } from 'astro:content';
 import EventDate from './EventDate.astro';
 import CancelledBadge from './CancelledBadge.astro';
+import { ui } from '../../i18n/ui';
 
 interface Props {
   event: CollectionEntry<'events'>;
@@ -22,7 +23,7 @@ const href = `/events/${event.id}`;
     <div class="overflow-hidden">
       <img
         src={poster}
-        alt={`${title} — ಪೋಸ್ಟರ್`}
+        alt={`${title} — ${ui.events.posterSuffix.kn}`}
         width="850"
         height="1100"
         loading="lazy"
@@ -37,13 +38,17 @@ const href = `/events/${event.id}`;
         <span
           class="text-ink underline-offset-4 group-hover:text-leaf group-hover:underline group-hover:decoration-leaf group-hover:decoration-2"
         >
-          {title}
+          <span lang="kn">{title}</span>
         </span>
       </h3>
       <p class="font-ui text-sm text-stone">
-        <span lang="kn" class="font-semibold">ಸ್ಥಳ:</span> {venue}
+        <span class="font-semibold">
+          <span data-kn lang="kn">{ui.events.venue.kn}</span>
+          <span data-en>{ui.events.venue.en}</span>
+        </span>{' '}
+        <span lang="kn">{venue}</span>
       </p>
-      <p class="line-clamp-3 font-body text-sm text-stone">{summary}</p>
+      <p class="line-clamp-3 font-body text-sm text-stone"><span lang="kn">{summary}</span></p>
     </div>
   </a>
 </article>

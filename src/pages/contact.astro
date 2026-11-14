@@ -6,11 +6,14 @@
  */
 import BaseLayout from '../components/BaseLayout.astro';
 import PageHero from '../components/pages/PageHero.astro';
+import { ui } from '../i18n/ui';
+
+const { contact, events } = ui;
 
 const CONTACT = {
   email: 'contact@kadali.org',
   emailHref: 'mailto:contact@kadali.org',
-  addressLines: ['ಕದಳಿ ವನಿತಾ ಸಮಾಜ', 'ಚೌಕಿ ಮಠ', 'ಶಿವಮೊಗ್ಗ, ಕರ್ನಾಟಕ'],
+  addressLines: contact.addressLines,
   mapHref:
     'https://www.google.com/maps/search/?api=1&query=Chowki+Matha+Shivamogga',
 };
@@ -18,18 +21,20 @@ const CONTACT = {
 
 <BaseLayout
   title="ಸಂಪರ್ಕ · ಕದಳಿ ವನಿತಾ ಸಮಾಜ"
+  titleEn="Contact · Kadali Vanita Samaja"
   description="ಕದಳಿ ವನಿತಾ ಸಮಾಜವನ್ನು ಸಂಪರ್ಕಿಸಿ — ಇಮೇಲ್ contact@kadali.org, ಅಥವಾ ಶಿವಮೊಗ್ಗದ ಚೌಕಿ ಮಠದಲ್ಲಿ ಭೇಟಿಯಾಗಿ."
+  descriptionEn="Reach Kadali Vanita Samaja — email contact@kadali.org, or visit Chowki Matha in Shivamogga."
 >
   <PageHero
-    eyebrow="ಕದಳಿ ವನಿತಾ ಸಮಾಜ"
-    title="ನಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸಿ"
-    lede="ಒಂದು ಸಂದೇಶ ಸಾಕು — ಇಮೇಲ್ ಬರೆಯಿರಿ ಅಥವಾ ಶಿವಮೊಗ್ಗದ ಚೌಕಿ ಮಠಕ್ಕೆ ಬನ್ನಿ. ದಿನದ ಕೆಲಸಗಳ ನಡುವೆ ಉತ್ತರಿಸುತ್ತೇವೆ."
+    eyebrow={contact.eyebrow}
+    title={contact.title}
+    lede={contact.lede}
     tone="jasmine"
   />
 
   <section class="bg-cream">
     <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-      <h2 class="sr-only">ಸಂಪರ್ಕದ ದಾರಿಗಳು</h2>
+      <h2 class="sr-only">{contact.ways.kn}</h2>
       <ul class="grid gap-6 sm:grid-cols-2">
         <!-- Email -->
         <li class="flex flex-col border border-ink/10 bg-jasmine p-6">
@@ -50,21 +55,23 @@ const CONTACT = {
             <h3
               class="font-ui text-xs font-semibold tracking-[0.2em] text-stone"
             >
-              <span>ಇಮೇಲ್</span>
+              <span data-kn lang="kn">{contact.email.kn}</span>
+              <span data-en>{contact.email.en}</span>
             </h3>
           </div>
           <p class="mt-4 font-display text-xl font-semibold break-all text-ink">
             {CONTACT.email}
           </p>
           <p class="mt-2 font-body text-base text-stone">
-            ಸದಸ್ಯತ್ವ, ಕಾರ್ಯಕ್ರಮಗಳು, ಬರಹಗಳ ಹಂಚಿಕೆ — ಬರೆದು ಇಟ್ಟರೆ
-            ಸಾಕು.
+            <span data-kn lang="kn">{contact.emailLede.kn}</span>
+            <span data-en class="font-serif">{contact.emailLede.en}</span>
           </p>
           <a
             href={CONTACT.emailHref}
             class="mt-auto self-start pt-4 font-ui text-sm font-semibold text-leaf underline-offset-4 hover:underline"
           >
-            <span>ಇಮೇಲ್ ಬರೆಯಿರಿ</span>
+            <span data-kn lang="kn">{contact.writeEmail.kn}</span>
+            <span data-en>{contact.writeEmail.en}</span>
             <span aria-hidden="true"> ↗</span>
           </a>
         </li>
@@ -90,21 +97,27 @@ const CONTACT = {
             <h3
               class="font-ui text-xs font-semibold tracking-[0.2em] text-stone"
             >
-              <span>ಭೇಟಿ</span>
+              <span data-kn lang="kn">{contact.visit.kn}</span>
+              <span data-en>{contact.visit.en}</span>
             </h3>
           </div>
           <address
             class="mt-4 font-display text-xl font-semibold not-italic text-ink"
           >
-            {
-              CONTACT.addressLines.map((line, i) => (
-                <span class:list={['block', i > 0 && 'mt-0.5']}>{line}</span>
-              ))
-            }
+            <span data-kn lang="kn">
+              {CONTACT.addressLines.map((line, i) => (
+                <span class:list={['block', i > 0 && 'mt-0.5']}>{line.kn}</span>
+              ))}
+            </span>
+            <span data-en>
+              {CONTACT.addressLines.map((line, i) => (
+                <span class:list={['block', i > 0 && 'mt-0.5']}>{line.en}</span>
+              ))}
+            </span>
           </address>
           <p class="mt-2 font-body text-base text-stone">
-            ಸಭೆಗಳು ಶಿವಮೊಗ್ಗದ ಚೌಕಿ ಮಠದ ಸುತ್ತ ನಡೆಯುತ್ತವೆ; ಮೊದಲು ಸಂದೇಶ
-            ಕಳಿಸಿದರೆ ಸರಿಯಾದ ಸಮಯ ಹೇಳಿಕೊಡುತ್ತೇವೆ.
+            <span data-kn lang="kn">{contact.visitLede.kn}</span>
+            <span data-en class="font-serif">{contact.visitLede.en}</span>
           </p>
           <a
             href={CONTACT.mapHref}
@@ -112,7 +125,8 @@ const CONTACT = {
             rel="noopener noreferrer"
             class="mt-auto self-start pt-4 font-ui text-sm font-semibold text-leaf underline-offset-4 hover:underline"
           >
-            <span>ನಕ್ಷೆಯಲ್ಲಿ ನೋಡಿ</span>
+            <span data-kn lang="kn">{events.viewOnMap.kn}</span>
+            <span data-en>{events.viewOnMap.en}</span>
             <span aria-hidden="true"> ↗</span>
           </a>
         </li>
@@ -120,12 +134,12 @@ const CONTACT = {
 
       <div class="mt-10 border border-ink/10 bg-jasmine p-6 sm:p-8">
         <h2 class="font-display text-2xl font-semibold text-ink">
-          <span>ಅರ್ಜಿ ಇಲ್ಲ — ಬೇಕಾಗಿಲ್ಲ</span>
+          <span data-kn lang="kn">{contact.noFormTitle.kn}</span>
+          <span data-en>{contact.noFormTitle.en}</span>
         </h2>
         <p class="mt-3 max-w-2xl font-body text-base text-stone">
-          ಈ ಜಾಲತಾಣದಲ್ಲಿ ಯಾವುದೇ ಫಾರ್ಮ್ ಇಲ್ಲ, ದತ್ತಾಂಶ ಸಂಗ್ರಹವಿಲ್ಲ. ಇಮೇಲ್
-          ಕೊಂಡಿ ನಿಮ್ಮದೇ ಮೇಲ್ ಅಪ್ಲಿಕೇಶನ್ ತೆರೆಯುತ್ತದೆ — ನಿಮ್ಮ ಸಂದೇಶ
-          ನೇರವಾಗಿ ಸಮಾಜಕ್ಕೆ ಬರುತ್ತದೆ, ಬೇರೆ ಯಾವುದೇ ಸರ್ವರ್‌ಗೆ ಹೋಗುವುದಿಲ್ಲ.
+          <span data-kn lang="kn">{contact.noFormLede.kn}</span>
+          <span data-en class="font-serif">{contact.noFormLede.en}</span>
         </p>
       </div>
     </div>

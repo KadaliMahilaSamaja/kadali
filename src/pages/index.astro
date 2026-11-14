@@ -8,6 +8,7 @@ import RecentArticles from '../components/home/RecentArticles.astro';
 import CommitteePreview from '../components/home/CommitteePreview.astro';
 import JoinBand from '../components/home/JoinBand.astro';
 import { deriveStatus, sortEvents } from '../lib/events';
+import { ui } from '../i18n/ui';
 
 const now = new Date();
 
@@ -52,27 +53,34 @@ const galleryEntry = featuredGalleryRef
   : (await getCollection('galleries')).at(0);
 const galleryPhotos = galleryEntry?.data.photos.slice(0, 3) ?? [];
 
-const heroHeading =
-  settings?.data.heroHeading ?? 'ಭಕ್ತಿ ಬೇರು. ಸಂಸ್ಕೃತಿ ಉಸಿರು. ಮಹಿಳೆಯರ ಒಗ್ಗಟ್ಟು.';
-const heroDescription =
-  settings?.data.heroDescription ??
-  'ಅಕ್ಕ ಮಹಾದೇವಿಯ ಆತ್ಮಸಾಕ್ಷಿ ಮತ್ತು ವಚನಗಳ ಬೆಳಕಿನಲ್ಲಿ — ಭಕ್ತಿ, ಕಲೆ, ಸೇವೆ ಹಾಗೂ ಸಾಹಿತ್ಯವನ್ನು ಬೆಸೆಯುವ ನಮ್ಮ ಸಮುದಾಯ.';
+const { home } = ui;
+const heroHeading = {
+  kn: settings?.data.heroHeading ?? home.heroFallbackHeading.kn,
+  en: settings?.data.heroHeadingEn ?? home.heroFallbackHeading.en,
+};
+const heroDescription = {
+  kn: settings?.data.heroDescription ?? home.heroFallbackDescription.kn,
+  en: settings?.data.heroDescriptionEn ?? home.heroFallbackDescription.en,
+};
 ---
 
 <BaseLayout
-  title="ಕದಳಿ ವನಿತಾ ಸಮಾಜ, ಶಿವಮೊಗ್ಗ"
-  description={heroDescription}
+  description={heroDescription.kn}
+  descriptionEn={heroDescription.en}
 >
   {
     activeAnnouncement && (
       <aside
         class="border-b border-ink/10 bg-jasmine/60 py-3 text-ink"
-        aria-label="ಪ್ರಮುಖ ಸೂಚನೆ"
+        aria-label={home.noticeAria.kn}
       >
         <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
           <div class="flex items-center gap-2.5 min-w-0">
             <span class="inline-flex size-2 shrink-0 rounded-full bg-turmeric animate-pulse" aria-hidden="true"></span>
-            <span class="shrink-0 font-ui text-xs font-bold uppercase tracking-wider text-sindoor">ಸೂಚನೆ:</span>
+            <span class="shrink-0 font-ui text-xs font-bold uppercase tracking-wider text-sindoor">
+              <span data-kn lang="kn">{home.noticeLabel.kn}</span>
+              <span data-en>{home.noticeLabel.en}</span>
+            </span>
             <p class="truncate font-ui text-sm font-medium">
               <span lang="kn">{activeAnnouncement.data.title}</span>
             </p>
@@ -81,7 +89,8 @@ const heroDescription =
             href="/events"
             class="shrink-0 font-ui text-xs font-semibold text-leaf hover:text-sindoor hover:underline"
           >
-            <span>ವಿವರಗಳು</span>
+            <span data-kn lang="kn">{home.details.kn}</span>
+            <span data-en>{home.details.en}</span>
             <span aria-hidden="true"> →</span>
           </a>
         </div>
@@ -103,21 +112,26 @@ const heroDescription =
         <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:py-20">
           <div class="reveal flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
             <div>
-              <p class="eyebrow-kn">ಒಟ್ಟಾಗಿ ಆಚರಿಸೋಣ</p>
+              <p class="eyebrow-kn">
+                <span data-kn lang="kn">{home.eventsEyebrow.kn}</span>
+                <span data-en>{home.eventsEyebrow.en}</span>
+              </p>
               <h2 id="upcoming-events-heading" class="text-section font-bold">
-                ಮುಂಬರುವ ಕಾರ್ಯಕ್ರಮಗಳು
+                <span data-kn lang="kn">{home.eventsHeading.kn}</span>
+                <span data-en>{home.eventsHeading.en}</span>
               </h2>
             </div>
             <div class="md:pb-2 md:text-right">
               <p class="max-w-sm font-body text-lg leading-relaxed text-stone">
-                ಒಟ್ಟಾಗಿ ಸೇರುವ ಕ್ಷಣಗಳೇ ಸಮುದಾಯವನ್ನು ಕಟ್ಟುತ್ತವೆ. ಮುಂದಿನ
-                ಕಾರ್ಯಕ್ರಮದಲ್ಲಿ ನಮ್ಮೊಂದಿಗೆ ಸೇರಿ.
+                <span data-kn lang="kn">{home.eventsLede.kn}</span>
+                <span data-en class="font-serif">{home.eventsLede.en}</span>
               </p>
               <a
                 href="/events"
                 class="underline-reveal mt-3 inline-flex items-center gap-1.5 font-ui text-base font-semibold text-leaf active:text-sindoor"
               >
-                <span>ಎಲ್ಲಾ ಕಾರ್ಯಕ್ರಮಗಳು</span>
+                <span data-kn lang="kn">{home.allEvents.kn}</span>
+                <span data-en>{home.allEvents.en}</span>
                 <span aria-hidden="true">→</span>
               </a>
             </div>
@@ -141,7 +155,8 @@ const heroDescription =
                   ))}
                 </div>
                 <p class="swipe-hint md:hidden" aria-hidden="true">
-                  ಸರಿಸಿ ನೋಡಿ
+                  <span data-kn lang="kn">{home.swipe.kn}</span>
+                  <span data-en>{home.swipe.en}</span>
                 </p>
               </>
             )
@@ -159,20 +174,26 @@ const heroDescription =
         <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:py-20">
           <div class="reveal flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
             <div>
-              <p class="eyebrow-kn">ನಮ್ಮ ಸಂಭ್ರಮ</p>
+              <p class="eyebrow-kn">
+                <span data-kn lang="kn">{home.galleryEyebrow.kn}</span>
+                <span data-en>{home.galleryEyebrow.en}</span>
+              </p>
               <h2 id="gallery-preview-heading" class="text-section font-bold">
-                ಚಿತ್ರಶಾಲೆಯ ಆಯ್ದ ಕ್ಷಣಗಳು
+                <span data-kn lang="kn">{home.galleryHeading.kn}</span>
+                <span data-en>{home.galleryHeading.en}</span>
               </h2>
             </div>
             <div class="md:pb-2 md:text-right">
               <p class="max-w-sm font-body text-lg leading-relaxed text-stone">
-                ಕದಳಿ ವನಿತಾ ಸಮಾಜದ ಹಬ್ಬಗಳು, ಕಸುತಿ ಹೆಣಿಗೆ, ಸಾಮೂಹಿಕ ಆಚರಣೆಗಳ ಛಾಯಾಚಿತ್ರಗಳು.
+                <span data-kn lang="kn">{home.galleryLede.kn}</span>
+                <span data-en class="font-serif">{home.galleryLede.en}</span>
               </p>
               <a
                 href="/gallery"
                 class="underline-reveal mt-3 inline-flex items-center gap-1.5 font-ui text-base font-semibold text-leaf active:text-sindoor"
               >
-                <span>ಸಂಪೂರ್ಣ ಚಿತ್ರಶಾಲೆ</span>
+                <span data-kn lang="kn">{home.fullGallery.kn}</span>
+                <span data-en>{home.fullGallery.en}</span>
                 <span aria-hidden="true">→</span>
               </a>
             </div>
@@ -243,19 +264,23 @@ const heroDescription =
 
   // Scroll-driven word light-up (the mockup's word-reveal): the intro
   // paragraph's words brighten left-to-right as it crosses the viewport.
-  // The spans are rendered server-side; no scripting leaves them visible.
-  const para = document.querySelector('.word-reveal');
-  if (para && !reduced) {
-    const words = para.querySelectorAll('.w');
+  // Both language variants carry their own word spans; the hidden one's
+  // geometry is zero, so driving both is harmless. The spans are rendered
+  // server-side; no scripting leaves them visible.
+  const paras = document.querySelectorAll('.word-reveal');
+  if (paras.length && !reduced) {
     const update = () => {
-      const r = para.getBoundingClientRect();
-      const progress = Math.max(
-        0,
-        Math.min(1, (innerHeight * 0.85 - r.top) / (r.height + innerHeight * 0.3)),
-      );
-      words.forEach((word, i) => {
-        word.classList.toggle('lit', i / Math.max(1, words.length) < progress);
-      });
+      for (const para of paras) {
+        const words = para.querySelectorAll('.w');
+        const r = para.getBoundingClientRect();
+        const progress = Math.max(
+          0,
+          Math.min(1, (innerHeight * 0.85 - r.top) / (r.height + innerHeight * 0.3)),
+        );
+        words.forEach((word, i) => {
+          word.classList.toggle('lit', i / Math.max(1, words.length) < progress);
+        });
+      }
     };
     addEventListener('scroll', () => requestAnimationFrame(update), {
       passive: true,

@@ -1,11 +1,13 @@
 ---
+import { ui } from '../i18n/ui';
+
 const links = [
-  { href: '/', label: 'ಮುಖಪುಟ' },
-  { href: '/about', label: 'ನಮ್ಮ ಬಗ್ಗೆ' },
-  { href: '/articles', label: 'ಬರಹಗಳು' },
-  { href: '/events', label: 'ಕಾರ್ಯಕ್ರಮಗಳು' },
-  { href: '/gallery', label: 'ಚಿತ್ರಶಾಲೆ' },
-  { href: '/contact', label: 'ಸಂಪರ್ಕ' },
+  { href: '/', label: ui.nav.home },
+  { href: '/about', label: ui.nav.about },
+  { href: '/articles', label: ui.nav.articles },
+  { href: '/events', label: ui.nav.events },
+  { href: '/gallery', label: ui.nav.gallery },
+  { href: '/contact', label: ui.nav.contact },
 ];
 
 const current = Astro.url.pathname.replace(/\/$/, '') || '/';
@@ -49,7 +51,8 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
                     'font-semibold text-leaf underline decoration-turmeric decoration-2 underline-offset-8',
                 ]}
               >
-                {label}
+                <span data-kn lang="kn">{label.kn}</span>
+                <span data-en>{label.en}</span>
               </a>
             </li>
           ))
@@ -58,11 +61,21 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
     </nav>
 
     <div class="flex items-center gap-2">
+      <button
+        type="button"
+        data-lang-toggle
+        class="inline-flex min-h-[40px] min-w-[3.6rem] items-center justify-center rounded-full border border-ink/15 bg-cream px-3 py-2 font-ui text-sm font-semibold text-leaf transition-colors duration-200 hover:border-leaf hover:bg-jasmine"
+      >
+        <span data-kn lang="kn" class="hidden sm:inline">{ui.langToggle.kn}</span>
+        <span data-kn lang="kn" class="sm:hidden">EN</span>
+        <span data-en class="hidden sm:inline">{ui.langToggle.en}</span>
+        <span data-en class="sm:hidden">KN</span>
+      </button>
       <a
         href="/contact"
         class="inline-flex min-h-[40px] items-center justify-center rounded-full bg-turmeric px-5 py-2 font-ui text-sm font-semibold text-ink transition-colors duration-200 hover:bg-leaf hover:text-milk focus-visible:outline-leaf active:translate-y-[1px]"
       >
-        <span lang="kn">ಸೇರಿ</span>
+        <span data-kn lang="kn">{ui.join.kn}</span><span data-en>{ui.join.en}</span>
       </a>
       <button
         id="nav-toggle"
@@ -71,7 +84,9 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
         aria-expanded="false"
         aria-controls="nav-drawer"
       >
-        <span class="sr-only">ಮೆನು</span>
+        <span class="sr-only">
+          <span data-kn lang="kn">{ui.menu.kn}</span><span data-en>{ui.menu.en}</span>
+        </span>
         <svg
           class="size-6"
           viewBox="0 0 24 24"
@@ -105,19 +120,28 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
                 current === href && 'font-semibold text-leaf',
               ]}
             >
-              {label}
+              <span data-kn lang="kn">{label.kn}</span>
+              <span data-en>{label.en}</span>
             </a>
           </li>
         ))
       }
     </ul>
-    <div class="mx-auto max-w-6xl px-4 pb-4 sm:px-6">
+    <div class="mx-auto max-w-6xl space-y-3 px-4 pb-4 sm:px-6">
       <a
         href="/contact"
         class="flex min-h-[48px] items-center justify-center rounded-full bg-turmeric px-7 py-3 font-ui text-base font-semibold text-ink transition-colors duration-200 hover:bg-leaf hover:text-milk focus-visible:outline-leaf active:translate-y-[1px]"
       >
-        <span lang="kn">ಸೇರಿ</span>
+        <span data-kn lang="kn">{ui.join.kn}</span><span data-en>{ui.join.en}</span>
       </a>
+      <button
+        type="button"
+        data-lang-toggle
+        class="flex min-h-[44px] w-full items-center justify-center gap-2 rounded-full border border-ink/15 bg-cream px-6 py-2.5 font-ui text-sm font-semibold text-leaf transition-colors duration-200 hover:border-leaf hover:bg-jasmine"
+      >
+        <span data-kn lang="kn">{ui.langToggle.kn}</span>
+        <span data-en>{ui.langToggle.en}</span>
+      </button>
     </div>
   </nav>
 </header>

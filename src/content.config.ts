@@ -108,6 +108,11 @@ const settings = defineCollection({
   schema: z.object({
     heroHeading: z.string(),
     heroDescription: z.string(),
+    // English mirrors shown when the visitor switches the site to English.
+    // Optional — the built-in translations in src/i18n/ui.ts stand in when
+    // they are missing or empty.
+    heroHeadingEn: z.string().optional(),
+    heroDescriptionEn: z.string().optional(),
     featuredArticle: reference('articles').optional(),
     featuredEvent: reference('events').optional(),
     banner: z.string().optional(), // path under public/

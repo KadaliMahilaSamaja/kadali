@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { dayOfMonth, knMonth, timeRangeIST, yearOf } from './dates';
+import { istInstant, istTimeRange } from '../../i18n/dates';
+import { ui } from '../../i18n/ui';
 
 interface Props {
   event: CollectionEntry<'events'>;
@@ -11,6 +12,8 @@ interface Props {
 const { event, wide = false } = Astro.props;
 const { title, poster, summary, venue, startAt, endAt } = event.data;
 const href = `/events/${event.id}`;
+const instant = istInstant(startAt);
+const time = istTimeRange(startAt, endAt);
 ---
 
 <article
@@ -53,13 +56,14 @@ const href = `/events/${event.id}`;
       ]}
     >
       <span class="text-2xl leading-none font-semibold text-leaf">
-        {dayOfMonth(startAt)}
+        {instant.day}
       </span>
-      <span class="mt-1 font-ui text-xs leading-tight text-stone" lang="kn">
-        {knMonth(startAt)}
+      <span class="mt-1 font-ui text-xs leading-tight text-stone">
+        <span data-kn lang="kn">{instant.month.kn}</span>
+        <span data-en>{instant.month.en}</span>
       </span>
       <span class="font-ui text-[0.65rem] leading-tight text-stone">
-        {yearOf(startAt)}
+        {instant.year}
       </span>
     </span>
   </a>
@@ -70,7 +74,8 @@ const href = `/events/${event.id}`;
     ]}
   >
     <p class="font-ui text-sm font-medium text-leaf">
-      <span lang="kn">{timeRangeIST(startAt, endAt)}</span>
+      <span data-kn lang="kn">{time.kn}</span>
+      <span data-en>{time.en}</span>
     </p>
     <h3 class="mt-2 text-xl leading-snug">
       <a href={href} class="underline-reveal text-leaf">
@@ -104,7 +109,8 @@ const href = `/events/${event.id}`;
               href={href}
               class="inline-flex min-h-[42px] items-center justify-center gap-1.5 rounded-full bg-leaf px-6 py-2 font-ui text-sm font-semibold text-milk transition-colors hover:bg-turmeric hover:text-ink focus-visible:outline-leaf active:translate-y-[1px]"
             >
-              <span>ಕಾರ್ಯಕ್ರಮದ ವಿವರ</span>
+              <span data-kn lang="kn">{ui.home.eventDetails.kn}</span>
+              <span data-en>{ui.home.eventDetails.en}</span>
               <span aria-hidden="true">→</span>
             </a>
           </div>

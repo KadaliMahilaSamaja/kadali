@@ -76,6 +76,17 @@
 </dialog>
 
 <script>
+  import { activeLocale } from '../../i18n/client';
+  import { ui } from '../../i18n/ui';
+
+  // Locale-aware fallback alt, read at use time so a mid-session language
+  // switch is reflected on the next opened photo.
+  function fallbackAlt(): string {
+    return activeLocale() === 'en'
+      ? ui.gallery.photoFallback.en
+      : ui.gallery.photoFallback.kn;
+  }
+
   const dialog = document.getElementById('lightbox') as HTMLDialogElement | null;
   const imgEl = document.getElementById('lightbox-image') as HTMLImageElement | null;
   const captionEl = document.getElementById('lightbox-caption');
@@ -93,7 +104,7 @@
       if (!photo) return;
       // Same file as the thumb for now; see TODO(optimize) above.
       imgEl.src = photo.src;
-      imgEl.alt = photo.caption || 'ಛಾಯಾಚಿತ್ರ';
+      imgEl.alt = photo.caption || fallbackAlt();
       if (captionEl) {
         captionEl.textContent = photo.caption;
         captionEl.classList.toggle('hidden', !photo.caption);

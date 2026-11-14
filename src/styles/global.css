@@ -59,16 +59,30 @@
     font-family: var(--font-kn);
   }
 
-  /* Kannada headings carry the same poster-sans voice as the Latin display */
-  h1:lang(kn),
-  h2:lang(kn),
-  h3:lang(kn),
-  h4:lang(kn),
-  h5:lang(kn),
-  h6:lang(kn) {
-    font-family: var(--font-kn);
+  /* Kannada headings carry the same poster-sans voice as the Latin display.
+     The :has() half keeps conjunct room when a heading in English mode
+     carries Kannada content through a lang="kn" span. */
+  :is(h1, h2, h3, h4, h5, h6):lang(kn),
+  :is(h1, h2, h3, h4, h5, h6):has([lang='kn']) {
     /* Kannada stacks conjuncts high and low — display sizes need the room */
     line-height: 1.3;
+  }
+
+  :is(h1, h2, h3, h4, h5, h6):lang(kn) {
+    font-family: var(--font-kn);
+  }
+
+  /* Language visibility: every page ships both language variants; the
+     pre-paint script in BaseLayout sets html[data-lang] before paint and
+     these rules show only the active one. Without scripting the Kannada
+     default stands. Wrapper spans use `contents` so block children keep
+     laying out normally. */
+  :root[data-lang='en'] [data-kn] {
+    display: none !important;
+  }
+
+  :root[data-lang='kn'] [data-en] {
+    display: none !important;
   }
 
   /* Keyboard focus: 2px solid leaf ring, offset from the edge */

@@ -1,42 +1,26 @@
 ---
 import Bloom from '../motifs/Bloom.astro';
 import FlowerLine from '../motifs/FlowerLine.astro';
+import { ui } from '../../i18n/ui';
+
+const { aim } = ui;
 
 /* The mockup's intro paragraph, split into words server-side so the
    scroll-driven light-up (word-reveal) needs no DOM surgery at runtime.
-   The strong phrase keeps its weight across the split. */
-const introSegments: Array<{ text: string; strong?: boolean }> = [
-  {
-    text: 'ಕದಳಿ ವನಿತಾ ಸಮಾಜವು ಭಕ್ತಿ, ಸಂಸ್ಕೃತಿ, ಸಾಹಿತ್ಯ ಮತ್ತು ಸಮಾಜಸೇವೆಯ ಮೂಲಕ ಮಹಿಳೆಯರನ್ನು ಒಂದೆಡೆ ಸೇರಿಸುವ',
-  },
-  { text: 'ಒಂದು ಜೀವಂತ ವೇದಿಕೆ.', strong: true },
-  {
-    text: 'ನಮ್ಮ ಪರಂಪರೆಯನ್ನು ಗೌರವಿಸುತ್ತಾ, ಮುಂದಿನ ಪೀಳಿಗೆಗೆ ಅದನ್ನು ಪ್ರೀತಿಯಿಂದ ತಲುಪಿಸುವುದು ನಮ್ಮ ಪಯಣ.',
-  },
-];
-
-const pillars = [
-  {
-    icon: 'spirit',
-    title: 'ಭಕ್ತಿ',
-    body: 'ಆಧ್ಯಾತ್ಮ, ವಚನಗಳು ಮತ್ತು ಒಳಗಿನ ಅರಿವಿನ ಪಯಣ.',
-  },
-  {
-    icon: 'lamp',
-    title: 'ಸಂಸ್ಕೃತಿ',
-    body: 'ಹಬ್ಬ, ಕಲೆ, ಸಂಪ್ರದಾಯ ಮತ್ತು ಜೀವಂತ ಆಚರಣೆಗಳು.',
-  },
-  {
-    icon: 'people',
-    title: 'ಸಮಾಜ ಸೇವೆ',
-    body: 'ಪರಸ್ಪರ ಬೆಂಬಲ, ಕಾಳಜಿ ಮತ್ತು ಸಮುದಾಯದ ಬೆಳವಣಿಗೆ.',
-  },
-  {
-    icon: 'book',
-    title: 'ಸಾಹಿತ್ಯ',
-    body: 'ವಚನ, ಬರಹ, ನೆನಪುಗಳು ಮತ್ತು ಮಹಿಳೆಯರ ಧ್ವನಿ.',
-  },
-];
+   The strong phrase keeps its weight across the split. Both languages
+   render their own paragraph; only the active one is visible. */
+const introSegments = [
+  [
+    { text: aim.intro1.kn },
+    { text: aim.intro2.kn, strong: true },
+    { text: aim.intro3.kn },
+  ],
+  [
+    { text: aim.intro1.en },
+    { text: aim.intro2.en, strong: true },
+    { text: aim.intro3.en },
+  ],
+] as const;
 ---
 
 <section
@@ -56,29 +40,42 @@ const pillars = [
     <!-- Intro split: beat-line heading left, the light-up paragraph right -->
     <div class="grid items-start gap-8 md:grid-cols-[0.9fr_1.1fr] md:gap-14">
       <div class="reveal">
-        <p class="eyebrow-kn">ನಮ್ಮ ಸಮಾಜ</p>
+        <p class="eyebrow-kn">
+          <span data-kn lang="kn">{aim.eyebrow.kn}</span>
+          <span data-en>{aim.eyebrow.en}</span>
+        </p>
         <h2 id="aim-heading" class="text-section font-bold">
-          ಒಂದು ಮನಸ್ಸು.
-          <span class="block text-sindoor">ಅನೇಕ ಹೃದಯಗಳು.</span>
+          <span data-kn lang="kn">{aim.heading1.kn}</span>
+          <span data-en>{aim.heading1.en}</span>
+          <span class="block text-sindoor">
+            <span data-kn lang="kn">{aim.heading2.kn}</span>
+            <span data-en>{aim.heading2.en}</span>
+          </span>
         </h2>
       </div>
       <div class="reveal" style="--reveal-delay: 120ms">
-        <p class="word-reveal font-display text-xl leading-relaxed text-ink md:text-2xl">
-          {
-            introSegments.map((segment) =>
-              segment.text.split(/\s+/).map((word) => (
-                <span class:list={['w', segment.strong ? 'font-semibold' : 'font-medium']}>
-                  {word}{' '}
-                </span>
-              )),
-            )
-          }
-        </p>
+        {
+          introSegments.map((segments, variant) => (
+            <p
+              class="word-reveal font-display text-xl leading-relaxed text-ink md:text-2xl"
+              {...(variant === 0 ? { 'data-kn': true, lang: 'kn' } : { 'data-en': true })}
+            >
+              {segments.map((segment) =>
+                segment.text.split(/\s+/).map((word) => (
+                  <span class:list={['w', 'strong' in segment && segment.strong ? 'font-semibold' : 'font-medium']}>
+                    {word}{' '}
+                  </span>
+                )),
+              )}
+            </p>
+          ))
+        }
         <a
           href="/contact"
           class="underline-reveal mt-6 inline-flex items-center gap-1.5 font-ui text-base font-semibold text-leaf active:text-sindoor"
         >
-          <span>ನಮ್ಮೊಂದಿಗೆ ಕೈಜೋಡಿಸಿ</span>
+          <span data-kn lang="kn">{aim.joinHands.kn}</span>
+          <span data-en>{aim.joinHands.en}</span>
           <span aria-hidden="true">↗</span>
         </a>
       </div>
@@ -88,7 +85,7 @@ const pillars = [
          milk-on-cream tiles. -->
     <div class="mt-12 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
       {
-        pillars.map((pillar, i) => (
+        aim.pillars.map((pillar, i) => (
           <div class="reveal" style={`--reveal-delay: ${i * 90}ms`}>
             <article class="flex h-full flex-col items-center rounded-t-[9rem] border border-ink/10 bg-milk px-3.5 pb-6 pt-10 text-center sm:px-6 sm:pb-7 sm:pt-14">
               <span class="text-turmeric" aria-hidden="true">
@@ -142,10 +139,12 @@ const pillars = [
                 )}
               </span>
               <h3 class="mt-4 text-xl font-bold">
-                <span lang="kn">{pillar.title}</span>
+                <span data-kn lang="kn">{pillar.title.kn}</span>
+                <span data-en>{pillar.title.en}</span>
               </h3>
               <p class="mt-3 font-body text-sm leading-relaxed text-stone sm:text-base">
-                <span lang="kn">{pillar.body}</span>
+                <span data-kn lang="kn">{pillar.body.kn}</span>
+                <span data-en class="font-serif">{pillar.body.en}</span>
               </p>
             </article>
           </div>

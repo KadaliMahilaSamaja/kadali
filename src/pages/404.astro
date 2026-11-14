@@ -2,17 +2,22 @@
 import BaseLayout from '../components/BaseLayout.astro';
 import Arch from '../components/motifs/Arch.astro';
 import Beads from '../components/motifs/Beads.astro';
+import { ui } from '../i18n/ui';
+
+const { notFound, nav } = ui;
 
 const links = [
-  { href: '/', label: 'ಮುಖಪುಟ' },
-  { href: '/articles', label: 'ಬರಹಗಳು' },
-  { href: '/events', label: 'ಕಾರ್ಯಕ್ರಮಗಳು' },
+  { href: '/', label: nav.home },
+  { href: '/articles', label: nav.articles },
+  { href: '/events', label: nav.events },
 ];
 ---
 
 <BaseLayout
   title="ಪುಟ ಸಿಗುದಿಲ್ಲ · ಕದಳಿ ವನಿತಾ ಸಮಾಜ"
+  titleEn="Page not found · Kadali Vanita Samaja"
   description="ನೀವು ಹುಡುಕುತ್ತಿದ್ದ ಪುಟ ಸಿಗಲಿಲ್ಲ. ಮುಖಪುಟಕ್ಕೆ ಹಿಂತಿರುಗಿ ಅಥವಾ ಬರಹಗಳು, ಕಾರ್ಯಕ್ರಮಗಳನ್ನು ನೋಡಿ."
+  descriptionEn="The page you were looking for wasn't found. Return to the homepage or browse the writings and events."
 >
   <section class="relative overflow-hidden">
     <div
@@ -32,14 +37,15 @@ const links = [
       <h1
         class="mt-8 font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
       >
-        ಈ ಪುಟ ಎಲ್ಲೋ ತಪ್ಪಿಹೋಗಿದೆ
+        <span data-kn lang="kn">{notFound.heading.kn}</span>
+        <span data-en>{notFound.heading.en}</span>
       </h1>
 
       <Beads class="mt-8 w-40 text-leaf" />
 
       <p class="mt-8 max-w-md font-body text-lg leading-relaxed text-stone">
-        ನೀವು ಹುಡುಕುತ್ತಿರುವ ಪುಟ ಇಲ್ಲ ಅಥವಾ ಸ್ಥಳಾಂತರಗೊಂಡಿದೆ. ಬದಲಿಗೆ
-        ಈ ದಾರಿಗಳನ್ನು ಪ್ರಯತ್ನಿಸಿ.
+        <span data-kn lang="kn">{notFound.lede.kn}</span>
+        <span data-en class="font-serif">{notFound.lede.en}</span>
       </p>
 
       <ul class="mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -55,7 +61,8 @@ const links = [
                     : 'border border-ink/15 text-ink hover:border-leaf hover:text-leaf',
                 ]}
               >
-                {label}
+                <span data-kn lang="kn">{label.kn}</span>
+                <span data-en>{label.en}</span>
               </a>
             </li>
           ))

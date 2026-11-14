@@ -7,6 +7,8 @@ import Seo from './Seo.astro';
 import Header from './Header.astro';
 import Footer from './Footer.astro';
 import JsonLd from './JsonLd.astro';
+import LanguageGate from './LanguageGate.astro';
+import { ui } from '../i18n/ui';
 
 // Preload the Kannada sans — headings (incl. the hero display line) are set
 // in Noto Sans Kannada now, and its variable wght file covers the 400–700
@@ -15,12 +17,26 @@ import kannadaUrl from '@fontsource-variable/noto-sans-kannada/files/noto-sans-k
 
 interface Props {
   title?: string;
+  /** English <title> for the browser tab; omitted → the site name is used. */
+  titleEn?: string;
   description?: string;
+  /** English meta description; omitted → the Kannada one stays in both modes. */
+  descriptionEn?: string;
   image?: string;
   type?: 'website' | 'article';
 }
 
-const { title, description, image, type = 'website' } = Astro.props;
+const { title, titleEn, description, descriptionEn, image, type = 'website' } =
+  Astro.props;
+
+// The Kannada variants are what crawlers see; the English mirrors ride on
+// <body> data attributes below and are swapped in client-side by i18n/client.
+const titleKn = title ?? ui.seo.siteTitle.kn;
+const titleEnDefault = titleEn ?? ui.seo.siteTitle.en;
+const descKn = description ?? ui.seo.description.kn;
+// Without an explicit English description (e.g. content pages), the Kannada
+// meta stays in both modes — content is not translated.
+const descEn = descriptionEn ?? (description ? '' : ui.seo.description.en);
 
 // Site-wide JSON-LD: Organization + WebSite, injected once on every page.
 // Social URLs are placeholders — swap in the club's real profiles when they exist.
@@ -60,8 +76,21 @@ const jsonLd = [
 ---
 
 <!doctype html>
-<html lang="kn" class="overflow-x-clip">
+<html lang="kn" data-lang="kn" class="overflow-x-clip">
   <head>
+    <script is:inline>
+      // Language before first paint: read the stored preference (never a
+      // cookie) and flip the root so the CSS visibility rules show the right
+      // variant instantly — no flash of the other language.
+      try {
+        if (localStorage.getItem('kadali-lang') === 'en') {
+          document.documentElement.dataset.lang = 'en';
+          document.documentElement.lang = 'en';
+        }
+      } catch (e) {
+        /* storage unavailable — the Kannada default stands */
+      }
+    </script>
     <Seo title={title} description={description} image={image} type={type} />
     <link
       rel="preload"
@@ -74,17 +103,22 @@ const jsonLd = [
   </head>
   <body
     class="grid min-h-screen grid-cols-[minmax(0,1fr)] grid-rows-[auto_1fr_auto] overflow-x-clip bg-cream font-ui text-ink"
+    data-title-kn={titleKn}
+    data-title-en={titleEnDefault}
+    data-desc-kn={descKn}
+    data-desc-en={descEn || undefined}
   >
     <a
       href="#main"
       class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:bg-jasmine focus:px-4 focus:py-2 focus:font-ui focus:text-sm focus:font-semibold focus:text-leaf"
     >
-      ಮುಖ್ಯ ವಿಷಯಕ್ಕೆ ಹೋಗಿ
+      <span data-kn lang="kn">{ui.skip.kn}</span><span data-en>{ui.skip.en}</span>
     </a>
     <Header />
     <main id="main">
       <slot />
     </main>
     <Footer />
+    <LanguageGate />
   </body>
 </html>

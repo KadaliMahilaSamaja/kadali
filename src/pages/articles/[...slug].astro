@@ -10,6 +10,9 @@ import ShareLinks from '../../components/articles/ShareLinks.astro';
 import AuthorBio from '../../components/articles/AuthorBio.astro';
 import ArticleLightbox from '../../components/articles/ArticleLightbox.astro';
 import { getAuthorProfile } from '../../lib/authors';
+import { ui } from '../../i18n/ui';
+
+const { articles: t, home } = ui;
 
 export async function getStaticPaths() {
   // Drafts excluded; newest first so related picks the freshest matches.
@@ -61,21 +64,33 @@ const shareUrl = new URL(
 ).href;
 ---
 
-<BaseLayout title={`${title} · ಕದಳಿ ವನಿತಾ ಸಮಾಜ`} description={description} image={cover} type="article">
+<BaseLayout
+  title={`${title} · ಕದಳಿ ವನಿತಾ ಸಮಾಜ`}
+  titleEn={`${title} · Kadali Vanita Samaja`}
+  description={description}
+  image={cover}
+  type="article"
+>
   <article class="bg-cream">
     <!-- Breadcrumb + article header -->
     <div class="mx-auto max-w-3xl px-4 pt-10 sm:px-6">
       <nav aria-label="ಸ್ಥಳ ಸೂಚಿ" class="font-ui text-sm text-stone">
         <ol class="flex flex-wrap items-center gap-2">
           <li>
-            <a href="/" class="underline-offset-4 hover:text-leaf hover:underline">ಮುಖಪುಟ</a>
+            <a href="/" class="underline-offset-4 hover:text-leaf hover:underline">
+              <span data-kn lang="kn">{t.breadcrumbHome.kn}</span>
+              <span data-en>{t.breadcrumbHome.en}</span>
+            </a>
           </li>
           <li aria-hidden="true">/</li>
           <li>
-            <a href="/articles" class="underline-offset-4 hover:text-leaf hover:underline">ಬರಹಗಳು</a>
+            <a href="/articles" class="underline-offset-4 hover:text-leaf hover:underline">
+              <span data-kn lang="kn">{t.breadcrumbArticles.kn}</span>
+              <span data-en>{t.breadcrumbArticles.en}</span>
+            </a>
           </li>
           <li aria-hidden="true">/</li>
-          <li aria-current="page" class="text-ink">{title}</li>
+          <li aria-current="page" class="text-ink"><span lang="kn">{title}</span></li>
         </ol>
       </nav>
 
@@ -88,22 +103,23 @@ const shareUrl = new URL(
                 href={`/events/${event.id}`}
                 class="inline-flex items-center gap-1.5 self-start border border-leaf/30 bg-cream px-2.5 py-1 font-ui text-xs font-semibold tracking-wider uppercase text-leaf transition-colors duration-200 hover:border-leaf hover:bg-leaf hover:text-cream"
               >
-                <span lang="kn" class="tracking-normal normal-case">ಕಾರ್ಯಕ್ರಮ</span>
+                <span data-kn lang="kn" class="tracking-normal normal-case">{t.eventChip.kn}</span>
+                <span data-en class="tracking-normal normal-case">{t.eventChip.en}</span>
                 <span aria-hidden="true">·</span>
-                <span class="normal-case">{event.data.title}</span>
+                <span class="normal-case"><span lang="kn">{event.data.title}</span></span>
               </a>
             )
           }
           {post.data.tags.map((tag) => <TagChip tag={tag} />)}
         </div>
         <h1 class="mt-5 font-display text-4xl leading-tight font-semibold text-ink md:text-5xl">
-          {title}
+          <span lang="kn">{title}</span>
         </h1>
         <div class="mt-6 flex flex-wrap items-center gap-3">
           <a
             href={`/articles?author=${encodeURIComponent(author)}`}
             class="group inline-flex items-center gap-2.5 rounded-full border border-ink/15 bg-milk py-1 pl-1.5 pr-3.5 transition-colors duration-200 hover:border-leaf hover:bg-jasmine"
-            title={`${author} ಅವರ ಎಲ್ಲಾ ಬರಹಗಳನ್ನು ನೋಡಿ`}
+            title={`${author} ${t.allByAuthorSuffix.kn}`}
           >
             {authorProfile.photo ? (
               <img
@@ -119,7 +135,13 @@ const shareUrl = new URL(
               </span>
             )}
             <span class="font-ui text-sm text-ink">
-              <span class="text-stone">ಲೇಖಕಿ:</span> <strong class="font-semibold text-leaf group-hover:underline">{author}</strong>
+              <span class="text-stone">
+                <span data-kn lang="kn">{home.by.kn}</span>
+                <span data-en>{home.by.en}</span>
+              </span>{' '}
+              <strong class="font-semibold text-leaf group-hover:underline">
+                <span lang="kn">{author}</span>
+              </strong>
             </span>
           </a>
           <span class="text-stone/40 font-ui text-sm" aria-hidden="true">·</span>
@@ -156,7 +178,8 @@ const shareUrl = new URL(
       <section class="mt-14 bg-jasmine">
         <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
           <h2 class="font-display text-2xl font-semibold text-ink">
-            <span lang="kn" class="text-leaf">ಸಂಬಂಧಿತ ಬರಹಗಳು</span>
+            <span data-kn lang="kn" class="text-leaf">{t.related.kn}</span>
+            <span data-en class="text-leaf">{t.related.en}</span>
           </h2>
           <div class="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((rel) => (

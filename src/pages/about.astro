@@ -3,81 +3,141 @@
  * About page — ಕದಳಿ ವನಿತಾ ಸಮಾಜ, ಶಿವಮೊಗ್ಗ.
  * About Us-style summary: founding facts, mission, milestones and the committee,
  * distilled from the founder's article (which carries the full narrative and
- * photos — linked from here instead of duplicated).
+ * photos — linked from here instead of duplicated). Fully bilingual: every
+ * string is a { kn, en } pair; the founder's article itself stays Kannada.
  */
 import BaseLayout from '../components/BaseLayout.astro';
 import PageHero from '../components/pages/PageHero.astro';
 import Beads from '../components/motifs/Beads.astro';
 import CommitteeSection from '../components/pages/CommitteeSection.astro';
+import type { Bi } from '../i18n/ui';
 
 const ARTICLE_URL = '/articles/kadali-vanita-samaja';
 
+interface Fact {
+  title: Bi;
+  text: Bi;
+}
+
 /** Mission pillars — one short line each, independent of the article's prose. */
-const OBJECTIVES = [
+const OBJECTIVES: Fact[] = [
   {
-    title: 'ಮಹಿಳಾ ಸಬಲೀಕರಣ ಮತ್ತು ಜಾಗೃತಿ',
-    text: 'ಪ್ರತಿಯೊಬ್ಬ ಸದಸ್ಯೆಯಲ್ಲಿ ಅರಿವು ಮತ್ತು ಆತ್ಮವಿಶ್ವಾಸ ಮೂಡಿಸುವುದು.',
+    title: { kn: 'ಮಹಿಳಾ ಸಬಲೀಕರಣ ಮತ್ತು ಜಾಗೃತಿ', en: 'Women’s empowerment and awareness' },
+    text: {
+      kn: 'ಪ್ರತಿಯೊಬ್ಬ ಸದಸ್ಯೆಯಲ್ಲಿ ಅರಿವು ಮತ್ತು ಆತ್ಮವಿಶ್ವಾಸ ಮೂಡಿಸುವುದು.',
+      en: 'To awaken awareness and self-confidence in every member.',
+    },
   },
   {
-    title: 'ವಿದ್ಯಾಭ್ಯಾಸ ಮತ್ತು ಪ್ರತಿಭೆಗೆ ಪ್ರೋತ್ಸಾಹ',
-    text: 'ಅಗತ್ಯವಿರುವವರಿಗೆ ನೆರವು, ಪ್ರತಿಭೆಗೆ ಗೌರವ.',
+    title: { kn: 'ವಿದ್ಯಾಭ್ಯಾಸ ಮತ್ತು ಪ್ರತಿಭೆಗೆ ಪ್ರೋತ್ಸಾಹ', en: 'Encouraging education and talent' },
+    text: {
+      kn: 'ಅಗತ್ಯವಿರುವವರಿಗೆ ನೆರವು, ಪ್ರತಿಭೆಗೆ ಗೌರವ.',
+      en: 'Support for those in need, honour for talent.',
+    },
   },
   {
-    title: 'ಶರಣ ಸಾಹಿತ್ಯ ಮತ್ತು ವಚನ ಸಂದೇಶ',
-    text: 'ಸಮಾನತೆ, ಕಾಯಕ ಮತ್ತು ದಾಸೋಹ ತತ್ವಗಳನ್ನು ಎಲ್ಲ ವರ್ಗದ ಜನರಿಗೆ ತಲುಪಿಸುವುದು.',
+    title: { kn: 'ಶರಣ ಸಾಹಿತ್ಯ ಮತ್ತು ವಚನ ಸಂದೇಶ', en: 'Sharana literature and the vachana message' },
+    text: {
+      kn: 'ಸಮಾನತೆ, ಕಾಯಕ ಮತ್ತು ದಾಸೋಹ ತತ್ವಗಳನ್ನು ಎಲ್ಲ ವರ್ಗದ ಜನರಿಗೆ ತಲುಪಿಸುವುದು.',
+      en: 'Carrying the principles of equality, kayaka and dasoha to people of every walk of life.',
+    },
   },
   {
-    title: 'ಸಮಾಜ ನಿರ್ಮಾಣದಲ್ಲಿ ಮಹಿಳೆಯ ಪಾತ್ರ',
-    text: 'ಮಹಿಳೆ ಕುಟುಂಬದಷ್ಟೇ ಸಮಾಜದ ನಿರ್ಮಾತೃ ಎಂಬ ಅರಿವು.',
+    title: { kn: 'ಸಮಾಜ ನಿರ್ಮಾಣದಲ್ಲಿ ಮಹಿಳೆಯ ಪಾತ್ರ', en: 'Woman’s role in building society' },
+    text: {
+      kn: 'ಮಹಿಳೆ ಕುಟುಂಬದಷ್ಟೇ ಸಮಾಜದ ನಿರ್ಮಾತೃ ಎಂಬ ಅರಿವು.',
+      en: 'The awareness that woman is society’s builder as much as the family’s.',
+    },
   },
   {
-    title: 'ರಾಷ್ಟ್ರೀಯ ಹಬ್ಬಗಳು ಮತ್ತು ಸಂಸ್ಕೃತಿ',
-    text: 'ಹಬ್ಬ-ಜಯಂತಿಗಳ ಆಚರಣೆಯ ಮೂಲಕ ದೇಶಭಕ್ತಿ ಬೆಳೆಸುವುದು.',
+    title: { kn: 'ರಾಷ್ಟ್ರೀಯ ಹಬ್ಬಗಳು ಮತ್ತು ಸಂಸ್ಕೃತಿ', en: 'National festivals and culture' },
+    text: {
+      kn: 'ಹಬ್ಬ-ಜಯಂತಿಗಳ ಆಚರಣೆಯ ಮೂಲಕ ದೇಶಭಕ್ತಿ ಬೆಳೆಸುವುದು.',
+      en: 'Nurturing patriotism through the celebration of festivals and jayantis.',
+    },
   },
   {
-    title: 'ಆರೋಗ್ಯ ಮತ್ತು ಸಮುದಾಯ ಕಾಳಜಿ',
-    text: 'ಆರೋಗ್ಯ ಶಿಬಿರಗಳು, ಯೋಗ ಮತ್ತು ನೇತ್ರದಾನ ಜಾಗೃತಿ.',
+    title: { kn: 'ಆರೋಗ್ಯ ಮತ್ತು ಸಮುದಾಯ ಕಾಳಜಿ', en: 'Health and community care' },
+    text: {
+      kn: 'ಆರೋಗ್ಯ ಶಿಬಿರಗಳು, ಯೋಗ ಮತ್ತು ನೇತ್ರದಾನ ಜಾಗೃತಿ.',
+      en: 'Health camps, yoga and eye-donation awareness.',
+    },
   },
-] as const;
+];
 
 /** Three decades of milestones — fact lines distilled from the article. */
-const MILESTONES = [
+const MILESTONES: Fact[] = [
   {
-    title: 'ಶ್ರೀಮತಿ ಕದಳಿ ಸಿರಿ ಪ್ರಶಸ್ತಿ',
-    text: 'ರಾಜ್ಯಮಟ್ಟದಲ್ಲಿ ಸಾಧನೆ ಮಾಡಿದ ಮಹಿಳೆಯರಿಗೆ ಗೌರವ.',
+    title: { kn: 'ಶ್ರೀಮತಿ ಕದಳಿ ಸಿರಿ ಪ್ರಶಸ್ತಿ', en: 'The Smt. Kadali Siri award' },
+    text: {
+      kn: 'ರಾಜ್ಯಮಟ್ಟದಲ್ಲಿ ಸಾಧನೆ ಮಾಡಿದ ಮಹಿಳೆಯರಿಗೆ ಗೌರವ.',
+      en: 'Honouring women who have achieved at the state level.',
+    },
   },
   {
-    title: 'ನೇತ್ರದಾನ ಜಾಗೃತಿ ಮತ್ತು ಯೋಜನೆ',
-    text: 'ಯಶಸ್ವಿಯಾಗಿ ನಿರ್ವಹಿಸಲಾದ ಮಾನವೀಯ ಸೇವಾ ಕಾರ್ಯ.',
+    title: { kn: 'ನೇತ್ರದಾನ ಜಾಗೃತಿ ಮತ್ತು ಯೋಜನೆ', en: 'Eye-donation awareness and programme' },
+    text: {
+      kn: 'ಯಶಸ್ವಿಯಾಗಿ ನಿರ್ವಹಿಸಲಾದ ಮಾನವೀಯ ಸೇವಾ ಕಾರ್ಯ.',
+      en: 'Humanitarian service carried out successfully.',
+    },
   },
   {
-    title: 'ಉಚಿತ ಆರೋಗ್ಯ ತಪಾಸಣಾ ಶಿಬಿರಗಳು',
-    text: 'ಪ್ರತಿ ವರ್ಷ ಮಹಿಳೆಯರ ಆರೋಗ್ಯದ ಕಾಳಜಿ.',
+    title: { kn: 'ಉಚಿತ ಆರೋಗ್ಯ ತಪಾಸಣಾ ಶಿಬಿರಗಳು', en: 'Free health check-up camps' },
+    text: {
+      kn: 'ಪ್ರತಿ ವರ್ಷ ಮಹಿಳೆಯರ ಆರೋಗ್ಯದ ಕಾಳಜಿ.',
+      en: 'Care for women’s health, every year.',
+    },
   },
   {
-    title: 'ಯೋಗ ತರಬೇತಿ',
-    text: 'ದೈಹಿಕ ಮತ್ತು ಮಾನಸಿಕ ಆರೋಗ್ಯದ ಅಭ್ಯಾಸಕ್ಕೆ ಪ್ರೋತ್ಸಾಹ.',
+    title: { kn: 'ಯೋಗ ತರಬೇತಿ', en: 'Yoga training' },
+    text: {
+      kn: 'ದೈಹಿಕ ಮತ್ತು ಮಾನಸಿಕ ಆರೋಗ್ಯದ ಅಭ್ಯಾಸಕ್ಕೆ ಪ್ರೋತ್ಸಾಹ.',
+      en: 'Encouraging the practice of physical and mental well-being.',
+    },
   },
   {
-    title: "'ವಚನಯಾನ' ನಾಟಕ",
-    text: 'ಶರಣೆ ಅಕ್ಕನಾಗವ್ವ ಸ್ಮರಣಾರ್ಥ ಬಸವ ಕೇಂದ್ರದ ಸಹಕಾರದ ರಂಗಪ್ರಯೋಗ.',
+    title: { kn: "'ವಚನಯಾನ' ನಾಟಕ", en: 'The "Vachanayana" play' },
+    text: {
+      kn: 'ಶರಣೆ ಅಕ್ಕನಾಗವ್ವ ಸ್ಮರಣಾರ್ಥ ಬಸವ ಕೇಂದ್ರದ ಸಹಕಾರದ ರಂಗಪ್ರಯೋಗ.',
+      en: 'A stage experiment with Basava Kendra in memory of Sharane Akkanagavva.',
+    },
   },
   {
-    title: 'ಪ್ರತಿಭಾ ಪ್ರದರ್ಶನ ಮತ್ತು ಅರಿವು ಕಾರ್ಯಕ್ರಮಗಳು',
-    text: 'ಸಾಮಾಜಿಕ ಮತ್ತು ಸಾಂಸ್ಕೃತಿಕ ಚಿಂತನೆಯ ವೇದಿಕೆ.',
+    title: { kn: 'ಪ್ರತಿಭಾ ಪ್ರದರ್ಶನ ಮತ್ತು ಅರಿವು ಕಾರ್ಯಕ್ರಮಗಳು', en: 'Talent shows and awareness programmes' },
+    text: {
+      kn: 'ಸಾಮಾಜಿಕ ಮತ್ತು ಸಾಂಸ್ಕೃತಿಕ ಚಿಂತನೆಯ ವೇದಿಕೆ.',
+      en: 'A platform for social and cultural reflection.',
+    },
   },
-] as const;
+];
+
+/** Founder's words, carried over as a quote. */
+const founderQuote: Bi = {
+  kn: 'ಹಿಂದಿನ ತಲೆಮಾರಿನವರ ಅನುಭವ ಮತ್ತು ಇಂದಿನ ಪೀಳಿಗೆಯವರ ನವೀನ ಚಿಂತನೆಗಳು ಒಂದಾಗಿ ಸಾಗಿದಾಗ ಮಾತ್ರ ಸಂಸ್ಥೆಯ ಬೆಳವಣಿಗೆ ಇನ್ನಷ್ಟು ಎತ್ತರಕ್ಕೆ ತಲುಪಲು ಸಾಧ್ಯ.',
+  en: 'Only when the experience of the older generation and the fresh thinking of today’s generation flow together as one can an institution rise even taller.',
+};
 ---
 
 <BaseLayout
   title="ನಮ್ಮ ಬಗ್ಗೆ · ಕದಳಿ ವನಿತಾ ಸಮಾಜ, ಶಿವಮೊಗ್ಗ"
+  titleEn="About us · Kadali Vanita Samaja, Shivamogga"
   description="1993ರಲ್ಲಿ ಶಿವಮೊಗ್ಗದಲ್ಲಿ ಜ್ಯೋತಿ ಬೆಳಗುವ ಮೂಲಕ ಆರಂಭವಾದ ಕದಳಿ ವನಿತಾ ಸಮಾಜದ ಮೂರು ದಶಕಗಳ ಸಾರ್ಥಕ ಸೇವಾ ಪಯಣ, ಮಹಿಳಾ ಸಬಲೀಕರಣ ಮತ್ತು ಸಾಧನೆಗಳ ವಿವರ."
+  descriptionEn="Three decades of rewarding service by Kadali Vanita Samaja, begun by lighting a lamp in Shivamogga in 1993 — women's empowerment, milestones and the committee."
 >
   <PageHero
-    eyebrow="ಕದಳಿ ವನಿತಾ ಸಮಾಜ · ಶಿವಮೊಗ್ಗ"
-    title="ಸಮಾಜಸೇವೆಯೇ ಬದುಕಿನ ಉಸಿರು · ಮಹಿಳಾ ಸಬಲೀಕರಣವೇ ಸಂಕಲ್ಪ"
-    kn="ಮೂರು ದಶಕಗಳಿಗೂ ಮೀರಿದ ಸಾರ್ಥಕ ಸೇವಾ ಪಯಣ (1993 – 2026)"
-    lede="ಶಿವಮೊಗ್ಗದಲ್ಲಿ ಮಹಿಳಾ ಸಬಲೀಕರಣ, ಸಂಸ್ಕೃತಿ ಮತ್ತು ಸಮಾಜಸೇವೆಗಾಗಿ 1993ರಿಂದ ನಿರಂತರವಾಗಿ ದುಡಿಯುತ್ತಿರುವ ಸಂಘಟನೆ — ನಮ್ಮ ಹಿನ್ನೆಲೆ, ಧ್ಯೇಯ ಮತ್ತು ಸಮಿತಿಯ ಪರಿಚಯ."
+    eyebrow={{ kn: 'ಕದಳಿ ವನಿತಾ ಸಮಾಜ · ಶಿವಮೊಗ್ಗ', en: 'Kadali Vanita Samaja · Shivamogga' }}
+    title={{
+      kn: 'ಸಮಾಜಸೇವೆಯೇ ಬದುಕಿನ ಉಸಿರು · ಮಹಿಳಾ ಸಬಲೀಕರಣವೇ ಸಂಕಲ್ಪ',
+      en: 'Service is the breath of our life · Women’s empowerment is our resolve',
+    }}
+    kn={{
+      kn: 'ಮೂರು ದಶಕಗಳಿಗೂ ಮೀರಿದ ಸಾರ್ಥಕ ಸೇವಾ ಪಯಣ (1993 – 2026)',
+      en: 'A rewarding journey of service beyond three decades (1993 – 2026)',
+    }}
+    lede={{
+      kn: 'ಶಿವಮೊಗ್ಗದಲ್ಲಿ ಮಹಿಳಾ ಸಬಲೀಕರಣ, ಸಂಸ್ಕೃತಿ ಮತ್ತು ಸಮಾಜಸೇವೆಗಾಗಿ 1993ರಿಂದ ನಿರಂತರವಾಗಿ ದುಡಿಯುತ್ತಿರುವ ಸಂಘಟನೆ — ನಮ್ಮ ಹಿನ್ನೆಲೆ, ಧ್ಯೇಯ ಮತ್ತು ಸಮಿತಿಯ ಪರಿಚಯ.',
+      en: 'An organisation working ceaselessly since 1993 in Shivamogga for women’s empowerment, culture and social service — our background, purpose and committee.',
+    }}
     tone="leaf"
   />
 
@@ -88,23 +148,37 @@ const MILESTONES = [
     >
       <div>
         <p class="font-ui text-xs font-semibold tracking-[0.2em] uppercase text-leaf">
-          ಸ್ಥಾಪನೆಯ ಇತಿಹಾಸ
+          <span data-kn lang="kn" class="tracking-normal normal-case">ಸ್ಥಾಪನೆಯ ಇತಿಹಾಸ</span>
+          <span data-en class="tracking-normal normal-case">Founding history</span>
         </p>
         <h2 class="mt-2 font-display text-3xl font-semibold text-ink sm:text-4xl">
-          ಜ್ಯೋತಿ ಬೆಳಗಿಸಿ ಆರಂಭವಾದ ಸೇವಾ ಪಯಣ
+          <span data-kn lang="kn">ಜ್ಯೋತಿ ಬೆಳಗಿಸಿ ಆರಂಭವಾದ ಸೇವಾ ಪಯಣ</span>
+          <span data-en>A journey of service that began by lighting a lamp</span>
         </h2>
 
-        <div class="mt-8 space-y-5 font-body text-lg leading-relaxed text-stone">
-          <p>
+        <div class="mt-8 space-y-5 text-lg leading-relaxed text-stone">
+          <p data-kn lang="kn" class="font-body">
             ಮಹಿಳೆಯರನ್ನು ಸಂಘಟಿಸಿ, ಅವರಲ್ಲಿ ಜಾಗೃತಿ ಮತ್ತು ಆತ್ಮವಿಶ್ವಾಸ ಮೂಡಿಸುವ ಆಶಯದೊಂದಿಗೆ
             <strong class="font-semibold text-ink">ರೇಣುಕಾ ಶಿವಾನಂದಪ್ಪ</strong> ಹಾಗೂ ಸಮಾನ
             ಮನಸ್ಕ ಸ್ನೇಹಿತೆಯರ ಸಮೂಹವೊಂದು <strong class="font-semibold text-ink">12 ಮಾರ್ಚ್
             1993ರಂದು</strong> ಶಿವಮೊಗ್ಗದಲ್ಲಿ ಕದಳಿ ವನಿತಾ ಸಮಾಜವನ್ನು ಕಟ್ಟಿಬೆಳೆಸಿತು.
           </p>
-          <p>
+          <p data-en class="font-serif">
+            With the wish of organising women and awakening awareness and
+            self-confidence in them, <strong class="font-semibold text-ink">Renuka
+            Shivanandappa</strong> and a group of like-minded friends built Kadali
+            Vanita Samaja in Shivamogga on <strong class="font-semibold text-ink">12
+            March 1993</strong>.
+          </p>
+          <p data-kn lang="kn" class="font-body">
             ಅಂದಿನ ಜಿಲ್ಲಾಧಿಕಾರಿಗಳ ಪತ್ನಿ <strong class="font-semibold text-ink">ಶ್ರೀಮತಿ ಪ್ರೇಮಲತಾ
             ಸದಾಶಿವಯ್ಯನವರ</strong> ಅಮೃತ ಹಸ್ತದ ಜ್ಯೋತಿ ಬೆಳಗುವಿಕೆಯೊಂದಿಗೆ ಸಮಾಜದ ಪಯಣ ಆರಂಭವಾಯಿತು; ಆ
             ಬೆಳಕು ಇಂದು ಮೂರು ದಶಕಗಳಿಗೂ ಮೀರಿ ಸಹಸ್ರಾರು ಮಹಿಳೆಯರ ಬದುಕಿನಲ್ಲಿ ಮುಂದುವರಿದಿದೆ.
+          </p>
+          <p data-en class="font-serif">
+            The journey began with the lamp lit by <strong class="font-semibold text-ink">Smt.
+            Premalatha Sadasivayya</strong>, the district collector’s wife of the time; that
+            light has now carried on past three decades into the lives of thousands of women.
           </p>
         </div>
 
@@ -112,7 +186,8 @@ const MILESTONES = [
           href={ARTICLE_URL}
           class="mt-8 inline-flex items-center gap-2 rounded-full border border-leaf/40 bg-jasmine px-6 py-3 font-ui text-sm font-semibold text-leaf transition-colors duration-200 hover:border-leaf hover:bg-leaf hover:text-milk"
         >
-          <span>ಸಂಸ್ಥಾಪಕರ ಬರಹದಲ್ಲಿ ಸಂಪೂರ್ಣ ಸ್ಥಾಪನಾ ಕಥೆ ಓದಿ</span>
+          <span data-kn lang="kn">ಸಂಸ್ಥಾಪಕರ ಬರಹದಲ್ಲಿ ಸಂಪೂರ್ಣ ಸ್ಥಾಪನಾ ಕಥೆ ಓದಿ</span>
+          <span data-en>Read the full founding story in the founder’s essay</span>
           <span aria-hidden="true">→</span>
         </a>
       </div>
@@ -120,63 +195,82 @@ const MILESTONES = [
       <!-- Quick Summary Aside -->
       <aside class="mt-12 self-start border border-ink/10 bg-jasmine p-6 sm:p-8 lg:mt-0">
         <h3 class="font-ui text-xs font-semibold tracking-[0.2em] uppercase text-leaf">
-          ಒಂದು ನೋಟದಲ್ಲಿ
+          <span data-kn lang="kn" class="tracking-normal normal-case">ಒಂದು ನೋಟದಲ್ಲಿ</span>
+          <span data-en class="tracking-normal normal-case">At a glance</span>
         </h3>
         <dl class="mt-6 space-y-5">
           <div class="border-b border-ink/10 pb-3">
             <dt class="font-ui text-xs font-semibold tracking-wide uppercase text-stone">
-              ಸ್ಥಾಪನೆ ದಿನಾಂಕ
+              <span data-kn lang="kn" class="tracking-normal normal-case">ಸ್ಥಾಪನೆ ದಿನಾಂಕ</span>
+              <span data-en class="tracking-normal normal-case">Founded</span>
             </dt>
             <dd class="mt-1 font-display text-lg font-semibold text-ink">
-              12 ಮಾರ್ಚ್ 1993
+              <span data-kn lang="kn">12 ಮಾರ್ಚ್ 1993</span>
+              <span data-en>12 March 1993</span>
             </dd>
           </div>
           <div class="border-b border-ink/10 pb-3">
             <dt class="font-ui text-xs font-semibold tracking-wide uppercase text-stone">
-              ಸಂಸ್ಥಾಪಕರು
+              <span data-kn lang="kn" class="tracking-normal normal-case">ಸಂಸ್ಥಾಪಕರು</span>
+              <span data-en class="tracking-normal normal-case">Founders</span>
             </dt>
-            <dd class="mt-1 font-body text-base text-ink">
-              ರೇಣುಕಾ ಶಿವಾನಂದಪ್ಪ ಹಾಗೂ ಸಮಾನ ಮನಸ್ಕ ಸ್ನೇಹಿತೆಯರು
+            <dd class="mt-1 text-base text-ink">
+              <span data-kn lang="kn" class="font-body">ರೇಣುಕಾ ಶಿವಾನಂದಪ್ಪ ಹಾಗೂ ಸಮಾನ ಮನಸ್ಕ ಸ್ನೇಹಿತೆಯರು</span>
+              <span data-en class="font-serif">Renuka Shivanandappa and like-minded friends</span>
             </dd>
           </div>
           <div class="border-b border-ink/10 pb-3">
             <dt class="font-ui text-xs font-semibold tracking-wide uppercase text-stone">
-              ಸ್ಥಳ
+              <span data-kn lang="kn" class="tracking-normal normal-case">ಸ್ಥಳ</span>
+              <span data-en class="tracking-normal normal-case">Location</span>
             </dt>
-            <dd class="mt-1 font-body text-base text-ink">
-              ಶಿವಮೊಗ್ಗ, ಕರ್ನಾಟಕ
+            <dd class="mt-1 text-base text-ink">
+              <span data-kn lang="kn" class="font-body">ಶಿವಮೊಗ್ಗ, ಕರ್ನಾಟಕ</span>
+              <span data-en class="font-serif">Shivamogga, Karnataka</span>
             </dd>
           </div>
           <div class="border-b border-ink/10 pb-3">
             <dt class="font-ui text-xs font-semibold tracking-wide uppercase text-stone">
-              ಆದರ್ಶ ಪ್ರೇರಣೆ
+              <span data-kn lang="kn" class="tracking-normal normal-case">ಆದರ್ಶ ಪ್ರೇರಣೆ</span>
+              <span data-en class="tracking-normal normal-case">Guiding inspiration</span>
             </dt>
-            <dd class="mt-1 font-body text-base text-ink">
-              ಶರಣೆ ಅಕ್ಕಮಹಾದೇವಿ ಹಾಗೂ ಬಸವಾದಿ ಶರಣರ ಸಮಾನತೆ, ಕಾಯಕ ಮತ್ತು ದಾಸೋಹ ತತ್ವಗಳು
+            <dd class="mt-1 text-base text-ink">
+              <span data-kn lang="kn" class="font-body">ಶರಣೆ ಅಕ್ಕಮಹಾದೇವಿ ಹಾಗೂ ಬಸವಾದಿ ಶರಣರ ಸಮಾನತೆ, ಕಾಯಕ ಮತ್ತು ದಾಸೋಹ ತತ್ವಗಳು</span>
+              <span data-en class="font-serif">The equality, kayaka and dasoha principles of Sharane Akkamahadevi and the Basava sharanas</span>
             </dd>
           </div>
           <div class="border-b border-ink/10 pb-3">
             <dt class="font-ui text-xs font-semibold tracking-wide uppercase text-stone">
-              ಹೆಸರಿನ ಹಿನ್ನೆಲೆ
+              <span data-kn lang="kn" class="tracking-normal normal-case">ಹೆಸರಿನ ಹಿನ್ನೆಲೆ</span>
+              <span data-en class="tracking-normal normal-case">The name</span>
             </dt>
-            <dd class="mt-1 font-body text-base text-ink">
-              <span lang="kn" class="font-semibold text-leaf">ಕದಳಿ</span> — ಬಾಳೆಗಿಡ (ಆಶ್ರಯ ಮತ್ತು ತಂಪು ನೀಡುವ ನಿಸರ್ಗದ ಸಂಕೇತ) ಹಾಗೂ ಅಕ್ಕಮಹಾದೇವಿ ಐಕ್ಯವಾದ ಪವಿತ್ರ ಕದಳಿ ವನ.
+            <dd class="mt-1 text-base text-ink">
+              <span data-kn lang="kn" class="font-body">
+                <span lang="kn" class="font-semibold text-leaf">ಕದಳಿ</span> — ಬಾಳೆಗಿಡ (ಆಶ್ರಯ ಮತ್ತು ತಂಪು ನೀಡುವ ನಿಸರ್ಗದ ಸಂಕೇತ) ಹಾಗೂ ಅಕ್ಕಮಹಾದೇವಿ ಐಕ್ಯವಾದ ಪವಿತ್ರ ಕದಳಿ ವನ.
+              </span>
+              <span data-en class="font-serif">
+                <span lang="kn" class="font-semibold text-leaf">Kadali</span> — the banana plant (nature’s symbol of shelter and cool shade) and the sacred kadali grove where Akkamahadevi found union.
+              </span>
             </dd>
           </div>
           <div>
             <dt class="font-ui text-xs font-semibold tracking-wide uppercase text-stone">
-              ಸಾರ್ಥಕ ಮೈಲಿಗಲ್ಲು
+              <span data-kn lang="kn" class="tracking-normal normal-case">ಸಾರ್ಥಕ ಮೈಲಿಗಲ್ಲು</span>
+              <span data-en class="tracking-normal normal-case">A proud milestone</span>
             </dt>
-            <dd class="mt-1 font-body text-base text-ink">
-              ರಜತ ಮಹೋತ್ಸವ (ಬೆಳ್ಳಿ ಹಬ್ಬ) ಪೂರೈಸಿ 35ನೇ ವರ್ಷದತ್ತ ಸಾಗುತ್ತಿರುವ ಹೆಮ್ಮೆಯ ಇತಿಹಾಸ
+            <dd class="mt-1 text-base text-ink">
+              <span data-kn lang="kn" class="font-body">ರಜತ ಮಹೋತ್ಸವ (ಬೆಳ್ಳಿ ಹಬ್ಬ) ಪೂರೈಸಿ 35ನೇ ವರ್ಷದತ್ತ ಸಾಗುತ್ತಿರುವ ಹೆಮ್ಮೆಯ ಇತಿಹಾಸ</span>
+              <span data-en class="font-serif">A silver jubilee completed, proudly moving into its 35th year</span>
             </dd>
           </div>
           <div>
             <dt class="font-ui text-xs font-semibold tracking-wide uppercase text-stone">
-              ಸದಸ್ಯತ್ವ
+              <span data-kn lang="kn" class="tracking-normal normal-case">ಸದಸ್ಯತ್ವ</span>
+              <span data-en class="tracking-normal normal-case">Membership</span>
             </dt>
-            <dd class="mt-1 font-body text-base text-ink">
-              ಎಲ್ಲಾ ವರ್ಗದ ಮಹಿಳೆಯರಿಗೂ ಮುಕ್ತ ಸ್ವಾಗತ
+            <dd class="mt-1 text-base text-ink">
+              <span data-kn lang="kn" class="font-body">ಎಲ್ಲಾ ವರ್ಗದ ಮಹಿಳೆಯರಿಗೂ ಮುಕ್ತ ಸ್ವಾಗತ</span>
+              <span data-en class="font-serif">A free and open welcome to women of every walk of life</span>
             </dd>
           </div>
         </dl>
@@ -186,7 +280,8 @@ const MILESTONES = [
             href="/contact"
             class="inline-flex items-center gap-2 font-ui text-sm font-semibold text-leaf underline-offset-4 hover:underline"
           >
-            <span>ಸಮಾಜದೊಂದಿಗೆ ಸಂಪರ್ಕದಲ್ಲಿರಿ</span>
+            <span data-kn lang="kn">ಸಮಾಜದೊಂದಿಗೆ ಸಂಪರ್ಕದಲ್ಲಿರಿ</span>
+            <span data-en>Stay in touch with the society</span>
             <span aria-hidden="true">→</span>
           </a>
         </div>
@@ -205,13 +300,16 @@ const MILESTONES = [
     <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
       <div class="max-w-3xl">
         <p class="font-ui text-xs font-semibold tracking-[0.2em] uppercase text-leaf">
-          ಮೂಲ ಸಂಕಲ್ಪ
+          <span data-kn lang="kn" class="tracking-normal normal-case">ಮೂಲ ಸಂಕಲ್ಪ</span>
+          <span data-en class="tracking-normal normal-case">Our resolve</span>
         </p>
         <h2 class="mt-2 font-display text-3xl font-semibold text-ink sm:text-4xl">
-          ಸಮಾಜದ ಉದ್ದೇಶ ಮತ್ತು ಧ್ಯೇಯಗಳು
+          <span data-kn lang="kn">ಸಮಾಜದ ಉದ್ದೇಶ ಮತ್ತು ಧ್ಯೇಯಗಳು</span>
+          <span data-en>The society’s purpose and objectives</span>
         </h2>
-        <p class="mt-4 font-body text-lg text-stone">
-          ಮಹಿಳೆಯರ ಸರ್ವತೋಮುಖ ಅಭಿವೃದ್ಧಿ — ಈ ಒಂದು ಗುರಿಯುಳ್ಳ ಸಂಕಲ್ಪದ ಮೇಲೆ ಸಮಾಜದ ಎಲ್ಲಾ ಕಾರ್ಯಕ್ರಮಗಳು ನಿಂತಿವೆ.
+        <p class="mt-4 text-lg text-stone">
+          <span data-kn lang="kn" class="font-body">ಮಹಿಳೆಯರ ಸರ್ವತೋಮುಖ ಅಭಿವೃದ್ಧಿ — ಈ ಒಂದು ಗುರಿಯುಳ್ಳ ಸಂಕಲ್ಪದ ಮೇಲೆ ಸಮಾಜದ ಎಲ್ಲಾ ಕಾರ್ಯಕ್ರಮಗಳು ನಿಂತಿವೆ.</span>
+          <span data-en class="font-serif">The all-round development of women — every programme of the society stands on this one resolve.</span>
         </p>
       </div>
 
@@ -223,10 +321,12 @@ const MILESTONES = [
                 {String(i + 1).padStart(2, '0')}
               </div>
               <h3 class="mt-2 font-display text-xl font-semibold text-ink">
-                <span lang="kn">{objective.title}</span>
+                <span data-kn lang="kn">{objective.title.kn}</span>
+                <span data-en>{objective.title.en}</span>
               </h3>
-              <p class="mt-3 font-body text-base text-stone">
-                <span lang="kn">{objective.text}</span>
+              <p class="mt-3 text-base text-stone">
+                <span data-kn lang="kn" class="font-body">{objective.text.kn}</span>
+                <span data-en class="font-serif">{objective.text.en}</span>
               </p>
             </div>
           ))
@@ -246,13 +346,16 @@ const MILESTONES = [
     <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
       <div class="max-w-3xl">
         <p class="font-ui text-xs font-semibold tracking-[0.2em] uppercase text-leaf">
-          ಮೂರು ದಶಕಗಳ ಸಾಧನೆಗಳು
+          <span data-kn lang="kn" class="tracking-normal normal-case">ಮೂರು ದಶಕಗಳ ಸಾಧನೆಗಳು</span>
+          <span data-en class="tracking-normal normal-case">Three decades of achievement</span>
         </p>
         <h2 class="mt-2 font-display text-3xl font-semibold text-ink sm:text-4xl">
-          ಪ್ರಮುಖ ಮೈಲಿಗಲ್ಲುಗಳು ಮತ್ತು ಕಾರ್ಯಕ್ರಮಗಳು
+          <span data-kn lang="kn">ಪ್ರಮುಖ ಮೈಲಿಗಲ್ಲುಗಳು ಮತ್ತು ಕಾರ್ಯಕ್ರಮಗಳು</span>
+          <span data-en>Key milestones and programmes</span>
         </h2>
-        <p class="mt-4 font-body text-lg text-stone">
-          ಧ್ಯೇಯಗಳಿಗೆ ಅನುಗುಣವಾಗಿ ಸಮಾಜವು ನಿರಂತರವಾಗಿ ಹಮ್ಮಿಕೊಂಡು ಬಂದ ಪ್ರಮುಖ ಕಾರ್ಯಗಳು.
+        <p class="mt-4 text-lg text-stone">
+          <span data-kn lang="kn" class="font-body">ಧ್ಯೇಯಗಳಿಗೆ ಅನುಗುಣವಾಗಿ ಸಮಾಜವು ನಿರಂತರವಾಗಿ ಹಮ್ಮಿಕೊಂಡು ಬಂದ ಪ್ರಮುಖ ಕಾರ್ಯಗಳು.</span>
+          <span data-en class="font-serif">The principal works the society has carried on continually, true to its objectives.</span>
         </p>
       </div>
 
@@ -263,10 +366,12 @@ const MILESTONES = [
               <span aria-hidden="true" class="mt-2 block h-2.5 w-2.5 shrink-0 rounded-full bg-turmeric" />
               <div>
                 <h3 class="font-display text-lg font-semibold text-ink">
-                  <span lang="kn">{milestone.title}</span>
+                  <span data-kn lang="kn">{milestone.title.kn}</span>
+                  <span data-en>{milestone.title.en}</span>
                 </h3>
-                <p class="mt-2 font-body text-base text-stone">
-                  <span lang="kn">{milestone.text}</span>
+                <p class="mt-2 text-base text-stone">
+                  <span data-kn lang="kn" class="font-body">{milestone.text.kn}</span>
+                  <span data-en class="font-serif">{milestone.text.en}</span>
                 </p>
               </div>
             </div>
@@ -279,7 +384,8 @@ const MILESTONES = [
           href={ARTICLE_URL}
           class="inline-flex items-center gap-2 font-ui text-sm font-semibold text-leaf underline-offset-4 hover:underline"
         >
-          <span>ಪ್ರತಿಯೊಂದು ಸಾಧನೆಯ ವಿವರವನ್ನು ಸಂಸ್ಥಾಪಕರ ಬರಹದಲ್ಲಿ ಓದಿ</span>
+          <span data-kn lang="kn">ಪ್ರತಿಯೊಂದು ಸಾಧನೆಯ ವಿವರವನ್ನು ಸಂಸ್ಥಾಪಕರ ಬರಹದಲ್ಲಿ ಓದಿ</span>
+          <span data-en>Read the details of every achievement in the founder’s essay</span>
           <span aria-hidden="true">→</span>
         </a>
       </div>
@@ -288,9 +394,11 @@ const MILESTONES = [
       <div class="mt-16 border-t border-ink/10 pt-12">
         <Beads class="mx-auto w-40 text-turmeric" />
         <blockquote class="mx-auto mt-8 max-w-3xl text-center font-display text-xl leading-snug italic text-ink sm:text-2xl">
-          “ಹಿಂದಿನ ತಲೆಮಾರಿನವರ ಅನುಭವ ಮತ್ತು ಇಂದಿನ ಪೀಳಿಗೆಯವರ ನವೀನ ಚಿಂತನೆಗಳು ಒಂದಾಗಿ ಸಾಗಿದಾಗ ಮಾತ್ರ ಸಂಸ್ಥೆಯ ಬೆಳವಣಿಗೆ ಇನ್ನಷ್ಟು ಎತ್ತರಕ್ಕೆ ತಲುಪಲು ಸಾಧ್ಯ.”
+          <span data-kn lang="kn">“{founderQuote.kn}”</span>
+          <span data-en>“{founderQuote.en}”</span>
           <footer class="mt-4 font-ui text-sm font-semibold not-italic text-leaf">
-            — ರೇಣುಕಾ ಶಿವಾನಂದಪ್ಪ, ಸಂಸ್ಥಾಪಕರು / ಹಿರಿಯ ಮಾರ್ಗದರ್ಶಕರು
+            <span data-kn lang="kn">— ರೇಣುಕಾ ಶಿವಾನಂದಪ್ಪ, ಸಂಸ್ಥಾಪಕರು / ಹಿರಿಯ ಮಾರ್ಗದರ್ಶಕರು</span>
+            <span data-en>— Renuka Shivanandappa, Founder / Senior guide</span>
           </footer>
         </blockquote>
       </div>
@@ -305,32 +413,38 @@ const MILESTONES = [
     <div class="mx-auto max-w-6xl px-4 py-16 text-center sm:px-6 sm:py-20">
       <Beads class="mx-auto w-40 text-turmeric" />
       <h2 class="mt-8 font-display text-3xl font-semibold sm:text-4xl text-cream">
-        ಕದಳಿ ವನಿತಾ ಸಮಾಜಕ್ಕೆ ಸೇರಿ
+        <span data-kn lang="kn">ಕದಳಿ ವನಿತಾ ಸಮಾಜಕ್ಕೆ ಸೇರಿ</span>
+        <span data-en>Join Kadali Vanita Samaja</span>
       </h2>
-      <p lang="kn" class="mt-3 font-display text-xl text-turmeric">
-        ಮಹಿಳಾ ಶಕ್ತಿ ಮತ್ತಷ್ಟು ಬಲಗೊಳ್ಳಲಿ · ಸೇವೆ ನಿರಂತರವಾಗಿರಲಿ
+      <p class="mt-3 font-display text-xl text-turmeric">
+        <span data-kn lang="kn">ಮಹಿಳಾ ಶಕ್ತಿ ಮತ್ತಷ್ಟು ಬಲಗೊಳ್ಳಲಿ · ಸೇವೆ ನಿರಂತರವಾಗಿರಲಿ</span>
+        <span data-en>May women’s strength grow ever stronger · May service continue unbroken</span>
       </p>
-      <p class="mx-auto mt-5 max-w-2xl font-body text-lg leading-relaxed text-cream/85">
-        ಕದಳಿ ವನಿತಾ ಸಮಾಜದ ಯಾವುದೇ ಕಾರ್ಯಕ್ರಮದಲ್ಲಿ ಅತಿಥಿಯಾಗಿ ಪಾಲ್ಗೊಳ್ಳಿ, ನಮ್ಮ ಒಡನಾಟವನ್ನು ಅನುಭವಿಸಿ. ನೀವು ಸದಸ್ಯರಾಗಲು, ಕಾರ್ಯಕ್ರಮಗಳಲ್ಲಿ ಭಾಗವಹಿಸಲು ಅಥವಾ ಸೇವಾ ಕಾರ್ಯಗಳಲ್ಲಿ ಕೈಜೋಡಿಸಲು ಇಂದೇ ನಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸಿ.
+      <p class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-cream/85">
+        <span data-kn lang="kn" class="font-body">ಕದಳಿ ವನಿತಾ ಸಮಾಜದ ಯಾವುದೇ ಕಾರ್ಯಕ್ರಮದಲ್ಲಿ ಅತಿಥಿಯಾಗಿ ಪಾಲ್ಗೊಳ್ಳಿ, ನಮ್ಮ ಒಡನಾಟವನ್ನು ಅನುಭವಿಸಿ. ನೀವು ಸದಸ್ಯರಾಗಲು, ಕಾರ್ಯಕ್ರಮಗಳಲ್ಲಿ ಭಾಗವಹಿಸಲು ಅಥವಾ ಸೇವಾ ಕಾರ್ಯಗಳಲ್ಲಿ ಕೈಜೋಡಿಸಲು ಇಂದೇ ನಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸಿ.</span>
+        <span data-en class="font-serif">Join any Kadali Vanita Samaja event as a guest and experience our fellowship. Contact us today to become a member, take part in events, or lend a hand in service.</span>
       </p>
       <div class="mt-8 flex flex-wrap justify-center gap-4">
         <a
           href="/contact"
           class="rounded-full bg-turmeric px-8 py-3 font-ui text-sm font-semibold text-ink transition-colors duration-200 hover:bg-cream active:translate-y-[1px]"
         >
-          ಸಂಪರ್ಕಿಸಿ
+          <span data-kn lang="kn">ಸಂಪರ್ಕಿಸಿ</span>
+          <span data-en>Contact us</span>
         </a>
         <a
           href="/events"
           class="rounded-full border border-cream/40 px-8 py-3 font-ui text-sm font-semibold text-cream transition-colors duration-200 hover:border-cream hover:bg-cream/10 active:translate-y-[1px]"
         >
-          ಕಾರ್ಯಕ್ರಮಗಳನ್ನು ನೋಡಿ
+          <span data-kn lang="kn">ಕಾರ್ಯಕ್ರಮಗಳನ್ನು ನೋಡಿ</span>
+          <span data-en>See events</span>
         </a>
         <a
           href={ARTICLE_URL}
           class="rounded-full border border-cream/40 px-8 py-3 font-ui text-sm font-semibold text-cream transition-colors duration-200 hover:border-cream hover:bg-cream/10 active:translate-y-[1px]"
         >
-          ಬರಹಗಳನ್ನು ಓದಿ
+          <span data-kn lang="kn">ಬರಹಗಳನ್ನು ಓದಿ</span>
+          <span data-en>Read writings</span>
         </a>
       </div>
     </div>

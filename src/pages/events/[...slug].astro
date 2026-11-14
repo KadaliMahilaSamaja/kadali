@@ -7,8 +7,11 @@ import EventDate from '../../components/events/EventDate.astro';
 import EventCard from '../../components/events/EventCard.astro';
 import CancelledBadge from '../../components/events/CancelledBadge.astro';
 import ArticleCard from '../../components/articles/ArticleCard.astro';
-import { istIso } from '../../components/events/format';
+import { istIso } from '../../i18n/dates';
 import { deriveStatus, sortEvents } from '../../lib/events';
+import { ui } from '../../i18n/ui';
+
+const { articles: tArticles, events: t } = ui;
 
 export async function getStaticPaths() {
   const events = await getCollection('events');
@@ -76,6 +79,7 @@ const eventSchema = {
 
 <BaseLayout
   title={`${title} · ಕಾರ್ಯಕ್ರಮಗಳು — ಕದಳಿ ವನಿತಾ ಸಮಾಜ`}
+  titleEn={`${title} · Events — Kadali Vanita Samaja`}
   description={summary}
   image={poster}
   type="article"
@@ -83,11 +87,17 @@ const eventSchema = {
   <article class="bg-cream">
     <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:py-16">
       <nav aria-label="ಸ್ಥಳ ಸೂಚಿ" class="font-ui text-sm text-stone">
-        <a href="/" class="hover:text-leaf hover:underline">ಮುಖಪುಟ</a>
+        <a href="/" class="hover:text-leaf hover:underline">
+          <span data-kn lang="kn">{tArticles.breadcrumbHome.kn}</span>
+          <span data-en>{tArticles.breadcrumbHome.en}</span>
+        </a>
         <span aria-hidden="true"> / </span>
-        <a href="/events" class="hover:text-leaf hover:underline">ಕಾರ್ಯಕ್ರಮಗಳು</a>
+        <a href="/events" class="hover:text-leaf hover:underline">
+          <span data-kn lang="kn">{t.pageHeading.kn}</span>
+          <span data-en>{t.pageHeading.en}</span>
+        </a>
         <span aria-hidden="true"> / </span>
-        <span aria-current="page" class="text-ink">{title}</span>
+        <span aria-current="page" class="text-ink"><span lang="kn">{title}</span></span>
       </nav>
 
       <div class="mt-8 grid gap-10 lg:grid-cols-12 lg:gap-14">
@@ -96,7 +106,7 @@ const eventSchema = {
           <div class="overflow-hidden rounded-t-[999px] border border-ink/10">
             <img
               src={poster}
-              alt={`${title} — ಪೋಸ್ಟರ್`}
+              alt={`${title} — ${t.posterSuffix.kn}`}
               width="850"
               height="1100"
               loading="eager"
@@ -109,13 +119,17 @@ const eventSchema = {
         <div class="flex flex-col items-start gap-5 lg:col-span-7">
           {statusLabel === 'cancelled' && <CancelledBadge />}
           <h1 class="font-display text-3xl font-semibold text-ink sm:text-4xl">
-            {title}
+            <span lang="kn">{title}</span>
           </h1>
 
           <EventDate startAt={startAt} endAt={endAt} size="large" />
 
           <p class="font-ui text-base text-ink">
-            <span lang="kn" class="font-semibold">ಸ್ಥಳ:</span> {venue}
+            <span class="font-semibold">
+              <span data-kn lang="kn">{t.venue.kn}</span>
+              <span data-en>{t.venue.en}</span>
+            </span>{' '}
+            <span lang="kn">{venue}</span>
           </p>
 
           {
@@ -126,7 +140,9 @@ const eventSchema = {
                 rel="noopener noreferrer"
                 class="border-2 border-leaf px-4 py-2 font-ui text-sm font-semibold text-leaf underline-offset-4 transition-colors duration-200 hover:bg-leaf hover:text-cream"
               >
-                ನಕ್ಷೆಯಲ್ಲಿ ನೋಡಿ <span aria-hidden="true">↗</span>
+                <span data-kn lang="kn">{t.viewOnMap.kn}</span>
+                <span data-en>{t.viewOnMap.en}</span>{' '}
+                <span aria-hidden="true">↗</span>
               </a>
             )
           }
@@ -134,12 +150,16 @@ const eventSchema = {
           {
             contact && (
               <p class="font-ui text-base text-stone">
-                <span lang="kn" class="font-semibold">ಸಂಪರ್ಕ:</span> {contact}
+                <span class="font-semibold">
+                  <span data-kn lang="kn">{t.contact.kn}</span>
+                  <span data-en>{t.contact.en}</span>
+                </span>{' '}
+                <span lang="kn">{contact}</span>
               </p>
             )
           }
 
-          <p class="font-body text-lg text-stone">{summary}</p>
+          <p class="font-body text-lg text-stone"><span lang="kn">{summary}</span></p>
         </div>
       </div>
 
@@ -156,7 +176,8 @@ const eventSchema = {
       <section class="bg-jasmine">
         <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
           <h2 class="font-display text-2xl font-semibold text-ink sm:text-3xl">
-            <span lang="kn">ಈ ಕಾರ್ಯಕ್ರಮದ ಕಥನಗಳು</span>
+            <span data-kn lang="kn">{t.stories.kn}</span>
+            <span data-en>{t.stories.en}</span>
           </h2>
           <div class="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {stories.map((story) => (
@@ -173,7 +194,8 @@ const eventSchema = {
       <section class="bg-jasmine">
         <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
           <h2 class="font-display text-2xl font-semibold text-ink sm:text-3xl">
-            <span lang="kn">ಇತರ ಮುಂಬರುವ ಕಾರ್ಯಕ್ರಮಗಳು</span>
+            <span data-kn lang="kn">{t.otherUpcoming.kn}</span>
+            <span data-en>{t.otherUpcoming.en}</span>
           </h2>
           <ul class="mt-8 grid gap-6 sm:grid-cols-2">
             {others.map((other) => (

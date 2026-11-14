@@ -4,6 +4,8 @@
  * our own) plus a copy-link button. The copy action is progressive —
  * navigator.clipboard with an execCommand fallback for non-secure contexts.
  */
+import { ui } from '../../i18n/ui';
+
 interface Props {
   /** Absolute URL of the page being shared. */
   url: string;
@@ -11,21 +13,22 @@ interface Props {
 }
 
 const { url, title } = Astro.props;
+const { articles } = ui;
 
 const text = encodeURIComponent(title);
 const link = encodeURIComponent(url);
 
 const shares = [
   {
-    label: 'ವಾಟ್ಸ್‌ಆಪ್',
+    label: articles.whatsapp,
     href: `https://wa.me/?text=${text}%20${link}`,
   },
   {
-    label: 'ಫೇಸ್‌ಬುಕ್',
+    label: articles.facebook,
     href: `https://www.facebook.com/sharer/sharer.php?u=${link}`,
   },
   {
-    label: 'ಎಕ್ಸ್ (ಟ್ವಿಟರ್)',
+    label: articles.x,
     href: `https://twitter.com/intent/tweet?text=${text}&url=${link}`,
   },
 ];
@@ -36,21 +39,24 @@ const buttonClass =
 
 <div data-share class="flex flex-wrap items-center gap-3">
   <h2 class="font-ui text-sm font-semibold tracking-wide uppercase text-ink">
-    <span lang="kn" class="font-normal tracking-normal normal-case text-leaf">ಹಂಚಿಕೆ</span>
+    <span data-kn lang="kn" class="font-normal tracking-normal normal-case text-leaf">{articles.share.kn}</span>
+    <span data-en class="font-normal tracking-normal normal-case text-leaf">{articles.share.en}</span>
   </h2>
   <ul class="flex flex-wrap items-center gap-2">
     {
       shares.map(({ label, href }) => (
         <li>
           <a href={href} target="_blank" rel="noopener noreferrer" class={buttonClass}>
-            {label}
+            <span data-kn lang="kn">{label.kn}</span>
+            <span data-en>{label.en}</span>
           </a>
         </li>
       ))
     }
     <li>
       <button type="button" data-copy-link={url} class={buttonClass}>
-        ಕೊಂಡಿ ಕಾಪಿ ಮಾಡಿ
+        <span data-kn lang="kn">{articles.copyLink.kn}</span>
+        <span data-en>{articles.copyLink.en}</span>
       </button>
     </li>
   </ul>
@@ -58,7 +64,8 @@ const buttonClass =
 </div>
 
 <script>
-  const COPY_LABEL = 'ಕೊಂಡಿ ಕಾಪಿ ಮಾಡಿ';
+  import { activeLocale } from '../../i18n/client';
+  import { ui } from '../../i18n/ui';
 
   for (const button of document.querySelectorAll<HTMLButtonElement>(
     '[data-copy-link]',
@@ -84,15 +91,19 @@ const buttonClass =
         scratch.remove();
       }
 
+      const en = activeLocale() === 'en';
       const status = button
         .closest('[data-share]')
         ?.querySelector<HTMLElement>('[data-copy-status]');
       if (status) {
         status.textContent = copied
-          ? 'ಕೊಂಡಿ ಕಾಪಿ ಆಯಿತು'
-          : 'ಕಾಪಿ ಆಗಲಿಲ್ಲ — ವಿಳಾಸ ಪಟ್ಟಿಯ ಕೊಂಡಿಯನ್ನು ಹಂಚಿಕೊಳ್ಳಿ';
+          ? en
+            ? ui.articles.copied.en
+            : ui.articles.copied.kn
+          : en
+            ? ui.articles.copyFailed.en
+            : ui.articles.copyFailed.kn;
       }
-      button.textContent = COPY_LABEL;
 
       window.setTimeout(() => {
         if (status) status.textContent = '';

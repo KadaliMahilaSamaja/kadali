@@ -1,13 +1,17 @@
 ---
 /**
  * Article card for grids — rectangular, cover image top, category label,
- * Fraunces title with hover underline reveal, excerpt and bilingual byline.
+ * title with hover underline reveal, excerpt and bilingual byline.
  * Hover: image scale 1.02 + underline reveal (reduced-motion handled in
  * global.css). `arch` gives the card the temple-arch top mask; use on the
  * featured/first card of a grid only.
+ *
+ * Titles, excerpts and authors stay in their written language (Kannada),
+ * wrapped in lang="kn"; only the category chip and chrome switch.
  */
 import type { CollectionEntry } from 'astro:content';
 import { CATEGORY_LABELS } from './categories';
+import { ui } from '../../i18n/ui';
 import ArticleDate from './ArticleDate.astro';
 
 interface Props {
@@ -44,30 +48,36 @@ const { kn, en } = CATEGORY_LABELS[category];
     </div>
     <div class="flex flex-1 flex-col gap-3 p-5 pt-6">
       <p class="font-ui text-xs font-semibold tracking-wider uppercase text-leaf">
-        <span lang="kn" class="tracking-normal normal-case">{kn}</span>
+        <span data-kn lang="kn" class="tracking-normal normal-case">{kn}</span>
+        <span data-en class="tracking-normal normal-case">{en}</span>
       </p>
       <h3 class="font-display text-2xl leading-snug text-ink">
         <span
           class="bg-linear-to-r from-leaf to-leaf bg-[length:0%_2px] bg-left-bottom bg-no-repeat pb-0.5 transition-[background-size] duration-200 group-hover:bg-[length:100%_2px]"
         >
-          {title}
+          <span lang="kn">{title}</span>
         </span>
       </h3>
-      <p class="font-body text-base text-stone">{description}</p>
+      <p class="font-body text-base text-stone"><span lang="kn">{description}</span></p>
       {
         tags.length > 0 && (
-          <ul class="flex flex-wrap gap-1.5" aria-label="ಟ್ಯಾಗ್‌ಗಳು">
+          <ul class="flex flex-wrap gap-1.5" aria-label={ui.articles.tagsAria.kn}>
             {tags.map((tag) => (
               <li class="border border-ink/15 bg-jasmine px-2 py-0.5 font-ui text-xs font-medium lowercase text-stone">
                 <span aria-hidden="true">#</span>
-                {tag}
+                <span lang="kn">{tag}</span>
               </li>
             ))}
           </ul>
         )
       }
       <p class="mt-auto pt-3 font-ui text-sm text-stone">
-        <span class="text-stone/75">ಲೇಖಕಿ:</span> <span class="font-medium text-ink">{author}</span> · <ArticleDate date={pubDate} />
+        <span class="text-stone/75">
+          <span data-kn lang="kn">{ui.home.by.kn}</span>
+          <span data-en>{ui.home.by.en}</span>
+        </span>{' '}
+        <span class="font-medium text-ink"><span lang="kn">{author}</span></span> ·{' '}
+        <ArticleDate date={pubDate} />
       </p>
     </div>
   </a>

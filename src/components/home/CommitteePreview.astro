@@ -1,39 +1,20 @@
 ---
 import { getCollection } from 'astro:content';
+import { ROLE_LABELS, ROLE_ORDER, ui } from '../../i18n/ui';
 
 /**
  * Homepage committee preview — the board's own members, Kannada-primary.
  * Order: president → vice-president → secretary → joint secretary →
  * treasurer → directors → members; the section hides when empty.
  */
-const ROLE_ORDER = [
-  'president',
-  'vice_president',
-  'secretary',
-  'joint_secretary',
-  'treasurer',
-  'director',
-  'member',
-] as const;
-
-type Role = (typeof ROLE_ORDER)[number];
-
-const ROLE_LABELS_KN: Record<Role, string> = {
-  president: 'ಅಧ್ಯಕ್ಷರು',
-  vice_president: 'ಉಪಾಧ್ಯಕ್ಷರು',
-  secretary: 'ಕಾರ್ಯದರ್ಶಿ',
-  joint_secretary: 'ಸಹಕಾರ್ಯದರ್ಶಿ',
-  treasurer: 'ಖಜಾಂಚಿ',
-  director: 'ನಿರ್ದೇಶಕರು',
-  member: 'ಸದಸ್ಯೆ',
-};
-
 const committee = (await getCollection('people')).sort(
   (a, b) =>
     ROLE_ORDER.indexOf(a.data.role) - ROLE_ORDER.indexOf(b.data.role) ||
     a.data.order - b.data.order ||
     a.data.name.localeCompare(b.data.name),
 );
+
+const { home } = ui;
 ---
 
 {
@@ -42,21 +23,26 @@ const committee = (await getCollection('people')).sort(
       <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:py-20">
         <div class="reveal flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div>
-            <p class="eyebrow-kn">ನಮ್ಮ ಜನ</p>
+            <p class="eyebrow-kn">
+              <span data-kn lang="kn">{home.committeeEyebrow.kn}</span>
+              <span data-en>{home.committeeEyebrow.en}</span>
+            </p>
             <h2 id="committee-heading" class="text-section font-bold">
-              ಒಟ್ಟಾಗಿ ಮುನ್ನಡೆಸುವ ಕೈಗಳು
+              <span data-kn lang="kn">{home.committeeHeading.kn}</span>
+              <span data-en>{home.committeeHeading.en}</span>
             </h2>
           </div>
           <div class="md:pb-2 md:text-right">
             <p class="max-w-sm font-body text-lg leading-relaxed text-stone">
-              ಕದಳಿ ವನಿತಾ ಸಮಾಜದ ಹಿಂದೆ ಇರುವ ಸೇವಾ ಮನಸ್ಸುಗಳು, ಸಮರ್ಪಣೆ ಮತ್ತು
-              ಒಗ್ಗಟ್ಟಿನ ಪರಿಚಯ.
+              <span data-kn lang="kn">{home.committeeLede.kn}</span>
+              <span data-en class="font-serif">{home.committeeLede.en}</span>
             </p>
             <a
               href="/about"
               class="underline-reveal mt-3 inline-flex items-center gap-1.5 font-ui text-base font-semibold text-leaf active:text-sindoor"
             >
-              <span>ಸಂಪೂರ್ಣ ಸಮಿತಿ</span>
+              <span data-kn lang="kn">{home.fullCommittee.kn}</span>
+              <span data-en>{home.fullCommittee.en}</span>
               <span aria-hidden="true">→</span>
             </a>
           </div>
@@ -66,6 +52,7 @@ const committee = (await getCollection('people')).sort(
         <div class="rail-x mt-10 pb-2 md:hidden">
           {committee.map((person, i) => {
             const { name, nameKn, role, photo } = person.data;
+            const roleLabel = ROLE_LABELS[role];
             return (
               <div
                 class="reveal min-w-[64%] snap-center sm:min-w-[38%]"
@@ -87,7 +74,8 @@ const committee = (await getCollection('people')).sort(
                     <span lang="kn">{nameKn ?? name}</span>
                   </h3>
                   <p class="mt-2 font-ui text-sm font-semibold text-leaf">
-                    <span lang="kn">{ROLE_LABELS_KN[role]}</span>
+                    <span data-kn lang="kn">{roleLabel.kn}</span>
+                    <span data-en>{roleLabel.en}</span>
                   </p>
                 </article>
               </div>
@@ -95,7 +83,8 @@ const committee = (await getCollection('people')).sort(
           })}
         </div>
         <p class="swipe-hint md:hidden" aria-hidden="true">
-          ಸರಿಸಿ ಪರಿಚಯ ಪಡೆಯಿರಿ
+          <span data-kn lang="kn">{home.swipeMeet.kn}</span>
+          <span data-en>{home.swipeMeet.en}</span>
         </p>
 
         {/* Tablet & Desktop: centered wrap grid — a partial last row (e.g. a
@@ -103,6 +92,7 @@ const committee = (await getCollection('people')).sort(
         <div class="hidden md:flex md:flex-wrap md:justify-center gap-6 mt-10">
           {committee.map((person, i) => {
             const { name, nameKn, role, photo } = person.data;
+            const roleLabel = ROLE_LABELS[role];
             return (
               <div
                 class="reveal w-[calc(50%-0.75rem)] md:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1.125rem)]"
@@ -124,7 +114,8 @@ const committee = (await getCollection('people')).sort(
                     <span lang="kn">{nameKn ?? name}</span>
                   </h3>
                   <p class="mt-1.5 font-ui text-sm font-semibold text-leaf">
-                    <span lang="kn">{ROLE_LABELS_KN[role]}</span>
+                    <span data-kn lang="kn">{roleLabel.kn}</span>
+                    <span data-en>{roleLabel.en}</span>
                   </p>
                 </article>
               </div>

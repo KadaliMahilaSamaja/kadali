@@ -1,9 +1,9 @@
 ---
 /**
- * Event date block — big Fraunces day number, Kannada month, year, and the
- * IST time range. Jasmine tile with a hairline ink border.
+ * Event date block — big day number, bilingual month, year, and the IST
+ * time range. Jasmine tile with a hairline ink border.
  */
-import { istInstant, istTimeRange } from './format';
+import { istInstant, istTimeRange } from '../../i18n/dates';
 
 interface Props {
   startAt: Date;
@@ -14,7 +14,7 @@ interface Props {
 }
 
 const { startAt, endAt, size = 'regular', class: className } = Astro.props;
-const { day, monthKn, year } = istInstant(startAt);
+const { day, month, year } = istInstant(startAt);
 const time = istTimeRange(startAt, endAt);
 
 const daySize = {
@@ -29,9 +29,13 @@ const pad = size === 'large' ? 'px-5 py-4' : 'px-4 py-3';
   <span class={`font-display font-semibold text-leaf ${daySize}`}>{day}</span>
   <span class="flex flex-col font-ui leading-tight">
     <span class={size === 'compact' ? 'text-xs' : 'text-sm'}>
-      <span lang="kn" class="font-semibold text-ink">{monthKn}</span>
+      <span data-kn lang="kn" class="font-semibold text-ink">{month.kn}</span>
+      <span data-en class="font-semibold text-ink">{month.en}</span>
       <span class="text-stone">{year}</span>
     </span>
-    <span class={`${size === 'compact' ? 'text-xs' : 'text-sm'} text-stone`}>{time}</span>
+    <span class={`${size === 'compact' ? 'text-xs' : 'text-sm'} text-stone`}>
+      <span data-kn lang="kn">{time.kn}</span>
+      <span data-en>{time.en}</span>
+    </span>
   </span>
 </div>

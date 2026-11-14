@@ -1,7 +1,10 @@
 ---
+import type { Bi } from '../../i18n/ui';
+import { ui } from '../../i18n/ui';
+
 interface Props {
-  heading: string;
-  description: string;
+  heading: Bi;
+  description: Bi;
   /** A notice ribbon sits above the hero — fold the strip into the min-height math. */
   withNotice?: boolean;
 }
@@ -11,21 +14,44 @@ const { heading, description, withNotice = false } = Astro.props;
 /* The mockup sets the headline as beat lines ("ಭಕ್ತಿ ಬೇರು. ಸಂಸ್ಕೃತಿ ಉಸಿರು.
    ಮಹಿಳೆಯರ ಒಗ್ಗಟ್ಟು.") — split on the full stops, keep the punctuation, and
    gold the middle line of a three-beat head. A period-free heading renders
-   as one unbroken line. */
-const lines = heading
-  .split('.')
-  .map((line) => line.trim())
-  .filter(Boolean)
-  .map((line) => `${line}.`);
-const goldLine = lines.length === 3 ? 1 : -1;
+   as one unbroken line. Both language variants carry their own beat lines,
+   gold line and word choreography. */
+const linesFor = (text: string) =>
+  text
+    .split('.')
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => `${line}.`);
 
 /* Kannada line-breaks at syllable boundaries inside a word; wrapping each
    word unbreakably keeps breaks at the spaces the author wrote. */
 const words = (line: string) => line.split(/\s+/);
-const wordCount = lines.reduce((n, line) => n + words(line).length, 0);
+
+interface BeatLine {
+  text: string;
+  gold: boolean;
+  words: string[];
+}
+
+const beatsFor = (text: string): BeatLine[] => {
+  const lines = linesFor(text);
+  const goldLine = lines.length === 3 ? 1 : -1;
+  return lines.map((line, li) => ({
+    text: line,
+    gold: li === goldLine,
+    words: words(line),
+  }));
+};
+
+const knBeats = beatsFor(heading.kn);
+const enBeats = beatsFor(heading.en);
+
 /* Entrance choreography: each word 90ms apart, then sentence, actions, art. */
 const wordDelay = (i: number) => 140 + i * 90;
-const afterWords = 140 + wordCount * 90;
+const afterWords = (beats: BeatLine[]) =>
+  140 + beats.reduce((n, line) => n + line.words.length, 0) * 90;
+const knAfter = afterWords(knBeats);
+const enAfter = afterWords(enBeats);
 ---
 
 <section
@@ -47,60 +73,94 @@ const afterWords = 140 + wordCount * 90;
     <!-- Word block: gold kicker, serif beat lines, one sentence, two actions -->
     <div class="min-w-0 md:max-w-[36rem]">
       <p class="hero-kicker hero-fade font-ui [animation-delay:40ms]">
-        ಕದಳಿ ವನಿತಾ ಸಮಾಜ · ಶಿವಮೊಗ್ಗ
+        <span data-kn lang="kn">{ui.hero.kicker.kn}</span>
+        <span data-en>{ui.hero.kicker.en}</span>
       </p>
       <h1 class="hero-title mt-5">
-        {
-          lines.map((line, li) => (
-            <span class:list={['block', li === goldLine && 'hero-title-gold']}>
-              {words(line).map((word, wi) => (
-                <>
-                  {wi > 0 && ' '}
-                  <span
-                    class="hero-rise whitespace-nowrap"
-                    style={`animation-delay: ${wordDelay(
-                      lines
-                        .slice(0, li)
-                        .reduce((n, l) => n + words(l).length, 0) + wi,
-                    )}ms`}
-                  >
-                    {word}
-                  </span>
-                </>
-              ))}
-            </span>
-          ))
-        }
+        <span data-kn lang="kn" class="contents">
+          {
+            knBeats.map((line, li) => (
+              <span class:list={['block', line.gold && 'hero-title-gold']}>
+                {line.words.map((word, wi) => (
+                  <>
+                    {wi > 0 && ' '}
+                    <span
+                      class="hero-rise whitespace-nowrap"
+                      style={`animation-delay: ${wordDelay(
+                        knBeats.slice(0, li).reduce((n, l) => n + l.words.length, 0) + wi,
+                      )}ms`}
+                    >
+                      {word}
+                    </span>
+                  </>
+                ))}
+              </span>
+            ))
+          }
+        </span>
+        <span data-en class="contents">
+          {
+            enBeats.map((line, li) => (
+              <span class:list={['block', line.gold && 'hero-title-gold']}>
+                {line.words.map((word, wi) => (
+                  <>
+                    {wi > 0 && ' '}
+                    <span
+                      class="hero-rise whitespace-nowrap"
+                      style={`animation-delay: ${wordDelay(
+                        enBeats.slice(0, li).reduce((n, l) => n + l.words.length, 0) + wi,
+                      )}ms`}
+                    >
+                      {word}
+                    </span>
+                  </>
+                ))}
+              </span>
+            ))
+          }
+        </span>
       </h1>
       <p
+        data-kn
+        lang="kn"
         class="hero-rise mt-5 max-w-md font-body text-lg leading-relaxed text-milk/80 md:text-xl"
-        style={`animation-delay: ${afterWords}ms`}
+        style={`animation-delay: ${knAfter}ms`}
       >
-        {description}
+        {description.kn}
+      </p>
+      <p
+        data-en
+        class="hero-rise mt-5 max-w-md font-serif text-lg leading-relaxed text-milk/80 md:text-xl"
+        style={`animation-delay: ${enAfter}ms`}
+      >
+        {description.en}
       </p>
       <div
         class="hero-rise mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
-        style={`animation-delay: ${afterWords + 120}ms`}
+        style={`animation-delay: ${Math.max(knAfter, enAfter) + 120}ms`}
       >
         <a
           href="#aim"
           class="hero-btn-gold inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full px-7 py-3 font-ui text-base font-semibold"
         >
-          <span>ಕದಳಿಯನ್ನು ಅರಿಯಿರಿ</span>
+          <span data-kn lang="kn">{ui.hero.knowKadali.kn}</span>
+          <span data-en>{ui.hero.knowKadali.en}</span>
           <span aria-hidden="true">↗</span>
         </a>
         <a
           href="/articles"
           class="hero-btn-ghost inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full px-7 py-3 font-ui text-base font-semibold"
         >
-          <span>ನಮ್ಮ ಬರಹಗಳನ್ನು ಓದಿ</span>
+          <span data-kn lang="kn">{ui.hero.readWritings.kn}</span>
+          <span data-en>{ui.hero.readWritings.en}</span>
         </a>
       </div>
       <p
         class="hero-note hero-fade mt-12 hidden md:flex"
         style="animation-delay: 700ms"
       >
-        <span lang="kn">ಮಹಿಳೆಯರ ಧ್ವನಿ · ನಮ್ಮ ಪರಂಪರೆ · ನಾಳೆಯ ಪೀಳಿಗೆ</span>
+        <span data-kn lang="kn">{ui.hero.note.kn}</span>
+        <span data-en>{ui.hero.note.en}</span>
       </p>
     </div>
   </div>
@@ -127,11 +187,14 @@ const afterWords = 140 + wordCount * 90;
     </div>
   </div>
 
-  <p class="art-caption" aria-hidden="true" lang="kn">
-    ಅಕ್ಕಮಹಾದೇವಿ · ವಚನ ಪರಂಪರೆ
+  <p class="art-caption" aria-hidden="true">
+    <span data-kn lang="kn">{ui.hero.artCaption.kn}</span>
+    <span data-en>{ui.hero.artCaption.en}</span>
   </p>
   <a href="#aim" class="scroll-cue font-ui">
-    <b aria-hidden="true"></b> ಮುಂದೆ ಸಾಗಿ
+    <b aria-hidden="true"></b>
+    <span data-kn lang="kn">{ui.hero.scrollCue.kn}</span>
+    <span data-en>{ui.hero.scrollCue.en}</span>
   </a>
 </section>
 
@@ -224,7 +287,7 @@ const afterWords = 140 + wordCount * 90;
   }
 
   .hero-title {
-    font-family: var(--font-kn-serif);
+    font-family: var(--font-display);
     font-weight: 500;
     /* Fluid font size with Kannada clearance: 1.28 line-height gives room for
        stacked ottakshara (subscript consonants) and vowel signs. */

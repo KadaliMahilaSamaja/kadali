@@ -2,16 +2,18 @@
 /**
  * Shared intro band for the standalone pages (about / contact / privacy).
  * Alternates section treatment per the design brief: leaf / jasmine / cream.
- * Decorative Arch sits off to the right on wider screens.
+ * Decorative Arch sits off to the right on wider screens. All copy props are
+ * bilingual ({ kn, en }) pairs rendered as dual spans.
  */
 import Arch from '../motifs/Arch.astro';
+import type { Bi } from '../../i18n/ui';
 
 interface Props {
-  eyebrow: string;
-  title: string;
-  /** Kannada subtitle line — always rendered with lang="kn". */
-  kn?: string;
-  lede?: string;
+  eyebrow: Bi;
+  title: Bi;
+  /** Subtitle line — rendered below the title in both languages. */
+  kn?: Bi;
+  lede?: Bi;
   tone?: 'leaf' | 'jasmine' | 'cream';
 }
 
@@ -40,7 +42,8 @@ const tones: Record<NonNullable<Props['tone']>, string> = {
         onLeaf ? 'text-milk/80' : 'text-leaf',
       ]}
     >
-      {eyebrow}
+      <span data-kn lang="kn" class="tracking-normal normal-case">{eyebrow.kn}</span>
+      <span data-en class="tracking-normal normal-case">{eyebrow.en}</span>
     </p>
     <h1
       class:list={[
@@ -48,18 +51,19 @@ const tones: Record<NonNullable<Props['tone']>, string> = {
         onLeaf && 'text-milk',
       ]}
     >
-      {title}
+      <span data-kn lang="kn">{title.kn}</span>
+      <span data-en>{title.en}</span>
     </h1>
     {
       kn && (
         <p
-          lang="kn"
           class:list={[
             'mt-3 font-display text-xl',
             onLeaf ? 'text-milk/90' : 'text-leaf',
           ]}
         >
-          {kn}
+          <span data-kn lang="kn">{kn.kn}</span>
+          <span data-en>{kn.en}</span>
         </p>
       )
     }
@@ -71,7 +75,8 @@ const tones: Record<NonNullable<Props['tone']>, string> = {
             onLeaf ? 'text-milk/85' : 'text-stone',
           ]}
         >
-          {lede}
+          <span data-kn lang="kn">{lede.kn}</span>
+          <span data-en class="font-serif">{lede.en}</span>
         </p>
       )
     }

@@ -362,6 +362,22 @@ collections:
           - name: heroDescription
             label: Description
             widget: text
+          - name: heroHeadingEn
+            label: Heading (English)
+            widget: string
+            required: false
+            hint: >-
+              Optional. The English hero heading shown after the visitor
+              switches the site to English. Leave empty to use the built-in
+              English translation.
+          - name: heroDescriptionEn
+            label: Description (English)
+            widget: text
+            required: false
+            hint: >-
+              Optional. The English description shown after the visitor
+              switches the site to English. Leave empty to use the built-in
+              English translation.
           - name: featuredArticle
             label: Featured article
             widget: relation

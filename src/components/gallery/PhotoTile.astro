@@ -7,13 +7,15 @@
  * Thumb and full-size image are the same file for now (SVG seeds);
  * TODO(optimize): generate small thumbs when real photographs arrive.
  */
+import { ui } from '../../i18n/ui';
+
 interface Props {
   src: string;
   caption?: string;
 }
 
 const { src, caption } = Astro.props;
-const alt = caption ?? 'ಕದಳಿ ಚಿತ್ರಶಾಲೆಯ ಛಾಯಾಚಿತ್ರ';
+const alt = caption ?? ui.gallery.photoAltFallback.kn;
 
 // Seed SVGs are square 800x800; real photos will vary, but intrinsic
 // width/height only guards layout before the image decodes, so square
@@ -42,7 +44,7 @@ const HEIGHT = 800;
   {
     caption && (
       <span class="block px-2.5 py-2 font-ui text-sm leading-snug text-stone underline-offset-4 decoration-leaf group-hover:underline">
-        {caption}
+        <span lang="kn">{caption}</span>
       </span>
     )
   }
