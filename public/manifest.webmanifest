@@ -1,0 +1,23 @@
+{
+  "name": "ಕದಳಿ ವನಿತಾ ಸಮಾಜ",
+  "short_name": "ಕದಳಿ",
+  "description": "ಅಕ್ಕಮಹಾದೇವಿಯ ವಚನಗಳ ನೆನಪಲ್ಲಿ ಬೆಳೆಯುವ, ಶಿವಮೊಗ್ಗದ ಮಹಿಳೆಯರ ಒಡನಾಡು. ವಚನ ವೃತ್ತ, ಕಸುತಿ ಹೆಣಿಗೆ, ಸೇವೆ.",
+  "lang": "kn",
+  "dir": "ltr",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f9ead3",
+  "theme_color": "#f9ead3",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    {
+      "src": "/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

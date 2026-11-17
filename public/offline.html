@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="kn" data-lang="kn">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>ಜಾಲಬಂಧ ಇಲ್ಲ · Offline — ಕದಳಿ ವನಿತಾ ಸಮಾಜ</title>
+    <script>
+      // Same pre-paint trick as the site: show the visitor's stored language
+      // without a flash of the other one.
+      try {
+        if (localStorage.getItem('kadali-lang') === 'en') {
+          document.documentElement.dataset.lang = 'en';
+          document.documentElement.lang = 'en';
+        }
+      } catch (e) {
+        /* storage unavailable — the Kannada default stands */
+      }
+    </script>
+    <style>
+      /*
+       * The offline fallback: deliberately self-contained (no fonts, no
+       * stylesheets — nothing to fail to load while offline). Brand colours
+       * are inlined from src/styles/tokens.css.
+       */
+      :root {
+        --ink: #20281f;
+        --leaf: #1d5f3c;
+        --cream: #f9ead3;
+        --jasmine: #f2ddb9;
+        --milk: #fffdf7;
+      }
+      html[data-lang='en'] [data-kn] {
+        display: none !important;
+      }
+      html[data-lang='kn'] [data-en] {
+        display: none !important;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: var(--cream);
+        color: var(--ink);
+        font-family: system-ui, sans-serif;
+        text-align: center;
+        padding: 1.5rem;
+        box-sizing: border-box;
+      }
+      .card {
+        background: var(--milk);
+        border: 1px solid var(--jasmine);
+        padding: 2.5rem 2rem;
+        max-width: 26rem;
+      }
+      /* The bud-and-dots mark from favicon.svg, drawn inline. */
+      .mark {
+        width: 48px;
+        height: 48px;
+        margin: 0 auto;
+      }
+      h1 {
+        font-size: 1.35rem;
+        line-height: 1.3;
+        margin: 1.25rem 0 0.5rem;
+        color: var(--leaf);
+      }
+      p {
+        margin: 0.25rem 0;
+        line-height: 1.6;
+        font-size: 0.95rem;
+      }
+      button {
+        margin-top: 1.5rem;
+        border: 1px solid var(--leaf);
+        background: var(--leaf);
+        color: var(--milk);
+        font: inherit;
+        font-weight: 600;
+        padding: 0.6rem 1.6rem;
+        cursor: pointer;
+      }
+      button:hover {
+        background: transparent;
+        color: var(--leaf);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="16" cy="16" r="14" fill="#1D5F3C" />
+        <circle cx="12" cy="13" r="1.6" fill="#FBF6ED" />
+        <circle cx="19" cy="12" r="1.6" fill="#FBF6ED" />
+        <circle cx="16" cy="18" r="1.6" fill="#FBF6ED" />
+        <circle cx="10.5" cy="18.5" r="1.2" fill="#FBF6ED" />
+        <circle cx="21.5" cy="18" r="1.2" fill="#FBF6ED" />
+      </svg>
+      <h1>
+        <span data-kn lang="kn">ಜಾಲಬಂಧ ಈಗ ಇಲ್ಲ</span>
+        <span data-en>No network right now</span>
+      </h1>
+      <p>
+        <span data-kn lang="kn"
+          >ಸಂಪರ್ಕ ಮರಳಿದ ತಕ್ಷಣ ಈ ಪುಟ ಮತ್ತೆ ತೆರೆಯುತ್ತದೆ. ಈಗಾಗಲೇ ನೋಡಿದ ಪುಟಗಳು ಅಳಿದಿಲ್ಲ — ಹಿಂದಿರುಗಿ ಅವನ್ನು ಓದಬಹುದು.</span
+        >
+        <span data-en
+          >This page will open again once the connection returns. Pages you have
+          already visited are still there — go back and keep reading.</span
+        >
+      </p>
+      <button type="button" data-retry>
+        <span data-kn lang="kn">ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ</span>
+        <span data-en>Try again</span>
+      </button>
+    </main>
+    <script>
+      document.querySelector('[data-retry]').addEventListener('click', () => {
+        location.reload();
+      });
+    </script>
+  </body>
+</html>

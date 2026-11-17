@@ -1,0 +1,241 @@
+---
+/**
+ * "Install as app" banner — a small fixed card that offers to install the
+ * site as an app, replacing the browser's bare mini-infobar with bilingual
+ * copy. Never a modal (the LanguageGate owns the first-visit dialog) and
+ * never shown before the gate has closed.
+ *
+ * Chrome/Android: `beforeinstallprompt` is captured and the native install
+ * dialog fired from the banner's button. iOS Safari has no such event, so a
+ * variant with Share → "Add to Home Screen" instructions is shown instead.
+ * Dismissal is remembered in localStorage (never a cookie — see the privacy
+ * page), and the banner stays hidden once the app is running standalone.
+ */
+import { ui } from '../i18n/ui';
+
+const t = ui.install;
+---
+
+<aside
+  id="install-prompt"
+  class="install-prompt fixed inset-x-4 bottom-4 z-50 sm:inset-x-auto sm:right-6 sm:w-[22rem]"
+  hidden
+  data-variant="chrome"
+  aria-label={t.title.kn}
+>
+  <div class="flex items-start gap-3 border border-ink/10 bg-milk p-4 shadow-2xl">
+    <svg class="mt-0.5 size-9 shrink-0" viewBox="0 0 32 32" aria-hidden="true">
+      <circle cx="16" cy="16" r="14" class="fill-leaf" />
+      <circle cx="12" cy="13" r="1.6" class="fill-cream" />
+      <circle cx="19" cy="12" r="1.6" class="fill-cream" />
+      <circle cx="16" cy="18" r="1.6" class="fill-cream" />
+      <circle cx="10.5" cy="18.5" r="1.2" class="fill-cream" />
+      <circle cx="21.5" cy="18" r="1.2" class="fill-cream" />
+    </svg>
+
+    <div class="min-w-0 flex-1">
+      <p class="install-title font-display text-base font-bold text-ink" data-chrome-only>
+        <span data-kn lang="kn">{t.title.kn}</span><span data-en>{t.title.en}</span>
+      </p>
+      <p class="install-title font-display text-base font-bold text-ink" data-ios-only>
+        <span data-kn lang="kn">{t.iosTitle.kn}</span><span data-en>{t.iosTitle.en}</span>
+      </p>
+      <p class="install-body mt-1 font-ui text-sm leading-relaxed text-stone" data-chrome-only>
+        <span data-kn lang="kn">{t.body.kn}</span><span data-en>{t.body.en}</span>
+      </p>
+      <p class="install-body mt-1 font-ui text-sm leading-relaxed text-stone" data-ios-only>
+        <span data-kn lang="kn">{t.iosBody.kn}</span><span data-en>{t.iosBody.en}</span>
+      </p>
+    </div>
+
+    <div class="flex shrink-0 items-center gap-2 self-center">
+      <button
+        type="button"
+        class="install-accept"
+        data-install-accept
+        data-chrome-only
+      >
+        <span data-kn lang="kn">{t.installBtn.kn}</span><span data-en>{t.installBtn.en}</span>
+      </button>
+      <button
+        type="button"
+        class="install-dismiss"
+        data-install-dismiss
+        aria-label={t.dismiss.kn}
+      >
+        ✕
+      </button>
+    </div>
+  </div>
+</aside>
+
+<style>
+  /* Variant switching: the script sets data-variant before revealing. */
+  .install-prompt[data-variant='ios'] [data-chrome-only] {
+    display: none !important;
+  }
+  .install-prompt[data-variant='chrome'] [data-ios-only] {
+    display: none !important;
+  }
+
+  .install-accept {
+    cursor: pointer;
+    border: 1px solid var(--color-leaf);
+    background-color: var(--color-leaf);
+    color: var(--color-milk);
+    padding: 0.45rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition:
+      background-color 200ms ease,
+      color 200ms ease;
+  }
+
+  .install-accept:hover,
+  .install-accept:active {
+    background-color: transparent;
+    color: var(--color-leaf);
+  }
+
+  .install-dismiss {
+    cursor: pointer;
+    border: 0;
+    background: none;
+    color: var(--color-stone);
+    font-size: 1rem;
+    line-height: 1;
+    padding: 0.35rem;
+    transition: color 200ms ease;
+  }
+
+  .install-dismiss:hover,
+  .install-dismiss:active {
+    color: var(--color-ink);
+  }
+
+  /* Slide up gently — transform/opacity only, and still under reduced motion. */
+  .install-prompt:not([hidden]) {
+    animation: install-in 300ms ease;
+  }
+
+  @keyframes install-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.75rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .install-prompt:not([hidden]) {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  import { PWA_DISMISS_KEY } from '../i18n/client';
+
+  interface BeforeInstallPromptEvent extends Event {
+    prompt(): Promise<void>;
+    userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+  }
+
+  const banner = document.getElementById('install-prompt');
+  if (banner) {
+    const alreadyStandalone = () =>
+      window.matchMedia('(display-mode: standalone)').matches ||
+      window.matchMedia('(display-mode: minimal-ui)').matches ||
+      // iOS Safari only sets this on home-screen web apps.
+      (navigator as Navigator & { standalone?: boolean }).standalone === true;
+
+    const wasDismissed = () => {
+      try {
+        return localStorage.getItem(PWA_DISMISS_KEY) === '1';
+      } catch {
+        return false;
+      }
+    };
+
+    let deferred: BeforeInstallPromptEvent | null = null;
+
+    const hide = () => {
+      banner.hidden = true;
+    };
+
+    const rememberDismissal = () => {
+      try {
+        localStorage.setItem(PWA_DISMISS_KEY, '1');
+      } catch {
+        // Storage blocked — the banner just may return next visit.
+      }
+    };
+
+    // First visits open the language gate; wait for it to release the page,
+    // then give it a beat so the two never stack in the same moment.
+    const whenPageIsFree = () =>
+      new Promise<void>((resolve) => {
+        const gate = document.getElementById('lang-gate');
+        if (!gate?.open) {
+          resolve();
+          return;
+        }
+        gate.addEventListener(
+          'close',
+          () => setTimeout(resolve, 1000),
+          { once: true },
+        );
+      });
+
+    const offer = (variant: 'chrome' | 'ios') => {
+      if (wasDismissed() || alreadyStandalone()) return;
+      banner.dataset.variant = variant;
+      banner.hidden = false;
+    };
+
+    // Chrome/Android: capture the native prompt and re-offer it from the
+    // banner, after a quiet moment so first paint is never competing.
+    window.addEventListener('beforeinstallprompt', (event) => {
+      event.preventDefault();
+      deferred = event as BeforeInstallPromptEvent;
+      setTimeout(() => whenPageIsFree().then(() => offer('chrome')), 4000);
+    });
+
+    // iOS: no install event exists — show the Share-menu instructions instead.
+    const isIOS =
+      /iP(hone|ad|od)/.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    if (isIOS) {
+      const offerIos = () =>
+        setTimeout(() => whenPageIsFree().then(() => offer('ios')), 6000);
+      if (document.readyState === 'complete') offerIos();
+      else window.addEventListener('load', offerIos, { once: true });
+    }
+
+    banner
+      .querySelector<HTMLButtonElement>('[data-install-accept]')
+      ?.addEventListener('click', async () => {
+        if (!deferred) return;
+        await deferred.prompt();
+        const { outcome } = await deferred.userChoice;
+        deferred = null;
+        if (outcome === 'accepted') hide();
+      });
+
+    banner
+      .querySelector<HTMLButtonElement>('[data-install-dismiss]')
+      ?.addEventListener('click', () => {
+        hide();
+        rememberDismissal();
+      });
+
+    window.addEventListener('appinstalled', () => {
+      hide();
+      rememberDismissal();
+    });
+  }
+</script>

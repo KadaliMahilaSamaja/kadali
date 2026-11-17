@@ -8,6 +8,7 @@ import Header from './Header.astro';
 import Footer from './Footer.astro';
 import JsonLd from './JsonLd.astro';
 import LanguageGate from './LanguageGate.astro';
+import InstallPrompt from './InstallPrompt.astro';
 import { ui } from '../i18n/ui';
 
 // Preload the Kannada sans — headings (incl. the hero display line) are set
@@ -119,6 +120,22 @@ const jsonLd = [
       <slot />
     </main>
     <Footer />
+    <InstallPrompt />
     <LanguageGate />
   </body>
 </html>
+
+<script>
+  // Service worker: offline caching + installability. Registered after load
+  // so it never competes with first paint, and only in production builds —
+  // the dev server's constantly-changing output would poison the cache.
+  // Registration failing (rare, e.g. blocked storage) changes nothing: the
+  // site works fine without it.
+  if ('serviceWorker' in navigator && import.meta.env.PROD) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').catch(() => {
+        /* progressive enhancement — carry on without offline support */
+      });
+    });
+  }
+</script>

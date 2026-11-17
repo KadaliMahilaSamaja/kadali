@@ -348,6 +348,22 @@ export const ui = {
       en: 'The page you are looking for is missing or has moved. Try these paths instead.',
     },
   },
+
+  /* ——— install as app ——— */
+  install: {
+    title: { kn: 'ಕದಳಿ ಆ್ಯಪ್ ಸ್ಥಾಪಿಸಿ', en: 'Install the Kadali app' },
+    body: {
+      kn: 'ತೆರೆಯಲು ಬೇಗ, ಜಾಲಬಂಧ ಇಲ್ಲದಿದ್ದರೂ ಓದಬಹುದು.',
+      en: 'Opens in its own window, and stays readable when the network drops.',
+    },
+    installBtn: { kn: 'ಸ್ಥಾಪಿಸಿ', en: 'Install' },
+    dismiss: { kn: 'ಈಗ ಬೇಡ', en: 'Not now' },
+    iosTitle: { kn: 'ಕದಳಿಯನ್ನು ಮುಖಪುಟಕ್ಕೆ ಸೇರಿಸಿ', en: 'Add Kadali to your Home Screen' },
+    iosBody: {
+      kn: 'ಹಂಚಿಕೆಯ (Share) ಗುರುತನ್ನು ಒತ್ತಿ, ಆಮೇಲೆ “ಮುಖಪುಟಕ್ಕೆ ಸೇರಿಸಿ” ಆಯ್ಕೆ ಮಾಡಿ.',
+      en: 'Tap the Share button, then choose “Add to Home Screen”.',
+    },
+  },
 } as const;
 
 /** Committing-author role strings for the articles' author bios. */

@@ -13,6 +13,13 @@
 
 export const LANG_KEY = 'kadali-lang';
 
+/**
+ * Marks that the visitor dismissed the "install as app" banner, so it never
+ * nags again (see InstallPrompt.astro). Same family as LANG_KEY: localStorage
+ * only, never a cookie.
+ */
+export const PWA_DISMISS_KEY = 'kadali-pwa-dismissed';
+
 export type Locale = 'kn' | 'en';
 
 /** The language the document is currently showing (set by the pre-paint script). */
