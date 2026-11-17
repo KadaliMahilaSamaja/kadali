@@ -82,7 +82,7 @@ export const ui = {
     youtube: { kn: 'ಯೂಟ್ಯೂಬ್', en: 'YouTube' },
     whatsapp: { kn: 'ವಾಟ್ಸ್‌ಆಪ್', en: 'WhatsApp' },
     copyright: {
-      kn: 'ಕದಳಿ ವನಿತಾ ಸಮಾಜ. ಕರ್ನಾಟಕದಲ್ಲಿ ಪ್ರೀತಿಯಿಂದ ಕಟ್ಟಿದ್ದು.',
+      kn: 'ಕದಳಿ ವನಿತಾ ಸಮಾಜ. ಶಿವಮೊಗ್ಗದಲ್ಲಿ ಅಭಿಜಿತ್ ನುಚ್ಚಿನ್ ಅವರು ಪ್ರೀತಿಯಿಂದ ಕಟ್ಟಿದ್ದು.',
       en: 'Kadali Vanita Samaja. Built with love in Shivamogga by Abhijith Nuchin.',
     },
   },
