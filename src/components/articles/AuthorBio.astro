@@ -19,18 +19,18 @@ const role = author.role as { kn: string; en: string };
 <section class="mt-14 border border-ink/15 bg-jasmine p-6 sm:p-8" aria-labelledby="author-heading">
   <div class="flex flex-col gap-6 sm:flex-row sm:items-center">
     <a href={authorUrl} class="group shrink-0 self-start sm:self-center" aria-label={`${author.name} ಅವರ ಪ್ರೊಫೈಲ್`}>
-      <div class="size-24 sm:size-28 overflow-hidden rounded-full border-2 border-leaf/30 bg-cream p-1 transition-transform duration-200 group-hover:scale-105">
+      <div class="size-32 sm:size-36 overflow-hidden rounded-full border-2 border-leaf/30 bg-cream p-1.5 transition-transform duration-200 group-hover:scale-105">
         {author.photo ? (
           <img
             src={author.photo}
             alt={author.name}
-            width="112"
-            height="112"
+            width="144"
+            height="144"
             class="size-full rounded-full object-cover"
           />
         ) : (
           <div class="flex size-full items-center justify-center rounded-full bg-leaf/10 text-leaf">
-            <span class="font-display text-4xl font-bold">
+            <span class="font-display text-5xl font-bold">
               {author.name.slice(0, 1)}
             </span>
           </div>

@@ -11,11 +11,12 @@ interface Props {
 
 const { heading, description, withNotice = false } = Astro.props;
 
-/* The mockup sets the headline as beat lines ("ಭಕ್ತಿ ಬೇರು. ಸಂಸ್ಕೃತಿ ಉಸಿರು.
-   ಮಹಿಳೆಯರ ಒಗ್ಗಟ್ಟು.") — split on the full stops, keep the punctuation, and
-   gold the middle line of a three-beat head. A period-free heading renders
-   as one unbroken line. Both language variants carry their own beat lines,
-   gold line and word choreography. */
+/* The org name is the page's h1 — the mockup's beat-line tagline ("ಭಕ್ತಿ
+   ಬೇರು. ಸಂಸ್ಕೃತಿ ಉಸಿರು. ಮಹಿಳೆಯರ ಒಗ್ಗಟ್ಟು.") follows as a smaller display
+   line beneath it, split on the full stops with the punctuation kept and
+   the middle line of a three-beat head gilded. A period-free heading
+   renders as one unbroken line. Both language variants carry their own
+   word choreography. */
 const linesFor = (text: string) =>
   text
     .split('.')
@@ -43,15 +44,24 @@ const beatsFor = (text: string): BeatLine[] => {
   }));
 };
 
+const knTitleWords = words(ui.hero.title.kn);
+const enTitleWords = words(ui.hero.title.en);
 const knBeats = beatsFor(heading.kn);
 const enBeats = beatsFor(heading.en);
 
-/* Entrance choreography: each word 90ms apart, then sentence, actions, art. */
+/* Entrance choreography: the org name's words rise first, the tagline's
+   continue the count, then sentence, actions, art. Each word 90ms apart. */
 const wordDelay = (i: number) => 140 + i * 90;
-const afterWords = (beats: BeatLine[]) =>
-  140 + beats.reduce((n, line) => n + line.words.length, 0) * 90;
-const knAfter = afterWords(knBeats);
-const enAfter = afterWords(enBeats);
+const countWords = (beats: BeatLine[]) =>
+  beats.reduce((n, line) => n + line.words.length, 0);
+const tagWordDelay = (titleWords: string[], beats: BeatLine[], li: number, wi: number) =>
+  wordDelay(
+    titleWords.length +
+      beats.slice(0, li).reduce((n, l) => n + l.words.length, 0) +
+      wi,
+  );
+const knAfter = 140 + (knTitleWords.length + countWords(knBeats)) * 90;
+const enAfter = 140 + (enTitleWords.length + countWords(enBeats)) * 90;
 ---
 
 <section
@@ -68,7 +78,7 @@ const enAfter = afterWords(enBeats);
   <div class="hero-rings" aria-hidden="true"></div>
 
   <div
-    class="relative z-[4] mx-auto w-full max-w-6xl px-4 pt-14 pb-6 sm:px-6 md:pt-0 md:pb-0"
+    class="relative z-[4] mx-auto w-full max-w-6xl px-4 pt-14 sm:px-6 md:pt-0"
   >
     <!-- Word block: gold kicker, serif beat lines, one sentence, two actions -->
     <div class="min-w-0 md:max-w-[36rem]">
@@ -79,15 +89,50 @@ const enAfter = afterWords(enBeats);
       <h1 class="hero-title mt-5">
         <span data-kn lang="kn" class="contents">
           {
+            knTitleWords.map((word, wi) => (
+              <>
+                {wi > 0 && ' '}
+                <span
+                  class="hero-rise whitespace-nowrap"
+                  style={`animation-delay: ${wordDelay(wi)}ms`}
+                >
+                  {word}
+                </span>
+              </>
+            ))
+          }
+        </span>
+        <span data-en class="contents">
+          {
+            enTitleWords.map((word, wi) => (
+              <>
+                {wi > 0 && ' '}
+                <span
+                  class="hero-rise whitespace-nowrap"
+                  style={`animation-delay: ${wordDelay(wi)}ms`}
+                >
+                  {word}
+                </span>
+              </>
+            ))
+          }
+        </span>
+      </h1>
+      <p class="hero-tagline mt-4">
+        <span data-kn lang="kn" class="contents">
+          {
             knBeats.map((line, li) => (
-              <span class:list={['block', line.gold && 'hero-title-gold']}>
+              <span class:list={['block', line.gold && 'hero-tagline-gold']}>
                 {line.words.map((word, wi) => (
                   <>
                     {wi > 0 && ' '}
                     <span
                       class="hero-rise whitespace-nowrap"
-                      style={`animation-delay: ${wordDelay(
-                        knBeats.slice(0, li).reduce((n, l) => n + l.words.length, 0) + wi,
+                      style={`animation-delay: ${tagWordDelay(
+                        knTitleWords,
+                        knBeats,
+                        li,
+                        wi,
                       )}ms`}
                     >
                       {word}
@@ -101,14 +146,17 @@ const enAfter = afterWords(enBeats);
         <span data-en class="contents">
           {
             enBeats.map((line, li) => (
-              <span class:list={['block', line.gold && 'hero-title-gold']}>
+              <span class:list={['block', line.gold && 'hero-tagline-gold']}>
                 {line.words.map((word, wi) => (
                   <>
                     {wi > 0 && ' '}
                     <span
                       class="hero-rise whitespace-nowrap"
-                      style={`animation-delay: ${wordDelay(
-                        enBeats.slice(0, li).reduce((n, l) => n + l.words.length, 0) + wi,
+                      style={`animation-delay: ${tagWordDelay(
+                        enTitleWords,
+                        enBeats,
+                        li,
+                        wi,
                       )}ms`}
                     >
                       {word}
@@ -119,7 +167,7 @@ const enAfter = afterWords(enBeats);
             ))
           }
         </span>
-      </h1>
+      </p>
       <p
         data-kn
         lang="kn"
@@ -134,33 +182,6 @@ const enAfter = afterWords(enBeats);
         style={`animation-delay: ${enAfter}ms`}
       >
         {description.en}
-      </p>
-      <div
-        class="hero-rise mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
-        style={`animation-delay: ${Math.max(knAfter, enAfter) + 120}ms`}
-      >
-        <a
-          href="#aim"
-          class="hero-btn-gold inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full px-7 py-3 font-ui text-base font-semibold"
-        >
-          <span data-kn lang="kn">{ui.hero.knowKadali.kn}</span>
-          <span data-en>{ui.hero.knowKadali.en}</span>
-          <span aria-hidden="true">↗</span>
-        </a>
-        <a
-          href="/articles"
-          class="hero-btn-ghost inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full px-7 py-3 font-ui text-base font-semibold"
-        >
-          <span data-kn lang="kn">{ui.hero.readWritings.kn}</span>
-          <span data-en>{ui.hero.readWritings.en}</span>
-        </a>
-      </div>
-      <p
-        class="hero-note hero-fade mt-12 hidden md:flex"
-        style="animation-delay: 700ms"
-      >
-        <span data-kn lang="kn">{ui.hero.note.kn}</span>
-        <span data-en>{ui.hero.note.en}</span>
       </p>
     </div>
   </div>
@@ -184,6 +205,42 @@ const enAfter = afterWords(enBeats);
           decoding="async"
         />
       </picture>
+    </div>
+  </div>
+
+  <!-- Actions: on phones the artwork reads first, then these buttons;
+       from md up the art is absolutely positioned, so this container just
+       continues the copy column exactly as when it lived inside it. -->
+  <div class="relative z-[4] mx-auto w-full max-w-6xl px-4 pb-6 sm:px-6 md:pb-0">
+    <div class="min-w-0 md:max-w-[36rem]">
+      <div
+        class="hero-rise mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
+        style={`animation-delay: ${Math.max(knAfter, enAfter) + 120}ms`}
+      >
+        <a
+          href="#aim"
+          class="hero-btn-gold inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full px-7 py-3 font-ui text-base font-semibold"
+        >
+          <span data-kn lang="kn">{ui.hero.knowKadali.kn}</span>
+          <span data-en>{ui.hero.knowKadali.en}</span>
+          <span aria-hidden="true">↓</span>
+        </a>
+        <a
+          href="#committee"
+          class="hero-btn-ghost inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full px-7 py-3 font-ui text-base font-semibold"
+        >
+          <span data-kn lang="kn">{ui.hero.meetCommittee.kn}</span>
+          <span data-en>{ui.hero.meetCommittee.en}</span>
+          <span aria-hidden="true">↓</span>
+        </a>
+      </div>
+      <p
+        class="hero-note hero-fade mt-12 hidden md:flex"
+        style="animation-delay: 700ms"
+      >
+        <span data-kn lang="kn">{ui.hero.note.kn}</span>
+        <span data-en>{ui.hero.note.en}</span>
+      </p>
     </div>
   </div>
 
@@ -288,16 +345,26 @@ const enAfter = afterWords(enBeats);
 
   .hero-title {
     font-family: var(--font-display);
-    font-weight: 500;
+    font-weight: 600;
     /* Fluid font size with Kannada clearance: 1.28 line-height gives room for
        stacked ottakshara (subscript consonants) and vowel signs. */
-    font-size: clamp(2rem, 0.9rem + 4.2vw, 4rem);
+    font-size: clamp(2.4rem, 1.1rem + 4.9vw, 4.5rem);
     line-height: 1.28;
     color: var(--color-milk);
     text-wrap: initial;
   }
 
-  .hero-title-gold {
+  /* The beat-line tagline under the org name — display face, one step down. */
+  .hero-tagline {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.2rem, 1rem + 1.1vw, 1.7rem);
+    line-height: 1.45;
+    color: rgb(255 253 247 / 0.85);
+    text-wrap: initial;
+  }
+
+  .hero-tagline-gold {
     color: var(--hg-em);
   }
 
@@ -351,9 +418,12 @@ const enAfter = afterWords(enBeats);
     outline-color: var(--hg-em);
   }
 
-  /* ——— The artwork and its stage ——— */
+  /* ——— The artwork and its stage ———
+     Mobile margin: a little air above the painting, none below — the
+     action buttons follow it in flow. From md up the position is
+     absolute and the margin is zeroed. */
   .hero-art {
-    margin: 0 -8% -1.5rem -3%;
+    margin: 1.25rem -8% 0 -3%;
     z-index: 1;
   }
 
@@ -528,13 +598,13 @@ const enAfter = afterWords(enBeats);
   }
 
   /* ——— From md: the painting anchors to the panel's bottom-right corner,
-         large and partly behind the copy, as in the mockup ——— */
+         whole and uncropped, large and partly behind the copy ——— */
   @media (min-width: 48rem) {
     .hero-art {
       position: absolute;
-      right: -4%;
+      right: -2%;
       bottom: -3%;
-      width: 60%;
+      width: 66%;
       margin: 0;
     }
 
@@ -555,9 +625,9 @@ const enAfter = afterWords(enBeats);
 
   @media (min-width: 1024px) {
     .hero-art {
-      right: -1.5%;
-      bottom: -4%;
-      width: min(62%, 780px);
+      right: -2%;
+      bottom: -3%;
+      width: min(68%, 880px);
     }
   }
 

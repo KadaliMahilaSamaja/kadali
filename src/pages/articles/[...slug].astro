@@ -12,7 +12,7 @@ import ArticleLightbox from '../../components/articles/ArticleLightbox.astro';
 import { getAuthorProfile } from '../../lib/authors';
 import { ui } from '../../i18n/ui';
 
-const { articles: t, home } = ui;
+const { articles: t } = ui;
 
 export async function getStaticPaths() {
   // Drafts excluded; newest first so related picks the freshest matches.
@@ -115,37 +115,43 @@ const shareUrl = new URL(
         <h1 class="mt-5 font-display text-4xl leading-tight font-semibold text-ink md:text-5xl">
           <span lang="kn">{title}</span>
         </h1>
-        <div class="mt-6 flex flex-wrap items-center gap-3">
+        <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 border-y border-ink/10 py-4">
           <a
             href={`/articles?author=${encodeURIComponent(author)}`}
-            class="group inline-flex items-center gap-2.5 rounded-full border border-ink/15 bg-milk py-1 pl-1.5 pr-3.5 transition-colors duration-200 hover:border-leaf hover:bg-jasmine"
+            class="group flex items-center gap-3.5"
             title={`${author} ${t.allByAuthorSuffix.kn}`}
           >
             {authorProfile.photo ? (
               <img
                 src={authorProfile.photo}
                 alt={author}
-                width="28"
-                height="28"
-                class="size-7 rounded-full object-cover border border-ink/10"
+                width="64"
+                height="64"
+                class="size-16 rounded-full border-2 border-leaf/40 object-cover"
               />
             ) : (
-              <span class="flex size-7 items-center justify-center rounded-full bg-leaf text-milk font-ui text-xs font-bold">
+              <span class="flex size-16 items-center justify-center rounded-full bg-leaf text-milk font-display text-2xl font-bold">
                 {author.slice(0, 1)}
               </span>
             )}
-            <span class="font-ui text-sm text-ink">
-              <span class="text-stone">
-                <span data-kn lang="kn">{home.by.kn}</span>
-                <span data-en>{home.by.en}</span>
-              </span>{' '}
-              <strong class="font-semibold text-leaf group-hover:underline">
+            <span class="flex flex-col gap-0.5">
+              <span class="font-ui text-xs font-semibold tracking-wider uppercase text-stone">
+                <span data-kn lang="kn" class="tracking-normal normal-case">{t.authorBadge.kn}</span>
+                <span data-en>{t.authorBadge.en}</span>
+              </span>
+              <strong class="font-display text-xl font-bold text-ink transition-colors duration-200 group-hover:text-leaf">
                 <span lang="kn">{author}</span>
               </strong>
             </span>
           </a>
-          <span class="text-stone/40 font-ui text-sm" aria-hidden="true">·</span>
-          <ArticleDate date={pubDate} />
+          <span class="hidden h-9 w-px bg-ink/15 sm:block" aria-hidden="true"></span>
+          <div class="flex flex-col gap-0.5">
+            <span class="font-ui text-xs font-semibold tracking-wider uppercase text-stone">
+              <span data-kn lang="kn" class="tracking-normal normal-case">{t.publishedOn.kn}</span>
+              <span data-en>{t.publishedOn.en}</span>
+            </span>
+            <ArticleDate date={pubDate} class="font-ui text-base font-medium text-stone" />
+          </div>
         </div>
       </header>
     </div>

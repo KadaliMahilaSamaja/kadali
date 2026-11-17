@@ -83,7 +83,7 @@ export const ui = {
     whatsapp: { kn: 'ವಾಟ್ಸ್‌ಆಪ್', en: 'WhatsApp' },
     copyright: {
       kn: 'ಕದಳಿ ವನಿತಾ ಸಮಾಜ. ಕರ್ನಾಟಕದಲ್ಲಿ ಪ್ರೀತಿಯಿಂದ ಕಟ್ಟಿದ್ದು.',
-      en: 'Kadali Vanita Samaja. Built with love in Karnataka.',
+      en: 'Kadali Vanita Samaja. Built with love in Shivamogga by Abhijith Nuchin.',
     },
   },
 
@@ -155,9 +155,10 @@ export const ui = {
 
   /* ——— Hero (home) ——— */
   hero: {
-    kicker: { kn: 'ಕದಳಿ ವನಿತಾ ಸಮಾಜ · ಶಿವಮೊಗ್ಗ', en: 'Kadali Vanita Samaja · Shivamogga' },
+    title: { kn: 'ಕದಳಿ ವನಿತಾ ಸಮಾಜ', en: 'Kadali Vanita Samaja' },
+    kicker: { kn: 'ಶಿವಮೊಗ್ಗ · ಕರ್ನಾಟಕ', en: 'Shivamogga · Karnataka' },
     knowKadali: { kn: 'ಕದಳಿಯನ್ನು ಅರಿಯಿರಿ', en: 'Discover Kadali' },
-    readWritings: { kn: 'ನಮ್ಮ ಬರಹಗಳನ್ನು ಓದಿ', en: 'Read our writings' },
+    meetCommittee: { kn: 'ನಮ್ಮ ಸಮಿತಿಯನ್ನು ನೋಡಿ', en: 'Meet our committee' },
     note: {
       kn: 'ಮಹಿಳೆಯರ ಧ್ವನಿ · ನಮ್ಮ ಪರಂಪರೆ · ನಾಳೆಯ ಪೀಳಿಗೆ',
       en: 'Women’s voices · Our heritage · Tomorrow’s generation',
@@ -233,6 +234,7 @@ export const ui = {
     tagsAria: { kn: 'ಟ್ಯಾಗ್‌ಗಳು', en: 'Tags' },
     authorFilter: { kn: 'ಲೇಖಕಿ ಶೋಧ:', en: 'Author filter:' },
     authorBadge: { kn: 'ಲೇಖಕಿ', en: 'Author' },
+    publishedOn: { kn: 'ಪ್ರಕಟಣೆ ದಿನಾಂಕ', en: 'Published' },
     clearFilter: { kn: 'ಶೋಧನೆ ತೆಗೆಯಿರಿ (ಎಲ್ಲಾ ಬರಹಗಳು)', en: 'Clear filter (all writings)' },
     empty: {
       kn: 'ಹೊಂದಾಣಿಕೆಯ ಬರಹಗಳಿಲ್ಲ. ಬೇರೆ ಪದ ಹುಡುಕಿ ಅಥವಾ ಬೇರೆ ವರ್ಗ ಆಯ್ದುಕೊಳ್ಳಿ.',

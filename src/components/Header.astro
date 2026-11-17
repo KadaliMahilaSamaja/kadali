@@ -15,7 +15,7 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
 
 <header class="sticky top-0 z-40 border-b border-ink/10 bg-cream/95 text-ink backdrop-blur">
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-    <a href="/" class="flex items-center gap-2.5" aria-label="ಕದಳಿ — ಮುಖಪುಟ">
+    <a href="/" class="flex items-center gap-2.5" aria-label="ಕದಳಿ ವನಿತಾ ಸಮಾಜ — ಮುಖಪುಟ">
       <svg
         class="size-8 shrink-0 text-turmeric"
         viewBox="0 0 32 32"
@@ -29,12 +29,10 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
         <circle cx="10.5" cy="18.5" r="1.2" fill="var(--color-leaf)"></circle>
         <circle cx="21.5" cy="18" r="1.2" fill="var(--color-leaf)"></circle>
       </svg>
-      <span class="font-display text-xl font-semibold tracking-tight text-leaf">
-        <span lang="kn">ಕದಳಿ</span>
-        <span class="ml-1.5 align-middle font-ui text-xs font-medium text-stone"
-          >ವನಿತಾ ಸಮಾಜ</span
-        >
-      </span>
+      <!-- Wordmark: all three words one size; phones keep the short form. -->
+      <span class="font-display text-xl font-semibold tracking-tight text-leaf" lang="kn"
+        >ಕದಳಿ<span class="hidden md:inline"> ವನಿತಾ ಸಮಾಜ</span></span
+      >
     </a>
 
     <nav class="hidden md:block" aria-label="Primary">
