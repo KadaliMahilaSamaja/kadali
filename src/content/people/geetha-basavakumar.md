@@ -1,7 +1,8 @@
 ---
-name: "Geetha Basavakumar"
-nameKn: "ಗೀತಾ ಬಸವಕುಮಾರ್"
+name: Geetha Basavakumar
+nameKn: ಗೀತಾ ಬಸವಕುಮಾರ್
 role: secretary
-photo: "/images/uploads/geetha-basavakumar.webp"
+photo: /images/uploads/amma-2026-11-17-05.22.46.webp
 order: 3
+bio: ''
 ---
