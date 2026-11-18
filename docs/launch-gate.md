@@ -40,39 +40,40 @@ guest presses the big button on /launch (hold 3 s)
 - **The gate fails open.** A missing `LAUNCH_KV` binding or a KV error means
   "not armed" and the site serves normally. The curtain is a celebration, not
   a dependency — it must never be able to take the live site down.
-- Branch previews (`<branch>.kadali.pages.dev`) are never gated — the team
-  can inspect the real site pre-launch without touching the flag.
+- Branch previews (`<branch>.kadali-coo.pages.dev`) are never gated — the team
+  can inspect the real site pre-launch without touching the flag. The
+  production alias `kadali-coo.pages.dev` (no branch prefix) **is** gated.
 - The **service worker is safe by construction**: page navigations are
   network-first, 5xx responses are never cached, and `/api/*` is skipped
   entirely — an installed PWA shows the curtain while closed and the real
   site after launch, with no stale copy in between.
 
-## One-time setup (arming the gate)
+## Setup (completed 2026-11-18, before the 19 Nov unveiling)
 
-Do this a few days before the ceremony. Until these steps are done, the site
-behaves exactly as before — deploying the code is safe at any time.
+Everything below is already in place; recorded here so it can be rotated or
+rebuilt:
 
-1. **Create the KV namespace** — Cloudflare dashboard → *Storage & Databases →
-   KV* → *Create namespace*, name it e.g. `kadali-launch`.
-2. **Bind it to the Pages project** — *Workers & Pages → kadali → Settings →
-   Bindings (Production tab)* → *Add → KV namespace*: variable name
-   **`LAUNCH_KV`**, namespace `kadali-launch`. (Repeat in the Preview tab only
-   if you want branch previews gated too — usually not.)
-3. **Set the secret.** Generate a strong key (e.g. `openssl rand -hex 24`, or
-   your password manager), then add it as an encrypted environment variable:
-   *Settings → Environment variables (Production tab)* → *Add* → type
-   **Secret**, name **`LAUNCH_KEY`**, paste the key. The CLI equivalent is
-   `npx wrangler pages secret put LAUNCH_KEY --project-name kadali`.
-4. **Redeploy once** — Pages bindings and variables apply on the *next*
-   deployment: GitHub → *Actions → Deploy to Cloudflare Pages → Run workflow*.
-   When it finishes, kadali.org shows the curtain.
-5. **Verify.** Open kadali.org → curtain. Open `/admin` → CMS sign-in works
-   as always. Open `https://kadali.org/launch` → the status pill says
-   "ಪರದೆ ಮುಚ್ಚಿದೆ / Curtain closed" and there is no "not armed" warning.
+1. **KV namespace** `kadali-launch` (ID `33e614c671cd42948f9ab75d08bb2393`) in
+   the KadaliVanitaSamaja Cloudflare account, created with
+   `wrangler kv namespace create kadali-launch`.
+2. **Secret** `LAUNCH_KEY` set on the production environment of the Pages
+   project with `wrangler pages secret put LAUNCH_KEY --project-name kadali`
+   (secrets persist across deployments and are never in the repo).
+3. **Binding** declared in `wrangler.toml` (`LAUNCH_KV` → the namespace), so
+   every deployment — GitHub Actions or manual — arms the gate automatically.
+4. Deployed; production verified: curtain on kadali.org, `/admin` working,
+   `/launch` reachable, robots.txt serving `Disallow: /`.
+
+To **rotate the key**: generate a new one (`openssl rand -hex 24`), run
+`wrangler pages secret put LAUNCH_KEY --project-name kadali` again, and update
+the ceremony link — no redeploy needed.
+
+To **disarm permanently**: remove the `[[kv_namespaces]]` block from
+`wrangler.toml`, commit, and let the next deploy run. The Worker then fails
+open and the site is a plain static one again.
 
 ⚠️ Pages bindings and environment variables take effect on the next deploy —
-if the curtain doesn't appear after step 2, it's almost always a missing
-redeploy.
+a config change without a redeploy does nothing.
 
 ## Rehearsal (day before)
 

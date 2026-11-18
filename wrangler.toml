@@ -1,0 +1,12 @@
+# Cloudflare Pages configuration — applied on every deploy (GitHub Actions:
+# wrangler pages deploy dist). This file arms the launch gate: the LAUNCH_KV
+# binding reaches the _worker.js with each deployment. See docs/launch-gate.md.
+# LAUNCH_KEY is a secret and must never live here — set it with
+# `wrangler pages secret put LAUNCH_KEY --project-name kadali`.
+name = "kadali"
+pages_build_output_dir = "dist"
+compatibility_date = "2025-01-01"
+
+[[kv_namespaces]]
+binding = "LAUNCH_KV"
+id = "33e614c671cd42948f9ab75d08bb2393"

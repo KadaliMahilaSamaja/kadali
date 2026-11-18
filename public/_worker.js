@@ -86,9 +86,9 @@ async function readGate(env) {
   }
 }
 
-/** Branch previews (<branch>.kadali.pages.dev) stay open for team checks. */
+/** Branch previews (<branch>.kadali-coo.pages.dev) stay open for team checks. */
 function isBranchPreview(url) {
-  return url.hostname.endsWith('.kadali.pages.dev');
+  return url.hostname.endsWith('.kadali-coo.pages.dev');
 }
 
 /** Paths served even while the curtain is closed. */
