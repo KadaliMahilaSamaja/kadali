@@ -27,3 +27,5 @@ pnpm-debug.log*
 .zcode/
 # wrangler local state (pages dev, kv simulation)
 .wrangler/
+# ceremony QR encodes the launch key - never commit (public repo)
+launch-qr.png
