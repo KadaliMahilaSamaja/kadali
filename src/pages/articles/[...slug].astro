@@ -68,7 +68,7 @@ const shareUrl = new URL(
   title={`${title} · ಕದಳಿ ವನಿತಾ ಸಮಾಜ`}
   titleEn={`${title} · Kadali Vanita Samaja`}
   description={description}
-  image={cover}
+  image={cover || undefined}
   type="article"
 >
   <article class="bg-cream">
@@ -156,19 +156,24 @@ const shareUrl = new URL(
       </header>
     </div>
 
-    <!-- Cover: full-width with the temple-arch top mask (above fold, no lazy) -->
-    <div class="article-cover mx-auto mt-10 max-w-4xl px-4 sm:px-6">
-      <div class="overflow-hidden rounded-t-[999px] border border-ink/10 bg-jasmine/30">
-        <img
-          src={cover}
-          alt={coverAlt}
-          width={1200}
-          height={675}
-          decoding="async"
-          class="aspect-[16/9] w-full object-cover"
-        />
-      </div>
-    </div>
+    <!-- Cover: full-width with the temple-arch top mask (above fold, no lazy).
+         Image-less articles skip it entirely — no author photo stand-in. -->
+    {
+      cover && (
+        <div class="article-cover mx-auto mt-10 max-w-4xl px-4 sm:px-6">
+          <div class="overflow-hidden rounded-t-[999px] border border-ink/10 bg-jasmine/30">
+            <img
+              src={cover}
+              alt={coverAlt ?? ''}
+              width={1200}
+              height={675}
+              decoding="async"
+              class="aspect-[16/9] w-full object-cover"
+            />
+          </div>
+        </div>
+      )
+    }
 
     <!-- Body -->
     <div class="prose-kadali mx-auto mt-12 max-w-3xl px-4 sm:px-6">

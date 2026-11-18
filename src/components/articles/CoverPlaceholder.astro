@@ -1,0 +1,22 @@
+---
+/**
+ * Decorative stand-in for articles published without a cover image.
+ * A turmeric bloom on the jasmine band, masked like the cover it replaces
+ * (pass the mask/radius classes of the slot via `class`). Never an author
+ * photo — image-less articles stay image-less.
+ */
+import Bloom from '../motifs/Bloom.astro';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<div
+  class={`flex items-center justify-center bg-jasmine ${className}`}
+  aria-hidden="true"
+>
+  <Bloom class="size-14 text-turmeric/70" />
+</div>

@@ -83,9 +83,14 @@ collections:
       - name: cover
         label: Cover image
         widget: image
+        required: false
+        hint: >-
+          ಐಚ್ಛಿಕ (Optional). ಚಿತ್ರ ಇಲ್ಲದೆ ಬಿಟ್ಟರೆ ಲೇಖನದ ಬದಲು ಅಲಂಕಾರಿಕ ಚಿತ್ರ ತೋರುತ್ತದೆ —
+          ಲೇಖಕಿಯ ಫೋಟೋ ಅನ್ನು cover ಆಗಿ ಆಯ್ಕೆ ಮಾಡಬೇಡಿ.
       - name: coverAlt
         label: Cover image description
         widget: string
+        required: false
         hint: Short description of the image for screen readers.
       - name: author
         label: ಲೇಖಕಿಯ ಹೆಸರು / Author

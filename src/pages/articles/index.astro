@@ -4,6 +4,7 @@ import BaseLayout from '../../components/BaseLayout.astro';
 import Beads from '../../components/motifs/Beads.astro';
 import ArticleCard from '../../components/articles/ArticleCard.astro';
 import ArticleDate from '../../components/articles/ArticleDate.astro';
+import CoverPlaceholder from '../../components/articles/CoverPlaceholder.astro';
 import {
   CATEGORY_LABELS,
   CATEGORY_ORDER,
@@ -98,14 +99,20 @@ const filterChipBase =
             </a>
           </div>
           <div class="overflow-hidden rounded-t-[999px] border border-ink/10">
-            <img
-              src={featured.data.cover}
-              alt={featured.data.coverAlt}
-              width={1200}
-              height={675}
-              decoding="async"
-              class="aspect-[4/3] w-full object-cover"
-            />
+            {
+              featured.data.cover ? (
+                <img
+                  src={featured.data.cover}
+                  alt={featured.data.coverAlt ?? ''}
+                  width={1200}
+                  height={675}
+                  decoding="async"
+                  class="aspect-[4/3] w-full object-cover"
+                />
+              ) : (
+                <CoverPlaceholder class="aspect-[4/3] w-full" />
+              )
+            }
           </div>
         </div>
       </section>

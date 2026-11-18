@@ -12,8 +12,10 @@ const articles = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string().max(200), // short excerpt used in lists & meta
-    cover: z.string(), // path under public/, e.g. /images/uploads/cover.svg
-    coverAlt: z.string(),
+    // Optional: empty string (or omitting the CMS field) means the article
+    // has no cover image — cards render a decorative motif placeholder.
+    cover: z.string(),
+    coverAlt: z.string().optional(),
     author: z.string(),
     authorPhoto: z.string().optional(),
     authorRole: z.string().optional(),
