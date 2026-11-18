@@ -198,8 +198,8 @@ const enAfter = 140 + (enTitleWords.length + countWords(enBeats)) * 90;
         <img
           src="/images/akkamahadevi-hero.png"
           alt="ಬಾಳೆಗಿಡಗಳ ನಡುವೆ ಧ್ಯಾನದಲ್ಲಿ ಕುಳಿತ ಅಕ್ಕಮಹಾದೇವಿ"
-          width="1039"
-          height="627"
+          width="2048"
+          height="1172"
           loading="eager"
           fetchpriority="high"
           decoding="async"
@@ -430,7 +430,7 @@ const enAfter = 140 + (enTitleWords.length + countWords(enBeats)) * 90;
   .art-stage {
     position: relative;
     width: 100%;
-    aspect-ratio: 1039 / 627;
+    aspect-ratio: 2048 / 1172;
   }
 
   .art-stage img {
@@ -473,16 +473,16 @@ const enAfter = 140 + (enTitleWords.length + countWords(enBeats)) * 90;
   }
 
   /* ——— The revolving halo ———
-     Anchored to the stage, not the viewport: her head sits at ~51% across,
-     ~19% down in the painting, so percentage offsets keep the ring on her
+     Anchored to the stage, not the viewport: her head sits at ~51.5% across,
+     ~17% down in the painting, so percentage offsets keep the ring on her
      head at every render size. The ring and its dashed inner circle turn
      together (34s); the broken outer ring counter-turns (18s); the glint
      rides the ring's crown. Reduced motion is neutralised globally. */
   .halo {
     position: absolute;
     z-index: 0;
-    top: 19%;
-    left: 51%;
+    top: 17%;
+    left: 51.5%;
     width: 33%;
     aspect-ratio: 1;
     margin: -16.5% 0 0 -16.5%;
