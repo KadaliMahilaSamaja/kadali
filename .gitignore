@@ -25,3 +25,5 @@ pnpm-debug.log*
 
 # agent session state
 .zcode/
+# wrangler local state (pages dev, kv simulation)
+.wrangler/

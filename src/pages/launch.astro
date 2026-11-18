@@ -1,0 +1,587 @@
+---
+/**
+ * Launch control — the ceremony page at /launch (unlinked, noindex, kept out
+ * of the sitemap in astro.config.mjs).
+ *
+ * The committee opens this page on stage, usually from a QR code that
+ * carries the key in the URL fragment: https://kadali.org/launch#k=…  The
+ * fragment never reaches any server; the script reads it into memory and
+ * scrubs it from the address bar immediately. Nothing is ever stored.
+ *
+ * Deliberately NOT BaseLayout: the ceremony screen must have no header,
+ * footer, language-gate dialog, install prompt or service-worker
+ * registration — nothing that could pop up mid-ceremony. Its strings also
+ * live inline for the same reason (ops tooling, not site chrome;
+ * offline.html is the precedent). global.css is imported directly so the
+ * design tokens, the bilingual visibility rules and the focus styles still
+ * apply.
+ */
+import '../styles/global.css';
+---
+
+<!doctype html>
+<html lang="kn" data-lang="kn">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#1d5f3c" />
+    <title>ಉದ್ಘಾಟನಾ ನಿಯಂತ್ರಣ · Launch control — ಕದಳಿ ವನಿತಾ ಸಮಾಜ</title>
+    <script is:inline>
+      // Same pre-paint language trick as BaseLayout — this page ships both
+      // languages too.
+      try {
+        if (localStorage.getItem('kadali-lang') === 'en') {
+          document.documentElement.dataset.lang = 'en';
+          document.documentElement.lang = 'en';
+        }
+      } catch (e) {
+        /* storage unavailable — the Kannada default stands */
+      }
+    </script>
+  </head>
+  <body class="min-h-screen bg-cream font-ui text-ink antialiased">
+    <main
+      class="mx-auto flex min-h-screen w-full max-w-xl flex-col items-center justify-center gap-5 px-4 py-10 text-center"
+    >
+      <svg class="h-12 w-12" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="16" cy="16" r="14" fill="#1D5F3C"></circle>
+        <circle cx="12" cy="13" r="1.6" fill="#FBF6ED"></circle>
+        <circle cx="19" cy="12" r="1.6" fill="#FBF6ED"></circle>
+        <circle cx="16" cy="18" r="1.6" fill="#FBF6ED"></circle>
+        <circle cx="10.5" cy="18.5" r="1.2" fill="#FBF6ED"></circle>
+        <circle cx="21.5" cy="18" r="1.2" fill="#FBF6ED"></circle>
+      </svg>
+
+      <header>
+        <h1 class="text-3xl">
+          <span data-kn lang="kn">ಉದ್ಘಾಟನಾ ನಿಯಂತ್ರಣ</span>
+          <span data-en>Launch control</span>
+        </h1>
+        <p class="mt-1 text-sm text-stone">kadali.org / launch</p>
+      </header>
+
+      <section class="flex flex-col items-center gap-3" aria-live="polite">
+        <p
+          data-status
+          class="inline-flex items-center gap-2.5 border px-5 py-2 text-base font-semibold"
+        >
+          <span class="status-dot" aria-hidden="true"></span>
+          <span data-state-text>…</span>
+        </p>
+        <p data-since class="hidden text-sm text-stone"></p>
+        <p
+          data-warn
+          class="hidden max-w-md border border-sindoor bg-milk px-3 py-2 text-sm text-sindoor"
+        ></p>
+      </section>
+
+      <!-- The big one: press and hold three seconds. The button is a circle
+           on purpose — it echoes the mandala/bud motif, and a hold gesture
+           cannot be triggered by a stray tap on stage. -->
+      <div data-launch-wrap>
+        <button
+          data-launch
+          type="button"
+          class="launch-btn relative grid h-56 w-56 place-items-center rounded-full bg-leaf text-milk shadow-lg"
+        >
+          <svg
+            class="absolute inset-0 h-full w-full -rotate-90"
+            viewBox="0 0 224 224"
+            aria-hidden="true"
+          >
+            <circle
+              cx="112"
+              cy="112"
+              r="100"
+              fill="none"
+              stroke="rgb(255 253 247 / 0.3)"
+              stroke-width="6"></circle>
+            <circle
+              data-ring
+              cx="112"
+              cy="112"
+              r="100"
+              fill="none"
+              stroke="#E8862E"
+              stroke-width="6"
+              stroke-linecap="round"
+              stroke-dasharray="628.3"
+              stroke-dashoffset="628.3"></circle>
+          </svg>
+          <span class="relative px-8 text-xl font-bold leading-snug">
+            <span data-kn lang="kn">ತೆರೆಯಿರಿ</span>
+            <span data-en>Open<br />the site</span>
+          </span>
+        </button>
+        <p class="mt-3 text-sm text-stone">
+          <span data-kn lang="kn">ಮೂರು ಸೆಕೆಂಡು ಒತ್ತಿ ಹಿಡಿಯಿರಿ</span>
+          <span data-en>Press and hold for three seconds</span>
+        </p>
+        <p
+          data-message
+          aria-live="assertive"
+          class="mx-auto mt-3 hidden max-w-md text-sm font-semibold text-sindoor"
+        ></p>
+      </div>
+
+      <div data-open-wrap class="hidden">
+        <a
+          href="/"
+          class="text-base font-semibold text-leaf underline decoration-turmeric decoration-2 underline-offset-4"
+        >
+          <span data-kn lang="kn">ತೆರೆದ ತಾಣಕ್ಕೆ ಹೋಗಿ ⟶</span>
+          <span data-en>Visit the opened site ⟶</span>
+        </a>
+      </div>
+
+      <section class="mt-4 w-full max-w-sm border-t border-jasmine pt-6">
+        <h2 class="text-base">
+          <span data-kn lang="kn">ಪೂರ್ವಾಭ್ಯಾಸ</span>
+          <span data-en>Rehearsal</span>
+        </h2>
+        <button
+          data-reset
+          type="button"
+          class="mt-3 border border-leaf bg-transparent px-5 py-2.5 text-sm font-semibold text-leaf"
+        >
+          <span data-kn lang="kn">ಪರದೆ ಮುಚ್ಚಿ · ಒತ್ತಿ ಹಿಡಿಯಿರಿ</span>
+          <span data-en>Close the curtain · press and hold</span>
+        </button>
+      </section>
+
+      <section class="w-full max-w-sm">
+        <form data-key-form class="hidden">
+          <label class="block text-sm text-stone" for="launch-key">
+            <span data-kn lang="kn">ಕೀ</span>
+            <span data-en>Key</span>
+          </label>
+          <input
+            data-key-input
+            id="launch-key"
+            type="password"
+            autocomplete="off"
+            spellcheck="false"
+            class="mx-auto mt-2 block w-64 border border-stone bg-milk px-3 py-2 text-sm"
+          />
+          <button
+            type="submit"
+            class="mt-3 bg-leaf px-4 py-2 text-sm font-semibold text-milk"
+          >
+            <span data-kn lang="kn">ಉಳಿಸಿ</span>
+            <span data-en>Save</span>
+          </button>
+        </form>
+        <p data-key-ok class="hidden text-sm text-stone"></p>
+      </section>
+    </main>
+
+    <!-- One-shot petal burst on a successful launch (transform/opacity
+         only; reduced motion neutralises it via global.css). -->
+    <div
+      data-burst
+      aria-hidden="true"
+      class="pointer-events-none fixed inset-0 z-10 grid place-items-center"
+    ></div>
+  </body>
+</html>
+
+<style>
+  /* Page-only styles; everything else rides on tokens + Tailwind. */
+  .status-dot {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 9999px;
+    background: currentColor;
+  }
+  [data-status][data-state='closed'] {
+    background: var(--color-turmeric);
+    border-color: var(--color-turmeric);
+    color: var(--color-ink);
+  }
+  [data-status][data-state='open'] {
+    background: var(--color-leaf);
+    border-color: var(--color-leaf);
+    color: var(--color-milk);
+  }
+  [data-status][data-state='unknown'],
+  [data-status][data-state='down'] {
+    background: var(--color-jasmine);
+    border-color: var(--color-jasmine);
+    color: var(--color-stone);
+  }
+  .launch-btn {
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .launch-btn.holding {
+    transform: scale(0.97);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .launch-btn.holding {
+      transform: none;
+    }
+  }
+</style>
+
+<!-- Petals are created by the script at runtime, so these rules must be
+     global — Astro would scope them to template elements otherwise. -->
+<style is:global>
+  .petal {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    margin: -6px;
+    border-radius: 50%;
+    background: var(--color-turmeric);
+    animation: petal-fly 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .petal.alt {
+    background: var(--color-sindoor);
+  }
+  @keyframes petal-fly {
+    from {
+      opacity: 1;
+      transform: translate(0, 0) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: translate(var(--dx), var(--dy)) scale(0.35);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .petal {
+      animation: none !important;
+      opacity: 0;
+    }
+  }
+</style>
+
+<script>
+  // Ceremony logic: poll the gate, hold-to-confirm, flip the flag. The key
+  // lives in this tab's memory only; the runbook (docs/launch-gate.md)
+  // describes the full flow. Plain JavaScript — the Astro compiler parses
+  // page scripts as JS, so no TypeScript syntax here.
+
+  const lang = document.documentElement.dataset.lang === 'en' ? 'en' : 'kn';
+  const t = (pair) => pair[lang];
+
+  const STATE = {
+    unknown: { kn: 'ತಪಾಸಣೆ ನಡೆಯುತ್ತಿದೆ…', en: 'Checking the gate…' },
+    down: { kn: 'ತಲುಪಲಾಗಿಲ್ಲ — ಸಂಪರ್ಕ ಪರಿಶೀಲಿಸಿ', en: 'Unreachable — check the connection' },
+    closed: { kn: 'ಪರದೆ ಮುಚ್ಚಿದೆ', en: 'Curtain closed' },
+    open: { kn: 'ತೆರೆದಿದೆ!', en: 'It is open!' },
+  };
+  const SINCE = { kn: 'ತೆರೆದದ್ದು:', en: 'Opened at:' };
+  const WARN = {
+    notArmed: {
+      kn: 'ಗೇಟ್ ಸಜ್ಜಾಗಿಲ್ಲ — Cloudflare Pages ಪ್ರಾಜೆಕ್ಟಿನಲ್ಲಿ LAUNCH_KV ಹೆಸರಿನ KV ಬೈಂಡಿಂಗ್ ಸೇರಿಸಿ, ಆಮೇಲೆ ಒಂದು ಸಲ ಪುನಃ ನಿಯೋಜಿಸಿ (docs/launch-gate.md).',
+      en: 'The gate is not armed — add a KV binding named LAUNCH_KV to the Cloudflare Pages project, then redeploy once (docs/launch-gate.md).',
+    },
+  };
+  const MSG = {
+    needKey: {
+      kn: 'ಕೀ ಬೇಕು — ಕೆಳಗೆ ನಮೂದಿಸಿ ಅಥವಾ ಈ ಪುಟವನ್ನು #k=… ಕೊಂಡಿಯಿಂದ ತೆರೆಯಿರಿ.',
+      en: 'A key is needed — enter it below, or open this page from the #k=… link.',
+    },
+    badKey: {
+      kn: 'ಕೀ ಒಪ್ಪಲಿಲ್ಲ — ಪುನಃ ಪರಿಶೀಲಿಸಿ.',
+      en: 'The key was not accepted — double-check it.',
+    },
+    notConfigured: {
+      kn: 'ಸರ್ವರಿನಲ್ಲಿ LAUNCH_KEY ಸಿದ್ಧವಾಗಿಲ್ಲ — ಮೊದಲು ಗುಪ್ತಪದ ಸೇರಿಸಿ (docs/launch-gate.md).',
+      en: 'LAUNCH_KEY is not set on the server — configure the secret first (docs/launch-gate.md).',
+    },
+    netError: {
+      kn: 'ಜಾಲಬಂಧದ ತೊಂದರೆ — ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.',
+      en: 'Network trouble — please try again.',
+    },
+    serverError: {
+      kn: 'ತಾಂತ್ರಿಕ ಅಡಚಣೆ — ಸ್ವಲ್ಪ ಕಾದು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.',
+      en: 'A technical hiccup — wait a moment and try again.',
+    },
+    launched: { kn: 'ಜಾಲತಾಣ ತೆರೆದಿದೆ!', en: 'The website is open!' },
+    closedAgain: { kn: 'ಪರದೆ ಮತ್ತೆ ಮುಚ್ಚಿದೆ.', en: 'The curtain is closed again.' },
+    holdHint: {
+      kn: 'ಒತ್ತಿ ಹಿಡಿಯಬೇಕು — ಮೂರು ಸೆಕೆಂಡು.',
+      en: 'You have to hold it — for three seconds.',
+    },
+  };
+  const KEY_SAVED = {
+    kn: 'ಕೀ ಇಡಲಾಗಿದೆ ✓ (ಈ ಟ್ಯಾಬಿನ ಮೆಮೊರಿಯಲ್ಲಿ ಮಾತ್ರ)',
+    en: 'Key set ✓ (in this tab’s memory only)',
+  };
+
+  /* ——— the key: URL fragment → memory, scrubbed from the bar at once ——— */
+  let key = '';
+  const hashMatch = /^#(?:k|key)=(.+)$/.exec(location.hash);
+  if (hashMatch) {
+    try {
+      key = decodeURIComponent(hashMatch[1]).trim();
+    } catch (e) {
+      key = hashMatch[1].trim();
+    }
+    history.replaceState(null, '', location.pathname + location.search);
+  }
+
+  const statusEl = document.querySelector('[data-status]');
+  const stateTextEl = document.querySelector('[data-state-text]');
+  const sinceEl = document.querySelector('[data-since]');
+  const warnEl = document.querySelector('[data-warn]');
+  const launchWrap = document.querySelector('[data-launch-wrap]');
+  const openWrap = document.querySelector('[data-open-wrap]');
+  const launchBtn = document.querySelector('[data-launch]');
+  const resetBtn = document.querySelector('[data-reset]');
+  const messageEl = document.querySelector('[data-message]');
+  const keyForm = document.querySelector('[data-key-form]');
+  const keyInput = document.querySelector('[data-key-input]');
+  const keyOkEl = document.querySelector('[data-key-ok]');
+  const burstEl = document.querySelector('[data-burst]');
+  const ring = document.querySelector('[data-ring]');
+  const RING_C = 628.3;
+
+  const show = (el, on) => {
+    if (el) el.classList.toggle('hidden', !on);
+  };
+
+  function showMsg(pair) {
+    if (!messageEl) return;
+    messageEl.textContent = t(pair);
+    show(messageEl, true);
+  }
+
+  function formatSince(iso) {
+    try {
+      return new Date(iso).toLocaleTimeString(lang === 'en' ? 'en-IN' : 'kn-IN', {
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+    } catch (e) {
+      return iso;
+    }
+  }
+
+  function render(gate) {
+    if (!statusEl || !stateTextEl) return;
+    if (!gate) {
+      statusEl.dataset.state = 'down';
+      stateTextEl.textContent = t(STATE.down);
+      show(sinceEl, false);
+      show(warnEl, false);
+      return;
+    }
+    statusEl.dataset.state = gate.open ? 'open' : 'closed';
+    stateTextEl.textContent = t(gate.open ? STATE.open : STATE.closed);
+    if (sinceEl) {
+      if (gate.open && gate.since) {
+        sinceEl.textContent = t(SINCE) + ' ' + formatSince(gate.since);
+        show(sinceEl, true);
+      } else {
+        show(sinceEl, false);
+      }
+    }
+    if (warnEl) {
+      warnEl.textContent = t(WARN.notArmed);
+      show(warnEl, !gate.armed);
+    }
+    show(launchWrap, !gate.open);
+    show(openWrap, gate.open);
+  }
+
+  /* ——— status polling ——— */
+  let failures = 0;
+  async function poll() {
+    try {
+      const res = await fetch('/api/launch-status', { cache: 'no-store' });
+      if (!res.ok) throw new Error('bad status');
+      const gate = await res.json();
+      failures = 0;
+      render(gate);
+    } catch (e) {
+      failures += 1;
+      // One failed poll (lift edge, flaky hall wi-fi) must not flash the
+      // status pill — call it down only after two in a row.
+      if (failures >= 2) render(null);
+    }
+  }
+  poll();
+  window.setInterval(poll, 2000);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) poll();
+  });
+
+  /* ——— hold-to-confirm ———
+     Three drivers, so the confirm never depends on one mechanism: rAF for a
+     smooth ring, a short interval as watchdog, and one authoritative timeout
+     that fires even in renderers that throttle rAF and intervals. */
+  function holdToConfirm(btn, opts) {
+    let raf = 0;
+    let watchdog = 0;
+    let confirmer = 0;
+    let start = 0;
+    let holding = false;
+    let confirmed = false;
+
+    const resetRing = () => {
+      if (opts.ring && opts.circumference) {
+        opts.ring.style.strokeDashoffset = String(opts.circumference);
+      }
+    };
+    const finish = () => {
+      holding = false;
+      confirmed = true;
+      cancelAnimationFrame(raf);
+      clearInterval(watchdog);
+      clearTimeout(confirmer);
+      btn.classList.remove('holding');
+      resetRing();
+      opts.onConfirm();
+    };
+    const stop = (released) => {
+      if (!holding || confirmed) return;
+      holding = false;
+      cancelAnimationFrame(raf);
+      clearInterval(watchdog);
+      clearTimeout(confirmer);
+      btn.classList.remove('holding');
+      resetRing();
+      if (released && opts.onShortRelease) {
+        const held = performance.now() - start;
+        if (held > 200 && held < opts.ms) opts.onShortRelease();
+      }
+    };
+    const tick = () => {
+      if (!holding || confirmed) return;
+      const progress = Math.min(1, (performance.now() - start) / opts.ms);
+      if (opts.ring && opts.circumference) {
+        opts.ring.style.strokeDashoffset = String(opts.circumference * (1 - progress));
+      }
+      if (progress >= 1) finish();
+    };
+    const begin = (e) => {
+      if (btn.disabled || holding) return;
+      e.preventDefault();
+      try {
+        if (typeof e.pointerId === 'number') btn.setPointerCapture(e.pointerId);
+      } catch (err) {
+        /* capture is best-effort; the window handler below still catches it */
+      }
+      confirmed = false;
+      holding = true;
+      start = performance.now();
+      btn.classList.add('holding');
+      raf = requestAnimationFrame(tick);
+      watchdog = setInterval(tick, 60);
+      confirmer = setTimeout(() => {
+        if (holding && !confirmed) finish();
+      }, opts.ms + 120);
+    };
+
+    btn.addEventListener('pointerdown', begin);
+    btn.addEventListener('pointerup', () => stop(true));
+    btn.addEventListener('pointercancel', () => stop(true));
+    // Safety net: a pointer released outside the button (capture failed) —
+    // no-op when nothing is being held.
+    window.addEventListener('pointerup', () => stop(true), { passive: true });
+    btn.addEventListener('keydown', (e) => {
+      if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) begin(e);
+    });
+    btn.addEventListener('keyup', (e) => {
+      if (e.key === ' ' || e.key === 'Enter') stop(true);
+    });
+    btn.addEventListener('contextmenu', (e) => e.preventDefault());
+  }
+
+  /* ——— the flips ——— */
+  let busy = false;
+  function setBusy(on) {
+    busy = on;
+    if (launchBtn) launchBtn.disabled = on;
+    if (resetBtn) resetBtn.disabled = on;
+  }
+
+  async function flip(path) {
+    if (busy) return;
+    if (!key) {
+      showMsg(MSG.needKey);
+      show(keyForm, true);
+      if (keyInput) keyInput.focus();
+      return;
+    }
+    setBusy(true);
+    try {
+      const res = await fetch(path, {
+        method: 'POST',
+        headers: { 'x-launch-key': key },
+        cache: 'no-store',
+      });
+      if (res.status === 404) {
+        showMsg(MSG.badKey);
+      } else if (res.status === 503) {
+        let error = '';
+        try {
+          error = (await res.json()).error || '';
+        } catch (e) {
+          /* body optional */
+        }
+        showMsg(error === 'not-configured' ? MSG.notConfigured : WARN.notArmed);
+      } else if (!res.ok) {
+        showMsg(MSG.serverError);
+      } else {
+        showMsg(path === '/api/launch' ? MSG.launched : MSG.closedAgain);
+        if (path === '/api/launch') celebrate();
+        await poll();
+      }
+    } catch (e) {
+      showMsg(MSG.netError);
+    }
+    setBusy(false);
+  }
+
+  function celebrate() {
+    if (!burstEl) return;
+    for (let i = 0; i < 12; i++) {
+      const petal = document.createElement('span');
+      const angle = (Math.PI * 2 * i) / 12 + Math.random() * 0.5;
+      const radius = 90 + Math.random() * 70;
+      petal.className = 'petal' + (i % 3 === 0 ? ' alt' : '');
+      petal.style.setProperty('--dx', Math.cos(angle) * radius + 'px');
+      petal.style.setProperty('--dy', Math.sin(angle) * radius + 'px');
+      petal.style.animationDelay = Math.random() * 120 + 'ms';
+      burstEl.appendChild(petal);
+    }
+    window.setTimeout(() => {
+      burstEl.innerHTML = '';
+    }, 1400);
+  }
+
+  holdToConfirm(launchBtn, {
+    ms: 3000,
+    ring: ring,
+    circumference: RING_C,
+    onShortRelease: () => showMsg(MSG.holdHint),
+    onConfirm: () => flip('/api/launch'),
+  });
+  holdToConfirm(resetBtn, { ms: 1200, onConfirm: () => flip('/api/reset') });
+
+  /* ——— key entry (only when the fragment link wasn't used) ——— */
+  function renderKeyState() {
+    if (key) {
+      if (keyOkEl) keyOkEl.textContent = t(KEY_SAVED);
+      show(keyOkEl, true);
+      show(keyForm, false);
+    } else {
+      show(keyForm, true);
+      show(keyOkEl, false);
+    }
+  }
+  keyForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    key = (keyInput ? keyInput.value : '').trim();
+    if (keyInput) keyInput.value = '';
+    renderKeyState();
+  });
+  renderKeyState();
+</script>

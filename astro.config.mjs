@@ -9,7 +9,15 @@ export default defineConfig({
   site: 'https://kadali.org',
   output: 'static',
   compressHTML: true,
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      // The ceremony control page is internal — never in the sitemap.
+      filter: (page) => {
+        const path = new URL(page).pathname;
+        return path !== '/launch' && !path.startsWith('/launch/');
+      },
+    }),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },

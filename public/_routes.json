@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "include": ["/*"],
+  "exclude": [
+    "/_astro/*",
+    "/images/*",
+    "/icons/*",
+    "/admin/*",
+    "/favicon.svg",
+    "/manifest.webmanifest",
+    "/offline.html",
+    "/sw.js",
+    "/sitemap-index.xml",
+    "/sitemap-0.xml"
+  ]
+}

@@ -77,6 +77,10 @@ npm run preview  # preview the build
   before conversion. Filenames are slugified.
 - README says "Astro 5"; `package.json` is authoritative (currently astro ^7). Trust
   package.json.
+- `public/_worker.js` is the launch-gate Worker (ceremony curtain, advanced mode):
+  every request not excluded by `public/_routes.json` passes through it, statics go
+  via `env.ASSETS`. It fails OPEN when the `LAUNCH_KV` binding is absent — that is the
+  "not armed" state, do not "fix" it. Runbook: `docs/launch-gate.md`.
 - Stray root files are source material, not site code: `article1.md`, `index (2).html`,
   `hero.png`, `board/` (committee photos with Kannada filenames). `.hallmark/` is
   gitignored design-tool state — never commit it. `dist/` and `.astro/` are generated.

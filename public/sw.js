@@ -12,7 +12,7 @@
  * change — page HTML itself is network-first, so content changes need no bump.
  */
 
-const VERSION = 'v1';
+const VERSION = 'v2';
 const PAGE_CACHE = `kadali-pages-${VERSION}`;
 const STATIC_CACHE = `kadali-static-${VERSION}`;
 const IMAGE_CACHE = `kadali-images-${VERSION}`;
@@ -106,8 +106,12 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
-  // Never touch the CMS area or the worker/manifest themselves.
+  // Never touch the CMS area, the launch-gate API, or the worker/manifest
+  // themselves. The API must always be live traffic: the curtain pages poll
+  // it to open themselves, and caching a status answer would mean showing
+  // the curtain after the launch.
   if (url.pathname.startsWith('/admin/')) return;
+  if (url.pathname.startsWith('/api/')) return;
   if (url.pathname === '/sw.js' || url.pathname === '/manifest.webmanifest') {
     return;
   }
