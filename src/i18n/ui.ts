@@ -386,9 +386,5 @@ export const AUTHOR_ROLES = {
   founder: { kn: 'ಸಂಸ್ಥಾಪಕರು · ಹಿರಿಯ ಮಾರ್ಗದರ್ಶಕರು', en: 'Founder · Senior guide' },
   fallback: { kn: 'ಲೇಖಕಿ', en: 'Author' },
   memberAuthor: { kn: 'ಸದಸ್ಯೆ ಹಾಗೂ ಲೇಖಕಿ', en: 'Member and writer' },
-  memberBioFallback: {
-    kn: 'ಕದಳಿ ವನಿತಾ ಸಮಾಜದ ಸಕ್ರಿಯ ಸದಸ್ಯೆ ಹಾಗೂ ಲೇಖಕಿ.',
-    en: 'An active member of Kadali Vanita Samaja and a writer.',
-  },
   writerFallback: { kn: 'ಕದಳಿ ವನಿತಾ ಸಮಾಜದ ಬರಹಗಾರ್ತಿ.', en: 'A writer with Kadali Vanita Samaja.' },
 } as const satisfies Record<string, Bi>;

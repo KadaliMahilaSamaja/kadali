@@ -61,7 +61,9 @@ export async function getAuthorProfile(
           name: matched.data.nameKn ?? matched.data.name,
           role: ROLE_LABELS[matched.data.role] ?? AUTHOR_ROLES.memberAuthor,
           photo: matched.data.photo,
-          bio: matched.data.bio ?? AUTHOR_ROLES.memberBioFallback.kn,
+          // Committee members without a bio in the registry get no bio
+          // line at all — no generic sentence in its place.
+          bio: matched.data.bio ?? '',
         };
       }
     } catch {
