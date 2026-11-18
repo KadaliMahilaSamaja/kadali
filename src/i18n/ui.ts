@@ -49,6 +49,15 @@ export const ROLE_LABELS: Record<Role, Bi> = {
   member: { kn: 'ಸದಸ್ಯೆ', en: 'Member' },
 };
 
+/** Website-committee roles, mirroring the `web-committee` schema enum. */
+export type WebRole = 'president' | 'past_president' | 'member';
+
+export const WEB_ROLE_LABELS: Record<WebRole, Bi> = {
+  president: { kn: 'ಅಧ್ಯಕ್ಷರು', en: 'President' },
+  past_president: { kn: 'ಮಾಜಿ ಅಧ್ಯಕ್ಷರು', en: 'Past president' },
+  member: { kn: 'ಸದಸ್ಯೆ', en: 'Member' },
+};
+
 export const ui = {
   /* ——— Global chrome ——— */
   skip: { kn: 'ಮುಖ್ಯ ವಿಷಯಕ್ಕೆ ಹೋಗಿ', en: 'Skip to main content' },

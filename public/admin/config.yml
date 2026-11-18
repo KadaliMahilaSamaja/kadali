@@ -346,6 +346,44 @@ collections:
         hint: >-
           One or two lines — how long she has been in Kadali and what she
           handles.
+  - name: web-committee
+    label: ಜಾಲತಾಣದ ಕಮಿಟಿ / Website committee
+    label_singular: Member
+    description: >-
+      The website-committee members shown on the homepage. Upload a photo,
+      choose her role, and set the display order — smaller numbers come
+      first, so the president keeps the smallest number to stay on top.
+    folder: src/content/web-committee
+    identifier_field: name # the entry file name is generated from the name
+    summary: '{{name}} — {{role}}'
+    editor:
+      preview: true
+    fields:
+      - name: name
+        label: Name
+        widget: string
+      - name: role
+        label: Role
+        widget: select
+        options:
+          - label: 'President (ಅಧ್ಯಕ್ಷರು)'
+            value: president
+          - label: 'Past president (ಮಾಜಿ ಅಧ್ಯಕ್ಷರು)'
+            value: past_president
+          - label: 'Member (ಸದಸ್ಯೆ)'
+            value: member
+        hint: >-
+          Shown under her name on the website, in Kannada and English.
+      - name: photo
+        label: Photo
+        widget: image
+      - name: order
+        label: Display order
+        widget: number
+        default: 99
+        hint: >-
+          Position on the homepage. Smaller numbers come first (1 before 2);
+          give the president the smallest number to keep her at the top.
   # ---------------------------------------------------------------- Homepage
   - name: settings
     label: Homepage

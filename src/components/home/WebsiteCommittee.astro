@@ -1,81 +1,81 @@
 ---
-import { ROLE_LABELS, type Role, ui } from '../../i18n/ui';
+import { getCollection } from 'astro:content';
+import { WEB_ROLE_LABELS, ui } from '../../i18n/ui';
 
 /**
- * Homepage website-committee (ಜಾಲತಾಣದ ಕಮಿಟಿ) — the small team behind
- * kadali.org. Three people, named by the society; the president serves on
- * it too. Kept static here rather than in the `people` board registry,
- * which is only for the managing committee shown role-grouped on About.
+ * Homepage website-committee (ಜಾಲತಾಣದ ಕಮಿಟಿ) — the team behind kadali.org,
+ * managed in the CMS (`src/content/web-committee/`). `order` decides the
+ * display position (smaller numbers first; the president is seeded at 1);
+ * `role` only picks the label. The section hides when the collection is empty.
  */
-const members: { name: string; photo: string; role: Role }[] = [
-  { name: 'ಸವಿತಾ ಸುರೇಶ', photo: '/images/uploads/savita-suresh.webp', role: 'member' },
-  { name: 'ಶೀಲಾ ಸುರೇಶ', photo: '/images/uploads/sheela-suresh.webp', role: 'member' },
-  { name: 'ಸುಜಾತ ಬಸವರಾಜ್', photo: '/images/uploads/sujata-basavaraj.webp', role: 'member' },
-  {
-    name: 'ವಾಗ್ದೇವಿ ಬಸವರಾಜ್ ನುಚ್ಚಿನ',
-    photo: '/images/uploads/vagdevi-basavaraj-nuchin.webp',
-    role: 'president',
-  },
-];
+const members = (
+  await getCollection('web-committee')
+).sort(
+  (a, b) =>
+    a.data.order - b.data.order || a.data.name.localeCompare(b.data.name),
+);
 
 const { home } = ui;
 ---
 
-<section
-  id="website-committee"
-  class="border-t border-ink/10 bg-jasmine"
-  aria-labelledby="website-committee-heading"
->
-  <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:py-20">
-    <div class="reveal flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-      <div>
-        <p class="eyebrow-kn">
-          <span data-kn lang="kn">{home.webCommitteeEyebrow.kn}</span>
-          <span data-en>{home.webCommitteeEyebrow.en}</span>
-        </p>
-        <h2 id="website-committee-heading" class="text-section font-bold">
-          <span data-kn lang="kn">{home.webCommitteeHeading.kn}</span>
-          <span data-en>{home.webCommitteeHeading.en}</span>
-        </h2>
-      </div>
-      <div class="md:pb-2 md:text-right">
-        <p class="max-w-sm font-body text-lg leading-relaxed text-stone">
-          <span data-kn lang="kn">{home.webCommitteeLede.kn}</span>
-          <span data-en class="font-serif">{home.webCommitteeLede.en}</span>
-        </p>
-      </div>
-    </div>
+{
+  members.length > 0 && (
+    <section
+      id="website-committee"
+      class="border-t border-ink/10 bg-jasmine"
+      aria-labelledby="website-committee-heading"
+    >
+      <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:py-20">
+        <div class="reveal flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p class="eyebrow-kn">
+              <span data-kn lang="kn">{home.webCommitteeEyebrow.kn}</span>
+              <span data-en>{home.webCommitteeEyebrow.en}</span>
+            </p>
+            <h2 id="website-committee-heading" class="text-section font-bold">
+              <span data-kn lang="kn">{home.webCommitteeHeading.kn}</span>
+              <span data-en>{home.webCommitteeHeading.en}</span>
+            </h2>
+          </div>
+          <div class="md:pb-2 md:text-right">
+            <p class="max-w-sm font-body text-lg leading-relaxed text-stone">
+              <span data-kn lang="kn">{home.webCommitteeLede.kn}</span>
+              <span data-en class="font-serif">{home.webCommitteeLede.en}</span>
+            </p>
+          </div>
+        </div>
 
-    <div class="mt-10 mx-auto grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      {
-        members.map((member, i) => {
-          const roleLabel = ROLE_LABELS[member.role];
-          return (
-            <div class="reveal" style={`--reveal-delay: ${i * 90}ms`}>
-              <article class="group flex h-full flex-col items-center rounded-b-[2rem] border border-ink/10 bg-milk px-4 pb-6 pt-6 text-center transition-transform duration-300 hover:-translate-y-1">
-                <div class="w-full overflow-hidden rounded-t-[999px] border border-ink/10">
-                  <img
-                    src={member.photo}
-                    alt={`ಕದಳಿ ಜಾಲತಾಣದ ಕಮಿಟಿಯ ಸದಸ್ಸೆ ${member.name}`}
-                    width="720"
-                    height="900"
-                    loading="lazy"
-                    decoding="async"
-                    class="aspect-[4/5] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                  />
-                </div>
-                <h3 class="mt-4 text-lg font-semibold leading-snug">
-                  <span lang="kn">{member.name}</span>
-                </h3>
-                <p class="mt-1.5 font-ui text-sm font-semibold text-leaf">
-                  <span data-kn lang="kn">{roleLabel.kn}</span>
-                  <span data-en>{roleLabel.en}</span>
-                </p>
-              </article>
-            </div>
-          );
-        })
-      }
-    </div>
-  </div>
-</section>
+        <div class="mt-10 mx-auto grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {members.map((member, i) => {
+            const { name, role, photo } = member.data;
+            const roleLabel = WEB_ROLE_LABELS[role];
+            return (
+              <div class="reveal" style={`--reveal-delay: ${i * 90}ms`}>
+                <article class="group flex h-full flex-col items-center rounded-b-[2rem] border border-ink/10 bg-milk px-4 pb-6 pt-6 text-center transition-transform duration-300 hover:-translate-y-1">
+                  <div class="w-full overflow-hidden rounded-t-[999px] border border-ink/10">
+                    <img
+                      src={photo}
+                      alt={`ಕದಳಿ ಜಾಲತಾಣದ ಕಮಿಟಿಯ ಸದಸ್ಸೆ ${name}`}
+                      width="720"
+                      height="900"
+                      loading="lazy"
+                      decoding="async"
+                      class="aspect-[4/5] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    />
+                  </div>
+                  <h3 class="mt-4 text-lg font-semibold leading-snug">
+                    <span lang="kn">{name}</span>
+                  </h3>
+                  <p class="mt-1.5 font-ui text-sm font-semibold text-leaf">
+                    <span data-kn lang="kn">{roleLabel.kn}</span>
+                    <span data-en>{roleLabel.en}</span>
+                  </p>
+                </article>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  )
+}

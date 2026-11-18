@@ -105,6 +105,20 @@ const people = defineCollection({
   }),
 });
 
+// Website-committee members (ಜಾಲತಾಣದ ಕಮಿಟಿ) shown on the homepage — the
+// team behind kadali.org. Separate from the `people` board registry, so
+// website roles (past president etc.) don't leak into the About page.
+// Frontmatter only — the markdown body is unused.
+const webCommittee = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/web-committee' }),
+  schema: z.object({
+    name: z.string(),
+    role: z.enum(['president', 'past_president', 'member']),
+    photo: z.string(), // path under public/, e.g. /images/uploads/photo.webp
+    order: z.number().default(99), // display order; smaller numbers come first
+  }),
+});
+
 const settings = defineCollection({
   loader: file('src/content/settings/site.json'),
   schema: z.object({
@@ -129,5 +143,6 @@ export const collections = {
   announcements,
   galleries,
   people,
+  'web-committee': webCommittee,
   'site-settings': settings,
 };
