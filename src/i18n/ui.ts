@@ -143,6 +143,12 @@ export const ui = {
     },
     fullCommittee: { kn: 'ಸಂಪೂರ್ಣ ಸಮಿತಿ', en: 'Full committee' },
     swipeMeet: { kn: 'ಸರಿಸಿ ಪರಿಚಯ ಪಡೆಯಿರಿ', en: 'Swipe to meet them' },
+    webCommitteeEyebrow: { kn: 'ಜಾಲತಾಣ', en: 'The website' },
+    webCommitteeHeading: { kn: 'ಜಾಲತಾಣದ ಕಮಿಟಿ', en: 'Website committee' },
+    webCommitteeLede: {
+      kn: 'ಕದಳಿಯ ಜಾಲತಾಣವನ್ನು ರೂಪಿಸಿ ನಿರ್ವಹಿಸುವ ಸಮಿತಿಯ ಪರಿಚಯ.',
+      en: 'The committee that shaped and cares for Kadali’s website.',
+    },
     joinEyebrow: { kn: 'ನಿಮ್ಮನ್ನು ಸ್ವಾಗತಿಸುತ್ತೇವೆ', en: 'We welcome you' },
     joinHeading: { kn: 'ಬನ್ನಿ, ನಮ್ಮೊಂದಿಗೆ ಬೆಸೆಯಿರಿ', en: 'Come, weave yourself with us' },
     joinLede: {

@@ -6,6 +6,7 @@ import Aim from '../components/home/Aim.astro';
 import EventCard from '../components/home/EventCard.astro';
 import RecentArticles from '../components/home/RecentArticles.astro';
 import CommitteePreview from '../components/home/CommitteePreview.astro';
+import WebsiteCommittee from '../components/home/WebsiteCommittee.astro';
 import JoinBand from '../components/home/JoinBand.astro';
 import { deriveStatus, sortEvents } from '../lib/events';
 import { ui } from '../i18n/ui';
@@ -231,6 +232,8 @@ const heroDescription = {
   }
 
   <CommitteePreview />
+
+  <WebsiteCommittee />
 
   <JoinBand />
 </BaseLayout>
