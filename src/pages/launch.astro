@@ -14,9 +14,13 @@
  * live inline for the same reason (ops tooling, not site chrome;
  * offline.html is the precedent). global.css is imported directly so the
  * design tokens, the bilingual visibility rules and the focus styles still
- * apply.
+ * apply, and the brand motifs (KasutiBorder, Mandala, Bloom) dress it like
+ * the rest of the brochure.
  */
 import '../styles/global.css';
+import KasutiBorder from '../components/motifs/KasutiBorder.astro';
+import Mandala from '../components/motifs/Mandala.astro';
+import Bloom from '../components/motifs/Bloom.astro';
 ---
 
 <!doctype html>
@@ -41,140 +45,190 @@ import '../styles/global.css';
     </script>
   </head>
   <body class="min-h-screen bg-cream font-ui text-ink antialiased">
+    <!-- The brochure frame: cross-stitch bands top and bottom, like the
+         site's footer dividers. -->
+    <div class="text-leaf"><KasutiBorder class="h-4 w-full" /></div>
+
     <main
-      class="mx-auto flex min-h-screen w-full max-w-xl flex-col items-center justify-center gap-5 px-4 py-10 text-center"
+      class="relative mx-auto flex min-h-[calc(100vh-2rem)] w-full max-w-2xl flex-col px-4 py-8 text-center sm:py-10"
     >
-      <svg class="h-12 w-12" viewBox="0 0 32 32" aria-hidden="true">
-        <circle cx="16" cy="16" r="14" fill="#1D5F3C"></circle>
-        <circle cx="12" cy="13" r="1.6" fill="#FBF6ED"></circle>
-        <circle cx="19" cy="12" r="1.6" fill="#FBF6ED"></circle>
-        <circle cx="16" cy="18" r="1.6" fill="#FBF6ED"></circle>
-        <circle cx="10.5" cy="18.5" r="1.2" fill="#FBF6ED"></circle>
-        <circle cx="21.5" cy="18" r="1.2" fill="#FBF6ED"></circle>
-      </svg>
+      <div class="m-auto flex w-full flex-col items-center">
+        <!-- scattered blossoms, the brochure's peach-panel flowers -->
+        <Bloom
+          class="pointer-events-none absolute -left-7 top-28 h-28 w-28 text-leaf/10 sm:h-36 sm:w-36"
+        />
+        <Bloom
+          class="pointer-events-none absolute -right-5 top-1/2 h-32 w-32 text-turmeric/15 sm:h-44 sm:w-44"
+        />
+        <Bloom
+          class="pointer-events-none absolute -left-6 bottom-24 h-24 w-24 text-turmeric/10 sm:h-32 sm:w-32"
+        />
 
-      <header>
-        <h1 class="text-3xl">
-          <span data-kn lang="kn">ಉದ್ಘಾಟನಾ ನಿಯಂತ್ರಣ</span>
-          <span data-en>Launch control</span>
-        </h1>
-        <p class="mt-1 text-sm text-stone">kadali.org / launch</p>
-      </header>
-
-      <section class="flex flex-col items-center gap-3" aria-live="polite">
-        <p
-          data-status
-          class="inline-flex items-center gap-2.5 border px-5 py-2 text-base font-semibold"
-        >
-          <span class="status-dot" aria-hidden="true"></span>
-          <span data-state-text>…</span>
-        </p>
-        <p data-since class="hidden text-sm text-stone"></p>
-        <p
-          data-warn
-          class="hidden max-w-md border border-sindoor bg-milk px-3 py-2 text-sm text-sindoor"
-        ></p>
-      </section>
-
-      <!-- The big one: press and hold three seconds. The button is a circle
-           on purpose — it echoes the mandala/bud motif, and a hold gesture
-           cannot be triggered by a stray tap on stage. -->
-      <div data-launch-wrap>
-        <button
-          data-launch
-          type="button"
-          class="launch-btn relative grid h-56 w-56 place-items-center rounded-full bg-leaf text-milk shadow-lg"
-        >
-          <svg
-            class="absolute inset-0 h-full w-full -rotate-90"
-            viewBox="0 0 224 224"
-            aria-hidden="true"
-          >
-            <circle
-              cx="112"
-              cy="112"
-              r="100"
-              fill="none"
-              stroke="rgb(255 253 247 / 0.3)"
-              stroke-width="6"></circle>
-            <circle
-              data-ring
-              cx="112"
-              cy="112"
-              r="100"
-              fill="none"
-              stroke="#E8862E"
-              stroke-width="6"
-              stroke-linecap="round"
-              stroke-dasharray="628.3"
-              stroke-dashoffset="628.3"></circle>
+        <header class="flex flex-col items-center">
+          <svg class="h-11 w-11" viewBox="0 0 32 32" aria-hidden="true">
+            <circle cx="16" cy="16" r="14" fill="#1D5F3C"></circle>
+            <circle cx="12" cy="13" r="1.6" fill="#FBF6ED"></circle>
+            <circle cx="19" cy="12" r="1.6" fill="#FBF6ED"></circle>
+            <circle cx="16" cy="18" r="1.6" fill="#FBF6ED"></circle>
+            <circle cx="10.5" cy="18.5" r="1.2" fill="#FBF6ED"></circle>
+            <circle cx="21.5" cy="18" r="1.2" fill="#FBF6ED"></circle>
           </svg>
-          <span class="relative px-8 text-xl font-bold leading-snug">
-            <span data-kn lang="kn">ತೆರೆಯಿರಿ</span>
-            <span data-en>Open<br />the site</span>
-          </span>
-        </button>
-        <p class="mt-3 text-sm text-stone">
-          <span data-kn lang="kn">ಮೂರು ಸೆಕೆಂಡು ಒತ್ತಿ ಹಿಡಿಯಿರಿ</span>
-          <span data-en>Press and hold for three seconds</span>
-        </p>
-        <p
-          data-message
-          aria-live="assertive"
-          class="mx-auto mt-3 hidden max-w-md text-sm font-semibold text-sindoor"
-        ></p>
-      </div>
+          <p class="mt-2 text-sm font-bold tracking-wide text-leaf">
+            <span data-kn lang="kn">ಕದಳಿ ವನಿತಾ ಸಮಾಜ</span>
+            <span data-en>Kadali Vanita Samaja</span>
+          </p>
+          <h1 class="text-section">
+            <span data-kn lang="kn">ಉದ್ಘಾಟನಾ ನಿಯಂತ್ರಣ</span>
+            <span data-en>Launch control</span>
+          </h1>
+          <p class="mt-1 text-xs tracking-widest text-stone">kadali.org/launch</p>
+        </header>
 
-      <div data-open-wrap class="hidden">
-        <a
-          href="/"
-          class="text-base font-semibold text-leaf underline decoration-turmeric decoration-2 underline-offset-4"
-        >
-          <span data-kn lang="kn">ತೆರೆದ ತಾಣಕ್ಕೆ ಹೋಗಿ ⟶</span>
-          <span data-en>Visit the opened site ⟶</span>
-        </a>
-      </div>
-
-      <section class="mt-4 w-full max-w-sm border-t border-jasmine pt-6">
-        <h2 class="text-base">
-          <span data-kn lang="kn">ಪೂರ್ವಾಭ್ಯಾಸ</span>
-          <span data-en>Rehearsal</span>
-        </h2>
-        <button
-          data-reset
-          type="button"
-          class="mt-3 border border-leaf bg-transparent px-5 py-2.5 text-sm font-semibold text-leaf"
-        >
-          <span data-kn lang="kn">ಪರದೆ ಮುಚ್ಚಿ · ಒತ್ತಿ ಹಿಡಿಯಿರಿ</span>
-          <span data-en>Close the curtain · press and hold</span>
-        </button>
-      </section>
-
-      <section class="w-full max-w-sm">
-        <form data-key-form class="hidden">
-          <label class="block text-sm text-stone" for="launch-key">
-            <span data-kn lang="kn">ಕೀ</span>
-            <span data-en>Key</span>
-          </label>
-          <input
-            data-key-input
-            id="launch-key"
-            type="password"
-            autocomplete="off"
-            spellcheck="false"
-            class="mx-auto mt-2 block w-64 border border-stone bg-milk px-3 py-2 text-sm"
-          />
-          <button
-            type="submit"
-            class="mt-3 bg-leaf px-4 py-2 text-sm font-semibold text-milk"
+        <section class="mt-7 flex w-full flex-col items-center gap-3" aria-live="polite">
+          <p
+            data-status
+            class="inline-flex w-full items-center justify-center gap-3 border px-6 py-3 text-lg font-semibold"
           >
-            <span data-kn lang="kn">ಉಳಿಸಿ</span>
-            <span data-en>Save</span>
-          </button>
-        </form>
-        <p data-key-ok class="hidden text-sm text-stone"></p>
-      </section>
+            <span class="status-dot" aria-hidden="true"></span>
+            <span data-state-text>…</span>
+          </p>
+          <p data-since class="hidden text-sm text-stone"></p>
+          <p
+            data-warn
+            class="hidden w-full border border-sindoor bg-milk px-3 py-2 text-sm text-sindoor"
+          ></p>
+        </section>
+
+        <!-- The big one: press and hold three seconds. The button is a
+             mandala on purpose — dotted rim, bud dots echoing the favicon —
+             and a hold gesture cannot be triggered by a stray tap on stage. -->
+        <div data-launch-wrap class="mt-8 flex w-full flex-col items-center">
+          <div class="relative flex h-72 w-full items-center justify-center">
+            <Mandala
+              class="pointer-events-none absolute h-[26rem] w-[26rem] max-sm:h-80 max-sm:w-80 text-leaf/[0.08]"
+            />
+            <button
+              data-launch
+              type="button"
+              class="launch-btn relative grid h-60 w-60 place-items-center rounded-full bg-leaf text-milk shadow-photo"
+            >
+              <svg class="absolute inset-0 h-full w-full" viewBox="0 0 240 240" aria-hidden="true">
+                <!-- dotted rim, slowly turning -->
+                <circle
+                  class="rim-spin"
+                  cx="120"
+                  cy="120"
+                  r="114"
+                  fill="none"
+                  stroke="rgb(255 253 247 / 0.4)"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-dasharray="0.2 10"></circle>
+                <!-- hold-progress track + ring -->
+                <circle
+                  cx="120"
+                  cy="120"
+                  r="98"
+                  fill="none"
+                  stroke="rgb(255 253 247 / 0.25)"
+                  stroke-width="6"
+                  transform="rotate(-90 120 120)"></circle>
+                <circle
+                  data-ring
+                  cx="120"
+                  cy="120"
+                  r="98"
+                  fill="none"
+                  stroke="#E8862E"
+                  stroke-width="6"
+                  stroke-linecap="round"
+                  stroke-dasharray="615.75"
+                  stroke-dashoffset="615.75"
+                  transform="rotate(-90 120 120)"></circle>
+                <!-- the bud mark's dots, set into the disc -->
+                <circle cx="120" cy="64" r="3.5" fill="rgb(255 253 247 / 0.85)"></circle>
+                <circle cx="165" cy="92" r="3.5" fill="rgb(255 253 247 / 0.85)"></circle>
+                <circle cx="165" cy="148" r="3.5" fill="rgb(255 253 247 / 0.85)"></circle>
+                <circle cx="120" cy="176" r="3.5" fill="rgb(255 253 247 / 0.85)"></circle>
+                <circle cx="75" cy="148" r="3.5" fill="rgb(255 253 247 / 0.85)"></circle>
+                <circle cx="75" cy="92" r="3.5" fill="rgb(255 253 247 / 0.85)"></circle>
+              </svg>
+              <span class="relative px-10 text-2xl font-bold leading-snug">
+                <span data-kn lang="kn">ತೆರೆಯಿರಿ</span>
+                <span data-en>Open<br />the site</span>
+              </span>
+            </button>
+          </div>
+          <p class="mt-2 text-sm text-stone">
+            <span data-kn lang="kn">ಮೂರು ಸೆಕೆಂಡು ಒತ್ತಿ ಹಿಡಿಯಿರಿ</span>
+            <span data-en>Press and hold for three seconds</span>
+          </p>
+          <p
+            data-message
+            aria-live="assertive"
+            class="mx-auto mt-3 hidden max-w-md text-sm font-semibold text-sindoor"
+          ></p>
+        </div>
+
+        <div data-open-wrap class="hidden">
+          <a
+            href="/"
+            class="mt-2 inline-flex items-center gap-2 bg-leaf px-6 py-3 text-lg font-semibold text-milk"
+          >
+            <span data-kn lang="kn">ತೆರೆದ ತಾಣಕ್ಕೆ ಹೋಗಿ</span>
+            <span data-en>Visit the opened site</span>
+            <span aria-hidden="true">⟶</span>
+          </a>
+        </div>
+
+        <!-- quiet tools strip -->
+        <section class="mt-10 w-full max-w-lg">
+          <div class="flex items-center gap-3 text-turmeric" aria-hidden="true">
+            <span class="h-px flex-1 bg-jasmine"></span>
+            <Bloom class="h-5 w-5 text-turmeric" />
+            <span class="h-px flex-1 bg-jasmine"></span>
+          </div>
+          <p class="eyebrow-kn mt-5">
+            <span data-kn lang="kn">ಪೂರ್ವಾಭ್ಯಾಸ</span>
+            <span data-en>Rehearsal</span>
+          </p>
+          <div class="mt-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-3">
+            <button
+              data-reset
+              type="button"
+              class="border border-leaf bg-transparent px-4 py-2 text-sm font-semibold text-leaf"
+            >
+              <span data-kn lang="kn">ಪರದೆ ಮುಚ್ಚಿ · ಒತ್ತಿ ಹಿಡಿಯಿರಿ</span>
+              <span data-en>Close the curtain · press and hold</span>
+            </button>
+            <form data-key-form class="hidden">
+              <label class="text-sm text-stone" for="launch-key">
+                <span data-kn lang="kn">ಕೀ:</span>
+                <span data-en>Key:</span>
+              </label>
+              <input
+                data-key-input
+                id="launch-key"
+                type="password"
+                autocomplete="off"
+                spellcheck="false"
+                class="inline-block w-52 border border-stone bg-milk px-3 py-1.5 text-sm"
+              />
+              <button
+                type="submit"
+                class="inline-block bg-leaf px-3 py-1.5 text-sm font-semibold text-milk"
+              >
+                <span data-kn lang="kn">ಉಳಿಸಿ</span>
+                <span data-en>Save</span>
+              </button>
+            </form>
+            <p data-key-ok class="hidden text-sm text-stone"></p>
+          </div>
+        </section>
+      </div>
     </main>
+
+    <div class="text-leaf"><KasutiBorder class="h-4 w-full" /></div>
 
     <!-- One-shot petal burst on a successful launch (transform/opacity
          only; reduced motion neutralises it via global.css). -->
@@ -189,8 +243,8 @@ import '../styles/global.css';
 <style>
   /* Page-only styles; everything else rides on tokens + Tailwind. */
   .status-dot {
-    width: 0.6rem;
-    height: 0.6rem;
+    width: 0.7rem;
+    height: 0.7rem;
     border-radius: 9999px;
     background: currentColor;
   }
@@ -219,9 +273,21 @@ import '../styles/global.css';
   .launch-btn.holding {
     transform: scale(0.97);
   }
+  .rim-spin {
+    animation: rim-spin 90s linear infinite;
+    transform-origin: 120px 120px;
+  }
+  @keyframes rim-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
   @media (prefers-reduced-motion: reduce) {
     .launch-btn.holding {
       transform: none;
+    }
+    .rim-spin {
+      animation: none;
     }
   }
 </style>
@@ -340,7 +406,7 @@ import '../styles/global.css';
   const keyOkEl = document.querySelector('[data-key-ok]');
   const burstEl = document.querySelector('[data-burst]');
   const ring = document.querySelector('[data-ring]');
-  const RING_C = 628.3;
+  const RING_C = 615.75;
 
   const show = (el, on) => {
     if (el) el.classList.toggle('hidden', !on);
