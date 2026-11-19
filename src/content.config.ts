@@ -29,6 +29,10 @@ const articles = defineCollection({
       'community',
     ]),
     pubDate: z.coerce.date(),
+    // Explicit decision (Main, Nov 2026): optional display-order pin. Smaller
+    // numbers come first on the homepage rail and event story lists (same
+    // pattern as the committee's `order`); unset articles follow newest-first.
+    order: z.number().optional(),
     // Optional link to the event this story belongs to (stored as the
     // event's id, e.g. 'monsoon-mela'). The event page lists matching
     // stories under "Stories from this event".

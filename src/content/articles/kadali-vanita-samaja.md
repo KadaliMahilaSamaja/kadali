@@ -14,6 +14,8 @@ tags:
   - ಮಹಿಳಾ ಸಬಲೀಕರಣ
   - ಸೇವೆ
 pubDate: 2026-11-13
+order: 2 # pinned: second on the homepage rail
+event: website-unveiling
 featured: true
 draft: false
 ---

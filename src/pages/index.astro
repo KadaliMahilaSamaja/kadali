@@ -9,6 +9,7 @@ import CommitteePreview from '../components/home/CommitteePreview.astro';
 import WebsiteCommittee from '../components/home/WebsiteCommittee.astro';
 import JoinBand from '../components/home/JoinBand.astro';
 import { deriveStatus, sortEvents } from '../lib/events';
+import { sortArticlesForDisplay } from '../lib/articles';
 import { ui } from '../i18n/ui';
 
 const now = new Date();
@@ -16,16 +17,19 @@ const now = new Date();
 // --- Site settings (single file() entry, id 'site') -------------------------
 const settings = (await getCollection('site-settings')).at(0);
 
-// --- Recent articles (newest first, max 4 — the rail scrolls) ---------------
-const articles = (
-  await getCollection('articles', ({ data }) => !data.draft)
-).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+// --- Recent articles (CMS-pinned order, then newest — max 4) ----------------
+const articles = sortArticlesForDisplay(
+  await getCollection('articles', ({ data }) => !data.draft),
+);
 
-// Settings' featured pick floats to the front if it is published.
+// Settings' featured pick floats to the front if it is published and not
+// already pinned by an explicit order in the CMS.
 const featuredArticleRef = settings?.data.featuredArticle;
 if (featuredArticleRef) {
   const entry = await getEntry(featuredArticleRef).catch(() => undefined);
-  if (entry && !entry.data.draft) articles.unshift(entry);
+  if (entry && !entry.data.draft && entry.data.order === undefined) {
+    articles.unshift(entry);
+  }
 }
 const recentArticles = [...new Map(articles.map((a) => [a.id, a])).values()]
   .slice(0, 4);

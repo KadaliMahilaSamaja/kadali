@@ -9,17 +9,19 @@ import CancelledBadge from '../../components/events/CancelledBadge.astro';
 import ArticleCard from '../../components/articles/ArticleCard.astro';
 import { istIso } from '../../i18n/dates';
 import { deriveStatus, sortEvents } from '../../lib/events';
+import { sortArticlesForDisplay } from '../../lib/articles';
 import { ui } from '../../i18n/ui';
 
 const { articles: tArticles, events: t } = ui;
 
 export async function getStaticPaths() {
   const events = await getCollection('events');
-  // Newest-first stories that articles have filed under an event. Each
-  // article's event reference is resolved once, then grouped by event id.
-  const published = (
-    await getCollection('articles', ({ data }) => !data.draft)
-  ).sort((a, b) => +b.data.pubDate - +a.data.pubDate);
+  // Newest-first stories that articles have filed under an event (CMS-pinned
+  // orders lead, so the committee's picks open the list). Each article's
+  // event reference is resolved once, then grouped by event id.
+  const published = sortArticlesForDisplay(
+    await getCollection('articles', ({ data }) => !data.draft),
+  );
 
   const storiesByEventId = new Map<string, CollectionEntry<'articles'>[]>();
   for (const article of published) {

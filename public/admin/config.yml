@@ -141,6 +141,14 @@ collections:
         label: Publish date
         widget: datetime
         type: date # date only (YYYY-MM-DD)
+      - name: order
+        label: ಕ್ರಮ ಸಂಖ್ಯೆ / Display order
+        widget: number
+        required: false
+        hint: >-
+          ಐಚ್ಛಿಕ (Optional). ಮುಖಪುಟ ಮತ್ತು ಘಟನೆಯ ಪುಟದಲ್ಲಿ ಲೇಖನದ ಸ್ಥಾನ.
+          ಚಿಕ್ಕ ಸಂಖ್ಯೆ ಮೊದಲು ಬರುತ್ತದೆ (1 before 2). ಸಂಖ್ಯೆ ಇಲ್ಲದ ಲೇಖನಗಳು
+          ದಿನಾಂಕದ ಪ್ರಕಾರ ಹಿಂದೆ ಬರುತ್ತವೆ.
       - name: featured
         label: Featured on homepage
         widget: boolean
