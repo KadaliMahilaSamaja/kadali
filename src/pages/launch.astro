@@ -1109,13 +1109,14 @@ import Bloom from '../components/motifs/Bloom.astro';
       } else if (!res.ok) {
         showMsg(MSG.serverError);
       } else if (path === '/api/launch') {
-        // celebrate first — pop, flare, burst — then hand the stage over
-        // to the real site: the homepage opens itself and rains petals
-        // over itself (?celebrate=1). Back returns to this console.
+        // celebrate — petals burst over the covering wash — then hand the
+        // stage over while still covered: the homepage loads under the same
+        // turmeric with petals raining, and fades itself in. Back returns
+        // to this console.
         showMsg(MSG.launched, 'ok');
         foldKeyTools();
         celebrate();
-        await sleep(REDUCED ? 500 : 1400);
+        await sleep(REDUCED ? 500 : 900);
         // Navigate only once this visitor's colo READS the gate as open:
         // KV is eventually consistent, and a homepage GET that lands on a
         // colo still seeing "closed" would serve the curtain for a beat —
@@ -1140,40 +1141,18 @@ import Bloom from '../components/motifs/Bloom.astro';
   }
 
   /* ——— the celebration ———
-     ಪುಷ್ಪ ವರ್ಷ: the disc pops, the turmeric wash blooms and dissolves,
-     and a radial burst of petals erupts from the disc (petal art lives in
-     src/lib/petal-shower.js, shared with the opened site). The full
-     flower shower belongs to the destination: the ceremony page hands
-     over to the homepage with ?celebrate=1 and the petals rain there. */
+     ಪುಷ್ಪ ವರ್ಷ: the wash already covers the whole screen from the hold —
+     it stays up (no dissolve), petals burst at the disc over it, and the
+     page hands over to the homepage while still covered. The destination
+     loads under the same turmeric (its celebrate veil) with petals raining
+     on top, then fades itself in. Petal art lives in
+     src/lib/petal-shower.js, shared with the opened site. */
   function celebrate() {
     frameLight(true);
     if (REDUCED) {
       clearGlow(); // state changes above still tell the story
       return;
     }
-    // 1 — the disc pops
-    motion(
-      launchBtn,
-      [
-        { transform: 'scale(0.965)' },
-        { transform: 'scale(1.06)', offset: 0.35 },
-        { transform: 'scale(1)' },
-      ],
-      { duration: 480, easing: EASE_OUT },
-    );
-    // 2 — the diya flare: the wash is already full-screen from the hold —
-    // bloom it a little wider, dissolve it into the petal burst, clear it
-    const from = Math.max(glowScale, 1);
-    motion(
-      glowEl,
-      [
-        { opacity: 1, transform: 'scale(' + from + ')' },
-        { opacity: 0.9, transform: 'scale(' + from * 1.12 + ')', offset: 0.45 },
-        { opacity: 0, transform: 'scale(' + from * 1.3 + ')' },
-      ],
-      { duration: 1100, easing: 'ease-out' },
-    );
-    window.setTimeout(clearGlow, 1150);
     burstPetals(burstEl);
   }
 

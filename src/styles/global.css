@@ -476,3 +476,38 @@
     display: none;
   }
 }
+
+/* ——— the launch hand-off veil ———
+   A page loaded with ?celebrate=1 (from the /launch ceremony or a curtain
+   tab) is covered by this turmeric light before its first frame — the
+   ceremony wash continues into it without a seam. Petals rain over it
+   (the shower layer is z-70, above this), and after a beat the root gets
+   .celebrate-reveal: the veil fades away over 2.2 s, revealing the real
+   page while the shower thins to a stop. Reduced motion: no veil at all. */
+.celebrate-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 65;
+  background: radial-gradient(
+    circle at 50% 42%,
+    #f2a95c 0%,
+    var(--color-turmeric) 58%,
+    #d97a26 100%
+  );
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+html.celebrate .celebrate-veil {
+  opacity: 1;
+  visibility: visible;
+}
+html.celebrate.celebrate-reveal .celebrate-veil {
+  opacity: 0;
+  transition: opacity 2200ms ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .celebrate-veil {
+    display: none;
+  }
+}

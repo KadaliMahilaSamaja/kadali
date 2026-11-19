@@ -106,10 +106,12 @@ https://kadali.org/launch#k=<LAUNCH_KEY>
    `curl -s https://kadali.org/api/launch-status` → `"open":false`.
    Press and **hold** the big button for three seconds (the turmeric ring
    fills; releasing early cancels).
-2. The page celebrates (the glow washes the screen, petals fall) and then
-   **opens the homepage itself** after ~2 seconds. Every open curtain tab
-   opens itself within a few seconds. Press **Back** to return to the
-   console — click around the real site; it is the finished deployment.
+2. The screen is already under the turmeric wash from the hold; the page
+   hands over to the homepage **while still covered** — petals rain over
+   the veil, which then fades away revealing the real site, the shower
+   thinning to a stop after it. Every open curtain tab joins the same
+   shower within a few seconds. Click around the real site — it is the
+   finished deployment.
 3. Expand the **ನಿರ್ವಹಣೆ / maintainer** strip at the foot (click it, or
    press **O**) and hold **ಪರದೆ ಮುಚ್ಚಿ / Close the curtain** (~1.2 s).
    Confirm the curtain is back on kadali.org.
@@ -137,10 +139,11 @@ curl -s -H "x-launch-key: <KEY>" https://kadali.org/about -o /dev/null -w '%{htt
 2. Before handover, confirm the gate is closed — expand the
    **ನಿರ್ವಹಣೆ** strip on `/launch` (status: "Curtain closed") or run
    `curl -s https://kadali.org/api/launch-status` → `"open":false`.
-3. The guest presses and holds for three seconds (the glow grows with the
-   hold and washes the screen at confirm). The stage page celebrates and
-   opens the homepage itself; the audience's curtain pages open
-   themselves in seconds (everyone in the hall shares one Cloudflare
+3. The guest presses and holds for the set seconds (the glow grows with
+   the hold until the wash engulfs the screen). The stage page then hands
+   over covered — petals rain over the turmeric veil as it fades away
+   revealing the homepage. The audience's curtain pages open themselves
+   the same way in seconds (everyone in the hall shares one Cloudflare
    colo); elsewhere in the world KV propagation takes at most ~60 s,
    which the polling quietly covers.
 4. If anything odd happens, `/api/reset` puts the curtain back instantly —

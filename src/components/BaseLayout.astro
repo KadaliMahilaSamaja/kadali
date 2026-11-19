@@ -91,6 +91,18 @@ const jsonLd = [
       } catch (e) {
         /* storage unavailable — the Kannada default stands */
       }
+      // The launch hand-off (?celebrate=1, from /launch or the curtain):
+      // mark the page pre-paint so the turmeric veil covers it before the
+      // first frame — the ceremony wash continues into this veil without a
+      // visible seam. The bundled script at the bottom runs the petals and
+      // the fade-out reveal.
+      try {
+        if (new URLSearchParams(location.search).has('celebrate')) {
+          document.documentElement.classList.add('celebrate');
+        }
+      } catch (e) {
+        /* no flag, no veil */
+      }
     </script>
     <Seo title={title} description={description} image={image} type={type} />
     <link
@@ -121,8 +133,11 @@ const jsonLd = [
     </main>
     <Footer />
     <!-- ಪುಷ್ಪ ವರ್ಷ: a page loaded with ?celebrate=1 (the launch moment —
-         the ceremony console and every curtain tab land here) rains petals
-         over the real site, then the layer cleans itself up. -->
+         the ceremony console and every curtain tab land here) is covered
+         by the turmeric veil first, petals rain over it, and the veil then
+         fades to reveal the real site. The shower layer sits above the
+         veil; both clean themselves up. -->
+    <div class="celebrate-veil" aria-hidden="true"></div>
     <div
       data-shower
       aria-hidden="true"
@@ -151,16 +166,33 @@ const jsonLd = [
 <script>
   // The launch moment, on every page: the ceremony console hands over with
   // ?celebrate=1 and the curtain tabs replace their URL with it, so
-  // wherever a visitor lands — homepage or a shared deep link — petals
-  // fall over the real content for a few seconds. The flag is scrubbed
-  // from the address bar right away; a later refresh is plain.
+  // wherever a visitor lands — homepage or a shared deep link — the page
+  // is first covered by the turmeric veil (added pre-paint in the head),
+  // petals rain over the veil, and after a beat the veil fades away
+  // revealing the site, the shower thinning out after it. The flag is
+  // scrubbed from the address bar right away; a later refresh is plain.
   import { flowerShower } from '../lib/petal-shower.js';
 
   const celebrate = new URLSearchParams(window.location.search).has('celebrate');
   if (celebrate) {
     window.history.replaceState(null, '', window.location.pathname);
-    window.addEventListener('load', () => {
-      flowerShower(document.querySelector('[data-shower]'));
-    });
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) {
+      // no veil, no petals — just the plain page
+      document.documentElement.classList.remove('celebrate');
+    } else {
+      window.addEventListener('load', () => {
+        flowerShower(document.querySelector('[data-shower]'));
+        // petals establish over the veil first, then it fades away
+        // (2.2 s) revealing the page; the shower keeps thinning to a
+        // stop on its own (~11 s), self-cleaning.
+        window.setTimeout(() => {
+          document.documentElement.classList.add('celebrate-reveal');
+        }, 700);
+        window.setTimeout(() => {
+          document.documentElement.classList.remove('celebrate', 'celebrate-reveal');
+        }, 3400);
+      });
+    }
   }
 </script>
