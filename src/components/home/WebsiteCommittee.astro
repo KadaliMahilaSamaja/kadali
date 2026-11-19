@@ -6,7 +6,8 @@ import { WEB_ROLE_LABELS, ui } from '../../i18n/ui';
  * Homepage website-committee (ಜಾಲತಾಣದ ಕಮಿಟಿ) — the team behind kadali.org,
  * managed in the CMS (`src/content/web-committee/`). `order` decides the
  * display position (smaller numbers first; the president is seeded at 1);
- * `role` only picks the label. The section hides when the collection is empty.
+ * `role` only picks the label. Phones swipe through the same rail as the
+ * board's section; tablets and up get the centered grid. Hides when empty.
  */
 const members = (
   await getCollection('web-committee')
@@ -45,7 +46,47 @@ const { home } = ui;
           </div>
         </div>
 
-        <div class="mt-10 mx-auto grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Mobile: swipe band, same affordance as the board's */}
+        <div class="rail-x mt-10 pb-2 md:hidden">
+          {members.map((member, i) => {
+            const { name, role, photo } = member.data;
+            const roleLabel = WEB_ROLE_LABELS[role];
+            return (
+              <div
+                class="reveal min-w-[64%] snap-center sm:min-w-[38%]"
+                style={`--reveal-delay: ${(i % 2) * 70}ms`}
+              >
+                <article class="flex h-full flex-col items-center rounded-b-[2rem] border border-ink/10 bg-milk px-3 pb-5 pt-6 text-center sm:px-4">
+                  <div class="w-full overflow-hidden rounded-t-[999px] border border-ink/10">
+                    <img
+                      src={photo}
+                      alt={`ಕದಳಿ ಜಾಲತಾಣದ ಕಮಿಟಿಯ ಸದಸ್ಸೆ ${name}`}
+                      width="720"
+                      height="900"
+                      loading="lazy"
+                      decoding="async"
+                      class="aspect-[4/5] w-full object-cover"
+                    />
+                  </div>
+                  <h3 class="mt-4 text-lg leading-snug">
+                    <span lang="kn">{name}</span>
+                  </h3>
+                  <p class="mt-2 font-ui text-sm font-semibold text-leaf">
+                    <span data-kn lang="kn">{roleLabel.kn}</span>
+                    <span data-en>{roleLabel.en}</span>
+                  </p>
+                </article>
+              </div>
+            );
+          })}
+        </div>
+        <p class="swipe-hint md:hidden" aria-hidden="true">
+          <span data-kn lang="kn">{home.swipeMeet.kn}</span>
+          <span data-en>{home.swipeMeet.en}</span>
+        </p>
+
+        {/* Tablet & desktop: centered grid */}
+        <div class="mx-auto mt-10 hidden max-w-5xl gap-6 md:grid md:grid-cols-2 lg:grid-cols-4">
           {members.map((member, i) => {
             const { name, role, photo } = member.data;
             const roleLabel = WEB_ROLE_LABELS[role];

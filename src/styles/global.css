@@ -356,7 +356,8 @@
 
   /* Rail children fade only: a vertical shift inside a horizontal overflow
      container would spawn a vertical scrollbar mid-swipe. */
-  html.js .rail > .reveal {
+  html.js .rail > .reveal,
+  html.js .rail-x > .reveal {
     transform: none;
     transition: opacity 600ms ease-out;
   }
