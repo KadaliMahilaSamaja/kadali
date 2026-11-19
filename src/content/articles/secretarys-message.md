@@ -3,6 +3,8 @@ title: "ಕಾರ್ಯದರ್ಶಿ ನುಡಿ"
 description: "ಕದಳಿ ವನಿತಾ ಸಮಾಜದ 34 ವರ್ಷಗಳ ಪಯಣ ಮತ್ತು ಸ್ವಂತ ಜಾಲತಾಣದ ಆರಂಭದ ಸುಸಂದರ್ಭದಲ್ಲಿ ಕಾರ್ಯದರ್ಶಿ ಗೀತಾ ಬಸವಕುಮಾರ್ ಅವರು ಸಂಸ್ಥಾಪಕರು, ಪೂರ್ವಾಧ್ಯಕ್ಷರು ಹಾಗೂ ಸದಸ್ಯೆಯರಿಗೆ ಸಲ್ಲಿಸಿದ ಕೃತಜ್ಞತೆಯ ನುಡಿ."
 cover: ""
 author: "ಗೀತಾ ಬಸವಕುಮಾರ್"
+authorPhoto: "/images/uploads/geetha-basavakumar.webp"
+authorRole: "ಕಾರ್ಯದರ್ಶಿ · ಕದಳಿ ವನಿತಾ ಸಮಾಜ"
 category: "community"
 pubDate: 2026-11-19
 event: website-unveiling

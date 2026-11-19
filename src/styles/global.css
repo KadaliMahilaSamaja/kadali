@@ -404,6 +404,61 @@
     display: none;
   }
 
+  /* Fine pointers can't swipe: give desktop mice a visible, styled
+     scrollbar as the affordance (touch keeps the hidden bar, with the
+     swipe hint carrying the affordance there). */
+  @media (hover: hover) and (pointer: fine) {
+    .rail-x {
+      /* The horizontal bar takes layout height, which would otherwise
+         recompute overflow-y to auto and spawn a scrollbar of its own. */
+      overflow-y: hidden;
+
+      /* The base rule sets scrollbar-width: none — and any standard
+         scrollbar property, even none, disables ::-webkit-scrollbar
+         styling entirely in Chromium. Reset to auto so the custom pill
+         below engages. */
+      scrollbar-width: auto;
+      scrollbar-color: auto;
+
+      /* Firefox & friends: native thin, tinted. Chromium would also honor
+         these — and then ignore every ::-webkit-scrollbar rule below — so
+         they're scoped to engines without the webkit pseudo-elements. */
+      @supports not selector(::-webkit-scrollbar) {
+        scrollbar-width: thin;
+        scrollbar-color: color-mix(in oklab, var(--color-leaf) 40%, transparent)
+          transparent;
+      }
+    }
+
+    /* Chromium/Safari: custom thin pill; hide the arrow buttons explicitly
+       or the full default scrollbar anatomy comes back. */
+    .rail-x::-webkit-scrollbar {
+      display: block;
+      height: 0.375rem;
+    }
+
+    .rail-x::-webkit-scrollbar-button {
+      display: none;
+    }
+
+    .rail-x::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .rail-x::-webkit-scrollbar-thumb {
+      border-radius: 999px;
+      background: color-mix(in oklab, var(--color-leaf) 40%, transparent);
+    }
+
+    .rail-x::-webkit-scrollbar-thumb:hover {
+      background: color-mix(in oklab, var(--color-leaf) 70%, transparent);
+    }
+
+    .rail-x::-webkit-scrollbar-corner {
+      background: transparent;
+    }
+  }
+
   /* "ಸರಿಸಿ ನೋಡಿ ⟶" — the swipe affordance under a rail */
   .swipe-hint {
     display: flex;

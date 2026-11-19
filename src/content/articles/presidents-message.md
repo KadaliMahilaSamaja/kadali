@@ -3,6 +3,8 @@ title: "ಅಧ್ಯಕ್ಷರ ನುಡಿ"
 description: "ಜಾಲತಾಣ ಅನಾವರಣದ ಶುಭಸಂದರ್ಭದಂದು ಕದಳಿ ವನಿತಾ ಸಮಾಜದ ಅಧ್ಯಕ್ಷೆ ವಾಗ್ದೇವಿ ಬಸವರಾಜ್ ನುಚ್ಚಿನ್ ಅವರು ಸದಸ್ಯೆಯರು, ಹಿರಿಯರು ಹಾಗೂ ಮಾಜಿ ಅಧ್ಯಕ್ಷರಿಗೆ ಮಾಡಿದ ಹೃದಯಸ್ಪರ್ಶಿ ಅಧ್ಯಕ್ಷೀಯ ಭಾಷಣ."
 cover: ""
 author: "ವಾಗ್ದೇವಿ ಬಸವರಾಜ್ ನುಚ್ಚಿನ್"
+authorPhoto: "/images/uploads/vagdevi-basavaraj-nuchin.webp"
+authorRole: "ಅಧ್ಯಕ್ಷೆ · ಕದಳಿ ವನಿತಾ ಸಮಾಜ"
 category: "community"
 pubDate: 2026-11-19
 event: website-unveiling
