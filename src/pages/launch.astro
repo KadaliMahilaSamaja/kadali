@@ -927,6 +927,18 @@ import Bloom from '../components/motifs/Bloom.astro';
       if (failures >= 2) render(null);
     }
   }
+  /* a bare gate read for the hand-off: true only when this visitor's colo
+     answers "open" — the same read the homepage navigation will hit */
+  async function gateReadsOpen() {
+    try {
+      const res = await fetch('/api/launch-status', { cache: 'no-store' });
+      if (!res.ok) return false;
+      const gate = await res.json();
+      return Boolean(gate && gate.open);
+    } catch (e) {
+      return false;
+    }
+  }
   poll();
   window.setInterval(poll, 2000);
   document.addEventListener('visibilitychange', () => {
@@ -1104,6 +1116,17 @@ import Bloom from '../components/motifs/Bloom.astro';
         foldKeyTools();
         celebrate();
         await sleep(REDUCED ? 500 : 1400);
+        // Navigate only once this visitor's colo READS the gate as open:
+        // KV is eventually consistent, and a homepage GET that lands on a
+        // colo still seeing "closed" would serve the curtain for a beat —
+        // the weird hop. Same read path the navigation will take, so if
+        // this says open, the homepage comes straight back as the site.
+        // Sixteen 500 ms tries (~8 s) and then go anyway; the curtain page
+        // the visitor might briefly see hops on its own first poll.
+        for (let tries = 0; tries < 16; tries++) {
+          if (await gateReadsOpen()) break;
+          await sleep(500);
+        }
         window.location.assign(REDUCED ? '/' : '/?celebrate=1');
       } else {
         showMsg(MSG.closedAgain, 'quiet');
