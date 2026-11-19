@@ -1,0 +1,46 @@
+---
+/**
+ * Card/hero image for an article — the single fallback chain:
+ * cover image → author photo → decorative motif placeholder.
+ * Sizing/hover classes come from the caller via `class` so each slot keeps
+ * its own aspect ratio and transform. The author-photo fallback crops from
+ * the top (object-top) so portrait shots keep faces and headwear in frame.
+ */
+import type { CollectionEntry } from 'astro:content';
+import CoverPlaceholder from './CoverPlaceholder.astro';
+
+interface Props {
+  post: CollectionEntry<'articles'>;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+}
+
+const { post, class: className = '', loading = 'lazy' } = Astro.props;
+const { cover, coverAlt, authorPhoto, author } = post.data;
+---
+
+{
+  cover ? (
+    <img
+      src={cover}
+      alt={coverAlt ?? ''}
+      width={1200}
+      height={675}
+      loading={loading}
+      decoding="async"
+      class={className}
+    />
+  ) : authorPhoto ? (
+    <img
+      src={authorPhoto}
+      alt={author}
+      width={1200}
+      height={900}
+      loading={loading}
+      decoding="async"
+      class={`${className} object-top`}
+    />
+  ) : (
+    <CoverPlaceholder class={className} />
+  )
+}

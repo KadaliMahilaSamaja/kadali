@@ -13,7 +13,8 @@ const articles = defineCollection({
     title: z.string(),
     description: z.string().max(200), // short excerpt used in lists & meta
     // Optional: empty string (or omitting the CMS field) means the article
-    // has no cover image — cards render a decorative motif placeholder.
+    // has no cover image — cards fall back to the author photo, then to a
+    // decorative motif placeholder (see ArticleImage.astro).
     cover: z.string(),
     coverAlt: z.string().optional(),
     author: z.string(),
