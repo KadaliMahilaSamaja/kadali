@@ -21,19 +21,23 @@
     <style>
       /*
        * The launch curtain — deliberately self-contained like offline.html
-       * (no fonts, no stylesheets, nothing that can fail while the curtain
-       * is up). Brand colours are inlined from src/styles/tokens.css. The
-       * gate Worker serves this file as a 503 for every closed path and the
-       * script below reloads the page on its own the moment the launch
-       * happens, so visitors never need to refresh.
+       * (no fonts, no stylesheets, no images: the gate Worker serves this
+       * file as a 503 for every closed path, so anything referenced from
+       * here would be curtain-blocked too). Brand colours are inlined from
+       * src/styles/tokens.css; the arch, the bud mark and the blooms are
+       * inline SVG. The script below rains petals over the real site the
+       * moment the launch happens (?celebrate=1), so visitors never need
+       * to refresh and never miss the inauguration.
        */
       :root {
         --ink: #20281f;
         --leaf: #1d5f3c;
+        --sindoor: #c03a2b;
         --turmeric: #e8862e;
         --cream: #f9ead3;
         --jasmine: #f2ddb9;
         --milk: #fffdf7;
+        --stone: #55645a;
       }
       html[data-lang='en'] [data-kn] {
         display: none !important;
@@ -47,44 +51,126 @@
       body {
         margin: 0;
         min-height: 100vh;
-        display: grid;
-        place-items: center;
+        display: flex;
+        flex-direction: column;
         background: var(--cream);
         color: var(--ink);
         font-family: 'Noto Sans Kannada', 'Nirmala UI', system-ui, sans-serif;
         text-align: center;
-        padding: 1.5rem;
+      }
+      /* the brochure's kasuti bands: stitched lines with turmeric dots */
+      .kasuti {
+        flex: none;
+        height: 9px;
+        background:
+          radial-gradient(circle at 5px 1px, var(--turmeric) 1.6px, transparent 2.2px) repeat-x
+            left top / 20px 3px,
+          radial-gradient(circle at 15px 1px, var(--turmeric) 1.6px, transparent 2.2px) repeat-x
+            left 6px / 20px 3px,
+          repeating-linear-gradient(90deg, var(--leaf) 0 8px, transparent 8px 12px) left center /
+            20px 2px no-repeat;
+      }
+      main {
+        flex: 1;
+        display: grid;
+        place-items: center;
+        padding: 2rem 1.5rem;
+        /* faint diagonal gold stripes, as in the site's hero field */
+        background: repeating-linear-gradient(
+          112deg,
+          transparent 0 74px,
+          rgb(220 195 135 / 0.07) 75px 76px
+        );
       }
       .card {
-        background: var(--milk);
-        border: 1px solid var(--jasmine);
-        padding: 2.5rem 2rem;
-        max-width: 26rem;
+        max-width: 30rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
-      .mark {
-        width: 48px;
-        height: 48px;
-        margin: 0 auto;
+      /* the salu arch shelters the bud mark, as on the ceremony page;
+         a dashed ring turns slowly behind it, like the site's mandala */
+      .arch-wrap {
+        position: relative;
+        width: 104px;
+        height: 130px;
+        display: grid;
+        place-items: end center;
       }
-      h1 {
-        font-size: 1.5rem;
-        line-height: 1.3;
-        margin: 1.25rem 0 0.5rem;
+      .ring {
+        position: absolute;
+        top: 6px;
+        left: 50%;
+        width: 108px;
+        height: 108px;
+        margin-left: -54px;
+        border: 1px solid rgb(29 95 60 / 0.35);
+        border-radius: 50%;
+        animation: turn 80s linear infinite;
+      }
+      .ring::before {
+        content: '';
+        position: absolute;
+        inset: 8px;
+        border: 1px dashed rgb(232 134 46 / 0.45);
+        border-radius: 50%;
+      }
+      @keyframes turn {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .arch {
+        position: relative;
+        width: 104px;
+        height: 130px;
         color: var(--leaf);
       }
+      .kicker {
+        margin: 1.1rem 0 0;
+        font-size: 1.05rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        color: var(--sindoor);
+      }
+      h1 {
+        font-size: 1.9rem;
+        line-height: 1.3;
+        margin: 0.45rem 0 0;
+        color: var(--leaf);
+      }
+      .blooms {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        margin-top: 1rem;
+        color: var(--turmeric);
+      }
+      .blooms svg {
+        width: 16px;
+        height: 16px;
+      }
+      .blooms svg:nth-child(2) {
+        width: 22px;
+        height: 22px;
+      }
       p {
-        margin: 0.4rem 0;
-        line-height: 1.65;
+        margin: 0.9rem 0 0;
+        line-height: 1.7;
         font-size: 0.95rem;
+        color: var(--ink);
+        max-width: 26rem;
       }
       .waiting {
         margin-top: 1.4rem;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 0.5rem;
+        gap: 0.55rem;
         font-size: 0.8rem;
-        color: #55645a;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        color: var(--stone);
       }
       .pulse {
         width: 0.55rem;
@@ -103,12 +189,14 @@
         }
       }
       .foot {
-        margin-top: 1.6rem;
+        margin-top: 1.7rem;
         font-size: 0.75rem;
-        color: #55645a;
+        letter-spacing: 0.05em;
+        color: var(--stone);
       }
       /* The launch moment: a leaf-green veil rises over the waiting page and
-         the real site loads beneath it. Transform/opacity only; the
+         the real site loads beneath it — with a petal shower falling over
+         the pages (?celebrate=1). Transform/opacity only; the
          prefers-reduced-motion rule turns it into an instant reload. */
       .veil {
         position: fixed;
@@ -127,6 +215,7 @@
           transform 700ms ease,
           visibility 0s linear 700ms;
         pointer-events: none;
+        z-index: 5;
       }
       html.is-open .veil {
         opacity: 1;
@@ -163,42 +252,71 @@
         .veil-text {
           transition: none !important;
         }
-        .pulse {
+        .pulse,
+        .ring {
           animation: none !important;
         }
       }
     </style>
   </head>
   <body>
-    <main class="card">
-      <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
-        <circle cx="16" cy="16" r="14" fill="#1D5F3C" />
-        <circle cx="12" cy="13" r="1.6" fill="#FBF6ED" />
-        <circle cx="19" cy="12" r="1.6" fill="#FBF6ED" />
-        <circle cx="16" cy="18" r="1.6" fill="#FBF6ED" />
-        <circle cx="10.5" cy="18.5" r="1.2" fill="#FBF6ED" />
-        <circle cx="21.5" cy="18" r="1.2" fill="#FBF6ED" />
-      </svg>
-      <h1>
-        <span data-kn lang="kn">ಉದ್ಘಾಟನೆ ಶೀಘ್ರವೇ</span>
-        <span data-en>Opening shortly</span>
-      </h1>
-      <p>
-        <span data-kn lang="kn"
-          >ಕದಳಿ ವನಿತಾ ಸಮಾಜದ ಹೊಸ ಜಾಲತಾಣ ಈಗ ತೆರೆಯಲು ಸಿದ್ಧವಾಗಿದೆ. ಈ ಪುಟವನ್ನು ಮುಚ್ಚಬೇಡಿ — ಉದ್ಘಾಟನೆಯಾದ ಕೂಡಲೇ ತಾನಾಗಿಯೇ ತೆರೆದುಕೊಳ್ಳುತ್ತದೆ.</span
-        >
-        <span data-en
-          >The new website of Kadali Vanita Samaja is ready to open. Keep this
-          page open — the moment the launch happens, it unfolds by itself.</span
-        >
-      </p>
-      <p class="waiting">
-        <span class="pulse" aria-hidden="true"></span>
-        <span data-kn lang="kn">ಉದ್ಘಾಟನೆಗಾಗಿ ಕಾಯುತ್ತಿದ್ದೇವೆ…</span>
-        <span data-en>Waiting for the opening…</span>
-      </p>
-      <p class="foot">ಕದಳಿ ವನಿತಾ ಸಮಾಜ · ಶಿವಮೊಗ್ಗ</p>
+    <div class="kasuti" aria-hidden="true"></div>
+    <main>
+      <div class="card">
+        <div class="arch-wrap" aria-hidden="true">
+          <div class="ring"></div>
+          <svg class="arch" viewBox="0 0 120 150" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="60" cy="6" r="2.5" fill="currentColor" stroke="none"></circle>
+            <path d="M8 146 V72 C8 40 30 23 52 15 C55 13 58 11 60 8 C62 11 65 13 68 15 C90 23 112 40 112 72 V146"></path>
+            <path d="M22 146 V74 C22 50 38 36 55 29 L60 26.5 L65 29 C82 36 98 50 98 74 V146"></path>
+            <path d="M4 146 H116"></path>
+            <circle cx="60" cy="108" r="16" fill="#1D5F3C" stroke="none"></circle>
+            <circle cx="55" cy="104" r="1.6" fill="#FBF6ED" stroke="none"></circle>
+            <circle cx="65" cy="103" r="1.6" fill="#FBF6ED" stroke="none"></circle>
+            <circle cx="60" cy="110" r="1.6" fill="#FBF6ED" stroke="none"></circle>
+            <circle cx="53.5" cy="110.5" r="1.2" fill="#FBF6ED" stroke="none"></circle>
+            <circle cx="66.5" cy="110" r="1.2" fill="#FBF6ED" stroke="none"></circle>
+          </svg>
+        </div>
+        <p class="kicker">
+          <span data-kn lang="kn">ಕದಳಿ ವನಿತಾ ಸಮಾಜ</span>
+          <span data-en>Kadali Vanita Samaja</span>
+        </p>
+        <h1>
+          <span data-kn lang="kn">ಉದ್ಘಾಟನೆ ಶೀಘ್ರವೇ</span>
+          <span data-en>Opening shortly</span>
+        </h1>
+        <div class="blooms" aria-hidden="true">
+          <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#E8862E" opacity="0.7" /><circle cx="16" cy="16" r="6" fill="#FFFDF7" /></svg>
+          <svg viewBox="0 0 32 32">
+            <ellipse cx="16" cy="8" rx="5" ry="7" fill="#E8862E" />
+            <ellipse cx="16" cy="24" rx="5" ry="7" fill="#E8862E" />
+            <ellipse cx="7" cy="14" rx="5" ry="7" transform="rotate(-60 7 14)" fill="#E8862E" />
+            <ellipse cx="25" cy="14" rx="5" ry="7" transform="rotate(60 25 14)" fill="#E8862E" />
+            <circle cx="16" cy="16" r="5.5" fill="#C03A2B" />
+            <circle cx="16" cy="16" r="2.4" fill="#FFFDF7" />
+          </svg>
+          <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#E8862E" opacity="0.7" /><circle cx="16" cy="16" r="6" fill="#FFFDF7" /></svg>
+        </div>
+        <p>
+          <span data-kn lang="kn"
+            >ಕದಳಿ ವನಿತಾ ಸಮಾಜದ ಹೊಸ ಜಾಲತಾಣ ಈಗ ತೆರೆಯಲು ಸಿದ್ಧವಾಗಿದೆ. ಈ ಪುಟವನ್ನು ಮುಚ್ಚಬೇಡಿ — ಉದ್ಘಾಟನೆಯಾದ ಕೂಡಲೇ ಹೂವಿನ ಸುರಿಮಳೆಯೊಂದಿಗೆ ತಾನಾಗಿಯೇ ತೆರೆದುಕೊಳ್ಳುತ್ತದೆ.</span
+          >
+          <span data-en
+            >The new website of Kadali Vanita Samaja is ready to open. Keep this
+            page open — the moment the launch happens, it unfolds by itself,
+            petals falling.</span
+          >
+        </p>
+        <p class="waiting">
+          <span class="pulse" aria-hidden="true"></span>
+          <span data-kn lang="kn">ಉದ್ಘಾಟನೆಗಾಗಿ ಕಾಯುತ್ತಿದ್ದೇವೆ…</span>
+          <span data-en>Waiting for the opening…</span>
+        </p>
+        <p class="foot">ಕದಳಿ ವನಿತಾ ಸಮಾಜ · ಶಿವಮೊಗ್ಗ</p>
+      </div>
     </main>
+    <div class="kasuti" aria-hidden="true"></div>
     <div class="veil" aria-hidden="true">
       <svg class="veil-mark" viewBox="0 0 32 32">
         <circle cx="16" cy="16" r="14" fill="#E8862E" />
@@ -215,8 +333,9 @@
     </div>
     <script>
       // Poll the gate every few seconds; the moment the flag flips, raise
-      // the veil and reload so whatever URL the visitor holds (home page or
-      // a shared deep link) comes back as the real thing.
+      // the veil and hop to the same URL with ?celebrate=1 — the opened
+      // site rains petals over itself (deep links keep their path), and
+      // the flag is scrubbed from the address bar by the site itself.
       const STATUS_URL = '/api/launch-status';
       const POLL_MS = 4000;
       let opened = false;
@@ -244,7 +363,13 @@
           window.matchMedia &&
           window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         document.documentElement.classList.add('is-open');
-        window.setTimeout(() => window.location.reload(), reduced ? 0 : 1600);
+        window.setTimeout(() => {
+          if (reduced) {
+            window.location.reload();
+          } else {
+            window.location.replace(location.pathname + '?celebrate=1');
+          }
+        }, 1600);
       }
 
       check();

@@ -120,6 +120,14 @@ const jsonLd = [
       <slot />
     </main>
     <Footer />
+    <!-- ಪುಷ್ಪ ವರ್ಷ: a page loaded with ?celebrate=1 (the launch moment —
+         the ceremony console and every curtain tab land here) rains petals
+         over the real site, then the layer cleans itself up. -->
+    <div
+      data-shower
+      aria-hidden="true"
+      class="pointer-events-none fixed inset-0 z-[70] overflow-hidden"
+    ></div>
     <InstallPrompt />
     <LanguageGate />
   </body>
@@ -136,6 +144,23 @@ const jsonLd = [
       navigator.serviceWorker.register('/sw.js').catch(() => {
         /* progressive enhancement — carry on without offline support */
       });
+    });
+  }
+</script>
+
+<script>
+  // The launch moment, on every page: the ceremony console hands over with
+  // ?celebrate=1 and the curtain tabs replace their URL with it, so
+  // wherever a visitor lands — homepage or a shared deep link — petals
+  // fall over the real content for a few seconds. The flag is scrubbed
+  // from the address bar right away; a later refresh is plain.
+  import { flowerShower } from '../lib/petal-shower.js';
+
+  const celebrate = new URLSearchParams(window.location.search).has('celebrate');
+  if (celebrate) {
+    window.history.replaceState(null, '', window.location.pathname);
+    window.addEventListener('load', () => {
+      flowerShower(document.querySelector('[data-shower]'));
     });
   }
 </script>

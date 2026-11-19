@@ -54,7 +54,7 @@ const { home } = ui;
           const categoryLabel = CATEGORY_LABELS[category];
           return (
             <div class="reveal mt-10">
-              <article class="group flex flex-col overflow-hidden border border-ink/10 bg-milk rounded-t-[3rem] md:rounded-t-none md:rounded-l-[4rem] md:flex-row">
+              <article class="group flex flex-col overflow-hidden border border-ink/10 bg-cream rounded-t-[3rem] md:rounded-t-none md:rounded-l-[4rem] md:flex-row">
                 <a
                   href={href}
                   class="relative overflow-hidden md:w-1/2 md:shrink-0"
@@ -131,10 +131,10 @@ const { home } = ui;
                   class="reveal flex min-w-[86%] snap-center sm:min-w-[58%] lg:min-w-[30rem]"
                   style={`--reveal-delay: ${i * 90}ms`}
                 >
-                  <div class="group flex w-full flex-col border border-ink/10 bg-milk">
+                  <div class="group flex w-full flex-col overflow-hidden rounded-t-[3rem] border border-ink/10 bg-cream">
                     <a
                       href={href}
-                      class="overflow-hidden rounded-t-[3rem]"
+                      class="overflow-hidden"
                       tabindex="-1"
                       aria-hidden="true"
                     >

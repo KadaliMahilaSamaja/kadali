@@ -75,6 +75,22 @@ open and the site is a plain static one again.
 ⚠️ Pages bindings and environment variables take effect on the next deploy —
 a config change without a redeploy does nothing.
 
+## Maintainer controls (the collapsible)
+
+The ceremony page shows no machinery to guests. Your controls — the
+**ಪರದೆ ಮುಚ್ಚಿ / Close the curtain** chip, the key field, the **hold
+seconds** for the big button (1–10, saved in that browser's localStorage)
+and the gate status line (checking / Curtain closed / It is open / Still
+reaching, plus the "Opened at" stamp) — live in the quiet
+**ನಿರ್ವಹಣೆ / maintainer** strip at the foot of the page, collapsed by
+default. Open it any of these ways (never persists across loads):
+
+- click the **ನಿರ್ವಹಣೆ / maintainer** strip itself, **or**
+- press the **O** key on the page, **or**
+- tap the Akka Mahadevi emblem at the top five times quickly (phone), **or**
+- open `/launch?ops` (or `/launch#ops`) — also surfaces the not-armed
+  diagnostic when the KV binding is missing.
+
 ## Rehearsal (day before)
 
 Open the launch link — the key travels in the URL **fragment**, which browsers
@@ -84,14 +100,22 @@ never send to any server, and the page scrubs it from the address bar at once:
 https://kadali.org/launch#k=<LAUNCH_KEY>
 ```
 
-1. The pill should read "Curtain closed". Press and **hold** the big button
-   for three seconds (the turmeric ring fills; releasing early cancels).
-2. Status flips to "ತೆರೆದಿದೆ!". Every open curtain tab opens itself within a
-   few seconds. Click around the real site — it is the finished deployment.
-3. Under *ಪೂರ್ವಾಭ್ಯಾಸ / Rehearsal*, hold **ಪರದೆ ಮುಚ್ಚಿ / Close the curtain**
-   (~1.2 s). Confirm the curtain is back on kadali.org.
+1. The page shows the big "ತೆರೆಯಿರಿ" disc. Check the gate — expand the
+   **ನಿರ್ವಹಣೆ** strip (the status line should read "Curtain closed") or run
+   `curl -s https://kadali.org/api/launch-status` → `"open":false`.
+   Press and **hold** the big button for three seconds (the turmeric ring
+   fills; releasing early cancels).
+2. The page celebrates (the glow washes the screen, petals fall) and then
+   **opens the homepage itself** after ~2 seconds. Every open curtain tab
+   opens itself within a few seconds. Press **Back** to return to the
+   console — click around the real site; it is the finished deployment.
+3. Expand the **ನಿರ್ವಹಣೆ / maintainer** strip at the foot (click it, or
+   press **O**) and hold **ಪರದೆ ಮುಚ್ಚಿ / Close the curtain** (~1.2 s).
+   Confirm the curtain is back on kadali.org.
 4. Repeat until comfortable. Also try opening `/launch` **without** the
-   fragment: it asks for the key in a field (memory of the tab only).
+   fragment: trying to open asks for the key, and the field unfolds only
+   then (memory of the tab only). The page itself shows no key machinery
+   otherwise.
 
 Quick checks from a terminal, any time:
 
@@ -109,13 +133,19 @@ curl -s -H "x-launch-key: <KEY>" https://kadali.org/about -o /dev/null -w '%{htt
 1. Print a QR code (or short link card) with `https://kadali.org/launch#k=<KEY>`
    for the guest. Share the key only with people who need it (password
    manager / private message) — keep the card on stage.
-2. Before handover, confirm the pill says "Curtain closed" and no warnings.
-3. The guest presses and holds for three seconds. The audience's curtain
-   pages open themselves in seconds (everyone in the hall shares one
-   Cloudflare colo); elsewhere in the world KV propagation takes at most
-   ~60 s, which the polling quietly covers.
-4. If anything odd happens, `/api/reset` (hold the rehearsal button) puts the
-   curtain back instantly.
+2. Before handover, confirm the gate is closed — expand the
+   **ನಿರ್ವಹಣೆ** strip on `/launch` (status: "Curtain closed") or run
+   `curl -s https://kadali.org/api/launch-status` → `"open":false`.
+3. The guest presses and holds for three seconds (the glow grows with the
+   hold and washes the screen at confirm). The stage page celebrates and
+   opens the homepage itself; the audience's curtain pages open
+   themselves in seconds (everyone in the hall shares one Cloudflare
+   colo); elsewhere in the world KV propagation takes at most ~60 s,
+   which the polling quietly covers.
+4. If anything odd happens, `/api/reset` puts the curtain back instantly —
+   open the **ನಿರ್ವಹಣೆ / maintainer** strip at the foot of `/launch`
+   (click it, press **O**, or five taps on the emblem) and hold the
+   **Close the curtain** chip.
 
 ## After the ceremony
 

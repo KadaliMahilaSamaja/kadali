@@ -1,6 +1,6 @@
 ---
 /**
- * Launch control — the ceremony page at /launch (unlinked, noindex, kept out
+ * ಶುಭೋದ್ಘಾಟನೆ — the ceremony page at /launch (unlinked, noindex, kept out
  * of the sitemap in astro.config.mjs).
  *
  * The committee opens this page on stage, usually from a QR code that
@@ -14,7 +14,7 @@
  * live inline for the same reason (ops tooling, not site chrome;
  * offline.html is the precedent). global.css is imported directly so the
  * design tokens, the bilingual visibility rules and the focus styles still
- * apply, and the brand motifs (KasutiBorder, Mandala, Bloom, Arch) dress it
+ * apply, and the brand motifs (KasutiBorder, Mandala, Bloom) dress it
  * like the rest of the brochure.
  *
  * Design (v3): the page enacts the ritual it triggers — ಪುಷ್ಪ ವರ್ಷ, the
@@ -30,12 +30,33 @@
  * timeline, and the page stays dependency-free like the rest of the repo),
  * gated behind html.js and reduced-motion-checked in JS so every effect
  * degrades to a calm state change.
+ *
+ * Design (v4): no ops chrome on stage. The title is ceremonial, the URL
+ * pill is gone, and the quiet-tools panel (close-the-curtain chip, key
+ * form) stays folded away — it unfolds only when a flip asks for a key.
+ * A key carried in by the #k= fragment never surfaces any machinery.
+ *
+ * Design (v5): a flaky connection reads as silence — the page just keeps
+ * checking, never alarming.
+ *
+ * Design (v6): Akka Mahadevi replaces the arch vector as the header's
+ * subtle emblem, and she gathers presence when the gate opens. The
+ * connection pill is gone entirely. Every maintainer control lives in the
+ * collapsed "ನಿರ್ವಹಣೆ / maintainer" strip at the foot — it only opens
+ * when expanded (click), via ops mode (/launch?ops, the "o" key, or five
+ * quick taps on the emblem), or when a flip asks for the key. Guests
+ * never see any of it.
+ *
+ * Design (v7): the hold grows the diya glow with the ring until it washes
+ * the whole screen at confirm, the celebration dissolves it into the
+ * petal burst, and then the stage page opens the homepage itself. The
+ * hold duration is set in the maintainer strip (1–10 s, remembered on
+ * the device in localStorage — no cookies).
  */
 import '../styles/global.css';
 import KasutiBorder from '../components/motifs/KasutiBorder.astro';
 import Mandala from '../components/motifs/Mandala.astro';
 import Bloom from '../components/motifs/Bloom.astro';
-import Arch from '../components/motifs/Arch.astro';
 ---
 
 <!doctype html>
@@ -45,7 +66,7 @@ import Arch from '../components/motifs/Arch.astro';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow" />
     <meta name="theme-color" content="#1d5f3c" />
-    <title>ಉದ್ಘಾಟನಾ ನಿಯಂತ್ರಣ · Launch control — ಕದಳಿ ವನಿತಾ ಸಮಾಜ</title>
+    <title>ಜಾಲತಾಣದ ಶುಭೋದ್ಘಾಟನೆ · The grand opening — ಕದಳಿ ವನಿತಾ ಸಮಾಜ</title>
     <script is:inline>
       // Pre-paint, same as BaseLayout: mark js capability (the entrance
       // animation only applies when this runs — the page is fully visible
@@ -68,7 +89,7 @@ import Arch from '../components/motifs/Arch.astro';
     <div data-frame class="text-leaf transition-colors duration-1000"><KasutiBorder class="h-4 w-full" /></div>
 
     <main
-      class="relative mx-auto flex min-h-[calc(100vh-2rem)] w-full max-w-2xl flex-col px-4 py-8 text-center sm:py-10"
+      class="relative z-10 mx-auto flex min-h-[calc(100vh-2rem)] w-full max-w-2xl flex-col px-4 py-8 text-center sm:py-10"
     >
       <div class="m-auto flex w-full flex-col items-center">
         <!-- scattered blossoms, the brochure's peach-panel flowers -->
@@ -86,64 +107,33 @@ import Arch from '../components/motifs/Arch.astro';
         />
 
         <header class="stage-rise flex flex-col items-center">
-          <!-- the salu arch shelters the society mark, the way the 404 page
-               shelters its numeral — the site as a shrine about to open.
-               On load the arch draws itself stroke by stroke (html.js only). -->
-          <div data-arch class="relative flex justify-center">
-            <Arch width={104} class="text-leaf/35" />
-            <svg
-              class="absolute inset-x-0 bottom-3 mx-auto h-9 w-9"
-              viewBox="0 0 32 32"
-              aria-hidden="true"
-            >
-              <circle cx="16" cy="16" r="14" fill="#1D5F3C"></circle>
-              <circle cx="12" cy="13" r="1.6" fill="#FBF6ED"></circle>
-              <circle cx="19" cy="12" r="1.6" fill="#FBF6ED"></circle>
-              <circle cx="16" cy="18" r="1.6" fill="#FBF6ED"></circle>
-              <circle cx="10.5" cy="18.5" r="1.2" fill="#FBF6ED"></circle>
-              <circle cx="21.5" cy="18" r="1.2" fill="#FBF6ED"></circle>
-            </svg>
+          <!-- Akka Mahadevi, the site's hero saint, as the ceremony's
+               emblem — subtle on the cream ground, and she gathers
+               presence when the gate opens (see .saint-img). She is also
+               the phone's secret ops tap-target (five quick taps). -->
+          <div data-saint class="relative flex justify-center" aria-hidden="true">
+            <picture>
+              <source srcset="/images/akkamahadevi-hero.webp" type="image/webp" />
+              <img
+                src="/images/akkamahadevi-hero.png"
+                alt=""
+                width="2048"
+                height="1172"
+                loading="eager"
+                decoding="async"
+                class="saint-img w-auto"
+              />
+            </picture>
           </div>
-          <p class="mt-2 text-sm font-bold tracking-wide text-leaf">
+          <p class="mt-3 text-2xl font-bold tracking-wide text-sindoor sm:text-3xl">
             <span data-kn lang="kn">ಕದಳಿ ವನಿತಾ ಸಮಾಜ</span>
             <span data-en>Kadali Vanita Samaja</span>
           </p>
-          <h1 class="mt-1 text-5xl font-bold">
-            <span data-kn lang="kn">ಉದ್ಘಾಟನಾ ನಿಯಂತ್ರಣ</span>
-            <span data-en>Launch control</span>
+          <h1 class="stage-h1 mt-1 font-bold">
+            <span data-kn lang="kn">ಜಾಲತಾಣದ ಶುಭೋದ್ಘಾಟನೆ</span>
+            <span data-en>The grand opening of the website</span>
           </h1>
-          <p
-            class="mt-4 inline-flex items-center gap-2 border border-ink/15 bg-milk/70 px-3.5 py-1.5 text-xs font-semibold tracking-[0.18em] text-stone"
-          >
-            <span class="size-1.5 rounded-full bg-turmeric" aria-hidden="true"></span>
-            kadali.org/launch
-          </p>
         </header>
-
-        <section
-          class="stage-rise mt-8 flex w-full flex-col items-center gap-3"
-          style="--rise-delay: 60ms"
-          aria-live="polite"
-        >
-          <!-- starts in the checking state so the pill is styled from the
-               first paint; the first poll replaces the text -->
-          <p
-            data-status
-            data-state="unknown"
-            class="inline-flex items-center gap-3 rounded-full px-8 py-3.5 text-xl font-semibold"
-          >
-            <span class="status-dot" aria-hidden="true"></span>
-            <span data-state-text>
-              <span data-kn lang="kn">ತಪಾಸಣೆ ನಡೆಯುತ್ತಿದೆ…</span>
-              <span data-en>Checking the gate…</span>
-            </span>
-          </p>
-          <p data-since class="hidden text-sm text-stone"></p>
-          <p
-            data-warn
-            class="hidden w-full max-w-md border border-sindoor bg-milk px-4 py-2.5 text-left text-sm leading-relaxed text-sindoor"
-          ></p>
-        </section>
 
         <!-- The big one: press and hold three seconds. The button is a
              mandala disc on purpose — dotted rim, bud dots echoing the
@@ -158,13 +148,13 @@ import Arch from '../components/motifs/Arch.astro';
         >
           <div
             data-launch-stage
-            class="launch-stage relative flex h-80 w-full items-center justify-center"
+            class="launch-stage relative flex w-full items-center justify-center"
           >
             <!-- wrapper carries the hold "wake-up" transform; the svg inside
                  carries its own entrance unfurl (separate elements so the
                  finished entrance animation never locks the wake transform) -->
             <span
-              class="stage-mandala-wrap pointer-events-none absolute flex h-[28rem] w-[28rem] max-sm:h-72 max-sm:w-72 items-center justify-center text-leaf/[0.08]"
+              class="stage-mandala-wrap pointer-events-none absolute inset-0 flex items-center justify-center text-leaf/[0.08]"
               aria-hidden="true"
             >
               <Mandala class="stage-mandala h-full w-full" />
@@ -172,7 +162,7 @@ import Arch from '../components/motifs/Arch.astro';
             <button
               data-launch
               type="button"
-              class="launch-btn relative z-10 grid h-60 w-60 place-items-center rounded-full bg-leaf text-milk shadow-photo disabled:cursor-not-allowed disabled:opacity-70 sm:h-64 sm:w-64"
+              class="launch-btn relative z-10 grid place-items-center rounded-full bg-leaf text-milk shadow-photo disabled:cursor-not-allowed disabled:opacity-70"
             >
               <svg class="absolute inset-0 h-full w-full" viewBox="0 0 240 240" aria-hidden="true">
                 <!-- dotted rim, slowly turning -->
@@ -237,17 +227,19 @@ import Arch from '../components/motifs/Arch.astro';
                 class="absolute inset-0 grid place-items-center font-display text-6xl font-bold"
                 style="display: none">3</span>
             </button>
-            <!-- the diya glow: opacity only, lit by .holding, flared by the
-                 script on confirmation -->
+            <!-- the diya glow: a solid turmeric core with a feathered edge —
+                 the hold grows it (16×) until it engulfs the page and the
+                 other content disappears under it, while the disc floats
+                 above on the turmeric sea -->
             <div
               data-glow
-              class="glow pointer-events-none absolute h-80 w-80 rounded-full bg-turmeric/40 blur-3xl"
+              class="glow pointer-events-none absolute h-80 w-80 rounded-full"
               aria-hidden="true"
             ></div>
           </div>
           <p class="mt-3 text-base font-medium text-stone">
-            <span data-kn lang="kn">ಮೂರು ಸೆಕೆಂಡು ಒತ್ತಿ ಹಿಡಿಯಿರಿ</span>
-            <span data-en>Press and hold for three seconds</span>
+            <span data-kn lang="kn">ಒತ್ತಿ ಹಿಡಿಯಿರಿ — <span data-hold-secs>3</span> ಸೆಕೆಂಡು</span>
+            <span data-en>Press and hold — <span data-hold-secs>3</span> seconds</span>
           </p>
           <p
             data-message
@@ -282,71 +274,107 @@ import Arch from '../components/motifs/Arch.astro';
           </div>
         </div>
 
-        <!-- quiet tools: a stitched panel, kept out of the ceremony's way -->
+        <!-- maintainer tools: a quiet collapsible, collapsed by default —
+             the ceremony never shows machinery. It opens only when the
+             strip is clicked, ops mode is on (/launch?ops, the "o" key,
+             five taps on the emblem), or a flip asks for the key. -->
         <section class="stage-rise mt-12 w-full max-w-lg" style="--rise-delay: 180ms">
-          <div class="flex items-center gap-3 text-turmeric" aria-hidden="true">
-            <span class="h-px flex-1 bg-jasmine"></span>
-            <Bloom class="h-5 w-5 text-turmeric" />
-            <span class="h-px flex-1 bg-jasmine"></span>
-          </div>
-          <p class="eyebrow-kn mt-6">
-            <span data-kn lang="kn">ಪೂರ್ವಾಭ್ಯಾಸ</span>
-            <span data-en>Rehearsal</span>
-          </p>
-          <div class="mt-4 border border-ink/10 bg-milk/70 px-5 py-6">
-            <div class="flex flex-wrap items-center justify-center">
-              <button
-                data-reset
-                type="button"
-                class="hold-chip border-2 border-leaf px-5 py-2.5 text-sm font-semibold text-leaf transition-colors hover:bg-leaf hover:text-milk disabled:cursor-not-allowed disabled:opacity-60"
+          <details data-tools class="mx-auto w-full max-w-md">
+            <summary
+              class="flex list-none cursor-pointer items-center justify-center gap-2 py-2 text-xs font-semibold tracking-[0.18em] text-stone/60 transition-colors duration-150 hover:text-stone"
+            >
+              <span data-kn lang="kn">ನಿರ್ವಹಣೆ</span>
+              <span data-en>maintainer</span>
+              <span class="chev" aria-hidden="true">▾</span>
+            </summary>
+            <div class="mt-4 border border-ink/10 bg-milk/80 px-5 py-6">
+              <!-- the gate status lives here, on the control side — the
+                   ceremony stage above stays free of diagnostics -->
+              <p
+                data-ctrl-status
+                data-state="checking"
+                aria-live="polite"
+                class="flex items-center justify-center gap-2.5 text-sm font-semibold text-stone"
               >
-                <span data-kn lang="kn">ಪರದೆ ಮುಚ್ಚಿ · ಒತ್ತಿ ಹಿಡಿಯಿರಿ</span>
-                <span data-en>Close the curtain · press and hold</span>
-              </button>
-            </div>
-            <form data-key-form class="hidden mt-5 border-t border-ink/10 pt-5">
-              <div class="flex flex-wrap items-center justify-center gap-2.5">
-                <label class="text-sm font-semibold text-stone" for="launch-key">
-                  <span data-kn lang="kn">ಕೀ:</span>
-                  <span data-en>Key:</span>
-                </label>
-                <input
-                  data-key-input
-                  id="launch-key"
-                  type="password"
-                  autocomplete="off"
-                  spellcheck="false"
-                  class="w-44 border border-ink/20 bg-milk px-3 py-2 text-sm tracking-wider sm:w-52"
-                />
+                <span class="ctrl-dot" aria-hidden="true"></span>
+                <span data-ctrl-text>
+                  <span data-kn lang="kn">ತಪಾಸಣೆ ನಡೆಯುತ್ತಿದೆ…</span>
+                  <span data-en>Checking the gate…</span>
+                </span>
+              </p>
+              <p data-ctrl-since class="mt-1 hidden text-center text-xs text-stone/80"></p>
+              <p
+                data-warn
+                class="hidden mt-4 w-full border border-sindoor bg-milk px-4 py-2.5 text-left text-sm leading-relaxed text-sindoor"
+              ></p>
+              <div class="mt-4 flex flex-wrap items-center justify-center">
                 <button
-                  type="submit"
-                  class="bg-leaf px-4 py-2 text-sm font-semibold text-milk transition duration-150 hover:bg-ink active:scale-[0.97]"
+                  data-reset
+                  type="button"
+                  class="hold-chip border-2 border-leaf px-5 py-2.5 text-sm font-semibold text-leaf transition-colors hover:bg-leaf hover:text-milk disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  <span data-kn lang="kn">ಉಳಿಸಿ</span>
-                  <span data-en>Save</span>
+                  <span data-kn lang="kn">ಪರದೆ ಮುಚ್ಚಿ · ಒತ್ತಿ ಹಿಡಿಯಿರಿ</span>
+                  <span data-en>Close the curtain · press and hold</span>
                 </button>
               </div>
-            </form>
-            <p data-key-ok class="mt-4 hidden text-center text-sm text-stone"></p>
-          </div>
+              <form data-key-form class="hidden mt-5 border-t border-ink/10 pt-5">
+                <div class="flex flex-wrap items-center justify-center gap-2.5">
+                  <label class="text-sm font-semibold text-stone" for="launch-key">
+                    <span data-kn lang="kn">ಕೀ:</span>
+                    <span data-en>Key:</span>
+                  </label>
+                  <input
+                    data-key-input
+                    id="launch-key"
+                    type="password"
+                    autocomplete="off"
+                    spellcheck="false"
+                    class="w-44 border border-ink/20 bg-milk px-3 py-2 text-sm tracking-wider sm:w-52"
+                  />
+                  <button
+                    type="submit"
+                    class="bg-leaf px-4 py-2 text-sm font-semibold text-milk transition duration-150 hover:bg-ink active:scale-[0.97]"
+                  >
+                    <span data-kn lang="kn">ಉಳಿಸಿ</span>
+                    <span data-en>Save</span>
+                  </button>
+                </div>
+              </form>
+              <p data-key-ok class="mt-4 hidden text-center text-sm text-stone"></p>
+              <!-- how long the big button must be held — a stage-device
+                   setting, remembered in this browser's localStorage -->
+              <div class="mt-5 flex flex-wrap items-center justify-center gap-2.5 border-t border-ink/10 pt-5">
+                <label class="text-sm font-semibold text-stone" for="hold-secs">
+                  <span data-kn lang="kn">ಒತ್ತುವ ಸೆಕೆಂಡು:</span>
+                  <span data-en>Hold seconds:</span>
+                </label>
+                <input
+                  data-hold-input
+                  id="hold-secs"
+                  type="number"
+                  min="1"
+                  max="10"
+                  step="1"
+                  value="3"
+                  class="w-16 border border-ink/20 bg-milk px-2 py-2 text-center text-sm"
+                />
+              </div>
+            </div>
+          </details>
         </section>
       </div>
     </main>
 
     <div data-frame class="text-leaf transition-colors duration-1000"><KasutiBorder class="h-4 w-full" /></div>
 
-    <!-- Celebration layers: a radial petal burst from the disc, then a
-         full-viewport flower shower. Both are populated by the script at
-         runtime; both are pointer-events-none and self-cleaning. -->
+    <!-- Celebration layer: a radial petal burst from the disc, populated
+         by the script at runtime; pointer-events-none and self-cleaning.
+         (The flower shower itself falls on the opened site — see
+         BaseLayout and ?celebrate=1.) -->
     <div
       data-burst
       aria-hidden="true"
       class="pointer-events-none fixed inset-0 z-10 grid place-items-center"
-    ></div>
-    <div
-      data-shower
-      aria-hidden="true"
-      class="pointer-events-none fixed inset-0 z-20 overflow-hidden"
     ></div>
   </body>
 </html>
@@ -380,34 +408,111 @@ import Arch from '../components/motifs/Arch.astro';
     animation-delay: var(--rise-delay, 0ms);
   }
 
-  /* The salu arch builds itself: two strokes draw in (pathLength="1" in
-     Arch.astro normalises the dash math), then the finial mark pops. */
-  html.js [data-arch] svg path {
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-    animation: arch-draw 950ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
-    animation-delay: 180ms;
+  /* ——— the ritual's scale ———
+     Sizes live here (not in Tailwind utilities) so the page can tune them
+     per viewport: phones get the compact ceremony, tablets a larger one,
+     and a tablet in landscape compacts the header so the whole ritual —
+     emblem, word, disc — fits one unscrollable stage. Kannada headings
+     keep line-height 1.3 for conjunct clearance (global.css rule). */
+  .saint-img {
+    height: 9rem;
+    opacity: 0.4;
+    transition: opacity 1400ms ease;
   }
-  html.js [data-arch] svg circle {
-    opacity: 0;
-    animation: dot-in 320ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
-    animation-delay: 1050ms;
-    transform-box: fill-box;
-    transform-origin: center;
+  [data-saint].gate-open .saint-img {
+    opacity: 0.6;
   }
-  @keyframes arch-draw {
-    to {
-      stroke-dashoffset: 0;
+  .stage-h1 {
+    font-size: 3rem;
+    line-height: 1.3;
+  }
+  .launch-stage {
+    height: 20rem;
+  }
+  .launch-btn {
+    width: 15rem;
+    height: 15rem;
+  }
+  @media (min-width: 48rem) {
+    .saint-img {
+      height: 11rem;
+    }
+    .stage-h1 {
+      font-size: 3.375rem;
+    }
+    .launch-stage {
+      height: 23rem;
+    }
+    .launch-btn {
+      width: 18rem;
+      height: 18rem;
     }
   }
-  @keyframes dot-in {
-    from {
-      opacity: 0;
-      transform: scale(0.4);
+  /* landscape tablets and laptop-height windows (≤960px tall): the
+     ceremony must fit one viewport — compact the header, keep the disc
+     generous */
+  @media (orientation: landscape) and (max-height: 60rem) {
+    .saint-img {
+      height: 7.5rem;
     }
-    to {
+    .stage-h1 {
+      font-size: 2.6rem;
+      margin-top: 0.25rem;
+    }
+    .launch-stage {
+      height: 17rem;
+    }
+    .launch-btn {
+      width: 15rem;
+      height: 15rem;
+    }
+  }
+
+  /* the collapsible maintainer strip: no native marker, the chevron turns */
+  [data-tools] summary {
+    list-style: none;
+  }
+  [data-tools] summary::-webkit-details-marker {
+    display: none;
+  }
+  .chev {
+    display: inline-block;
+    transition: transform 200ms ease;
+  }
+  [data-tools][open] .chev {
+    transform: rotate(180deg);
+  }
+
+  /* the control-side status line: a small dot speaking in tones —
+     turmeric while checking, turmeric steady for closed, leaf for open,
+     quiet stone when the connection is slow */
+  .ctrl-dot {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 9999px;
+    background: var(--color-stone);
+    transition: background-color 300ms ease;
+  }
+  [data-ctrl-status][data-state='checking'] .ctrl-dot {
+    background: var(--color-turmeric);
+    animation: dot-breathe 1.2s ease-in-out infinite;
+  }
+  [data-ctrl-status][data-state='closed'] .ctrl-dot {
+    background: var(--color-turmeric);
+  }
+  [data-ctrl-status][data-state='open'] .ctrl-dot {
+    background: var(--color-leaf);
+  }
+  [data-ctrl-status][data-state='down'] .ctrl-dot {
+    background: var(--color-stone);
+  }
+  @keyframes dot-breathe {
+    0%,
+    100% {
+      opacity: 0.35;
+    }
+    50% {
       opacity: 1;
-      transform: none;
     }
   }
 
@@ -421,42 +526,6 @@ import Arch from '../components/motifs/Arch.astro';
   .launch-stage.awake .stage-mandala-wrap {
     transform: rotate(22deg) scale(1.05);
     transition: transform 3s linear;
-  }
-
-  .status-dot {
-    width: 0.8rem;
-    height: 0.8rem;
-    border-radius: 9999px;
-    background: currentColor;
-  }
-  [data-status][data-state='closed'] {
-    background: var(--color-turmeric);
-    border-color: var(--color-turmeric);
-    color: var(--color-ink);
-  }
-  [data-status][data-state='open'] {
-    background: var(--color-leaf);
-    border-color: var(--color-leaf);
-    color: var(--color-milk);
-  }
-  [data-status][data-state='unknown'],
-  [data-status][data-state='down'] {
-    background: var(--color-jasmine);
-    border-color: var(--color-jasmine);
-    color: var(--color-stone);
-  }
-  /* while the first check is in flight, the dot breathes */
-  [data-status][data-state='unknown'] .status-dot {
-    animation: dot-breathe 1.2s ease-in-out infinite;
-  }
-  @keyframes dot-breathe {
-    0%,
-    100% {
-      opacity: 0.35;
-    }
-    50% {
-      opacity: 1;
-    }
   }
 
   /* The message box speaks in tones: errors sindoor, successes leaf,
@@ -499,10 +568,25 @@ import Arch from '../components/motifs/Arch.astro';
     transform: scale(0.97);
   }
 
-  /* the diya glow behind the disc, lit while holding */
+  /* the diya glow behind the disc: a solid turmeric core with a feathered
+     edge — no blur filter, so growing it to 16× stays cheap on tablets.
+     The hold raises its opacity and scale together; the content outside
+     the disc disappears under the wash long before the ring completes. */
   .glow {
     opacity: 0;
-    transition: opacity 350ms ease;
+    /* above every animated sibling (their filled entrance animations give
+       them stacking contexts) so the wash truly swallows the page — but
+       below the disc (button z-10), which floats on the turmeric sea */
+    z-index: 1;
+    background: radial-gradient(
+      circle closest-side,
+      var(--color-turmeric) 0%,
+      var(--color-turmeric) 62%,
+      rgb(232 134 46 / 0) 74%
+    );
+    transition:
+      opacity 350ms ease,
+      transform 300ms linear;
   }
   .launch-btn.holding ~ .glow {
     opacity: 1;
@@ -523,14 +607,6 @@ import Arch from '../components/motifs/Arch.astro';
     .open-rise {
       animation: none;
     }
-    html.js [data-arch] svg path {
-      animation: none;
-      stroke-dashoffset: 0;
-    }
-    html.js [data-arch] svg circle {
-      animation: none;
-      opacity: 1;
-    }
     .launch-stage.awake .stage-mandala-wrap {
       transform: none;
       transition: none;
@@ -541,13 +617,16 @@ import Arch from '../components/motifs/Arch.astro';
     }
     .glow,
     .launch-btn.holding ~ .glow {
-      opacity: 1;
       transition: none;
     }
     .rim-spin {
       animation: none;
     }
-    [data-status][data-state='unknown'] .status-dot {
+    .saint-img,
+    .chev {
+      transition: none;
+    }
+    [data-ctrl-status][data-state='checking'] .ctrl-dot {
       animation: none;
     }
   }
@@ -575,31 +654,13 @@ import Arch from '../components/motifs/Arch.astro';
     }
   }
 
-  /* Runtime celebration shapes: the burst petals sit centred in the fixed
-     grid, the shower drops start just above the viewport. Sizes, colours
-     and keyframes are set per-element by the script (WAAPI). */
-  .petal,
-  .drop {
-    position: absolute;
-    pointer-events: none;
-  }
-  .drop {
-    top: -44px;
-  }
-  .petal svg,
-  .drop svg {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
+  /* The runtime celebration shapes (.petal / .drop) and their reduced-
+     motion rules live in global.css — they are shared with the opened
+     site's ?celebrate=1 shower. */
 
   @media (prefers-reduced-motion: reduce) {
     .stage-mandala {
       animation: none;
-    }
-    .petal,
-    .drop {
-      display: none;
     }
   }
 </style>
@@ -610,13 +671,14 @@ import Arch from '../components/motifs/Arch.astro';
   // this tab's memory only; the runbook (docs/launch-gate.md) describes the
   // full flow. Plain JavaScript — the Astro compiler parses page scripts as
   // JS, so no TypeScript syntax here.
+  import { burstPetals } from '../lib/petal-shower.js';
 
   const lang = document.documentElement.dataset.lang === 'en' ? 'en' : 'kn';
   const t = (pair) => pair[lang];
 
   const STATE = {
     unknown: { kn: 'ತಪಾಸಣೆ ನಡೆಯುತ್ತಿದೆ…', en: 'Checking the gate…' },
-    down: { kn: 'ತಲುಪಲಾಗಿಲ್ಲ — ಸಂಪರ್ಕ ಪರಿಶೀಲಿಸಿ', en: 'Unreachable — check the connection' },
+    down: { kn: 'ಸಂಪರ್ಕ ಕಾಯುತ್ತಿದೆ…', en: 'Still reaching the gate…' },
     closed: { kn: 'ಪರದೆ ಮುಚ್ಚಿದೆ', en: 'Curtain closed' },
     open: { kn: 'ತೆರೆದಿದೆ!', en: 'It is open!' },
   };
@@ -629,8 +691,8 @@ import Arch from '../components/motifs/Arch.astro';
   };
   const MSG = {
     needKey: {
-      kn: 'ಕೀ ಬೇಕು — ಕೆಳಗೆ ನಮೂದಿಸಿ ಅಥವಾ ಈ ಪುಟವನ್ನು #k=… ಕೊಂಡಿಯಿಂದ ತೆರೆಯಿರಿ.',
-      en: 'A key is needed — enter it below, or open this page from the #k=… link.',
+      kn: 'ಕೀ ಬೇಕು — ಕೆಳಗೆ ನಮೂದಿಸಿ.',
+      en: 'A key is needed — enter it below.',
     },
     badKey: {
       kn: 'ಕೀ ಒಪ್ಪಲಿಲ್ಲ — ಪುನಃ ಪರಿಶೀಲಿಸಿ.',
@@ -650,10 +712,6 @@ import Arch from '../components/motifs/Arch.astro';
     },
     launched: { kn: 'ಜಾಲತಾಣ ತೆರೆದಿದೆ!', en: 'The website is open!' },
     closedAgain: { kn: 'ಪರದೆ ಮತ್ತೆ ಮುಚ್ಚಿದೆ.', en: 'The curtain is closed again.' },
-    holdHint: {
-      kn: 'ಒತ್ತಿ ಹಿಡಿಯಬೇಕು — ಮೂರು ಸೆಕೆಂಡು.',
-      en: 'You have to hold it — for three seconds.',
-    },
   };
   const KEY_SAVED = {
     kn: 'ಕೀ ಇಡಲಾಗಿದೆ ✓ (ಈ ಟ್ಯಾಬಿನ ಮೆಮೊರಿಯಲ್ಲಿ ಮಾತ್ರ)',
@@ -686,9 +744,6 @@ import Arch from '../components/motifs/Arch.astro';
     history.replaceState(null, '', location.pathname + location.search);
   }
 
-  const statusEl = document.querySelector('[data-status]');
-  const stateTextEl = document.querySelector('[data-state-text]');
-  const sinceEl = document.querySelector('[data-since]');
   const warnEl = document.querySelector('[data-warn]');
   const launchWrap = document.querySelector('[data-launch-wrap]');
   const openWrap = document.querySelector('[data-open-wrap]');
@@ -698,8 +753,12 @@ import Arch from '../components/motifs/Arch.astro';
   const keyForm = document.querySelector('[data-key-form]');
   const keyInput = document.querySelector('[data-key-input]');
   const keyOkEl = document.querySelector('[data-key-ok]');
+  const toolsEl = document.querySelector('[data-tools]');
+  const saintEl = document.querySelector('[data-saint]');
+  const ctrlStatusEl = document.querySelector('[data-ctrl-status]');
+  const ctrlTextEl = document.querySelector('[data-ctrl-text]');
+  const ctrlSinceEl = document.querySelector('[data-ctrl-since]');
   const burstEl = document.querySelector('[data-burst]');
-  const showerEl = document.querySelector('[data-shower]');
   const glowEl = document.querySelector('[data-glow]');
   const stageEl = document.querySelector('[data-launch-stage]');
   const ring = document.querySelector('[data-ring]');
@@ -726,6 +785,22 @@ import Arch from '../components/motifs/Arch.astro';
     );
   }
 
+  /* the kasuti frame joins the celebration: stitch bands turn turmeric */
+  function frameLight(on) {
+    document.querySelectorAll('[data-frame]').forEach((el) => {
+      el.style.color = on ? 'var(--color-turmeric)' : '';
+    });
+  }
+
+  let lastGate = null;
+  /* the gate status speaks only inside the maintainer strip — the stage
+     above stays pure. A slow connection is just "still reaching…", and
+     it lives on the control side, where it is useful. */
+  function renderStatus(state, pair) {
+    if (!ctrlStatusEl || !ctrlTextEl) return;
+    ctrlStatusEl.dataset.state = state;
+    ctrlTextEl.textContent = t(pair);
+  }
   function formatSince(iso) {
     try {
       return new Date(iso).toLocaleTimeString(lang === 'en' ? 'en-IN' : 'kn-IN', {
@@ -736,59 +811,104 @@ import Arch from '../components/motifs/Arch.astro';
       return iso;
     }
   }
-
-  /* the kasuti frame joins the celebration: stitch bands turn turmeric */
-  function frameLight(on) {
-    document.querySelectorAll('[data-frame]').forEach((el) => {
-      el.style.color = on ? 'var(--color-turmeric)' : '';
-    });
-  }
-
-  let prevState = null;
   function render(gate) {
-    if (!statusEl || !stateTextEl) return;
     if (!gate) {
-      statusEl.dataset.state = 'down';
-      stateTextEl.textContent = t(STATE.down);
-      show(sinceEl, false);
-      show(warnEl, false);
+      // a flaky hall network changes nothing on stage — the page just
+      // keeps quietly checking (two misses in a row even get here)
+      lastGate = null;
       frameLight(false);
+      renderStatus('down', STATE.down);
+      renderChrome();
       return;
     }
-    const next = gate.open ? 'open' : 'closed';
-    const changed = statusEl.dataset.state !== next;
-    statusEl.dataset.state = next;
-    stateTextEl.textContent = t(gate.open ? STATE.open : STATE.closed);
-    // the pill pops when the gate actually flips (never on the first poll —
-    // "checking" → "closed" is not news)
-    if (changed && prevState !== null) {
-      motion(
-        statusEl,
-        [
-          { transform: 'scale(0.92)' },
-          { transform: 'scale(1.05)', offset: 0.5 },
-          { transform: 'scale(1)' },
-        ],
-        { duration: 280, easing: EASE_OUT },
-      );
+    lastGate = gate;
+    frameLight(gate.open);
+    renderStatus(gate.open ? 'open' : 'closed', gate.open ? STATE.open : STATE.closed);
+    show(launchWrap, !gate.open);
+    show(openWrap, gate.open);
+    if (saintEl) saintEl.classList.toggle('gate-open', gate.open);
+    renderChrome();
+  }
+
+  /* ——— the collapsible maintainer strip ———
+     A collapsed "ನಿರ್ವಹಣೆ / maintainer" line at the foot; the ceremony
+     never shows machinery. It opens only when expanded — by click, by ops
+     mode, or by a flip that needs the key. */
+  function syncKeyRow() {
+    if (key) {
+      if (keyOkEl) keyOkEl.textContent = t(KEY_SAVED);
+      show(keyOkEl, true);
+      show(keyForm, false);
+    } else {
+      show(keyForm, true);
+      show(keyOkEl, false);
     }
-    prevState = next;
-    if (sinceEl) {
-      if (gate.open && gate.since) {
-        sinceEl.textContent = t(SINCE) + ' ' + formatSince(gate.since);
-        show(sinceEl, true);
+  }
+  function openTools(on) {
+    if (!toolsEl) return;
+    toolsEl.open = on;
+    if (on) syncKeyRow();
+  }
+  function foldKeyTools() {
+    if (keyInput) keyInput.value = '';
+    openTools(false);
+  }
+
+  /* ——— ops mode: the maintainer's quiet switch ———
+     /launch?ops (or #ops), the "o" key, or five quick taps on the emblem
+     all expand the maintainer strip. The strip itself already hides the
+     controls from guests, so ops mode is pure convenience — it never
+     persists; a fresh load is ceremony-clean. */
+  let opsMode = /ops/.test(location.search + location.hash);
+  function renderChrome() {
+    if (ctrlSinceEl) {
+      if (lastGate && lastGate.open && lastGate.since) {
+        ctrlSinceEl.textContent = t(SINCE) + ' ' + formatSince(lastGate.since);
+        show(ctrlSinceEl, true);
       } else {
-        show(sinceEl, false);
+        show(ctrlSinceEl, false);
       }
     }
     if (warnEl) {
-      warnEl.textContent = t(WARN.notArmed);
-      show(warnEl, !gate.armed);
+      // not armed = the Worker is failing open (site open anyway) — a
+      // diagnostic for the maintainer, inside the collapsed strip
+      const on = !!(lastGate && !lastGate.armed);
+      if (on) warnEl.textContent = t(WARN.notArmed);
+      show(warnEl, on);
     }
-    frameLight(gate.open);
-    show(launchWrap, !gate.open);
-    show(openWrap, gate.open);
   }
+  function setOps(on) {
+    opsMode = on;
+    openTools(on);
+  }
+  window.addEventListener('keydown', (e) => {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+    if (e.key === 'o' || e.key === 'O') setOps(!opsMode);
+  });
+  // on a phone there is no keyboard: five quick taps on the emblem
+  let taps = 0;
+  let tapTimer = 0;
+  if (saintEl) {
+    saintEl.addEventListener('click', () => {
+      taps += 1;
+      window.clearTimeout(tapTimer);
+      tapTimer = window.setTimeout(() => {
+        taps = 0;
+      }, 1600);
+      if (taps >= 5) {
+        taps = 0;
+        setOps(!opsMode);
+      }
+    });
+  }
+  // expanding by hand shows the right key row for the current memory
+  if (toolsEl) {
+    toolsEl.addEventListener('toggle', () => {
+      if (toolsEl.open) syncKeyRow();
+    });
+  }
+  if (opsMode) openTools(true);
 
   /* ——— status polling ——— */
   let failures = 0;
@@ -801,8 +921,9 @@ import Arch from '../components/motifs/Arch.astro';
       render(gate);
     } catch (e) {
       failures += 1;
-      // One failed poll (lift edge, flaky hall wi-fi) must not flash the
-      // status pill — call it down only after two in a row.
+      // One failed poll (lift edge, flaky hall wi-fi) must not disturb the
+      // stage — call it down only after two in a row, and the stage doesn't
+      // even change then.
       if (failures >= 2) render(null);
     }
   }
@@ -875,6 +996,7 @@ import Arch from '../components/motifs/Arch.astro';
       btn.classList.remove('holding');
       resetRing();
       setCount(null);
+      if (opts.onReset) opts.onReset();
       if (opts.onEnd) opts.onEnd();
       if (released && opts.onShortRelease) {
         const held = performance.now() - start;
@@ -888,6 +1010,7 @@ import Arch from '../components/motifs/Arch.astro';
       if (opts.ring && opts.circumference) {
         opts.ring.style.strokeDashoffset = String(opts.circumference * (1 - progress));
       }
+      if (opts.onProgress) opts.onProgress(progress);
       if (opts.count) {
         const remaining = Math.ceil((opts.ms - elapsed) / 1000);
         if (remaining > 0 && remaining !== lastShown) {
@@ -911,6 +1034,7 @@ import Arch from '../components/motifs/Arch.astro';
       lastShown = 0;
       btn.classList.add('holding');
       if (opts.onBegin) opts.onBegin();
+      if (opts.onProgress) opts.onProgress(0);
       if (opts.count) setCount(Math.round(opts.ms / 1000));
       raf = requestAnimationFrame(tick);
       watchdog = setInterval(tick, 60);
@@ -946,7 +1070,7 @@ import Arch from '../components/motifs/Arch.astro';
     if (busy) return;
     if (!key) {
       showMsg(MSG.needKey);
-      show(keyForm, true);
+      openTools(true);
       if (keyInput) keyInput.focus();
       return;
     }
@@ -958,7 +1082,10 @@ import Arch from '../components/motifs/Arch.astro';
         cache: 'no-store',
       });
       if (res.status === 404) {
+        // the key in memory is wrong: unfold the strip so it can be retyped
         showMsg(MSG.badKey);
+        openTools(true);
+        if (keyInput) keyInput.focus();
       } else if (res.status === 503) {
         let error = '';
         try {
@@ -970,15 +1097,17 @@ import Arch from '../components/motifs/Arch.astro';
       } else if (!res.ok) {
         showMsg(MSG.serverError);
       } else if (path === '/api/launch') {
-        // celebrate first, let the burst carry the swap, then confirm the
-        // pill — the 420 ms beat lets the disc pop finish before the
-        // console hands over to the opened-site block.
+        // celebrate first — pop, flare, burst — then hand the stage over
+        // to the real site: the homepage opens itself and rains petals
+        // over itself (?celebrate=1). Back returns to this console.
         showMsg(MSG.launched, 'ok');
+        foldKeyTools();
         celebrate();
-        await sleep(420);
-        await poll();
+        await sleep(REDUCED ? 500 : 1400);
+        window.location.assign(REDUCED ? '/' : '/?celebrate=1');
       } else {
         showMsg(MSG.closedAgain, 'quiet');
+        foldKeyTools();
         await poll();
       }
     } catch (e) {
@@ -988,93 +1117,17 @@ import Arch from '../components/motifs/Arch.astro';
   }
 
   /* ——— the celebration ———
-     ಪುಷ್ಪ ವರ್ಷ: the petal shower elders perform over every inauguration.
-     Four beats, in order: the disc pops, a turmeric flare blooms and
-     dissolves, a radial burst of petals erupts from the disc, and a
-     full-viewport flower shower falls in two depth layers while the kasuti
-     frame lights turmeric. All transform/opacity, all self-cleaning. */
-  // Colours are read from the tokens once — SVG presentation attributes do
-  // not understand var(), so the resolved values are baked into the art.
-  const ROOT_COLORS = getComputedStyle(document.documentElement);
-  const TOKEN = (name, fallback) => (ROOT_COLORS.getPropertyValue(name) || fallback).trim();
-  const PETAL_INK = {
-    turmeric: TOKEN('--color-turmeric', '#E8862E'),
-    sindoor: TOKEN('--color-sindoor', '#C03A2B'),
-    leaf: TOKEN('--color-leaf', '#1D5F3C'),
-    milk: TOKEN('--color-milk', '#FFFDF7'),
-  };
-  function petalArt(i) {
-    const colors = [
-      PETAL_INK.turmeric,
-      PETAL_INK.sindoor,
-      PETAL_INK.leaf,
-      PETAL_INK.turmeric,
-      PETAL_INK.sindoor,
-    ];
-    const c = colors[i % colors.length];
-    const kind = i % 4;
-    if (kind === 0) {
-      // a single marigold petal
-      return (
-        '<svg viewBox="0 0 14 22" aria-hidden="true"><ellipse cx="7" cy="11" rx="5.5" ry="10" fill="' +
-        c +
-        '"/></svg>'
-      );
-    }
-    if (kind === 1) {
-      // a ruffled marigold disc
-      return (
-        '<svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="' +
-        c +
-        '"/><circle cx="10" cy="10" r="4.6" fill="' +
-        PETAL_INK.milk +
-        '" opacity="0.85"/><circle cx="10" cy="10" r="1.8" fill="' +
-        c +
-        '"/></svg>'
-      );
-    }
-    if (kind === 2) {
-      // the brochure's six-petal bloom
-      let e = '';
-      for (let a = 0; a < 6; a++) {
-        e += '<ellipse cx="16" cy="8" rx="4.4" ry="6.4" transform="rotate(' + a * 60 + ' 16 16)"/>';
-      }
-      return (
-        '<svg viewBox="0 0 32 32" fill="' +
-        c +
-        '" aria-hidden="true">' +
-        e +
-        '<circle cx="16" cy="16" r="5.6" fill="' +
-        c +
-        '"/><circle cx="16" cy="16" r="2.6" fill="' +
-        PETAL_INK.milk +
-        '"/></svg>'
-      );
-    }
-    // jasmine-white bloom, stroked so it reads on the cream ground
-    let e2 = '';
-    for (let a = 0; a < 6; a++) {
-      e2 +=
-        '<ellipse cx="16" cy="8" rx="4.4" ry="6.4" transform="rotate(' +
-        a * 60 +
-        ' 16 16)" fill="' +
-        PETAL_INK.milk +
-        '" stroke="' +
-        c +
-        '" stroke-width="1.2"/>';
-    }
-    return (
-      '<svg viewBox="0 0 32 32" aria-hidden="true">' +
-      e2 +
-      '<circle cx="16" cy="16" r="3.4" fill="' +
-      c +
-      '"/></svg>'
-    );
-  }
-
+     ಪುಷ್ಪ ವರ್ಷ: the disc pops, the turmeric wash blooms and dissolves,
+     and a radial burst of petals erupts from the disc (petal art lives in
+     src/lib/petal-shower.js, shared with the opened site). The full
+     flower shower belongs to the destination: the ceremony page hands
+     over to the homepage with ?celebrate=1 and the petals rain there. */
   function celebrate() {
     frameLight(true);
-    if (REDUCED) return; // state changes above still tell the story
+    if (REDUCED) {
+      clearGlow(); // state changes above still tell the story
+      return;
+    }
     // 1 — the disc pops
     motion(
       launchBtn,
@@ -1085,148 +1138,110 @@ import Arch from '../components/motifs/Arch.astro';
       ],
       { duration: 480, easing: EASE_OUT },
     );
-    // 2 — the diya flare: bloom wide, then dissolve into the burst
+    // 2 — the diya flare: the wash is already full-screen from the hold —
+    // bloom it a little wider, dissolve it into the petal burst, clear it
+    const from = Math.max(glowScale, 1);
     motion(
       glowEl,
       [
-        { opacity: 1, transform: 'scale(1)' },
-        { opacity: 1, transform: 'scale(1.16)', offset: 0.45 },
-        { opacity: 0, transform: 'scale(1.3)' },
+        { opacity: 1, transform: 'scale(' + from + ')' },
+        { opacity: 0.9, transform: 'scale(' + from * 1.12 + ')', offset: 0.45 },
+        { opacity: 0, transform: 'scale(' + from * 1.3 + ')' },
       ],
-      { duration: 950, easing: 'ease-out' },
+      { duration: 1100, easing: 'ease-out' },
     );
-    burstPetals();
-    flowerShower();
+    window.setTimeout(clearGlow, 1150);
+    burstPetals(burstEl);
   }
 
-  function burstPetals() {
-    if (!burstEl) return;
-    for (let i = 0; i < 26; i++) {
-      const petal = document.createElement('span');
-      petal.className = 'petal';
-      petal.innerHTML = petalArt(i);
-      const s = 9 + Math.random() * 11;
-      petal.style.width = s + 'px';
-      petal.style.height = s + 'px';
-      petal.style.margin = -(s / 2) + 'px';
-      const angle = (Math.PI * 2 * i) / 26 + Math.random() * 0.4;
-      const radius = 110 + Math.random() * 120;
-      const dx = Math.cos(angle) * radius;
-      const dy = Math.sin(angle) * radius;
-      const spin = Math.random() * 260 - 130;
-      const anim = petal.animate(
-        [
-          { opacity: 1, transform: 'translate(0, 0) scale(1) rotate(0deg)' },
-          {
-            opacity: 0.9,
-            transform:
-              'translate(' + dx * 0.7 + 'px, ' + dy * 0.7 + 'px) scale(0.9) rotate(' + spin * 0.6 + 'deg)',
-            offset: 0.6,
-          },
-          {
-            opacity: 0,
-            transform:
-              'translate(' + dx + 'px, ' + (dy + 40) + 'px) scale(0.4) rotate(' + spin + 'deg)',
-          },
-        ],
-        { duration: 720 + Math.random() * 380, delay: Math.random() * 140, easing: EASE_OUT, fill: 'both' },
-      );
-      anim.onfinish = () => petal.remove();
-      burstEl.appendChild(petal);
-    }
-  }
-
-  function flowerShower() {
-    if (!showerEl) return;
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
-    // three waves, thinning as they go, like handfuls tossed one after another
-    const waves = [
-      { n: 30, at: 0 },
-      { n: 22, at: 1700 },
-      { n: 14, at: 3300 },
-    ];
-    let id = 0;
-    waves.forEach((wave) => {
-      for (let k = 0; k < wave.n; k++) {
-        spawnDrop(vw, vh, wave.at + Math.random() * 1500, id++);
-      }
-    });
-    window.setTimeout(() => {
-      if (showerEl) showerEl.innerHTML = '';
-    }, 11000);
-  }
-
-  function spawnDrop(vw, vh, delay, id) {
-    const el = document.createElement('span');
-    el.className = 'drop';
-    const back = id % 3 === 0; // the far layer: smaller, slower, dimmer
-    const s = back ? 9 + Math.random() * 5 : 15 + Math.random() * 11;
-    el.style.width = s + 'px';
-    el.style.height = s + 'px';
-    el.innerHTML = petalArt(id);
-    el.style.left = Math.random() * (vw + 40) - 20 + 'px';
-    const drift = Math.random() * 120 - 60;
-    const sway = 18 + Math.random() * 26;
-    const dir = Math.random() < 0.5 ? -1 : 1;
-    const spin = dir * (420 + Math.random() * 420);
-    const dur = (back ? 4200 : 3200) + Math.random() * 1400;
-    const restOpacity = back ? 0.5 : 0.95;
-    const anim = el.animate(
-      [
-        { transform: 'translate3d(0, 0, 0) rotate(0deg)', opacity: 0, easing: 'ease-in' },
-        { opacity: restOpacity, offset: 0.06, easing: 'ease-in-out' },
-        {
-          transform: 'translate3d(' + (drift * 0.4 + sway) + 'px, ' + vh * 0.38 + 'px, 0) rotate(' + spin * 0.4 + 'deg)',
-          offset: 0.4,
-          easing: 'ease-in-out',
-        },
-        {
-          transform: 'translate3d(' + (drift * 0.8 - sway) + 'px, ' + vh * 0.72 + 'px, 0) rotate(' + spin * 0.75 + 'deg)',
-          offset: 0.72,
-          easing: 'ease-in-out',
-        },
-        { opacity: restOpacity - 0.1, offset: 0.9, easing: 'ease-in' },
-        {
-          transform: 'translate3d(' + drift + 'px, ' + (vh + 50) + 'px, 0) rotate(' + spin + 'deg)',
-          opacity: 0,
-        },
-      ],
-      { duration: dur, delay: delay, fill: 'both' },
-    );
-    anim.onfinish = () => el.remove();
-    showerEl.appendChild(el);
-  }
-
-  holdToConfirm(launchBtn, {
+  /* ——— the hold duration, set from the maintainer panel ———
+     Remembered per device in localStorage (no cookies, per the privacy
+     policy); the guest's device keeps its own value. opts objects are
+     read live on every tick, so editing launchHold.ms mid-session just
+     works. */
+  const launchHold = {
     ms: 3000,
     ring: ring,
     circumference: RING_C,
     count: btnCount,
     label: btnLabel,
     onBegin: () => stageEl && stageEl.classList.add('awake'),
+    onProgress: (p) => setGlowProgress(p),
+    onReset: () => clearGlow(),
     onEnd: () => stageEl && stageEl.classList.remove('awake'),
-    onShortRelease: () => showMsg(MSG.holdHint, 'quiet'),
+    onShortRelease: () =>
+      showMsg(
+        {
+          kn: 'ಒತ್ತಿ ಹಿಡಿಯಬೇಕು — ' + holdSecs + ' ಸೆಕೆಂಡು.',
+          en: 'You have to hold it — for ' + holdSecs + ' seconds.',
+        },
+        'quiet',
+      ),
     onConfirm: () => flip('/api/launch'),
-  });
+  };
+  let holdSecs = 3;
+  try {
+    const saved = parseInt(localStorage.getItem('kadali-hold-secs') || '', 10);
+    if (saved >= 1 && saved <= 10) holdSecs = saved;
+  } catch (e) {
+    /* storage unavailable — the three-second default stands */
+  }
+  launchHold.ms = holdSecs * 1000;
+  const holdInput = document.querySelector('[data-hold-input]');
+  function renderHoldSecs() {
+    document.querySelectorAll('[data-hold-secs]').forEach((el) => {
+      el.textContent = String(holdSecs);
+    });
+    if (holdInput) holdInput.value = String(holdSecs);
+  }
+  if (holdInput) {
+    holdInput.addEventListener('change', () => {
+      const v = parseInt(holdInput.value, 10);
+      if (isNaN(v)) return;
+      holdSecs = Math.min(10, Math.max(1, v));
+      launchHold.ms = holdSecs * 1000;
+      try {
+        localStorage.setItem('kadali-hold-secs', String(holdSecs));
+      } catch (e) {
+        /* fine — this device just forgets it */
+      }
+      renderHoldSecs();
+    });
+  }
+  renderHoldSecs();
+  holdToConfirm(launchBtn, launchHold);
   holdToConfirm(resetBtn, { ms: 1200, onConfirm: () => flip('/api/reset') });
 
-  /* ——— key entry (only when the fragment link wasn't used) ——— */
-  function renderKeyState() {
-    if (key) {
-      if (keyOkEl) keyOkEl.textContent = t(KEY_SAVED);
-      show(keyOkEl, true);
-      show(keyForm, false);
-    } else {
-      show(keyForm, true);
-      show(keyOkEl, false);
+  /* ——— the glow: grows with the hold until it engulfs the page ———
+     scale 1 → 16× of the 20rem disc: the solid core (62% of the radius)
+     covers every corner of a stage screen, and the emblem, title, flowers
+     and frames slip under the turmeric sea one by one. Reduced-motion
+     guests get a calm lit glow instead of the bloom. */
+  let glowScale = 1;
+  function setGlowProgress(p) {
+    if (!glowEl) return;
+    if (REDUCED) {
+      glowEl.style.opacity = '1';
+      return;
     }
+    glowScale = 1 + p * 15;
+    glowEl.style.opacity = String(0.35 + p * 0.65);
+    glowEl.style.transform = 'scale(' + glowScale + ')';
   }
+  function clearGlow() {
+    glowScale = 1;
+    if (!glowEl) return;
+    glowEl.style.opacity = '';
+    glowEl.style.transform = '';
+  }
+
+  /* ——— key entry (only when the fragment link wasn't used) ——— */
+  // The strip stays collapsed on load: a fragment key works in silence,
+  // and a missing one only surfaces when someone actually tries a flip.
   keyForm.addEventListener('submit', (e) => {
     e.preventDefault();
     key = (keyInput ? keyInput.value : '').trim();
     if (keyInput) keyInput.value = '';
-    renderKeyState();
+    syncKeyRow();
   });
-  renderKeyState();
 </script>
