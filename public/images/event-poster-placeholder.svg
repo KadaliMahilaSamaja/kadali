@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 1100">
+  <!-- Portrait poster placeholder (850x1100) — same visual language as
+       og-default.svg: cream field, leaf-green kadali arch, turmeric beads,
+       diamond row on a sand band. Textless on purpose; shared by events
+       until their real poster is uploaded. -->
+  <rect width="850" height="1100" fill="#F9EAD3"/>
+  <rect x="0" y="950" width="850" height="150" fill="#F2DDB9"/>
+
+  <!-- Kadali arch motif (from og-default.svg), centred -->
+  <svg x="233" y="90" width="384" height="480" viewBox="0 0 120 150" fill="none" stroke="#1D5F3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="60" cy="6" r="2.5" fill="#1D5F3C" stroke="none"/>
+    <path d="M8 146 V72 C8 40 30 23 52 15 C55 13 58 11 60 8 C62 11 65 13 68 15 C90 23 112 40 112 72 V146"/>
+    <path d="M22 146 V74 C22 50 38 36 55 29 L60 26.5 L65 29 C82 36 98 50 98 74 V146"/>
+    <path d="M4 146 H116"/>
+  </svg>
+
+  <!-- Turmeric bead row -->
+  <circle cx="305" cy="640" r="9" fill="#E8862E"/>
+  <circle cx="365" cy="644" r="9" fill="#E8862E"/>
+  <circle cx="425" cy="646" r="9" fill="#E8862E"/>
+  <circle cx="485" cy="642" r="9" fill="#E8862E"/>
+  <circle cx="545" cy="644" r="9" fill="#E8862E"/>
+
+  <!-- Diamond accents on the sand band -->
+  <path d="M317 1004 L328 1015 L317 1026 L306 1015 Z" fill="none" stroke="#1D5F3C" stroke-width="2"/>
+  <path d="M353 1004 L364 1015 L353 1026 L342 1015 Z" fill="none" stroke="#1D5F3C" stroke-width="2"/>
+  <path d="M389 1004 L400 1015 L389 1026 L378 1015 Z" fill="none" stroke="#1D5F3C" stroke-width="2"/>
+  <path d="M425 1004 L436 1015 L425 1026 L414 1015 Z" fill="none" stroke="#1D5F3C" stroke-width="2"/>
+  <path d="M461 1004 L472 1015 L461 1026 L450 1015 Z" fill="none" stroke="#1D5F3C" stroke-width="2"/>
+  <path d="M497 1004 L508 1015 L497 1026 L486 1015 Z" fill="none" stroke="#1D5F3C" stroke-width="2"/>
+  <path d="M533 1004 L544 1015 L533 1026 L522 1015 Z" fill="none" stroke="#1D5F3C" stroke-width="2"/>
+</svg>
