@@ -73,11 +73,12 @@ export async function getAuthorProfile(
     if (foundFromPeople) {
       base = foundFromPeople;
     } else {
-      // 3. Fallback
+      // 3. Fallback — no generic bio sentence in its place: an unknown
+      // author (a Swamiji, a guest) must not be labelled a samaja writer.
       base = {
         name: trimmed,
         role: AUTHOR_ROLES.fallback,
-        bio: AUTHOR_ROLES.writerFallback.kn,
+        bio: '',
       };
     }
   }

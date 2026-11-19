@@ -141,7 +141,7 @@ export const ui = {
       en: 'From vachana reflections to members’ memories — stories told in our own voice.',
     },
     allArticles: { kn: 'ಎಲ್ಲಾ ಬರಹಗಳು', en: 'All writings' },
-    by: { kn: 'ಲೇಖಕಿ:', en: 'By' },
+    by: { kn: 'ಲೇಖಕರು:', en: 'By' },
     readFullArticle: { kn: 'ಪೂರ್ಣ ಲೇಖನ ಓದಿ', en: 'Read the full article' },
     swipeRead: { kn: 'ಸರಿಸಿ ಓದಿ', en: 'Swipe to read' },
     committeeEyebrow: { kn: 'ನಮ್ಮ ಜನ', en: 'Our people' },
@@ -247,8 +247,8 @@ export const ui = {
     filterTag: { kn: 'ಟ್ಯಾಗ್ ಪ್ರಕಾರ ಬರಹ ಶೋಧಿಸಿ', en: 'Filter writings by tag' },
     all: { kn: 'ಎಲ್ಲಾ', en: 'All' },
     tagsAria: { kn: 'ಟ್ಯಾಗ್‌ಗಳು', en: 'Tags' },
-    authorFilter: { kn: 'ಲೇಖಕಿ ಶೋಧ:', en: 'Author filter:' },
-    authorBadge: { kn: 'ಲೇಖಕಿ', en: 'Author' },
+    authorFilter: { kn: 'ಲೇಖಕರು ಶೋಧ:', en: 'Author filter:' },
+    authorBadge: { kn: 'ಲೇಖಕರು', en: 'Author' },
     publishedOn: { kn: 'ಪ್ರಕಟಣೆ ದಿನಾಂಕ', en: 'Published' },
     clearFilter: { kn: 'ಶೋಧನೆ ತೆಗೆಯಿರಿ (ಎಲ್ಲಾ ಬರಹಗಳು)', en: 'Clear filter (all writings)' },
     empty: {
@@ -384,7 +384,7 @@ export const ui = {
 /** Committing-author role strings for the articles' author bios. */
 export const AUTHOR_ROLES = {
   founder: { kn: 'ಸಂಸ್ಥಾಪಕರು · ಹಿರಿಯ ಮಾರ್ಗದರ್ಶಕರು', en: 'Founder · Senior guide' },
-  fallback: { kn: 'ಲೇಖಕಿ', en: 'Author' },
+  // Honorific "author" — fits guest writers and Swamijis, not only members.
+  fallback: { kn: 'ಲೇಖಕರು', en: 'Author' },
   memberAuthor: { kn: 'ಸದಸ್ಯೆ ಹಾಗೂ ಲೇಖಕಿ', en: 'Member and writer' },
-  writerFallback: { kn: 'ಕದಳಿ ವನಿತಾ ಸಮಾಜದ ಬರಹಗಾರ್ತಿ.', en: 'A writer with Kadali Vanita Samaja.' },
 } as const satisfies Record<string, Bi>;
