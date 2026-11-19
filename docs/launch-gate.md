@@ -31,9 +31,10 @@ guest presses the big button on /launch (hold 3 s)
 - While the curtain is closed, `robots.txt` serves `Disallow: /` so crawlers
   never enter; the real robots.txt comes back with the launch.
 - Curtain pages poll `GET /api/launch-status` every 4 s. When the flag flips,
-  a leaf-green veil rises and the page reloads **itself** — whatever URL the
-  visitor holds (homepage or a shared deep link) comes back as the real page.
-  Nobody has to refresh anything.
+  the curtain hops **itself** to the same URL with `?celebrate=1` (a visitor
+  parked on the curtain file goes to the homepage; deep links keep their
+  path) — the real page comes back with a petal shower falling over it, and
+  the flag is scrubbed from the address bar. Nobody has to refresh anything.
 - `POST /api/launch` (open) and `POST /api/reset` (close again — rehearsal)
   require the secret in the `x-launch-key` header, compared timing-safely
   (both sides SHA-256 hashed, then `crypto.subtle.timingSafeEqual`).
