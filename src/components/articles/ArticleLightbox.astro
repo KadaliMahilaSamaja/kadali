@@ -53,6 +53,7 @@ import { ui } from '../../i18n/ui';
 
 <script>
   import { activeLocale } from '../../i18n/client';
+  import { closeModal, openModal } from '../../lib/dialog';
   import { ui } from '../../i18n/ui';
 
   function setupArticleLightbox() {
@@ -75,7 +76,7 @@ import { ui } from '../../i18n/ui';
     };
 
     // Close on button click
-    closeBtn?.addEventListener('click', () => dialog.close());
+    closeBtn?.addEventListener('click', () => closeModal(dialog));
 
     // Close on backdrop click
     dialog.addEventListener('click', (e) => {
@@ -86,7 +87,7 @@ import { ui } from '../../i18n/ui';
         rect.left <= e.clientX &&
         e.clientX <= rect.left + rect.width;
       if (!isInDialog) {
-        dialog.close();
+        closeModal(dialog);
       }
     });
 
@@ -140,7 +141,7 @@ import { ui } from '../../i18n/ui';
           if (box) box.style.display = caption ? 'block' : 'none';
         }
 
-        dialog.showModal();
+        openModal(dialog);
         document.body.style.overflow = 'hidden';
       });
     });

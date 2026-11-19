@@ -77,6 +77,7 @@
 
 <script>
   import { activeLocale } from '../../i18n/client';
+  import { closeModal, openModal } from '../../lib/dialog';
   import { ui } from '../../i18n/ui';
 
   // Locale-aware fallback alt, read at use time so a mid-session language
@@ -128,7 +129,7 @@
       index = Math.min(Math.max(startIndex, 0), photos.length - 1);
       show();
       if (!dialog!.open) {
-        dialog!.showModal();
+        openModal(dialog!);
         document.body.style.overflow = 'hidden';
       }
     }
@@ -144,7 +145,7 @@
 
     prevBtn?.addEventListener('click', () => step(-1));
     nextBtn?.addEventListener('click', () => step(1));
-    closeBtn?.addEventListener('click', () => dialog.close());
+    closeBtn?.addEventListener('click', () => closeModal(dialog));
 
     // Arrow keys navigate while the dialog is focused (focus is trapped
     // inside it by showModal, so these never leak to the page).
@@ -155,7 +156,7 @@
 
     // Click on the backdrop (the dialog box is fully covered by its content).
     dialog.addEventListener('click', (event) => {
-      if (event.target === dialog) dialog.close();
+      if (event.target === dialog) closeModal(dialog);
     });
 
     // Native Esc triggers cancel -> close; clean up either way.

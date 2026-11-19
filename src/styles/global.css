@@ -24,13 +24,22 @@
     scroll-padding-top: 5rem;
   }
 
-  /* Floor 34: clip horizontal overflow on both, never hidden, never 100vw */
+  /* Floor 34: clip horizontal overflow on both, never hidden, never 100vw.
+     The Safari 15.1 fallback (clip needs 16) lives in @supports — a bare
+     double declaration gets deduped by the CSS minifier, leaving clip only. */
   html {
     overflow-x: clip;
   }
 
   body {
     overflow-x: clip;
+  }
+
+  @supports not (overflow: clip) {
+    html,
+    body {
+      overflow-x: hidden;
+    }
   }
 
   body {
@@ -83,6 +92,22 @@
 
   :root[data-lang='kn'] [data-en] {
     display: none !important;
+  }
+
+  /* <dialog> needs Safari 15.4+: before that the UA neither hides a closed
+     dialog (it would render in-flow at the end of the page) nor centers an
+     open one in a top layer. Mirror the UA's own modal geometry — a no-op
+     on supporting browsers, where showModal already applies it. Scripts
+     open legacy browsers with the plain open attribute (src/lib/dialog.ts). */
+  dialog:not([open]) {
+    display: none;
+  }
+
+  dialog[open] {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    height: fit-content;
   }
 
   /* Keyboard focus: 2px solid leaf ring, offset from the edge */
