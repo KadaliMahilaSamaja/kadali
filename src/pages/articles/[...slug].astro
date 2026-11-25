@@ -156,14 +156,14 @@ const shareUrl = new URL(
       </header>
     </div>
 
-    <!-- Cover: full-width with the temple-arch top mask (above fold, no lazy).
-         Rendered at its natural aspect ratio — covers are never cropped; the
-         arch mask is the only shaping. Image-less articles skip it entirely —
-         no author photo stand-in. -->
+    <!-- Cover: full-width at its natural aspect ratio (above fold, no lazy) —
+         no crop and no arch mask: the photo shows in full, sharp-cornered per
+         the Kadali look. Image-less articles skip it entirely — no author
+         photo stand-in. -->
     {
       cover && (
         <div class="article-cover mx-auto mt-10 max-w-4xl px-4 sm:px-6">
-          <div class="overflow-hidden rounded-t-[999px] border border-ink/10 bg-jasmine/30">
+          <div class="overflow-hidden border border-ink/10 bg-jasmine/30">
             <img src={cover} alt={coverAlt ?? ''} decoding="async" class="w-full h-auto" />
           </div>
         </div>
