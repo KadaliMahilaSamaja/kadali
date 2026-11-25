@@ -17,7 +17,7 @@ const now = new Date();
 // --- Site settings (single file() entry, id 'site') -------------------------
 const settings = (await getCollection('site-settings')).at(0);
 
-// --- Recent articles (CMS-pinned order, then newest — max 4) ----------------
+// --- Recent articles (CMS-pinned order, then newest — max 5) ----------------
 const articles = sortArticlesForDisplay(
   await getCollection('articles', ({ data }) => !data.draft),
 );
@@ -32,7 +32,7 @@ if (featuredArticleRef) {
   }
 }
 const recentArticles = [...new Map(articles.map((a) => [a.id, a])).values()]
-  .slice(0, 4);
+  .slice(0, 5);
 
 // --- Upcoming events (derived status, soonest first, max 4 — the rail scrolls)
 const events = await getCollection('events');
