@@ -1,8 +1,10 @@
 ---
 /**
  * Article Lightbox Component.
- * Enables full-screen zoom and inspection for any image inside article bodies
- * and article covers. Progressive enhancement, vanilla JS, zero dependencies.
+ * Full-screen viewer for every photo in an article — the cover and all body
+ * images — with prev/next navigation (buttons, arrow keys, touch swipe) and
+ * wrap-around, so a visitor can flip through the article's photos in one go.
+ * Progressive enhancement, vanilla JS, zero dependencies.
  */
 import { ui } from '../../i18n/ui';
 ---
@@ -13,35 +15,58 @@ import { ui } from '../../i18n/ui';
   aria-label={ui.articles.viewerTitle.kn}
 >
   <div class="flex flex-col overflow-hidden">
-    <!-- Header with caption preview and close button -->
+    <!-- Header with photo counter, caption preview and close button -->
     <div class="flex items-center justify-between border-b border-ink/10 bg-jasmine px-4 py-3 sm:px-6">
-      <div class="flex items-center gap-2">
-        <span class="inline-block size-2 rounded-full bg-turmeric"></span>
-        <p id="article-lightbox-title" class="font-ui text-sm font-semibold text-leaf truncate max-w-[20rem] sm:max-w-md">
+      <div class="flex min-w-0 items-center gap-2">
+        <span class="inline-block size-2 shrink-0 rounded-full bg-turmeric"></span>
+        <p id="article-lightbox-title" class="font-ui text-sm font-semibold text-leaf truncate max-w-[14rem] sm:max-w-sm md:max-w-md">
           <span data-kn lang="kn">{ui.articles.viewerTitle.kn}</span>
           <span data-en>{ui.articles.viewerTitle.en}</span>
         </p>
       </div>
-      <button
-        type="button"
-        id="article-lightbox-close"
-        class="flex size-9 cursor-pointer items-center justify-center rounded-full border border-ink/20 text-ink transition-colors hover:bg-leaf hover:text-milk"
-        aria-label="ಮುಚ್ಚಿ"
-      >
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-          <path d="M6 6l12 12M18 6L6 18"></path>
-        </svg>
-      </button>
+      <div class="flex shrink-0 items-center gap-3">
+        <p id="article-lightbox-counter" class="font-ui text-sm tabular-nums text-stone" aria-live="polite" hidden></p>
+        <button
+          type="button"
+          id="article-lightbox-close"
+          class="flex size-9 cursor-pointer items-center justify-center rounded-full border border-ink/20 text-ink transition-colors hover:bg-leaf hover:text-milk"
+          aria-label="ಮುಚ್ಚಿ"
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18"></path>
+          </svg>
+        </button>
+      </div>
     </div>
 
-    <!-- Image Viewport -->
-    <div class="flex items-center justify-center bg-cream/90 p-4 sm:p-6 min-h-[40vh]">
+    <!-- Image Viewport with prev/next navigation -->
+    <div class="relative flex items-center justify-center bg-cream/90 p-4 sm:p-6 min-h-[40vh]">
       <img
         id="article-lightbox-img"
         src=""
         alt=""
         class="max-h-[72vh] w-auto max-w-full rounded-sm border border-ink/10 bg-white object-contain shadow-md"
       />
+      <button
+        type="button"
+        id="article-lightbox-prev"
+        class="absolute left-2 top-1/2 hidden size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-ink/20 bg-cream/80 text-ink transition-colors duration-200 hover:bg-jasmine sm:left-4"
+        aria-label="ಹಿಂದಿನ ಛಾಯಾಚಿತ್ರ"
+      >
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 5l-7 7 7 7"></path>
+        </svg>
+      </button>
+      <button
+        type="button"
+        id="article-lightbox-next"
+        class="absolute right-2 top-1/2 hidden size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-ink/20 bg-cream/80 text-ink transition-colors duration-200 hover:bg-jasmine sm:right-4"
+        aria-label="ಮುಂದಿನ ಛಾಯಾಚಿತ್ರ"
+      >
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M9 5l7 7-7 7"></path>
+        </svg>
+      </button>
     </div>
 
     <!-- Footer Caption -->
@@ -60,7 +85,10 @@ import { ui } from '../../i18n/ui';
     const imgEl = document.getElementById('article-lightbox-img') as HTMLImageElement | null;
     const titleEl = document.getElementById('article-lightbox-title');
     const captionEl = document.getElementById('article-lightbox-caption');
+    const counterEl = document.getElementById('article-lightbox-counter');
     const closeBtn = document.getElementById('article-lightbox-close');
+    const prevBtn = document.getElementById('article-lightbox-prev');
+    const nextBtn = document.getElementById('article-lightbox-next');
 
     if (!dialog || !imgEl) return;
 
@@ -73,6 +101,85 @@ import { ui } from '../../i18n/ui';
         branded: en ? ui.articles.viewerBranded.en : ui.articles.viewerBranded.kn,
       };
     };
+
+    // Every photo of the article — the cover first, then the body images in
+    // article order. Caption: figure figcaption > nearby em > alt text.
+    const photos: { src: string; caption: string }[] = [];
+    const targets = document.querySelectorAll<HTMLImageElement>(
+      '.prose-kadali img, .article-cover img',
+    );
+
+    targets.forEach((img, i) => {
+      // Style cursor and hint
+      img.classList.add('cursor-zoom-in', 'transition-transform', 'duration-200', 'hover:opacity-95');
+      img.setAttribute('title', localized().zoomHint);
+
+      let caption = '';
+      const figure = img.closest('figure');
+      if (figure) {
+        const figcaption = figure.querySelector('figcaption');
+        if (figcaption) caption = figcaption.textContent?.trim() ?? '';
+      }
+
+      if (!caption && img.parentElement) {
+        const nextEm = img.parentElement.querySelector('em');
+        if (nextEm) caption = nextEm.textContent?.trim() ?? '';
+      }
+
+      if (!caption) {
+        caption = img.alt?.trim() ?? '';
+      }
+
+      photos.push({ src: img.currentSrc || img.src, caption });
+      img.addEventListener('click', () => openAt(i));
+    });
+
+    let index = 0;
+
+    function show(): void {
+      const photo = photos[index];
+      if (!photo) return;
+
+      const strings = localized();
+      imgEl.src = photo.src;
+      imgEl.alt = photo.caption || strings.viewer;
+
+      if (titleEl) {
+        titleEl.textContent = photo.caption || strings.branded;
+      }
+
+      if (captionEl) {
+        captionEl.textContent = photo.caption;
+        const box = document.getElementById('article-lightbox-caption-box');
+        if (box) box.style.display = photo.caption ? 'block' : 'none';
+      }
+
+      // Single-photo articles are a plain viewer — hide the navigation.
+      const navigable = photos.length > 1;
+      if (counterEl) {
+        counterEl.textContent = `${index + 1} / ${photos.length}`;
+        counterEl.hidden = !navigable;
+      }
+      prevBtn?.classList.toggle('hidden', !navigable);
+      nextBtn?.classList.toggle('hidden', !navigable);
+    }
+
+    function step(delta: number): void {
+      if (photos.length <= 1) return;
+      index = (index + delta + photos.length) % photos.length;
+      show();
+    }
+
+    function openAt(i: number): void {
+      const src = photos[i]?.src;
+      if (!src) return;
+      index = i;
+      show();
+      if (!dialog.open) {
+        dialog.showModal();
+        document.body.style.overflow = 'hidden';
+      }
+    }
 
     // Close on button click
     closeBtn?.addEventListener('click', () => dialog.close());
@@ -95,55 +202,36 @@ import { ui } from '../../i18n/ui';
       imgEl.src = '';
     });
 
-    // Find all images within the article body and cover
-    const targets = document.querySelectorAll<HTMLImageElement>(
-      '.prose-kadali img, .article-cover img',
-    );
-
-    targets.forEach((img) => {
-      // Style cursor and hint
-      img.classList.add('cursor-zoom-in', 'transition-transform', 'duration-200', 'hover:opacity-95');
-      img.setAttribute('title', localized().zoomHint);
-
-      img.addEventListener('click', () => {
-        const src = img.currentSrc || img.src;
-        if (!src) return;
-
-        // Determine caption: figure figcaption > alt text > nearby em
-        let caption = '';
-        const figure = img.closest('figure');
-        if (figure) {
-          const figcaption = figure.querySelector('figcaption');
-          if (figcaption) caption = figcaption.textContent?.trim() ?? '';
-        }
-
-        if (!caption && img.parentElement) {
-          const nextEm = img.parentElement.querySelector('em');
-          if (nextEm) caption = nextEm.textContent?.trim() ?? '';
-        }
-
-        if (!caption) {
-          caption = img.alt?.trim() ?? '';
-        }
-
-        const strings = localized();
-        imgEl.src = src;
-        imgEl.alt = caption || strings.viewer;
-
-        if (titleEl) {
-          titleEl.textContent = caption || strings.branded;
-        }
-
-        if (captionEl) {
-          captionEl.textContent = caption;
-          const box = document.getElementById('article-lightbox-caption-box');
-          if (box) box.style.display = caption ? 'block' : 'none';
-        }
-
-        dialog.showModal();
-        document.body.style.overflow = 'hidden';
-      });
+    // Arrow keys navigate while the dialog is focused (focus is trapped
+    // inside it by showModal, so these never leak to the page).
+    dialog.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') step(-1);
+      if (event.key === 'ArrowRight') step(1);
     });
+
+    // Touch swipe on phones: a decisive horizontal drag flips the photo.
+    let touchX = 0;
+    let touchY = 0;
+    dialog.addEventListener(
+      'touchstart',
+      (event) => {
+        if (event.touches.length !== 1) return;
+        touchX = event.touches[0].clientX;
+        touchY = event.touches[0].clientY;
+      },
+      { passive: true },
+    );
+    dialog.addEventListener('touchend', (event) => {
+      const touch = event.changedTouches[0];
+      const dx = touch.clientX - touchX;
+      const dy = touch.clientY - touchY;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        step(dx < 0 ? 1 : -1);
+      }
+    });
+
+    prevBtn?.addEventListener('click', () => step(-1));
+    nextBtn?.addEventListener('click', () => step(1));
   }
 
   // Run on page load and view transitions
