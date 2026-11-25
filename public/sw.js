@@ -7,9 +7,13 @@
  *   /images/*    → stale-while-revalidate, capped so uploads can't pile up
  *   other GETs   → network, falling back to the cache (favicon.svg and friends)
  *
+ * It also shows the news-notification pushes (the opt-in card and the
+ * /api/push/* backend live elsewhere; runbook: docs/push-notifications.md).
+ *
  * The admin area (/admin/) is never intercepted: Sveltia CMS must always talk
  * to the network. Bump VERSION whenever offline.html or the routing rules
- * change — page HTML itself is network-first, so content changes need no bump.
+ * change — page HTML itself is network-first, so content changes need no bump
+ * (and the push handlers below have nothing to do with caching).
  */
 
 const VERSION = 'v2';
@@ -127,4 +131,51 @@ self.addEventListener('fetch', (event) => {
   } else {
     event.respondWith(networkFirst(request, STATIC_CACHE));
   }
+});
+
+/* ——— news notifications ———
+ * The payload is small JSON built by scripts/notify.mjs: { title, body, url,
+ * tag }. A broken payload must never crash the worker — fall back to a plain
+ * "something new" notice so the push is still visibly acknowledged (browsers
+ * require a visible notification for every push). */
+
+self.addEventListener('push', (event) => {
+  let data = {};
+  try {
+    data = event.data ? event.data.json() : {};
+  } catch {
+    /* undecipherable or non-JSON — the fallback below still shows */
+  }
+  event.waitUntil(
+    self.registration.showNotification(data.title || 'ಕದಳಿ ವನಿತಾ ಸಮಾಜ', {
+      body: data.body || 'ಹೊಸದೊಂದು ಪ್ರಕಟವಾಗಿದೆ.',
+      tag: data.tag || 'kadali-news',
+      icon: '/icons/icon-192.png',
+      badge: '/icons/icon-192.png',
+      lang: 'kn',
+      data: { url: data.url || '/' },
+    }),
+  );
+});
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  const target = new URL(event.notification.data?.url || '/', self.location.origin).href;
+  event.waitUntil(
+    (async () => {
+      const windows = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+      for (const client of windows) {
+        if (client.url === target) return client.focus();
+      }
+      // A Kadali tab is already open? Send it to the article instead of
+      // opening a second one.
+      for (const client of windows) {
+        if (new URL(client.url).origin === self.location.origin) {
+          await client.navigate(target);
+          return client.focus();
+        }
+      }
+      return self.clients.openWindow(target);
+    })(),
+  );
 });

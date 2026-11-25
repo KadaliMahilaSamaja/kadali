@@ -10,7 +10,7 @@ import BaseLayout from '../components/BaseLayout.astro';
 import PageHero from '../components/pages/PageHero.astro';
 
 // Single source of the "last updated" date; hardcode, do not use the build date.
-const lastUpdated = '2026-11-12';
+const lastUpdated = '2026-11-25';
 ---
 
 <BaseLayout
@@ -23,8 +23,8 @@ const lastUpdated = '2026-11-12';
     eyebrow={{ kn: 'ಗೋಪ್ಯತೆ', en: 'Privacy' }}
     title={{ kn: 'ಗೋಪ್ಯತೆ ನೀತಿ', en: 'Privacy policy' }}
     lede={{
-      kn: 'ವಾಡಿಕೆಯ ಮಬ್ಬಿಲ್ಲದೆ ಇಡೀ ನೀತಿ ಇಷ್ಟೇ: ಏನನ್ನೂ ಸಂಗ್ರಹಿಸಿಲ್ಲ, ಏನನ್ನೂ ಹಿಂಬಾಲಿಸಿಲ್ಲ, ಏನನ್ನೂ ಮಾರಿಲ್ಲ — ಮಾರಲು ಏನೂ ಇಲ್ಲವಾದ್ದರಿಂದ.',
-      en: 'The whole policy, without the usual fog: we collect nothing, we follow nobody, we sell nothing — there is nothing to sell.',
+      kn: 'ವಾಡಿಕೆಯ ಮಬ್ಬಿಲ್ಲದೆ ಇಡೀ ನೀತಿ ಇಷ್ಟೇ: ನಿಮ್ಮನ್ನು ಗುರುತಿಸಬಲ್ಲ ಏನನ್ನೂ ಸಂಗ್ರಹಿಸಿಲ್ಲ, ಏನನ್ನೂ ಹಿಂಬಾಲಿಸಿಲ್ಲ, ಏನನ್ನೂ ಮಾರಿಲ್ಲ — ಮಾರಲು ಏನೂ ಇಲ್ಲವಾದ್ದರಿಂದ.',
+      en: 'The whole policy, without the usual fog: we collect nothing that could tell us who you are, we follow nobody, we sell nothing — there is nothing to sell.',
     }}
     tone="cream"
   />
@@ -33,8 +33,8 @@ const lastUpdated = '2026-11-12';
     class="prose-kadali mx-auto max-w-3xl px-4 py-16 sm:px-6"
   >
     <p class="font-ui text-sm text-stone">
-      <span data-kn lang="kn">ಕೊನೆಯ ಪರಿಷ್ಕರಣೆ: <time datetime={lastUpdated}>12 ನವೆಂಬರ್ 2026</time>.</span>
-      <span data-en>Last updated: <time datetime={lastUpdated}>12 November 2026</time>.</span>
+      <span data-kn lang="kn">ಕೊನೆಯ ಪರಿಷ್ಕರಣೆ: <time datetime={lastUpdated}>25 ನವೆಂಬರ್ 2026</time>.</span>
+      <span data-en>Last updated: <time datetime={lastUpdated}>25 November 2026</time>.</span>
     </p>
 
     <h2>
@@ -53,6 +53,10 @@ const lastUpdated = '2026-11-12';
       <li>
         <span data-kn lang="kn">ನೀವು ಆರಿಸುವ ಭಾಷೆ (ಕನ್ನಡ/ಇಂಗ್ಲಿಷ್) ನಿಮ್ಮ ವೀಕ್ಷಕದ ಸ್ಥಳೀಯ ಸಂಗ್ರಹದಲ್ಲಿ ಮಾತ್ರ ಇಡಲಾಗುತ್ತದೆ; ಅದು ಯಾವ ಸರ್ವರ್‌ಗೂ ಹೋಗುವುದಿಲ್ಲ.</span>
         <span data-en>The language you choose (Kannada/English) is stored only in your browser’s local storage; it never reaches any server.</span>
+      </li>
+      <li>
+        <span data-kn lang="kn">“ಹೊಸ ಬರಹಗಳ ಸುದ್ದಿ ಬೇಕು” ಎಂದು ನೀವೇ ಒತ್ತಿದರೆ ಮಾತ್ರ, ವೀಕ್ಷಕ ಒದಗಿಸುವ ಗುರುತಿಲ್ಲದ ಚಂದಾ ವಿಳಾಸವೊಂದನ್ನು ಸುದ್ದಿ ತಲುಪಿಸಲು ಇಟ್ಟುಕೊಳ್ಳುತ್ತೇವೆ — ಹೆಸರಿಲ್ಲ, ಇಮೇಲಿಲ್ಲ; “ಬೇಡ” ಎಂದರೆ ಅಳಿಸಿಬಿಡುತ್ತೇವೆ.</span>
+        <span data-en>Only if you tap “Notify me” do we keep the anonymous subscription address your browser generates, so a news notice can reach you — no name, no email; say “not now” and it is deleted.</span>
       </li>
       <li>
         <span data-kn lang="kn">ವಾಟ್ಸ್‌ಆಪ್ ಅಥವಾ ಇಮೇಲ್ ಸಂದೇಶ ಸಂಘಕ್ಕೆ ಹೋಗುತ್ತದೆ, ಇಲ್ಲಿನ ಯಾವುದೇ ದತ್ತಸಂಚಯಕ್ಕೆ ಅಲ್ಲ.</span>
@@ -81,6 +85,10 @@ const lastUpdated = '2026-11-12';
       <span data-en>We deliberately collect nothing. The pages of this site are static files: your browser asks for a page, it is served, and afterwards nobody follows you. There is no analytics script, no tracking pixel, no embedded advertisement, not even a contact form that could untangle personal information.</span>
     </p>
     <p>
+      <span data-kn lang="kn">ಎಲ್ಲಿಯೂ ಇಡಲಾಗುವ ಗುರುತುಗಳು ಈ ಪುಟದಲ್ಲಿಯೇ ಹೆಸರಿಸಿದ್ದಾವು: ಭದ್ರತೆಗಾಗಿ Cloudflare ಅಂಚಿನ ದಾಖಲೆ, ಮತ್ತು — ಕೆಳಗೆ ಹೇಳಿದ ಸುದ್ದಿ ಸೂಚನೆಗಳನ್ನು ನೀವು ಬೇಕೆಂದು ಕೇಳಿದರೆ ಮಾತ್ರ — ಯಾರೆಂದೂ ಹೇಳಲಾಗದ ಆ ಚಂದಾ ವಿಳಾಸ.</span>
+      <span data-en>The only marks kept anywhere are named on this page: Cloudflare’s security logs, and — only if you ask for the news notifications described below — that anonymous subscription address, which could never tell us who you are.</span>
+    </p>
+    <p>
       <span data-kn lang="kn">ವಾಟ್ಸ್‌ಆಪ್, ದೂರವಾಣಿ ಅಥವಾ ಇಮೇಲ್ ಮೂಲಕ ಸಂಪರ್ಕಿಸಿದರೆ, ನೀವು ಕಳಿಸಿದ್ದು ಓದುವ ಸಂಘದ ಅಧಿಕಾರಿಗಳ ಬಳಿಯೇ ಇರುತ್ತದೆ; ನಿಮಗೆ ಉತ್ತರಿಸಲೂ, ಸಂಘದ ಕೆಲಸಗಳನ್ನು ನಡೆಸಲೂ ಅದನ್ನು ಮಾತ್ರ ಬಳಸಿಕೊಳ್ಳುತ್ತೇವೆ. ಅದನ್ನು ಮುಂದೆ ಹಂಚುವುದಿಲ್ಲ; ಬೇರೆ ಉದ್ದೇಶಕ್ಕೆ ತಿರುಗಿಸಿಕೊಳ್ಳುವ ಯಾವುದೇ ಸೇವೆಗೆ ಕೊಡುವುದೂ ಇಲ್ಲ.</span>
       <span data-en>If you reach us over WhatsApp, phone or email, what you send stays with the society’s officers who read it; we use it only to reply to you and to run the society’s work. We do not pass it on, nor hand it to any service that would repurpose it.</span>
     </p>
@@ -101,6 +109,15 @@ const lastUpdated = '2026-11-12';
     <p>
       <span data-kn lang="kn">ಈ ತಾಣವನ್ನು ಆ್ಯಪ್ ಹಾಗೆ ಅಳವಡಿಸಿಕೊಳ್ಳಬಹುದು. ಹಾಗೆ ಮಾಡಿದರೆ ನಿಮ್ಮ ವೀಕ್ಷಕ ನೋಡಿದ ಪುಟಗಳು ಚಿತ್ರಗಳ ಪ್ರತಿಗಳನ್ನು ಅದರ ಆಫ್‌ಲೈನ್ ಸಂಗ್ರಹದಲ್ಲಿ (Cache Storage) ಇಟ್ಟುಕೊಳ್ಳಬಹುದು — ಜಾಲಬಂಧ ಇಲ್ಲದಿದ್ದರೂ ಓದಲು. ಇದೂ ಕುಕೀ ಅಲ್ಲ, ನಮಗೆ ಕಳಿಸಲಾಗುವುದಿಲ್ಲ; ವೀಕ್ಷಕದಲ್ಲಿಯೇ ಇರುತ್ತದೆ. “ಸ್ಥಾಪಿಸಿ” ಕೋರೆ ಬಂದಿರುವ ನೆನಪನ್ನು ಮುಚ್ಚಿದರೆ ಅದನ್ನು ಮತ್ತೆ ತೋರಿಸದಂತೆ ಇಡಲೂ ಒಂದು ಗುರುತು ಇಡಲಾಗುತ್ತದೆ — ಅದೂ ಇದೇ ಸ್ಥಳೀಯ ಸಂಗ್ರಹದಲ್ಲಿ.</span>
       <span data-en>This site can be installed as an app. If you do, your browser may keep copies of visited pages and pictures in its own offline cache (Cache Storage) so they stay readable without a network. That cache is not a cookie and is never sent to us — it lives in your browser alone. Dismissing the install reminder is remembered with one more mark in the same local storage.</span>
+    </p>
+
+    <h2>
+      <span data-kn lang="kn">ಸುದ್ದಿ ಸೂಚನೆಗಳು</span>
+      <span data-en>News notifications</span>
+    </h2>
+    <p>
+      <span data-kn lang="kn">ಹೊಸ ಲೇಖನ ಅಥವಾ ಕಾರ್ಯಕ್ರಮ ಪ್ರಕಟವಾದಾಗ ಸೂಚನೆ ಬೇಕೆಂದರೆ, ನೀವೇ ಒತ್ತಿ ಕೇಳಬೇಕು — ತಾನಾಗಿ ಯಾರನ್ನೂ ಕೇಳುವುದಿಲ್ಲ. ಒತ್ತಿದಾಗ ನಿಮ್ಮ ವೀಕ್ಷಕ ಗುರುತಿಲ್ಲದ ಚಂದಾ ವಿಳಾಸವೊಂದನ್ನು (ಬ್ರೌಸರ್ ತಾನೇ ಕಟ್ಟಿದ ಒಂದು ಕೊಂಡಿ) ಕೊಡುತ್ತದೆ; ಸುದ್ದಿ ತಲುಪಿಸಲು ನಾವದನ್ನು ಮಾತ್ರ ಇಟ್ಟುಕೊಳ್ಳುತ್ತೇವೆ. ಅದರಲ್ಲಿ ಹೆಸರಿಲ್ಲ, ಇಮೇಲಿಲ್ಲ, ಯಾವ ವೈಯಕ್ತಿಕ ವಿವರವೂ ಇಲ್ಲ — ಸೂಚನೆ ಕಳುಹಿಸಲು ಬೇಕಾದ ಬರಿ ತಂತಿಯಷ್ಟೇ. ಸುದ್ದಿ ಬೇಡವೆಂದರೆ ವೀಕ್ಷಕದ ತಾಣ ಸೆಟಿಂಗ್‌ನಿಂದ ಚಂದಾ ನಿಲ್ಲಿಸಿ; ಆ ವಿಳಾಸವನ್ನು ನಾವು ಅಳಿಸುತ್ತೇವೆ. ಸಂದೇಶ ತಲುಪಿಸುವ ಕೆಲಸ ನಿಮ್ಮ ವೀಕ್ಷಕದ ಕಂಪನಿಯ (Google, Apple, Mozilla) ಸೂಚನಾ ಸೇವೆಯದು; ಅದರ ಮಧ್ಯದಲ್ಲಿ ನಮ್ಮ ಯಾವ ಗುರುತೂ ಸೇರಿರುವುದಿಲ್ಲ. ಗಮನಿಸಿ: ಆ್ಯಪಲ್‌ನ ನಿಯಮದಂತೆ ಐಫೋನ್‌ನಲ್ಲಿ ಈ ಸೂಚನೆಗಳು ಕೆಲಸ ಮಾಡಬೇಕಾದರೆ ತಾಣವನ್ನು ಮುಖಪುಟಕ್ಕೆ ಸೇರಿಸಿಕೊಂಡಿರಬೇಕು. “ಈಗ ಬೇಡ” ಎಂದು ಮುಚ್ಚಿದರೆ ಅದನ್ನು ನೆನಪಿಟ್ಟುಕೊಳ್ಳಲೂ ಒಂದು ಗುರುತು ಇದೇ ಸ್ಥಳೀಯ ಸಂಗ್ರಹದಲ್ಲಿ ಇಡಲಾಗುತ್ತದೆ.</span>
+      <span data-en>If you want a notice when a new article or event is published, you tap and ask — nobody is ever asked by default. Tapping makes your browser hand us an anonymous subscription address (a link only it understands); we keep just that, so the notice can find you. It holds no name, no email, no personal detail — it is the bare key needed to deliver one message. If you change your mind, stop the subscription in your browser’s site settings; the address is deleted on our side. The delivery itself travels through your browser maker’s notification service (Google, Apple, Mozilla); nothing that identifies you joins it along the way. Note Apple’s rule: on an iPhone these notices work only once the site is added to the Home Screen. “Not now” is remembered with one more mark in that same local storage.</span>
     </p>
 
     <h2>

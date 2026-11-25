@@ -379,6 +379,30 @@ export const ui = {
       en: 'Tap the Share button, then choose “Add to Home Screen”.',
     },
   },
+
+  /* ——— news notifications (web push) ——— */
+  push: {
+    title: { kn: 'ಹೊಸ ಬರಹಗಳ ಸುದ್ದಿ ಬೇಕೆ?', en: 'Want news of new writings?' },
+    body: {
+      kn: 'ಹೊಸ ಲೇಖನ ಅಥವಾ ಕಾರ್ಯಕ್ರಮ ಪ್ರಕಟವಾದ ಕೂಡಲೇ ತಿಳಿಸುತ್ತೇವೆ — ಹೆಸರಿಲ್ಲ, ಇಮೇಲಿಲ್ಲ.',
+      en: 'We’ll tell you the moment a new article or event is published — no name, no email.',
+    },
+    allow: { kn: 'ಸುದ್ದಿ ಕಳುಹಿಸಿ', en: 'Notify me' },
+    dismiss: { kn: 'ಈಗ ಬೇಡ', en: 'Not now' },
+    granted: {
+      kn: 'ಸರಿ! ಮುಂದೆ ಹೊಸ ಬರಹ ಪ್ರಕಟವಾದಾಗ ಸುದ್ದಿ ಬರುತ್ತದೆ.',
+      en: 'Done — you’ll hear from us when something new is published.',
+    },
+    denied: {
+      kn: 'ಸೂಚನೆಗಳು ನಿರ್ಬಂಧಿತವಾಗಿವೆ — ವೀಕ್ಷಕದ ತಾಣ ಸೆಟಿಂಗ್‌ನಲ್ಲಿ ಅನುಮತಿಸಬಹುದು.',
+      en: 'Notifications are blocked — you can allow them in this site’s browser settings.',
+    },
+    failed: {
+      kn: 'ಈಗ ಸಾಧ್ಯವಾಗಲಿಲ್ಲ — ಬೇರೆ ಸಲ ಪ್ರಯತ್ನಿಸಿ.',
+      en: 'Couldn’t set it up just now — try again later.',
+    },
+    footerTrigger: { kn: 'ಹೊಸ ಬರಹಗಳ ಸುದ್ದಿ ಬೇಕೆ?', en: 'Get notified of new posts' },
+  },
 } as const;
 
 /** Committing-author role strings for the articles' author bios. */

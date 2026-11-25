@@ -20,6 +20,14 @@ export const LANG_KEY = 'kadali-lang';
  */
 export const PWA_DISMISS_KEY = 'kadali-pwa-dismissed';
 
+/**
+ * The push-notification card's two marks (see PushPrompt.astro): dismissal
+ * ("never ask again") and "this browser is subscribed". Same localStorage
+ * family, never a cookie.
+ */
+export const PUSH_DISMISS_KEY = 'kadali-push-dismissed';
+export const PUSH_SUBSCRIBED_KEY = 'kadali-push-subscribed';
+
 export type Locale = 'kn' | 'en';
 
 /** The language the document is currently showing (set by the pre-paint script). */

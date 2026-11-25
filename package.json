@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@csstools/postcss-cascade-layers": "^6.0.2",
-    "sharp": "^0.35.5"
+    "sharp": "^0.35.5",
+    "web-push": "^4.0.0"
   }
 }

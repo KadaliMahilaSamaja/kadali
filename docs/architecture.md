@@ -119,6 +119,7 @@ flowchart LR
 - A draft with empty required fields would break the Astro zod schema on its own branch; since those branches are not built, this costs nothing and production is unaffected.
 - Free-plan margins: 500 builds/month, 20k files, 25 MiB per file, unlimited bandwidth; Worker 100k requests/day; GitHub guidance under ~1 GB per repo, 100 MiB per file hard cap.
 - Launch gate (ceremony curtain): `public/_worker.js` (advanced mode) + `public/_routes.json` + a `LAUNCH_KV` KV flag hide the site behind an "Opening shortly" page until the launch button on `/launch` flips it. The Worker fails open when the KV binding is absent — not armed means "behave as before". Arming, rehearsal and the ceremony runbook: [launch-gate.md](launch-gate.md).
+- News notifications (web push): the same Worker holds `/api/push/*` endpoints over a second KV namespace (`PUSH_KV`); a post-deploy GitHub Actions step (`scripts/notify.mjs`) announces newly published articles/events to subscribers. Setup and runbook: [push-notifications.md](push-notifications.md).
 
 ## 7. Validation summary
 

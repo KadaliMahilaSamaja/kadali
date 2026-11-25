@@ -97,6 +97,17 @@ const socials = [
             ))
           }
         </ul>
+        <!-- News-notification opt-in: hidden by default; PushPrompt's script
+             reveals it only where push is supported and still actionable. -->
+        <button
+          type="button"
+          data-push-trigger
+          hidden
+          class="mt-4 font-ui text-sm font-medium text-milk underline-offset-4 hover:underline active:text-milk/80"
+        >
+          <span data-kn lang="kn">{ui.push.footerTrigger.kn}</span>
+          <span data-en>{ui.push.footerTrigger.en}</span>
+        </button>
       </div>
     </div>
 

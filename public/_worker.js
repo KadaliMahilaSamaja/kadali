@@ -1,5 +1,6 @@
 /*
- * Kadali launch gate — Cloudflare Pages advanced-mode Worker.
+ * Kadali launch gate + push subscriptions — Cloudflare Pages advanced-mode
+ * Worker.
  *
  * public/_worker.js is copied verbatim into dist/ by the Astro build; its
  * presence switches the Pages project into "advanced mode", so every request
@@ -23,11 +24,26 @@
  * /api/launch-status) opens itself within seconds. Fail-open is the
  * load-bearing decision: the gate must never be able to take the live site
  * down. Setup and the ceremony runbook: docs/launch-gate.md.
+ *
+ * The push API (/api/push/*) rides alongside the gate. Browsers POST their
+ * push subscription into PUSH_KV (subscribe / unsubscribe, no secret needed
+ * — a subscription address is anonymous and user-issued); the sending side
+ * (GitHub Actions after each deploy, scripts/notify.mjs) lists and prunes
+ * with the x-push-key secret. Its failure mode is inert: with no PUSH_KV or
+ * no PUSH_KEY the endpoints answer 503 and the site carries on unchanged.
+ * Runbook: docs/push-notifications.md.
  */
 
 const KV_KEY = 'launched';
 const CURTAIN = '/opening-soon.html';
 const NO_STORE = 'no-store';
+
+/* Push API limits: KV metadata (which carries the subscription for cheap
+ * listing) must stay under 1024 bytes; the free plan allows ~50 subrequests
+ * per invocation, hence the 40-endpoint prune chunk. */
+const SUB_MAX_BYTES = 900;
+const SUB_LIST_CAP = 500;
+const PRUNE_CHUNK = 40;
 
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -43,18 +59,38 @@ function methodNotAllowed(allow) {
   return new Response(null, { status: 405, headers: { allow } });
 }
 
+/** Small, defensive body reader: null on anything suspicious. */
+async function readJson(request, maxChars) {
+  try {
+    const text = await request.text();
+    if (text.length > maxChars) return null;
+    return JSON.parse(text);
+  } catch {
+    return null;
+  }
+}
+
+/** SHA-256 of a string, hex-encoded — the KV key for a subscription. */
+async function sha256Hex(text) {
+  const digest = await crypto.subtle.digest(
+    'SHA-256',
+    new TextEncoder().encode(text),
+  );
+  return [...new Uint8Array(digest)]
+    .map((byte) => byte.toString(16).padStart(2, '0'))
+    .join('');
+}
+
 /**
- * Constant-time comparison of the provided key against the configured one.
+ * Constant-time comparison of a provided secret against the configured one.
  * Both sides are hashed first so the comparison length is fixed regardless
- * of input. No LAUNCH_KEY configured → fail CLOSED: nobody can launch.
+ * of input. No expected value configured → fail CLOSED for that feature.
  */
-async function launchKeyOk(request, env) {
-  const expected = env.LAUNCH_KEY;
+async function secretMatches(provided, expected) {
   if (!expected) return false;
-  const provided = request.headers.get('x-launch-key') ?? '';
   const encoder = new TextEncoder();
   const [a, b] = await Promise.all([
-    crypto.subtle.digest('SHA-256', encoder.encode(provided)),
+    crypto.subtle.digest('SHA-256', encoder.encode(String(provided))),
     crypto.subtle.digest('SHA-256', encoder.encode(String(expected))),
   ]);
   if (typeof crypto.subtle.timingSafeEqual === 'function') {
@@ -66,6 +102,40 @@ async function launchKeyOk(request, env) {
   let diff = 0;
   for (let i = 0; i < va.length; i++) diff |= va[i] ^ vb[i];
   return diff === 0;
+}
+
+async function launchKeyOk(request, env) {
+  return secretMatches(request.headers.get('x-launch-key') ?? '', env.LAUNCH_KEY);
+}
+
+async function pushKeyOk(request, env) {
+  return secretMatches(request.headers.get('x-push-key') ?? '', env.PUSH_KEY);
+}
+
+/**
+ * Only what a send needs, nothing that could identify a person: the endpoint
+ * URL the browser generated and its encryption keys. Anything larger or
+ * stranger is refused.
+ */
+function isValidSubscription(sub) {
+  return (
+    !!sub &&
+    typeof sub.endpoint === 'string' &&
+    sub.endpoint.startsWith('https://') &&
+    sub.endpoint.length <= 500 &&
+    !!sub.keys &&
+    typeof sub.keys.p256dh === 'string' &&
+    sub.keys.p256dh.length > 0 &&
+    sub.keys.p256dh.length <= 200 &&
+    typeof sub.keys.auth === 'string' &&
+    sub.keys.auth.length > 0 &&
+    sub.keys.auth.length <= 100
+  );
+}
+
+/** The stored record: subscription + when it arrived. */
+function subscriptionRecord(sub) {
+  return { endpoint: sub.endpoint, keys: sub.keys, at: new Date().toISOString() };
 }
 
 /**
@@ -162,6 +232,114 @@ export default {
       }
       return json({ ok: true, open, since: new Date().toISOString() });
     }
+    /* ——— push API: subscriptions in PUSH_KV. Subscribe/unsubscribe are the
+       visitor's own, anonymous; list/prune are the sender's, secret-keyed.
+       Like the launch API, handled before the gate in every state. ——— */
+    if (path === '/api/push/subscribe') {
+      if (request.method !== 'POST') return methodNotAllowed('POST');
+      if (!env.PUSH_KV) return json({ ok: false, error: 'not-configured' }, 503);
+      const body = await readJson(request, 2000);
+      if (!isValidSubscription(body)) return json({ ok: false, error: 'bad-subscription' }, 400);
+      const record = subscriptionRecord(body);
+      const value = JSON.stringify(record);
+      // The record rides in the metadata (≤1024 bytes in KV) so listing is a
+      // single call; the value keeps a full copy for the rare too-big record.
+      const metadata =
+        value.length <= SUB_MAX_BYTES
+          ? { at: record.at, sub: record }
+          : { at: record.at };
+      try {
+        await env.PUSH_KV.put(await sha256Hex(record.endpoint), value, { metadata });
+      } catch {
+        return json({ ok: false, error: 'kv-write-failed' }, 503);
+      }
+      return json({ ok: true });
+    }
+
+    if (path === '/api/push/unsubscribe') {
+      if (request.method !== 'POST') return methodNotAllowed('POST');
+      if (!env.PUSH_KV) return json({ ok: false, error: 'not-configured' }, 503);
+      const body = await readJson(request, 1000);
+      if (!body || typeof body.endpoint !== 'string' || !body.endpoint.startsWith('https://')) {
+        return json({ ok: false, error: 'bad-endpoint' }, 400);
+      }
+      try {
+        const deleted = await env.PUSH_KV.delete(await sha256Hex(body.endpoint));
+        return json({ ok: true, deleted });
+      } catch {
+        return json({ ok: false, error: 'kv-write-failed' }, 503);
+      }
+    }
+
+    if (path === '/api/push/subscriptions') {
+      if (request.method !== 'GET') return methodNotAllowed('GET');
+      if (!env.PUSH_KEY) return json({ ok: false, error: 'not-configured' }, 503);
+      if (!(await pushKeyOk(request, env))) {
+        // Wrong key: a bare 404, no confirmation the endpoint exists.
+        return new Response(null, { status: 404 });
+      }
+      if (!env.PUSH_KV) return json({ ok: false, error: 'not-armed' }, 503);
+      try {
+        const subscriptions = [];
+        let cursor;
+        let truncated = false;
+        do {
+          const page = await env.PUSH_KV.list({ limit: 1000, cursor });
+          for (const key of page.keys) {
+            if (subscriptions.length >= SUB_LIST_CAP) {
+              truncated = true;
+              break;
+            }
+            // Metadata carries the record (fast path); fall back to a get.
+            if (key.metadata && key.metadata.sub) {
+              subscriptions.push(key.metadata.sub);
+            } else {
+              const value = await env.PUSH_KV.get(key.name);
+              if (value) {
+                try {
+                  subscriptions.push(JSON.parse(value));
+                } catch {
+                  /* a mangled record is skipped, never fatal */
+                }
+              }
+            }
+          }
+          cursor = page.list_complete ? undefined : page.cursor;
+        } while (cursor && subscriptions.length < SUB_LIST_CAP);
+        return json({ ok: true, subscriptions, truncated });
+      } catch {
+        return json({ ok: false, error: 'kv-read-failed' }, 503);
+      }
+    }
+
+    if (path === '/api/push/prune') {
+      if (request.method !== 'POST') return methodNotAllowed('POST');
+      if (!env.PUSH_KEY) return json({ ok: false, error: 'not-configured' }, 503);
+      if (!(await pushKeyOk(request, env))) {
+        return new Response(null, { status: 404 });
+      }
+      if (!env.PUSH_KV) return json({ ok: false, error: 'not-armed' }, 503);
+      const body = await readJson(request, 4000 + PRUNE_CHUNK * 600);
+      if (
+        !body ||
+        !Array.isArray(body.endpoints) ||
+        body.endpoints.length === 0 ||
+        body.endpoints.length > PRUNE_CHUNK ||
+        body.endpoints.some((e) => typeof e !== 'string' || !e.startsWith('https://'))
+      ) {
+        return json({ ok: false, error: 'bad-endpoints' }, 400);
+      }
+      try {
+        let deleted = 0;
+        for (const endpoint of body.endpoints) {
+          if (await env.PUSH_KV.delete(await sha256Hex(endpoint))) deleted += 1;
+        }
+        return json({ ok: true, deleted, remaining: body.endpoints.length - deleted });
+      } catch {
+        return json({ ok: false, error: 'kv-write-failed' }, 503);
+      }
+    }
+
     if (path.startsWith('/api/')) return new Response(null, { status: 404 });
 
     /* ——— the gate ——— */

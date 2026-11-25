@@ -9,6 +9,7 @@ import Footer from './Footer.astro';
 import JsonLd from './JsonLd.astro';
 import LanguageGate from './LanguageGate.astro';
 import InstallPrompt from './InstallPrompt.astro';
+import PushPrompt from './PushPrompt.astro';
 import { ui } from '../i18n/ui';
 
 // Preload the Kannada sans — headings (incl. the hero display line) are set
@@ -144,6 +145,7 @@ const jsonLd = [
       class="pointer-events-none fixed inset-0 z-[70] overflow-hidden"
     ></div>
     <InstallPrompt />
+    <PushPrompt />
     <LanguageGate />
   </body>
 </html>

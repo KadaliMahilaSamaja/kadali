@@ -3,6 +3,10 @@
 # binding reaches the _worker.js with each deployment. See docs/launch-gate.md.
 # LAUNCH_KEY is a secret and must never live here — set it with
 # `wrangler pages secret put LAUNCH_KEY --project-name kadali`.
+#
+# PUSH_KV holds web-push subscriptions for the news-notification feature
+# (docs/push-notifications.md). Its admin secret PUSH_KEY also stays out of
+# this file — `wrangler pages secret put PUSH_KEY --project-name kadali`.
 name = "kadali"
 pages_build_output_dir = "dist"
 compatibility_date = "2025-01-01"
@@ -10,3 +14,7 @@ compatibility_date = "2025-01-01"
 [[kv_namespaces]]
 binding = "LAUNCH_KV"
 id = "33e614c671cd42948f9ab75d08bb2393"
+
+[[kv_namespaces]]
+binding = "PUSH_KV"
+id = "a10e9e60bf824dff8c2c8140d6eb122b"

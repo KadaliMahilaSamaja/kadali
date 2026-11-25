@@ -1,0 +1,349 @@
+---
+/**
+ * "News notifications" card — a small fixed card offering web push when a
+ * new article or event is published, replacing the browser's bare permission
+ * bar with bilingual copy. Same manners as InstallPrompt: never a modal (the
+ * LanguageGate owns the first-visit dialog), never shown before the gate has
+ * closed, and it waits for the install banner to finish so the two never
+ * stack in the same corner.
+ *
+ * The feature is dormant until setup: VAPID_PUBLIC_KEY below stays empty
+ * until the keys are generated (docs/push-notifications.md). Browsers without
+ * push (iOS Safari outside the home-screen app, old browsers, in-private
+ * windows) never see the card — pure feature detection, no user-agent sniffing.
+ * Dismissal and the subscribed state are remembered in localStorage (never a
+ * cookie — see the privacy page).
+ */
+import { ui } from '../i18n/ui';
+
+const t = ui.push;
+---
+
+<aside
+  id="push-prompt"
+  class="push-prompt fixed inset-x-4 bottom-4 z-50 sm:inset-x-auto sm:right-6 sm:w-[22rem]"
+  hidden
+  aria-label={t.title.kn}
+>
+  <div class="flex items-start gap-3 border border-ink/10 bg-milk p-4 shadow-2xl">
+    <img
+      src="/images/kadali-mark.png"
+      alt=""
+      width="144"
+      height="144"
+      class="mt-0.5 size-9 shrink-0"
+      aria-hidden="true"
+    />
+
+    <div class="min-w-0 flex-1">
+      <p class="font-display text-base font-bold text-ink" data-question>
+        <span data-kn lang="kn">{t.title.kn}</span><span data-en>{t.title.en}</span>
+      </p>
+      <p class="mt-1 font-ui text-sm leading-relaxed text-stone" data-question>
+        <span data-kn lang="kn">{t.body.kn}</span><span data-en>{t.body.en}</span>
+      </p>
+      <p class="mt-1 font-ui text-sm leading-relaxed text-stone" data-status="granted" hidden>
+        <span data-kn lang="kn">{t.granted.kn}</span><span data-en>{t.granted.en}</span>
+      </p>
+      <p class="mt-1 font-ui text-sm leading-relaxed text-stone" data-status="denied" hidden>
+        <span data-kn lang="kn">{t.denied.kn}</span><span data-en>{t.denied.en}</span>
+      </p>
+      <p class="mt-1 font-ui text-sm leading-relaxed text-stone" data-status="failed" hidden>
+        <span data-kn lang="kn">{t.failed.kn}</span><span data-en>{t.failed.en}</span>
+      </p>
+    </div>
+
+    <div class="flex shrink-0 items-center gap-2 self-center" data-actions>
+      <button
+        type="button"
+        class="push-accept"
+        data-push-accept
+      >
+        <span data-kn lang="kn">{t.allow.kn}</span><span data-en>{t.allow.en}</span>
+      </button>
+      <button
+        type="button"
+        class="push-dismiss"
+        data-push-dismiss
+        aria-label={t.dismiss.kn}
+      >
+        ✕
+      </button>
+    </div>
+  </div>
+</aside>
+
+<style>
+  /* The script hides/shows pieces with the `hidden` attribute; this beats
+   * Tailwind display utilities (the actions row is `flex`) so attribute
+   * hiding always wins inside the card. */
+  .push-prompt [hidden] {
+    display: none !important;
+  }
+
+  .push-accept {
+    cursor: pointer;
+    border: 1px solid var(--color-leaf);
+    background-color: var(--color-leaf);
+    color: var(--color-milk);
+    padding: 0.45rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition:
+      background-color 200ms ease,
+      color 200ms ease;
+  }
+
+  .push-accept:hover,
+  .push-accept:active {
+    background-color: transparent;
+    color: var(--color-leaf);
+  }
+
+  .push-accept:disabled {
+    cursor: default;
+    opacity: 0.6;
+  }
+
+  .push-dismiss {
+    cursor: pointer;
+    border: 0;
+    background: none;
+    color: var(--color-stone);
+    font-size: 1rem;
+    line-height: 1;
+    padding: 0.35rem;
+    transition: color 200ms ease;
+  }
+
+  .push-dismiss:hover,
+  .push-dismiss:active {
+    color: var(--color-ink);
+  }
+
+  /* Slide up gently — transform/opacity only, and still under reduced motion. */
+  .push-prompt:not([hidden]) {
+    animation: push-in 300ms ease;
+  }
+
+  @keyframes push-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.75rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .push-prompt:not([hidden]) {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  import { PUSH_DISMISS_KEY, PUSH_SUBSCRIBED_KEY } from '../i18n/client';
+
+  /**
+   * The VAPID *public* key — public by nature, safe to ship in the page.
+   * Empty string = the feature sleeps: no card, no footer trigger, no
+   * permission prompts anywhere. Setup: docs/push-notifications.md.
+   */
+  const VAPID_PUBLIC_KEY = 'BObZMs4lFPq32NaN79Y_4Bz5AwEscCrlVPfxyp5RfqBFo3cmW6RIJNlMJKlsUHSKTRe5DzQ_Qj5MhGb8t56n988';
+
+  const SUBSCRIBE_URL = '/api/push/subscribe';
+
+  const card = document.getElementById('push-prompt');
+  if (card) {
+    const footerTrigger = document.querySelector<HTMLButtonElement>('[data-push-trigger]');
+    const question = card.querySelectorAll<HTMLElement>('[data-question]');
+    const actions = card.querySelector<HTMLElement>('[data-actions]');
+    const accept = card.querySelector<HTMLButtonElement>('[data-push-accept]');
+    const dismissButton = card.querySelector<HTMLButtonElement>('[data-push-dismiss]');
+    const statusLines = card.querySelectorAll<HTMLElement>('[data-status]');
+
+    const supported = () =>
+      'serviceWorker' in navigator &&
+      'PushManager' in window &&
+      'Notification' in window &&
+      VAPID_PUBLIC_KEY !== '';
+
+    const flag = (key: string) => {
+      try {
+        return localStorage.getItem(key) === '1';
+      } catch {
+        return false;
+      }
+    };
+
+    const setFlag = (key: string, value: '1' | null) => {
+      try {
+        if (value === null) localStorage.removeItem(key);
+        else localStorage.setItem(key, value);
+      } catch {
+        // Storage blocked — the card just may return next visit.
+      }
+    };
+
+    const wasDismissed = () => flag(PUSH_DISMISS_KEY);
+    const wasSubscribed = () => flag(PUSH_SUBSCRIBED_KEY);
+
+    const hide = () => {
+      card.hidden = true;
+    };
+
+    const rememberDismissal = () => setFlag(PUSH_DISMISS_KEY, '1');
+
+    /** Standard VAPID key decoder for pushManager.subscribe(). */
+    const urlBase64ToUint8Array = (base64: string): Uint8Array => {
+      const padding = '='.repeat((4 - (base64.length % 4)) % 4);
+      const base64Url = (base64 + padding).replace(/-/g, '+').replace(/_/g, '/');
+      const binary = atob(base64Url);
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+      return bytes;
+    };
+
+    /** requestPermission's promise form isn't universal (old callback API). */
+    const askPermission = () =>
+      new Promise<NotificationPermission>((resolve) => {
+        const result = Notification.requestPermission((permission) => resolve(permission));
+        if (result && typeof result.then === 'function') result.then(resolve);
+      });
+
+    const showStatus = (state: 'granted' | 'denied' | 'failed') => {
+      for (const line of question) line.hidden = true;
+      if (actions) actions.hidden = true;
+      for (const line of statusLines) line.hidden = line.dataset.status !== state;
+    };
+
+    const reveal = () => {
+      for (const line of question) line.hidden = false;
+      if (actions) actions.hidden = false;
+      for (const line of statusLines) line.hidden = true;
+      card.hidden = false;
+    };
+
+    const subscribe = async () => {
+      const registration = await navigator.serviceWorker.ready;
+      const existing = await registration.pushManager.getSubscription();
+      const subscription =
+        existing ??
+        (await registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
+        }));
+      // Send only the two anonymous fields the worker accepts.
+      const json = subscription.toJSON();
+      const response = await fetch(SUBSCRIBE_URL, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ endpoint: json.endpoint, keys: json.keys }),
+      });
+      if (!response.ok) throw new Error(`subscribe endpoint said ${response.status}`);
+      setFlag(PUSH_SUBSCRIBED_KEY, '1');
+    };
+
+    const settle = (state: 'granted' | 'denied' | 'failed') => {
+      showStatus(state);
+      const silence = state === 'granted' ? 3000 : 6000;
+      window.setTimeout(hide, silence);
+      if (state !== 'failed') rememberDismissal();
+    };
+
+    accept?.addEventListener('click', async () => {
+      accept.disabled = true;
+      try {
+        const permission = await askPermission();
+        if (permission !== 'granted') {
+          settle('denied');
+          return;
+        }
+        await subscribe();
+        settle('granted');
+      } catch {
+        // Blocked storage, absent worker, offline, backend down — quiet retry
+        // later; nothing is remembered so the card can come back.
+        settle('failed');
+      } finally {
+        accept.disabled = false;
+      }
+    });
+
+    dismissButton?.addEventListener('click', () => {
+      hide();
+      rememberDismissal();
+    });
+
+    // The footer's "get notified" line summons the card back.
+    footerTrigger?.addEventListener('click', () => {
+      if (actionable()) reveal();
+    });
+
+    // First visits open the language gate; wait for it to release the page
+    // (InstallPrompt's courtesy), then wait for the install banner to be done
+    // with the corner so the two never stack, then offer — quietly, once.
+    const whenPageIsFree = () =>
+      new Promise<void>((resolve) => {
+        const gate = document.getElementById('lang-gate');
+        if (!gate?.open) {
+          resolve();
+          return;
+        }
+        gate.addEventListener('close', () => setTimeout(resolve, 1000), { once: true });
+      });
+
+    const whenInstallSettles = () =>
+      new Promise<void>((resolve) => {
+        const install = document.getElementById('install-prompt');
+        if (!install || install.hidden) {
+          resolve();
+          return;
+        }
+        const watch = window.setInterval(() => {
+          if (install.hidden) {
+            window.clearInterval(watch);
+            resolve();
+          }
+        }, 1000);
+        window.setTimeout(() => {
+          window.clearInterval(watch);
+          resolve();
+        }, 30000);
+      });
+
+    const actionable = () => supported() && !wasSubscribed() && !wasDismissed();
+
+    // On every load, reconcile: a subscription the browser no longer has
+    // clears the "subscribed" mark so the card may ask again.
+    const reconcile = async () => {
+      if (!supported()) return;
+      try {
+        const registration = await navigator.serviceWorker.ready;
+        const subscription = await registration.pushManager.getSubscription();
+        if (subscription && !wasSubscribed()) setFlag(PUSH_SUBSCRIBED_KEY, '1');
+        if (!subscription && wasSubscribed()) setFlag(PUSH_SUBSCRIBED_KEY, null);
+      } catch {
+        // No worker yet (first visit before registration) — nothing to do.
+      }
+    };
+
+    reconcile().then(() => {
+      if (footerTrigger) footerTrigger.hidden = !actionable();
+      if (!actionable()) return;
+      window.setTimeout(
+        () =>
+          whenPageIsFree()
+            .then(whenInstallSettles)
+            .then(() => {
+              if (actionable()) card.hidden = false;
+            }),
+        6000,
+      );
+    });
+  }
+</script>
