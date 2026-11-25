@@ -7,7 +7,7 @@ authorPhoto: "/images/uploads/vagdevi-basavaraj-nuchin.webp"
 authorRole: "ಅಧ್ಯಕ್ಷೆ · ಕದಳಿ ವನಿತಾ ಸಮಾಜ"
 category: "community"
 pubDate: 2026-11-19
-order: 3 # pinned: third on the homepage rail
+order: 4 # pinned: fourth on the homepage rail
 event: website-unveiling
 tags: [ಅಧ್ಯಕ್ಷರ ನುಡಿ, ಜಾಲತಾಣ, ಅನಾವರಣ]
 featured: true

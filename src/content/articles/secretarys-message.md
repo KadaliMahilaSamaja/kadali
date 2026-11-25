@@ -7,7 +7,7 @@ authorPhoto: "/images/uploads/geetha-basavakumar.webp"
 authorRole: "ಕಾರ್ಯದರ್ಶಿ · ಕದಳಿ ವನಿತಾ ಸಮಾಜ"
 category: "community"
 pubDate: 2026-11-19
-order: 4 # pinned: fourth on the homepage rail
+order: 5 # pinned: fifth on the homepage rail
 event: website-unveiling
 tags: [ಕಾರ್ಯದರ್ಶಿ ನುಡಿ, ಜಾಲತಾಣ, ಅನಾವರಣ]
 featured: true

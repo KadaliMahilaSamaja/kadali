@@ -7,7 +7,7 @@ authorPhoto: "/images/uploads/basava-marulasidda-swamiji.webp"
 authorRole: "ಶ್ರೀ ಬಸವತತ್ವ ಪೀಠ, ಚಿಕ್ಕಮಗಳೂರು – ಬಸವಕೇಂದ್ರ, ಶಿವಮೊಗ್ಗ"
 category: "spirituality"
 pubDate: 2026-11-19
-order: 1 # pinned: leads the homepage rail and the unveiling story list
+order: 2 # pinned: second in the unveiling story list
 event: website-unveiling
 tags: [ಶುಭ ಸಂದೇಶ, ಜಾಲತಾಣ, ಅನಾವರಣ, ಅಕ್ಕಮಹಾದೇವಿ]
 featured: false

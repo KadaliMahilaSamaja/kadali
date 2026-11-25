@@ -8,7 +8,7 @@ authorPhoto: "/images/uploads/sheela-suresh.webp"
 authorRole: "ಮಾಜಿ ಅಧ್ಯಕ್ಷೆ · ಕದಳಿ ವನಿತಾ ಸಮಾಜ"
 category: "community"
 pubDate: 2026-11-19
-order: 5 # pinned: fifth in the unveiling story list
+order: 1 # pinned: newest report leads the homepage rail and the unveiling story list
 event: website-unveiling
 tags: [ಚಿಂತನ ಕಾರ್ತಿಕ, ಜಾಲತಾಣ, ಅನಾವರಣ, ವಚನ ಸಾಹಿತ್ಯ, ಕನ್ನಡ ರಾಜ್ಯೋತ್ಸವ, ಬಸವಣ್ಣ]
 featured: false
