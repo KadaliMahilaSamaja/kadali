@@ -20,15 +20,5 @@ export default defineConfig({
   ],
   vite: {
     plugins: [tailwindcss()],
-    build: {
-      // Safari 15 floor (iPadOS 15 devices in the club's audience): esbuild
-      // transpiles JS syntax; lightningcss minifies CSS against the same
-      // floor (vendor prefixes only — feature transforms happen in
-      // postcss.config.mjs, which lightningcss does not do for @layer,
-      // @property or var()-operand color-mix()).
-      target: ['safari15'],
-      cssMinify: 'lightningcss',
-      cssTarget: ['safari15'],
-    },
   },
 });

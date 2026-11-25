@@ -46,9 +46,6 @@ import Bloom from './motifs/Bloom.astro';
 </dialog>
 
 <style>
-  /* Shared <dialog> legacy geometry lives in global.css (@layer base) —
-     closed hidden, open fixed and auto-margined. */
-
   .lang-choice {
     cursor: pointer;
     border: 1px solid color-mix(in srgb, var(--color-ink) 15%, transparent);
@@ -85,7 +82,6 @@ import Bloom from './motifs/Bloom.astro';
 
 <script>
   import { activeLocale, applyLocale, storedLocale, type Locale } from '../i18n/client';
-  import { closeModal, openModal } from '../lib/dialog';
 
   // Keep title/meta/aria in step with whatever the pre-paint script applied.
   applyLocale(activeLocale(), false);
@@ -117,7 +113,7 @@ import Bloom from './motifs/Bloom.astro';
     )) {
       btn.addEventListener('click', () => {
         applyLocale((btn.dataset.langChoice as Locale) ?? 'kn');
-        closeModal(dialog);
+        dialog.close();
       });
     }
 
@@ -126,13 +122,11 @@ import Bloom from './motifs/Bloom.astro';
     });
 
     // Backdrop click dismisses: nothing stored, asked again next visit.
-    // On the legacy path the dialog itself fills the viewport (fixed inset
-    // in global.css), so surface clicks land here the same way.
     dialog.addEventListener('click', (event) => {
-      if (event.target === dialog) closeModal(dialog);
+      if (event.target === dialog) dialog.close();
     });
 
-    openModal(dialog);
+    dialog.showModal();
     document.body.style.overflow = 'hidden';
   }
 </script>
