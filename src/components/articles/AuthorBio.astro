@@ -16,7 +16,9 @@ const roleIsBi = typeof author.role !== 'string';
 const role = author.role as { kn: string; en: string };
 ---
 
-<section class="mt-14 border border-ink/15 bg-jasmine p-6 sm:p-8" aria-labelledby="author-heading">
+<!-- data-lightbox-exclude: the author photo is a profile link, not an article
+     photo — the article lightbox skips it (see ArticleLightbox.astro). -->
+<section data-lightbox-exclude class="mt-14 border border-ink/15 bg-jasmine p-6 sm:p-8" aria-labelledby="author-heading">
   <div class="flex flex-col gap-6 sm:flex-row sm:items-center">
     <a href={authorUrl} class="group shrink-0 self-start sm:self-center" aria-label={`${author.name} ಅವರ ಪ್ರೊಫೈಲ್`}>
       <div class="size-32 sm:size-36 overflow-hidden rounded-full border-2 border-leaf/30 bg-cream p-1.5 transition-transform duration-200 group-hover:scale-105">
